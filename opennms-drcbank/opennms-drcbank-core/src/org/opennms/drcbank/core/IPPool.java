@@ -26,39 +26,34 @@
  * http://www.opennms.com/
  *******************************************************************************/
 
-import java.net.InetAddress;
+package org.opennms.drcbank.core;
 
-/**
- * Calculate the ip segments according to the giving gateway and mask
- */
-public class CalculateIPSeg {
+public class IPPool {
+    private String StartIP;
+    private String EndIP;
+    private String NetMask;
 
-    private InetAddress gateway;
-    private InetAddress startIP;
-    private InetAddress endIP;
-    private int num;
-
-    public CalculateIPSeg(InetAddress gateway, int num){
-        this.gateway = gateway;
-        this.num = num;
-        calculate();
+    public String getStartIP() {
+        return StartIP;
     }
 
-    private void calculate(){
-        InetAddress start = getStartIPfrom(gateway);
-
+    public void setStartIP(String startIP) {
+        StartIP = startIP;
     }
 
-    private InetAddress getStartIPfrom(InetAddress gateway){
-        InetAddress start = null;
-        return start;
+    public String getEndIP() {
+        return EndIP;
     }
 
-    public InetAddress getStartIP(){
-        return startIP;
+    public void setEndIP(String endIP) {
+        EndIP = endIP;
     }
 
-    public InetAddress getEndIP(){
-        return endIP;
+    public String getNetMask() {
+        return NetMask;
+    }
+
+    public void setNetMask(String netMask) {
+        NetMask = netMask;
     }
 }
