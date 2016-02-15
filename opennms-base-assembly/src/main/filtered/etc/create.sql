@@ -77,6 +77,7 @@ drop table groups cascade;
 drop table group_user cascade;
 drop table category_user cascade;
 drop table category_group cascade;
+drop table ipSegment cascade;
 
 drop sequence catNxtId;
 drop sequence nodeNxtId;
@@ -205,9 +206,34 @@ CREATE TABLE accessLocks (
     constraint pk_accessLocks PRIMARY KEY (lockName)
 );
 
+--#
 
---# 
-
+--########################################################################
+--# ipSegment table - store the ip segment for the bank_site
+--#
+--# This table contains the following fields:
+--#  id          : id
+--#  gateway     : the gateway of this ip segment
+--#  mask        : the mask of this ip segment
+--#  startIP     : the start ip of this ip segment
+--#  endIP       : the end ip of this ip segment
+--#  name        : the name of this bank_site
+--#  type        : the type of this bank_site
+--#  state       : the state of this ip segment(including: using and non-use
+--#  comment     : comment if necessary
+--#
+--########################################################################
+create table ipSegment (
+    id INT not null,
+    gateway text not null,
+    mask text not null,
+    startIP text not null,
+    endIP text not null,
+    name text not null,
+    type text not null,
+    state char(1) not null,
+    comment text
+);
 
 --########################################################################
 --# serverMap table - Contains a list of IP Addresses mapped to
