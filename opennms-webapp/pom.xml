@@ -704,5 +704,10 @@
       <version>1.0.2</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.opennms</groupId>
+      <artifactId>opennms</artifactId>
+      <version>1.12.9</version>
+    </dependency>
   </dependencies>
 </project>
