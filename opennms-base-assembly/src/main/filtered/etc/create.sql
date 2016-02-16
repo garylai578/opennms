@@ -230,7 +230,7 @@ create table ipSegment (
     startIP text not null,
     endIP text not null,
     name text not null,
-    date timestamp with time zone,,
+    createTime timestamp with time zone,,
     type text not null,
     state text not null,
     comment text
