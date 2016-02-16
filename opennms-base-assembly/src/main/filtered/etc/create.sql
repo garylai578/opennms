@@ -224,14 +224,15 @@ CREATE TABLE accessLocks (
 --#
 --########################################################################
 create table ipSegment (
-    id INT not null,
+    id serial,
     gateway text not null,
     mask text not null,
     startIP text not null,
     endIP text not null,
     name text not null,
+    date timestamp with time zone,,
     type text not null,
-    state char(1) not null,
+    state text not null,
     comment text
 );
 
