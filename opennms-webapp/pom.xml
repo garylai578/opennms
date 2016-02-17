@@ -706,7 +706,7 @@
     </dependency>
     <dependency>
       <groupId>org.opennms</groupId>
-      <artifactId>opennms</artifactId>
+      <artifactId>opennms-bank</artifactId>
       <version>1.12.9</version>
     </dependency>
   </dependencies>

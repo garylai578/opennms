@@ -1,10 +1,8 @@
-package test;
-
-import org.opennms.drcbank.core.IPPoolCaculater;
 
 import junit.framework.TestCase;
+import org.opennms.drcbank.core.IPPoolCaculater;
 
-public class IPPoolCaculaterTest extends TestCase {
+public class IPPoolCaculaterTest extends TestCase{
 
     public void testGetStartIP(){
         String initIP;

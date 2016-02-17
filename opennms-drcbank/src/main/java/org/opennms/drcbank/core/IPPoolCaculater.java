@@ -15,6 +15,11 @@ public class IPPoolCaculater {
     private int num;
     private IPPool ipPool;
 
+    /**
+     *
+     * @param initIP: caculate from the initIP
+     * @param num: the numbers that needed
+     */
     public IPPoolCaculater(String initIP, int num){
         this.initIP = initIP;
         this.num = num;
