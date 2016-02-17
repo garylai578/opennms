@@ -9,12 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>opennms-bank</artifactId>
+    <artifactId>opennms-drcbank</artifactId>
+    <name>OpenNMS for drcbank </name>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>compile</scope>
+            <version>4.10</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
