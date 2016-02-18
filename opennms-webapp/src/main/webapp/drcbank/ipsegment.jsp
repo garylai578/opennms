@@ -14,7 +14,6 @@
 <%@page import="org.opennms.netmgt.config.UserFactory" %>
 <%@page import="org.opennms.netmgt.config.UserManager" %>
 <%@page import="javax.servlet.ServletException" %>
-<%@page import="java.util.Iterator" %>
 <%@ page import="java.util.Map" %>
 <%@page import="org.opennms.drcbank.core.IPSegmentOperater"%>
 <%@ page import="org.opennms.drcbank.web.IPSegment" %>
