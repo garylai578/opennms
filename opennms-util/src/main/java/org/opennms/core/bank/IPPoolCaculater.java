@@ -1,4 +1,4 @@
-package org.opennms.drcbank.core;
+package org.opennms.core.bank;
 
 /**
  * ipipipipip0.0.0.0

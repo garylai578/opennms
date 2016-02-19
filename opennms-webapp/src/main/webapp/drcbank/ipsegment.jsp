@@ -11,28 +11,11 @@
         contentType="text/html"
         session="true"
 %>
-<%@page import="org.opennms.netmgt.config.UserFactory" %>
-<%@page import="org.opennms.netmgt.config.UserManager" %>
-<%@page import="javax.servlet.ServletException" %>
-<%@ page import="java.util.Map" %>
-<%@page import="org.opennms.drcbank.core.IPSegmentOperater"%>
-<%@ page import="org.opennms.drcbank.web.IPSegment" %>
+
+<%@page import="org.opennms.core.bank.IPSegmentOperater"%>
+<%@page import="org.opennms.core.bank.IPSegment" %>
 
 <%
-    UserManager userFactory;
-    Map users = null;
-
-    try
-    {
-        UserFactory.init();
-        userFactory = UserFactory.getInstance();
-        users = userFactory.getUsers();
-    }
-    catch(Throwable e)
-    {
-        throw new ServletException("User:list " + e.getMessage());
-    }
-
     IPSegmentOperater op = new IPSegmentOperater();
 %>
 
@@ -96,8 +79,8 @@
 
     <h3>IP地址段分配</h3>
 
-    <a id="doNewUser" href="javascript:addNewUser()"><img src="images/add1.gif" alt="新增IP段" border="0"></a>
-    <a href="javascript:addNewUser()">新增IP段</a>
+    <a id="doNewUser" href="javascript:0"><img src="images/add1.gif" alt="新增IP段" border="0"></a>
+    <a href="javascript:0">新增IP段</a>
 
     <br/>
     <br/>

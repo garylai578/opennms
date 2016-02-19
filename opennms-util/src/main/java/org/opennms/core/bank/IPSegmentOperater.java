@@ -1,9 +1,8 @@
-package org.opennms.drcbank.core;
+package org.opennms.core.bank;
 
 import org.opennms.core.resource.Vault;
 import org.opennms.core.utils.DBUtils;
 import org.opennms.core.utils.ThreadCategory;
-import org.opennms.drcbank.web.IPSegment;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -27,7 +26,7 @@ public class IPSegmentOperater {
             Statement stmt = conn.createStatement();
             d.watch(stmt);
             int rc = stmt.executeUpdate(("insert into ipSegment(gateway, mask, startIP, endIP, name, createTime, type, state, comment) values (" + ipSegment.toInsertValues() + ")"));
-            log().debug("IPSegmentOperater.insert: SQL update result = " + rc);
+            log.debug("IPSegmentOperater.insert: SQL update result = " + rc);
         } finally {
             d.cleanUp();
         }

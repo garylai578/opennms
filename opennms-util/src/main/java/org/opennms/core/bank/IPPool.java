@@ -26,7 +26,7 @@
  * http://www.opennms.com/
  *******************************************************************************/
 
-package org.opennms.drcbank.core;
+package org.opennms.core.bank;
 
 public class IPPool {
     private String StartIP;

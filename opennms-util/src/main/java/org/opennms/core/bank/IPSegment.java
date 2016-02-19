@@ -1,6 +1,4 @@
-package org.opennms.drcbank.web;
-
-import org.opennms.drcbank.core.IPPool;
+package org.opennms.core.bank;
 
 /** 用于表示用户的1个IP地址段的所用信息
  *

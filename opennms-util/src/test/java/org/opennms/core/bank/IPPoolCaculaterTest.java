@@ -1,6 +1,6 @@
+package org.opennms.core.bank;
 
 import junit.framework.TestCase;
-import org.opennms.drcbank.core.IPPoolCaculater;
 
 public class IPPoolCaculaterTest extends TestCase{
 
