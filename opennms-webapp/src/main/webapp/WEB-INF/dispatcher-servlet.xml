@@ -584,7 +584,7 @@
 
                 <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
                     <property name="name" value="支持"/>
-                    <property name="url" value="suport/about.jsp"/>
+                    <property name="url" value="support/about.jsp"/>
                     <property name="locationMatch" value="support"/>
                 </bean>
             </list>

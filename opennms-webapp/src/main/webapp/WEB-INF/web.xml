@@ -797,6 +797,20 @@
         <load-on-startup>1</load-on-startup>
   </servlet>
 
+  <servlet>
+    <servlet-name>addIPSegment</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.AddIPSegmentServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>stopIPSegment</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.StopIPSegmentServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <servlet-name>startIPSegment</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.StartIPSegmentServlet</servlet-class>
+  </servlet>
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
   
@@ -1122,6 +1136,21 @@
   <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/graph/graph.png</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>addIPSegment</servlet-name>
+    <url-pattern>/abcbank/newIPSegment</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>stopIPSegment</servlet-name>
+    <url-pattern>/bacbank/stopIPSegment</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>startIPSegment</servlet-name>
+    <url-pattern>/bacbank/startIPSegment</url-pattern>
   </servlet-mapping>
 
   <!-- WARMERGE: insert servlet -->  
