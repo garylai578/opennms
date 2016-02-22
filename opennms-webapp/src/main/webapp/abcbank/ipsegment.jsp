@@ -28,58 +28,45 @@
 
 <script type="text/javascript" >
 
-    function addNewUser()
+    function addIPSegment()
     {
-        document.allUsers.action="admin/userGroupView/users/newUser.jsp?action=new";
-        document.allUsers.submit();
-
+        document.allIPSegments.action="abcbank/newIPSegment.jsp";
+        document.allIPSegments.submit();
     }
 
-    function detailUser(userID)
+    function stopIPSegment(id)
     {
-        document.allUsers.action="admin/userGroupView/users/userDetail.jsp?userID=" + userID;
-        document.allUsers.submit();
+        document.allIPSegments.action="abcbank/stopIPSegment";
+        document.allIPSegments.ipSegID.value=id;
+        document.allIPSegments.submit();
     }
 
-    function deleteUser(userID)
+    function startIPSegment(id)
     {
-        document.allUsers.action="admin/userGroupView/users/deleteUser";
-        document.allUsers.userID.value=userID;
-        document.allUsers.submit();
+        document.allIPSegments.action="abcbank/startIPSegment";
+        document.allIPSegments.ipSegID.value=id;
+        document.allIPSegments.submit();
     }
 
-    function modifyUser(userID)
+    function modifyIPSegment(id)
     {
-        document.allUsers.action="admin/userGroupView/users/modifyUser";
-        document.allUsers.userID.value=userID;
-        document.allUsers.submit();
-    }
-
-    function renameUser(userID)
-    {
-        document.allUsers.userID.value=userID;
-        var newID = prompt("输入新用户名。", userID);
-
-        if (newID != null && newID != "")
-        {
-            document.allUsers.newID.value = newID;
-            document.allUsers.action="admin/userGroupView/users/renameUser";
-            document.allUsers.submit();
-        }
+        document.allIPSegments.action="abcbank/modifyUser";
+        document.allIPSegments.ipSegID.value=id;
+        document.allIPSegments.submit();
     }
 
 </script>
 
 
-<form method="post" name="allUsers">
+<form method="post" name="allIPSegments">
     <input type="hidden" name="redirect"/>
-    <input type="hidden" name="userID"/>
+    <input type="hidden" name="ipSegID"/>
     <input type="hidden" name="newID"/>
     <input type="hidden" name="password"/>
 
     <h3>IP地址段分配</h3>
 
-    <a id="doNewUser" href="javascript:0"><img src="images/add1.gif" alt="新增IP段" border="0"></a>
+    <a id="doNewIPSegment" href="javascript:addIPSegment()"><img src="images/add1.gif" alt="新增IP段" border="0"></a>
     <a href="javascript:0">新增IP段</a>
 
     <br/>
@@ -88,8 +75,8 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
         <tr bgcolor="#999999">
-            <td width="5%"><b>停用</b></td>
-            <td width="5%"><b>修改</b></td>
+            <td width="5%"><b>操作</b></td>
+            <!--td width="5%"><b>修改</b></td-->
             <td width="10%"><b>网关</b></td>
             <td width="10%"><b>掩码</b></td>
             <td width="20%"><b>IP段</b></td>
@@ -117,14 +104,17 @@
                 String time = ip.getCreateTime();
                 String state = ip.getState();
                 String comment = ip.getComment();
-
+                int id = ip.getId();
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="5%" rowspan="2" align="center">
+                <a id="<%= "ips("+id+").doStop" %>" href="javascript:stopIPSegment('<%=id%>')" onclick="return confirm('你确定要停用IP段： <%=startIP + "-" + endIP%> ?')"><img src="images/stop.gif" alt="<%="停用IP段：" + startIP + "-" + endIP%>"></a>
+                <a id="<%= "ips("+id+").doStart" %>" href="javascript:startIPSegment('<%=id%>')" onclick="return confirm('你确定启要IP段： <%=startIP + "-" + endIP%> ?')"><img src="images/start.gif" alt="<%="启用IP段：" + startIP + "-" + endIP%>"></a>
             </td>
 
-            <td width="5%" rowspan="2" align="center">
-            </td>
+            <!--td width="5%" rowspan="2" align="center">
+                <a id="<%= "ips("+id+").doUpdate" %>" href="javascript:modifyIPSegment('<%=id%>')" ><img src="images/modify.gif"></a>
+            </td-->
 
             <td width="10%">
                 <div id="<%= "gateway" %>">

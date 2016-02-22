@@ -106,6 +106,26 @@ public class IPSegmentOperater {
     }
 
     /**
+     * update the col value with newValue.
+     * @param id
+     * @param colName
+     * @param newValue
+     * @throws SQLException
+     */
+    public void updateByID(int id, String colName, String newValue) throws SQLException {
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            int rc = stmt.executeUpdate(("update ipSegment set " + colName + " = '" + newValue + "' where id =" + id));
+            log().debug("IPSegmentOperater.update by id: SQL update result = " + rc);
+        } finally {
+            d.cleanUp();
+        }
+    }
+
+    /**
      * Select the last ip from table ipSegment. @TODO
      * @return the last ip
      */
