@@ -126,7 +126,7 @@ public class IPSegmentOperater {
     }
 
     /**
-     * Select the last ip from table ipSegment. @TODO
+     * Select the last ip from table ipSegment.
      * @return the last ip
      */
     public String selectLastIP() throws SQLException {
@@ -136,13 +136,12 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by endip");
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id");
             d.watch(rs);
-
+            lastIP = rs.getString("endip");
         } finally {
             d.cleanUp();
         }
-
 
         return lastIP;
     }
@@ -157,6 +156,7 @@ public class IPSegmentOperater {
 
         while(rs.next()){
             IPSegment ip = new IPSegment();
+            ip.setId(rs.getInt("id"));
             ip.setGateway(rs.getString("gateway"));
             ip.setMask(rs.getString("mask"));
             ip.setStartIP(rs.getString("startip"));
