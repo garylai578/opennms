@@ -50,14 +50,13 @@
 
     function modifyIPSegment(id,row)
     {
-        document.allIPSegments.action="abcbank/modifyIPSegment.jsp";
+        document.allIPSegments.action="abcbank/updateIPSegment";
         document.allIPSegments.ipSegID.value=id;
         document.allIPSegments.rowID=row;
         document.allIPSegments.submit();
     }
 
 </script>
-
 
 <form method="post" name="allIPSegments">
     <input type="hidden" name="redirect"/>
@@ -134,19 +133,31 @@
             </td>
 
             <td width="10%">
-                <div id="bankname<%=row%>">
-                    <%= ((name == null || name.equals("")) ? "&nbsp;" : name) %>
+                <div>
+                    <select id="bankname-<%=row%>">
+                        <option value="<%= ((name == null || name.equals("")) ? 0 : name) %>" selected=""><%= ((name == null || name.equals("")) ? "&nbsp;" : name) %></option>
+                        <option value="东莞分行">东莞分行</option>
+                        <option value="莞城支行">莞城支行</option>
+                        <option value="南城支行">南城支行</option>
+                        <option value="东城支行">东城支行</option>
+                        <option value="万江支行">万江支行</option>
+                    </select>
                 </div>
             </td>
 
             <td width="5%">
-                <div id="banktype<%=row%>">
-                    <%= ((type == null || type.equals("")) ? "&nbsp;" : type) %>
+                <div>
+                    <select id="banktype-<%=row%>">
+                        <option value="<%= ((type == null || type.equals("")) ? 0 : type) %>" selected=""><%= ((type == null || type.equals("")) ? 0 : type) %></option>
+                        <option value="网点">网点</option>
+                        <option value="离行点">离行点</option>
+                    </select>
+
                 </div>
             </td>
 
             <td width="10%">
-                <div id="createdate<%=row%>">
+                <div id="createdate-<%=row%>">
                     <%= ((time == null || time.equals("")) ? "&nbsp;" : time) %>
                 </div>
             </td>
@@ -160,8 +171,8 @@
 
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td colspan="7">
-                <div id="comment<%=row%>">
-                    <%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>
+                <div>
+                    <input id="comment-<%=row%>" type="text" size="100" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
                 </div>
             </td>
         </tr>
