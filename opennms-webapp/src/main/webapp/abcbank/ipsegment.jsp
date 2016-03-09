@@ -105,7 +105,7 @@
             IPSegment[] ips = op.selectAll();
             int row = 0;
             for(IPSegment ip : ips){
-                Integer ipId = ip.getId();
+                String ipId = ip.getId();
                 String gateway = ip.getGateway();
                 String mask = ip.getMask();
                 String startIP = ip.getStartIP();
