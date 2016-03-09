@@ -35,7 +35,7 @@
         String state = ip.getState();
         String comment = ip.getComment();
         String ipId = ip.getId();
-  //      out.print(ipId);
+        out.print(ipId);
     }
 %>
 
