@@ -1,3 +1,5 @@
+<%@ page import="org.opennms.core.bank.IPSegment" %>
+<%@ page import="org.opennms.core.bank.IPSegmentOperater" %>
 <%--
   Created by IntelliJ IDEA.
   User: laiguanhui
@@ -18,6 +20,24 @@
     <jsp:param name="breadcrumb" value="<a href='drcbank/index.jsp'>IP管理</a>" />
     <jsp:param name="breadcrumb" value="IP地址段分配" />
 </jsp:include>
+
+<%
+    IPSegmentOperater op = new IPSegmentOperater();
+    IPSegment[] ips = op.selectAll();
+    for(IPSegment ip : ips) {
+        String gateway = ip.getGateway();
+        String mask = ip.getMask();
+        String startIP = ip.getStartIP();
+        String endIP = ip.getEndIP();
+        String name = ip.getBankname();
+        String type = ip.getBanktype();
+        String time = ip.getCreateTime();
+        String state = ip.getState();
+        String comment = ip.getComment();
+        String ipId = ip.getId();
+        out.print(ipId);
+    }
+%>
 
 <script type="text/javascript" >
 

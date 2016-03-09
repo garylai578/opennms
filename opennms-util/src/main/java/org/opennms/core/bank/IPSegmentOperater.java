@@ -55,6 +55,23 @@ public class IPSegmentOperater {
         return result;
     }
 
+    public IPSegment selectById(String id) throws  SQLException {
+        IPSegment[] result = null;
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment where id = " + id);
+            d.watch(rs);
+            result = rs2IPSegment(rs);
+        } finally {
+            d.cleanUp();
+        }
+
+        return result[0];
+    }
+
     /**
      * Delete a record from table ipSegment according to the gateway
      *
@@ -156,7 +173,7 @@ public class IPSegmentOperater {
 
         while(rs.next()){
             IPSegment ip = new IPSegment();
-            ip.setId(rs.getInt("id"));
+            ip.setId(String.valueOf(rs.getInt("id")));
             ip.setGateway(rs.getString("gateway"));
             ip.setMask(rs.getString("mask"));
             ip.setStartIP(rs.getString("startip"));
@@ -168,9 +185,7 @@ public class IPSegmentOperater {
             ip.setComment(rs.getString("comment"));
             list.add(ip);
         }
-
         result = list.toArray(new IPSegment[list.size()]);
         return result;
-
     }
 }
