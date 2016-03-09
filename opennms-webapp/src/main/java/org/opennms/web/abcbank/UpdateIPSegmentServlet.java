@@ -18,7 +18,8 @@ public class UpdateIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = -7718296603096545783L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("ipSegID"));
+ //       int id = Integer.parseInt(request.getParameter("ipSegID"));
+        int id = 1;
         String row = request.getParameter("rowID");
         String bankname = request.getParameter("bankname-" + row);
         String banktype = request.getParameter("banktype-" + row);

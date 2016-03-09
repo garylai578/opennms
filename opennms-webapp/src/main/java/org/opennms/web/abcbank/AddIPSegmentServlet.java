@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 
@@ -42,6 +43,11 @@ public class AddIPSegmentServlet extends HttpServlet {
             seg.setCreateTime(sf.format(date));
 
             op.insert(seg);
+
+            PrintWriter pw=response.getWriter();
+            pw.write("<script language='javascript'>alert('修改成功')</script>");
+            pw.close();
+
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {
