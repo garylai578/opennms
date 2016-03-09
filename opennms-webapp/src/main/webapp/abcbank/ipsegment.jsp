@@ -12,11 +12,29 @@
         session="true"
 %>
 
-<%@page import="org.opennms.core.bank.IPSegmentOperater"%>
-<%@page import="org.opennms.core.bank.IPSegment" %>
+<%@page import="org.opennms.core.bank.IPSegment"%>
+<%@page import="org.opennms.core.bank.IPSegmentOperater" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.util.Properties" %>
 
 <%
     IPSegmentOperater op = new IPSegmentOperater();
+    Properties pro = new Properties();
+    String path = application.getRealPath("/");
+    try{
+        //读取配置文件
+        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
+        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        pro.load(bf);
+    } catch(FileNotFoundException e){
+        out.println(e);
+    } catch(IOException e){
+        out.println(e);
+    }
+
+    //通过key获取配置文件
+    String[] bankNames = pro.getProperty("abc-bankname").split("/");
+    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -62,12 +80,11 @@
     <input type="hidden" name="redirect"/>
     <input type="hidden" name="ipSegID"/>
     <input type="hidden" name="rowID"/>
-    <input type="hidden" name="password"/>
 
     <h3>IP地址段分配</h3>
 
     <a id="doNewIPSegment" href="javascript:addIPSegment()"><img src="images/add1.gif" alt="新增IP段" border="0"></a>
-    <a href="javascript:0">新增IP段</a>
+    <a href="javascript:addIPSegment()">新增IP段</a>
 
     <br/>
     <br/>
@@ -83,17 +100,12 @@
             <td width="5%"><b>网点类型</b></td>
             <td width="10%"><b>启用日期</b></td>
             <td width="5%"><b>使用情况</b></td>
-            <!--
-            <td width="10%"><b>Num Service</b></td>
-            <td width="10%"><b>Num Pin</b></td>
-            <td width="15%"><b>Text Service</b></td>
-            <td width="15%"><b>Text Pin</b></td>
-            -->
         </tr>
         <%
             IPSegment[] ips = op.selectAll();
             int row = 0;
             for(IPSegment ip : ips){
+                Integer ipId = ip.getId();
                 String gateway = ip.getGateway();
                 String mask = ip.getMask();
                 String startIP = ip.getStartIP();
@@ -103,15 +115,14 @@
                 String time = ip.getCreateTime();
                 String state = ip.getState();
                 String comment = ip.getComment();
-                int id = ip.getId();
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="7%" rowspan="2" align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+id+").doStop" %>" href="javascript:stopIPSegment('<%=id%>')" onclick="return confirm('你确定要停用IP段： <%=startIP + "-" + endIP%> ?')">停用</a>
+                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>')" onclick="return confirm('你确定要停用IP段： <%=startIP + "-" + endIP%> ?')">停用</a>
                 &nbsp;&nbsp;
-                <a id="<%= "ips("+id+").doStart" %>" href="javascript:startIPSegment('<%=id%>')" onclick="return confirm('你确定启要IP段： <%=startIP + "-" + endIP%> ?')">启用</a>
+                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPSegment('<%=ipId%>')" onclick="return confirm('你确定启要IP段： <%=startIP + "-" + endIP%> ?')">启用</a>
                 &nbsp;&nbsp;
-                <a id="<%= "ips("+id+").doModify" %>" href="javascript:modifyIPSegment('<%=id%>', '<%=row%>')">修改</a>
+                <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPSegment('<%=ipId%>', '<%=row%>')">修改</a>
             </td>
 
             <td width="10%">
@@ -136,11 +147,13 @@
                 <div>
                     <select id="bankname-<%=row%>">
                         <option value="<%= ((name == null || name.equals("")) ? 0 : name) %>" selected=""><%= ((name == null || name.equals("")) ? "&nbsp;" : name) %></option>
-                        <option value="东莞分行">东莞分行</option>
-                        <option value="莞城支行">莞城支行</option>
-                        <option value="南城支行">南城支行</option>
-                        <option value="东城支行">东城支行</option>
-                        <option value="万江支行">万江支行</option>
+                        <%
+                            for(int i = 0; i < bankNames.length; ++i){
+                        %>
+                        <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+                        <%
+                            }
+                        %>
                     </select>
                 </div>
             </td>
@@ -149,8 +162,13 @@
                 <div>
                     <select id="banktype-<%=row%>">
                         <option value="<%= ((type == null || type.equals("")) ? 0 : type) %>" selected=""><%= ((type == null || type.equals("")) ? 0 : type) %></option>
-                        <option value="网点">网点</option>
-                        <option value="离行点">离行点</option>
+                        <%
+                            for(int i = 0; i < bankTypes.length; ++i){
+                        %>
+                        <option value="<%=bankTypes[i]%>"><%=bankTypes[i]%></option>
+                        <%
+                            }
+                        %>
                     </select>
 
                 </div>

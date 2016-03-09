@@ -5,7 +5,7 @@ package org.opennms.core.bank;
  * Created by laiguanhui on 2016/2/16.
  */
 public class IPSegment {
-    private int id;
+    private Integer id;
     private IPPool ipPool;
     private String gateway;
     private String mask;
@@ -49,13 +49,9 @@ public class IPSegment {
         this.gateway = gateway;
     }
 
-    public int getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    public void setId(Integer id) { this.id = id; }
 
     public IPPool getIpPool() {
         return ipPool;
