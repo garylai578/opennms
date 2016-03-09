@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.io.*" %>
+<%@ page import="java.util.Properties" %><%--
   Created by IntelliJ IDEA.
   User: laiguanhui
   Date: 2016/2/22
@@ -15,27 +16,50 @@
     <jsp:param name="breadcrumb" value="新增IP段" />
 </jsp:include>
 
+<%
+    Properties pro = new Properties();
+    String path = application.getRealPath("/");
+    try{
+        //读取配置文件
+        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
+        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        pro.load(bf);
+    } catch(FileNotFoundException e){
+        out.println(e);
+    } catch(IOException e){
+        out.println(e);
+    }
+
+    //通过key获取配置文件
+    String[] bankNames = pro.getProperty("abc-bankname").split("/");
+    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+%>
+
 <script type="text/javascript">
     var isCommitted = false;
     function validateFormInput()
     {
         if(isCommitted == true)
-                return false;
+            return false;
         isCommitted = true;
         var num = new String(document.newIPs.ip_num.value);
         var name = new String(document.newIPs.bank_name.value);
         var type = new String(document.newIPs.bank_type.value);
         if(num==0) {
             alert("请选择所需的IP数量！");
+            isCommitted = false;
             return false;
         }else if(name == 0){
             alert("请选择所属网点！");
+            isCommitted = false;
             return false;
         }else if(type == 0){
             alert("请选择网点所属类型！");
+            isCommitted = false;
             return false;
         }else{
-            document.newIPs.action = "abcbank/addIPSegment";
+            document.newIPs.action = "abcbank/newIPSegment";
+            document.newIPs.submit();
             return true;
         }
     }
@@ -73,11 +97,13 @@
             <td>
                 <select id="bank_name">
                     <option value="0" selected="">请选择</option>
-                    <option value="东莞分行">东莞分行</option>
-                    <option value="莞城支行">莞城支行</option>
-                    <option value="南城支行">南城支行</option>
-                    <option value="东城支行">东城支行</option>
-                    <option value="万江支行">万江支行</option>
+                    <%
+                        for(int i = 0; i < bankNames.length; ++i){
+                    %>
+                    <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+                    <%
+                        }
+                    %>
                 </select>
             </td>
         </tr>
@@ -87,8 +113,13 @@
             <td>
                 <select id="bank_type">
                     <option value="0" selected="">请选择</option>
-                    <option value="网点">网点</option>
-                    <option value="离行点">离行点</option>
+                    <%
+                        for(int i = 0; i < bankTypes.length; ++i){
+                    %>
+                    <option value="<%=bankTypes[i]%>"><%=bankTypes[i]%></option>
+                    <%
+                        }
+                    %>
                 </select>
             </td>
         </tr>
@@ -101,7 +132,7 @@
         </tr>
 
         <tr>
-            <td><input id="doOK" type="submit" value="确认"/></td>
+            <td><input id="doOK" type="submit" value="确认"  href="javascript:validateFormInput()"/></td>
             <td><input id="doCancel" type="button" value="取消" onclick="cancel()"/></td>
         </tr>
     </table>

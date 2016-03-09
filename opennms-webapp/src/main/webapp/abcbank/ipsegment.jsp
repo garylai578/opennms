@@ -19,6 +19,7 @@
 
 <%
     IPSegmentOperater op = new IPSegmentOperater();
+
     Properties pro = new Properties();
     String path = application.getRealPath("/");
     try{
@@ -56,6 +57,7 @@
     {
         document.allIPSegments.action="abcbank/stopIPSegment";
         document.allIPSegments.ipSegID.value=id;
+        this.method="post";
         document.allIPSegments.submit();
     }
 
@@ -70,14 +72,13 @@
     {
         document.allIPSegments.action="abcbank/updateIPSegment";
         document.allIPSegments.ipSegID.value=id;
-        document.allIPSegments.rowID=row;
+        document.allIPSegments.rowID.value=row;
         document.allIPSegments.submit();
     }
 
 </script>
 
 <form method="post" name="allIPSegments">
-    <input type="hidden" name="redirect"/>
     <input type="hidden" name="ipSegID"/>
     <input type="hidden" name="rowID"/>
 
