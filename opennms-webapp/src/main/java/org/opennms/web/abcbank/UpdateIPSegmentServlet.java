@@ -32,7 +32,11 @@ public class UpdateIPSegmentServlet extends HttpServlet {
             op.updateByID(id, "comment", comment);
 
             PrintWriter pw=response.getWriter();
-            pw.write("<script language='javascript'>alert('修改成功')</script>");
+            pw.write("<script language='javascript'>alert('修改成功',row=" + row + ")</script>");
+            pw.write("<div>bankname=" + bankname + "</div>");
+            pw.write("<div>banktype=" + banktype + "</div>");
+            pw.write("<div>comment=" + comment + "</div>");
+            pw.write("<div>id=" + request.getParameter("ipSegID") + "</div>");
             pw.close();
 
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
