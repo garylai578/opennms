@@ -18,7 +18,8 @@ public class StopIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = 42396362620706028L;
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.getInteger(request.getParameter("ipSegID"));
+        String tmp = request.getParameter("ipSegID");
+        int id = Integer.parseInt(tmp);
         IPSegmentOperater op = new IPSegmentOperater();
         try {
             op.updateByID(id, "state", "停用");

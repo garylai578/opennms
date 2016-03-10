@@ -18,7 +18,8 @@ public class StartIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = -1759156388543404811L;
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.getInteger(request.getParameter("ipSegID"));
+        String tmp = request.getParameter("ipSegID");
+        int id = Integer.parseInt(tmp);
         IPSegmentOperater op = new IPSegmentOperater();
         try {
             op.updateByID(id, "state", "启用");
