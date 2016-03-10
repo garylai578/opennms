@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 
 /**
@@ -23,6 +24,10 @@ public class StopIPSegmentServlet extends HttpServlet {
         IPSegmentOperater op = new IPSegmentOperater();
         try {
             op.updateByID(id, "state", "停用");
+
+            response.setContentType("text/html;charset=gb2312");
+            PrintWriter pw=response.getWriter();
+            pw.print("<script language='javascript'>alert('成功停用' )</script>");
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
             dispatcher.forward(request, response);
         } catch (SQLException e) {

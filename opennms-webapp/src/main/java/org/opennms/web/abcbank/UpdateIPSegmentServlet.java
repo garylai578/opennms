@@ -31,8 +31,9 @@ public class UpdateIPSegmentServlet extends HttpServlet {
             op.updateByID(id, "type", banktype);
             op.updateByID(id, "comment", comment);
 
+            response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
-            pw.write("<script language='javascript'>alert('修改成功',row=" + row + ")</script>");
+            pw.print("<script language='javascript'>alert('修改成功',row=" + row + ")</script>");
             pw.write("<div>bankname=" + bankname + "</div>");
             pw.write("<div>banktype=" + banktype + "</div>");
             pw.write("<div>comment=" + comment + "</div>");
