@@ -45,7 +45,7 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipSegment");
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id");
             d.watch(rs);
             result = rs2IPSegment(rs);
         } finally {
@@ -156,6 +156,8 @@ public class IPSegmentOperater {
             ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id");
             d.watch(rs);
             lastIP = rs.getString("endip");
+            if(lastIP == null)
+                lastIP = "172.16.0.0";
         } finally {
             d.cleanUp();
         }
