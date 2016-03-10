@@ -73,6 +73,9 @@
         document.allIPSegments.action="abcbank/updateIPSegment";
         document.allIPSegments.ipSegID.value=id;
         document.allIPSegments.rowID.value=row;
+        document.allIPSegments.bankName.value=document.getElementById("bankname-"+row).value;
+        document.allIPSegments.bankType.value=document.getElementById("banktype-"+row).value;
+        document.allIPSegments.comments.value=document.getElementById("comment-"+row).value;
         document.allIPSegments.submit();
     }
 
@@ -81,6 +84,9 @@
 <form method="post" name="allIPSegments">
     <input type="hidden" name="ipSegID"/>
     <input type="hidden" name="rowID"/>
+    <input type="hidden" name="bankName"/>
+    <input type="hidden" name="bankType"/>
+    <input type="hidden" name="comments"/>
 
     <h3>IP地址段分配</h3>
 
