@@ -5,6 +5,7 @@ import org.opennms.core.bank.IPSegment;
 import org.opennms.core.bank.IPSegmentOperater;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +20,16 @@ import java.text.SimpleDateFormat;
  */
 public class AddIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = -3675392550713648442L;
+    private ServletConfig config;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        this.config = config;
+    }
 
     /** {@inheritDoc} */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String initIP = null;
         try {
             int num = Integer.getInteger(request.getParameter("ip_num"));
             String name = request.getParameter("bank_name");
@@ -32,7 +40,12 @@ public class AddIPSegmentServlet extends HttpServlet {
             java.util.Date date = new java.util.Date();
 
             IPSegmentOperater op = new IPSegmentOperater();
-            IPPoolCaculater cal = new IPPoolCaculater(op.selectLastIP(), num);
+            if(op.selectLastIP()==null){
+                initIP = this.config.getInitParameter("InitIP");
+            }else {
+                initIP = op.selectLastIP();
+            }
+            IPPoolCaculater cal = new IPPoolCaculater(initIP, num);
 
             IPSegment seg = new IPSegment();
             seg.setIpPool(cal.getIPPool());

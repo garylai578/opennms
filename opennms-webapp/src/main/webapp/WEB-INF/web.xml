@@ -800,6 +800,10 @@
   <servlet>
     <servlet-name>addIPSegment</servlet-name>
     <servlet-class>org.opennms.web.abcbank.AddIPSegmentServlet</servlet-class>
+    <init-param>
+      <param-name>InitIP</param-name>
+      <param-value>172.16.0.0</param-value>
+    </init-param>
   </servlet>
   
   <servlet>
