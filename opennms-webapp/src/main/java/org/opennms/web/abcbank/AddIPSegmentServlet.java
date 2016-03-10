@@ -4,7 +4,6 @@ import org.opennms.core.bank.IPPoolCaculater;
 import org.opennms.core.bank.IPSegment;
 import org.opennms.core.bank.IPSegmentOperater;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -58,11 +57,11 @@ public class AddIPSegmentServlet extends HttpServlet {
             op.insert(seg);
 
             PrintWriter pw=response.getWriter();
-            pw.write("<script language='javascript'>alert('修改成功')</script>");
+            pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/abcbank/ipsegment.jsp');</script>");
             pw.close();
 
-            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
-            dispatcher.forward(request, response);
+//            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
+//            dispatcher.forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
