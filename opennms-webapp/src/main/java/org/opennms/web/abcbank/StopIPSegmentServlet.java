@@ -2,7 +2,6 @@ package org.opennms.web.abcbank;
 
 import org.opennms.core.bank.IPSegmentOperater;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +26,10 @@ public class StopIPSegmentServlet extends HttpServlet {
 
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('成功停用' )</script>");
-            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
-            dispatcher.forward(request, response);
+            pw.print("<script language='javascript'>alert('成功停用' );window.location=('/abcbank/ipsegment.jsp');</script>");
+            pw.close();
+//            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
+//            dispatcher.forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }

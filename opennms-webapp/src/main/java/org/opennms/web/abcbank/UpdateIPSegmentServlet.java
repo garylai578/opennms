@@ -2,7 +2,6 @@ package org.opennms.web.abcbank;
 
 import org.opennms.core.bank.IPSegmentOperater;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +17,7 @@ public class UpdateIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = -7718296603096545783L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String tmp = request.getParameter("ipSegID");
         int id = Integer.parseInt(tmp);
         String row = request.getParameter("rowID");
@@ -33,15 +33,11 @@ public class UpdateIPSegmentServlet extends HttpServlet {
 
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('修改成功',row=" + row + ")</script>");
-            pw.write("<div>bankname=" + bankname + "</div>");
-            pw.write("<div>banktype=" + banktype + "</div>");
-            pw.write("<div>comment=" + comment + "</div>");
-            pw.write("<div>id=" + request.getParameter("ipSegID") + "</div>");
+            pw.print("<script language='javascript'>alert('修改成功！' );window.location=('/abcbank/ipsegment.jsp');</script>");
             pw.close();
 
-            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
-            dispatcher.forward(request, response);
+//            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
+//            dispatcher.forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
