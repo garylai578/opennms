@@ -43,12 +43,11 @@ public class AddIPSegmentServlet extends HttpServlet {
             IPSegmentOperater op = new IPSegmentOperater();
 
             pw.print("initIP start:" + initIP);
-            pw.flush();
 
             initIP = op.selectLastIP();
 
             pw.print("initIP:" + initIP);
-            pw.flush();
+            pw.close();
 
             if(initIP==null){
                 initIP = this.config.getInitParameter("InitIP");
