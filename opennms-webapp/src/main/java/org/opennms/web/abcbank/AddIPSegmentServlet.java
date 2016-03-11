@@ -30,11 +30,11 @@ public class AddIPSegmentServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String initIP = null;
         try {
-            String numString = request.getParameter("ip_num");
+            String numString = request.getParameter("ipNum");
             int num = Integer.getInteger(numString);
-            String name = request.getParameter("bank_name");
-            String type = request.getParameter("bank_type");
-            String comment = request.getParameter("comment");
+            String name = request.getParameter("bankName");
+            String type = request.getParameter("bankType");
+            String comment = request.getParameter("comments");
 
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date date = new java.util.Date();
