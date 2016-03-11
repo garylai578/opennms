@@ -30,7 +30,8 @@ public class AddIPSegmentServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String initIP = null;
         try {
-            int num = Integer.getInteger(request.getParameter("ip_num"));
+            String numString = request.getParameter("ip_num");
+            int num = Integer.getInteger(numString);
             String name = request.getParameter("bank_name");
             String type = request.getParameter("bank_type");
             String comment = request.getParameter("comment");
@@ -57,7 +58,7 @@ public class AddIPSegmentServlet extends HttpServlet {
             op.insert(seg);
 
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/abcbank/ipsegment.jsp');</script>");
+            pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
             pw.close();
 
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");

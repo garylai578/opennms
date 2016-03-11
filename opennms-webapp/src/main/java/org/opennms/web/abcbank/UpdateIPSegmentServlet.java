@@ -33,7 +33,8 @@ public class UpdateIPSegmentServlet extends HttpServlet {
 
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('修改成功！' );window.location=('/abcbank/ipsegment.jsp');</script>");
+            pw.print("<script language='javascript'>alert('修改成功！id= " + id +". name=" +bankname + ". type=" + banktype +". comment=" + comment+
+                    "' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
             pw.close();
 
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
