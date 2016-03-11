@@ -1,5 +1,6 @@
 package org.opennms.core.bank;
 
+import org.apache.log4j.Logger;
 import org.opennms.core.resource.Vault;
 import org.opennms.core.utils.DBUtils;
 import org.opennms.core.utils.ThreadCategory;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public class IPSegmentOperater {
     private final DBUtils d = new DBUtils(getClass());
-    private ThreadCategory log = log();
+    private Logger log =  Logger.getLogger(getClass());
 
     public void insert(IPSegment ipSegment) throws SQLException {
         try {
