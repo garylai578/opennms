@@ -47,10 +47,11 @@ public class AddIPSegmentServlet extends HttpServlet {
                 initIP = op.selectLastIP();
             }
             pw.print("initIP:" + initIP);
+            pw.flush();;
             IPPoolCaculater cal = new IPPoolCaculater(initIP, num);
 
             pw.print("cal:" + cal.getIPPool().getStartIP());
-
+pw.flush();
             IPSegment seg = new IPSegment();
             seg.setIpPool(cal.getIPPool());
             seg.setState("在用");
@@ -60,7 +61,7 @@ public class AddIPSegmentServlet extends HttpServlet {
             seg.setCreateTime(sf.format(date));
 
             pw.print("seg:" + seg.getEndIP());
-
+            pw.flush();
             op.insert(seg);
 
             response.setContentType("text/html;charset=gb2312");
