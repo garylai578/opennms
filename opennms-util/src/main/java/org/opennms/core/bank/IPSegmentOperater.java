@@ -147,22 +147,17 @@ public class IPSegmentOperater {
      * @return the last ip
      */
     public String selectLastIP() throws SQLException {
-        String lastIP = null;
         try {
             Connection conn = Vault.getDbConnection();
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id");
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id DESC ");
             d.watch(rs);
-            lastIP = rs.getString("endip");
-            if(lastIP == null)
-                lastIP = "172.16.0.0";
+            return rs.getString("endip");
         } finally {
             d.cleanUp();
         }
-
-        return lastIP;
     }
 
     private ThreadCategory log() {

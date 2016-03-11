@@ -31,7 +31,7 @@ public class AddIPSegmentServlet extends HttpServlet {
         String initIP = null;
         try {
             String numString = request.getParameter("ipNum");
-            int num = Integer.getInteger(numString);
+            int num = Integer.parseInt(numString);
             String name = request.getParameter("bankName");
             String type = request.getParameter("bankType");
             String comment = request.getParameter("comments");
@@ -57,6 +57,7 @@ public class AddIPSegmentServlet extends HttpServlet {
 
             op.insert(seg);
 
+            response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
             pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
             pw.close();
