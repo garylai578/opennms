@@ -46,10 +46,7 @@ public class AddIPSegmentServlet extends HttpServlet {
 
             initIP = op.selectLastIP();
 
-            pw.print("I am here!!!");
             pw.print("initIP:" + initIP);
-            pw.print("I am sucked!!!");
-            pw.close();
 
             if(initIP==null){
                 initIP = this.config.getInitParameter("InitIP");
