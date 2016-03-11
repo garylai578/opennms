@@ -61,18 +61,27 @@ public class IPSegmentOperater {
      */
     public String selectLastIP() throws SQLException {
         String lastIP = null;
+        log.debug("select last ip start:");
         try {
             Connection conn = Vault.getDbConnection();
+            log.debug("select last ip--1");
             d.watch(conn);
+            log.debug("select last ip--2");
             Statement stmt = conn.createStatement();
+            log.debug("select last ip--3");
             d.watch(stmt);
+            log.debug("select last ip : sql");
             ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id DESC ");
+            log.debug("select last ip--rs : " + rs.toString());
             d.watch(rs);
+            log.debug("select last ip--4");
             if(rs.next())
                 lastIP = rs.getString("endip");
+            log.debug("select last ip:" + lastIP);
         } finally {
             d.cleanUp();
         }
+        log.debug("select last ip--5");
         return lastIP;
     }
 
@@ -157,7 +166,7 @@ public class IPSegmentOperater {
             Statement stmt = conn.createStatement();
             d.watch(stmt);
             int rc = stmt.executeUpdate(("update ipSegment set " + colName + " = '" + newValue + "' where id =" + id));
-            log().debug("IPSegmentOperater.update by id: SQL update result = " + rc);
+            log.debug("IPSegmentOperater.update by id: SQL update result = " + rc);
         } finally {
             d.cleanUp();
         }
