@@ -59,6 +59,10 @@
             return false;
         }else{
             document.newIPs.action = "abcbank/newIPSegment";
+            document.newIPs.ipNum.value = num;
+            document.newIPs.bankName.value = name;
+            document.newIPs.bankType.value = type;
+            document.newIPs.comments.value = document.getElementById("comment").value;
             document.newIPs.submit();
             return true;
         }
@@ -75,6 +79,10 @@
 <h3>请填写以下资料</h3>
 
 <form id="newIPs" method="post" name="newIPs" onsubmit="return validateFormInput();">
+    <input type="hidden" name="ipNum"/>
+    <input type="hidden" name="bankName"/>
+    <input type="hidden" name="bankType"/>
+    <input type="hidden" name="comments"/>
     <table>
         <tr>
             <td>所需IP数量：</td>
