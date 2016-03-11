@@ -29,6 +29,7 @@ public class AddIPSegmentServlet extends HttpServlet {
     /** {@inheritDoc} */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String initIP = null;
+        PrintWriter pw=response.getWriter();
         try {
             String numString = request.getParameter("ipNum");
             int num = Integer.parseInt(numString);
@@ -45,7 +46,10 @@ public class AddIPSegmentServlet extends HttpServlet {
             }else {
                 initIP = op.selectLastIP();
             }
+            pw.print("initIP:" + initIP);
             IPPoolCaculater cal = new IPPoolCaculater(initIP, num);
+
+            pw.print("cal:" + cal.getIPPool().getStartIP());
 
             IPSegment seg = new IPSegment();
             seg.setIpPool(cal.getIPPool());
@@ -55,10 +59,11 @@ public class AddIPSegmentServlet extends HttpServlet {
             seg.setComment(comment);
             seg.setCreateTime(sf.format(date));
 
+            pw.print("seg:" + seg.getEndIP());
+
             op.insert(seg);
 
             response.setContentType("text/html;charset=gb2312");
-            PrintWriter pw=response.getWriter();
             pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
             pw.close();
 
