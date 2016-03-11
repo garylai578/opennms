@@ -41,7 +41,7 @@
 <jsp:include page="/includes/header.jsp" flush="false" >
     <jsp:param name="title" value="IP地址段分配" />
     <jsp:param name="headTitle" value="IP地址段分配" />
-    <jsp:param name="breadcrumb" value="<a href='drcbank/index.jsp'>IP管理</a>" />
+    <jsp:param name="breadcrumb" value="<a href='abcbank/index.jsp'>IP管理</a>" />
     <jsp:param name="breadcrumb" value="IP地址段分配" />
 </jsp:include>
 
@@ -125,9 +125,9 @@
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="7%" rowspan="2" align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>')" onclick="return confirm('你确定要停用IP段： <%=startIP + "-" + endIP%> ?')">停用</a>
+                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>')">停用</a>
                 &nbsp;&nbsp;
-                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPSegment('<%=ipId%>')" onclick="return confirm('你确定启要IP段： <%=startIP + "-" + endIP%> ?')">启用</a>
+                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPSegment('<%=ipId%>')">启用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPSegment('<%=ipId%>', '<%=row%>')">修改</a>
             </td>

@@ -40,21 +40,28 @@ public class AddIPSegmentServlet extends HttpServlet {
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date date = new java.util.Date();
 
-            pw.print("num:" + num);
+            IPSegmentOperater op = new IPSegmentOperater();
+
+            pw.print("initIP start");
             pw.flush();
 
-            IPSegmentOperater op = new IPSegmentOperater();
-            if(op.selectLastIP()==null){
-                initIP = this.config.getInitParameter("InitIP");
-            }else {
-                initIP = op.selectLastIP();
-            }
+            initIP = op.selectLastIP();
+
             pw.print("initIP:" + initIP);
             pw.flush();
+
+            if(initIP==null){
+                initIP = this.config.getInitParameter("InitIP");
+            }
+
+            pw.print("cal start:initIP and num = " + initIP + " " + num);
+            pw.flush();
+
             IPPoolCaculater cal = new IPPoolCaculater(initIP, num);
 
-            pw.print("cal:" + cal.getIPPool().getStartIP());
-pw.flush();
+            pw.print("cal end:" + cal.getIPPool().getStartIP());
+            pw.flush();
+
             IPSegment seg = new IPSegment();
             seg.setIpPool(cal.getIPPool());
             seg.setState("在用");
