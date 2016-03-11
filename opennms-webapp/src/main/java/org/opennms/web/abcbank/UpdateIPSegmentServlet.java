@@ -21,9 +21,9 @@ public class UpdateIPSegmentServlet extends HttpServlet {
         String tmp = request.getParameter("ipSegID");
         int id = Integer.parseInt(tmp);
         String row = request.getParameter("rowID");
-        String bankname = request.getParameter("bankname-" + row);
-        String banktype = request.getParameter("banktype-" + row);
-        String comment =request.getParameter("comment-" + row);
+        String bankname = request.getParameter("bankName");
+        String banktype = request.getParameter("bankType");
+        String comment =request.getParameter("comments");
 
         IPSegmentOperater op = new IPSegmentOperater();
         try{
