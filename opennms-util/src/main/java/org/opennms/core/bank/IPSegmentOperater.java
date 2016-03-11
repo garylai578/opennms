@@ -55,6 +55,28 @@ public class IPSegmentOperater {
         return result;
     }
 
+    /**
+     * Select the last ip from table ipSegment.
+     * @return the last ip
+     */
+    public String selectLastIP() throws SQLException {
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id DESC ");
+            d.watch(rs);
+            return "192.168.0.0";
+            /*if(rs.next())
+                return rs.getString("endip");
+            else
+                return null;*/
+        } finally {
+            d.cleanUp();
+        }
+    }
+
     public IPSegment selectById(String id) throws  SQLException {
         IPSegment[] result = null;
         try {
@@ -137,24 +159,6 @@ public class IPSegmentOperater {
             d.watch(stmt);
             int rc = stmt.executeUpdate(("update ipSegment set " + colName + " = '" + newValue + "' where id =" + id));
             log().debug("IPSegmentOperater.update by id: SQL update result = " + rc);
-        } finally {
-            d.cleanUp();
-        }
-    }
-
-    /**
-     * Select the last ip from table ipSegment.
-     * @return the last ip
-     */
-    public String selectLastIP() throws SQLException {
-        try {
-            Connection conn = Vault.getDbConnection();
-            d.watch(conn);
-            Statement stmt = conn.createStatement();
-            d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id DESC ");
-            d.watch(rs);
-            return rs.getString("endip");
         } finally {
             d.cleanUp();
         }
