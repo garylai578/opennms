@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class IPSegmentOperater {
     private final DBUtils d = new DBUtils(getClass());
-    private Logger log =  Logger.getLogger(getClass());
+    final static Logger log =  Logger.getLogger(IPSegmentOperater.class);
 
     public void insert(IPSegment ipSegment) throws SQLException {
         try {
@@ -62,23 +62,23 @@ public class IPSegmentOperater {
      */
     public String selectLastIP() throws SQLException {
         String lastIP = null;
-        log.debug("select last ip start:");
+        log.warn("select last ip start:");
         try {
             Connection conn = Vault.getDbConnection();
-            log.debug("select last ip--1");
+            log.warn("select last ip--1");
             d.watch(conn);
-            log.debug("select last ip--2");
+            log.warn("select last ip--2");
             Statement stmt = conn.createStatement();
-            log.debug("select last ip--3");
+            log.warn("select last ip--3");
             d.watch(stmt);
-            log.debug("select last ip : sql");
+            log.warn("select last ip : sql");
             ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id DESC ");
-            log.debug("select last ip--rs : " + rs.toString());
+            log.warn("select last ip--rs : " + rs.toString());
             d.watch(rs);
-            log.debug("select last ip--4");
+            log.warn("select last ip--4");
             if(rs.next())
                 lastIP = rs.getString("endip");
-            log.debug("select last ip:" + lastIP);
+            log.warn("select last ip:" + lastIP);
         } finally {
             d.cleanUp();
         }
