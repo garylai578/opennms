@@ -28,7 +28,7 @@ public class AddIPSegmentServlet extends HttpServlet {
 
     /** {@inheritDoc} */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String initIP = null;
+        String initIP = this.config.getInitParameter("InitIP");
         PrintWriter pw=response.getWriter();
         try {
             String numString = request.getParameter("ipNum");
@@ -42,7 +42,7 @@ public class AddIPSegmentServlet extends HttpServlet {
 
             IPSegmentOperater op = new IPSegmentOperater();
 
-            pw.print("initIP start");
+            pw.print("initIP start:" + initIP);
             pw.flush();
 
             initIP = op.selectLastIP();
