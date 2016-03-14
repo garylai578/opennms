@@ -55,13 +55,12 @@ public class IPPoolCaculater {
             startIP = temp1[0] + "." +  tmp1 + "." + tmp2 + ".0";
             return;
         }
-        //ip
+
         String binary = Integer.toBinaryString(tmp3);
         int len = binary.length();
-        int n = (int)Math.ceil( Math.log(num) / Math.log(2)); // numn10
+        int n = (int)Math.ceil( Math.log(num) / Math.log(2)); // 2的n次方大于等于num
         int flag = 0;
 
-        // ipn-11
         for(int i = 1; i <= n && i <= len; ++i){
             if(binary.charAt(len - i) == '1') {
                 flag = 1;
@@ -70,10 +69,17 @@ public class IPPoolCaculater {
         }
 
         if(flag == 1){
+            //这里分配ip的时候，只是对单个位置进行考虑（例如第3位是1），没有考虑多个位置（例如第7和第6位同时为1）的情况，所以中间会存在很多空洞
             int start = (int) Math.pow(2, Math.floor(Math.log(tmp3) / Math.log(2))+1);
-            if(start < num)
-                start = num;
-            startIP = temp1[0] + "." +  temp1[1] + "." + temp1[2] + "." + start;
+
+            if(start >= 256) {
+                int tmp2 = Integer.parseInt(temp1[2])+1;
+                startIP = temp1[0] + "." +  temp1[1] + "." + tmp2 + ".0";
+            }else {
+                if(start < num)
+                    start = num;
+                startIP = temp1[0] + "." +  temp1[1] + "." + temp1[2] + "." + start;
+            }
         } else {
             startIP = initIP;
         }

@@ -65,10 +65,15 @@ public class IPPoolCaculaterTest extends TestCase{
         assertEquals("192.168.1.0", ic.getIPPool().getStartIP());
         assertEquals("192.168.1.127", ic.getIPPool().getEndIP());
 
-        ic = new IPPoolCaculater("172.16.5.254", 8);
-        assertEquals("255.255.255.248", ic.getIPPool().getNetMask());
-        assertEquals("172.16.6.0", ic.getIPPool().getStartIP());
-        assertEquals("172.16.6.7", ic.getIPPool().getEndIP());
+        ic = new IPPoolCaculater("172.16.0.191", 128);
+        assertEquals("255.255.255.128", ic.getIPPool().getNetMask());
+        assertEquals("172.16.1.0", ic.getIPPool().getStartIP());
+        assertEquals("172.16.1.127", ic.getIPPool().getEndIP());
+
+//        ic = new IPPoolCaculater("172.16.0.191", 4);
+//        assertEquals("255.255.255.252", ic.getIPPool().getNetMask());
+//        assertEquals("172.16.0.192", ic.getIPPool().getStartIP());
+//        assertEquals("172.16.0.195", ic.getIPPool().getEndIP());
     }
 
 }

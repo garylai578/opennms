@@ -65,24 +65,17 @@ public class IPSegmentOperater {
         log.warn("select last ip start:");
         try {
             Connection conn = Vault.getDbConnection();
-            log.warn("select last ip--1");
             d.watch(conn);
-            log.warn("select last ip--2");
             Statement stmt = conn.createStatement();
-            log.warn("select last ip--3");
             d.watch(stmt);
-            log.warn("select last ip : sql");
             ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id DESC ");
-            log.warn("select last ip--rs : " + rs.toString());
             d.watch(rs);
-            log.warn("select last ip--4");
             if(rs.next())
                 lastIP = rs.getString("endip");
-            log.warn("select last ip:" + lastIP);
+            log.debug("select last ip:" + lastIP);
         } finally {
             d.cleanUp();
         }
-        log.debug("select last ip--5");
         return lastIP;
     }
 
