@@ -37,7 +37,7 @@ public class AddIPSegmentServlet extends HttpServlet {
             String type = request.getParameter("bankType");
             String comment = request.getParameter("comments");
 
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             java.util.Date date = new java.util.Date();
 
             IPSegmentOperater op = new IPSegmentOperater();
@@ -55,9 +55,6 @@ public class AddIPSegmentServlet extends HttpServlet {
             seg.setBanktype(type);
             seg.setComment(comment);
             seg.setCreateTime(sf.format(date));
-
-            pw.print("seg:" + seg.getEndIP());
-            pw.flush();
             op.insert(seg);
 
             response.setContentType("text/html;charset=gb2312");
