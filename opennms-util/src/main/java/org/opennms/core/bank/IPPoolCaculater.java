@@ -48,7 +48,11 @@ public class IPPoolCaculater {
         String[] temp1 = initIP.trim().split("\\.");
         int tmp3 = Integer.parseInt(temp1[3]);
         if(tmp3 + num > 255) {
-            startIP = "0.0.0.0";
+            int tmp1 = Integer.parseInt(temp1[1]);
+            int tmp2 = Integer.parseInt(temp1[2]) + 1;
+            if(tmp2 > 255)
+                tmp1++;
+            startIP = temp1[0] + "." +  tmp1 + "." + tmp2 + ".0";
             return;
         }
         //ip
@@ -73,18 +77,13 @@ public class IPPoolCaculater {
         } else {
             startIP = initIP;
         }
-
     }
 
     private void caculateEndIP() {
-        if(startIP.equals("0.0.0.0"))
-            endIP =  "0.0.0.0";
-        else {
-            String[] temp = startIP.trim().split("\\.");
-            int i = Integer.parseInt(temp[3]) + num - 1;
-            if (i <= 255)
-                endIP = temp[0] + "." + temp[1] + "." + temp[2] + "." + i;
-        }
+        String[] temp = startIP.trim().split("\\.");
+        int i = Integer.parseInt(temp[3]) + num - 1;
+        if (i <= 255)
+            endIP = temp[0] + "." + temp[1] + "." + temp[2] + "." + i;
     }
 
     /**
