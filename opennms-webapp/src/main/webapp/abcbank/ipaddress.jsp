@@ -177,11 +177,14 @@
             <td width="5%">
                 <div>
                     <select id="network_type-<%=row%>">
-                        <option value="<%= ((network_type == null || network_type.equals("")) ? 0 : network_type) %>" selected=""><%= ((network_type == null || network_type.equals("")) ? "请选择" : network_type) %></option>
-                        <option value="生产网">生产网</option>
-                        <option value="办公网">办公网</option>
-                        <option value="监控网">监控网</option>
-                        <option value="外网">外网</option>
+                        <%
+                            if(network_type == null || network_type.equals(""))
+                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                        %>
+                        <option value="生产网" <%if(network_type.equals("生产网")) out.print("selected=\"\""); %>>生产网</option>
+                        <option value="办公网" <%if(network_type.equals("办公网")) out.print("selected=\"\""); %>>办公网</option>
+                        <option value="监控网" <%if(network_type.equals("监控网")) out.print("selected=\"\""); %>>监控网</option>
+                        <option value="外网" <%if(network_type.equals("外网")) out.print("selected=\"\""); %>>外网</option>
                     </select>
                 </div>
             </td>
@@ -225,11 +228,14 @@
             <td width="5%">
                 <div>
                     <select id="bank-<%=row%>">
-                        <option value="<%= ((bank == null || bank.equals("")) ? 0 : bank) %>" selected=""><%= ((bank == null || bank.equals("")) ? "请选择" : bank) %></option>
+                        <%
+                            if(bank == null || bank.equals(""))
+                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                        %>
                         <%
                             for(int i = 0; i < bankNames.length; ++i){
                         %>
-                        <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+                        <option value="<%=bankNames[i]%>"  <%if(bank.equals(bankNames[i])) out.print("selected=\"\"");%>><%=bankNames[i]%></option>
                         <%
                             }
                         %>

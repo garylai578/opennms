@@ -172,11 +172,14 @@
             <td width="10%">
                 <div>
                     <select id="bankname-<%=row%>">
-                        <option value="<%= ((name == null || name.equals("")) ? 0 : name) %>" selected=""><%= ((name == null || name.equals("")) ? "&nbsp;" : name) %></option>
+                        <%
+                            if(name == null || name.equals(""))
+                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                        %>
                         <%
                             for(int i = 0; i < bankNames.length; ++i){
                         %>
-                        <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+                        <option value="<%=bankNames[i]%>"<%if(name.equals(bankNames[i])) out.print("selected=\"\"");%>><%=bankNames[i]%></option>
                         <%
                             }
                         %>
@@ -187,11 +190,14 @@
             <td width="5%">
                 <div>
                     <select id="banktype-<%=row%>">
-                        <option value="<%= ((type == null || type.equals("")) ? 0 : type) %>" selected=""><%= ((type == null || type.equals("")) ? 0 : type) %></option>
+                        <%
+                            if(type == null || type.equals(""))
+                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                        %>
                         <%
                             for(int i = 0; i < bankTypes.length; ++i){
                         %>
-                        <option value="<%=bankTypes[i]%>"><%=bankTypes[i]%></option>
+                        <option value="<%=bankTypes[i]%>" <%if(type.equals(bankTypes[i])) out.print("selected=\"\"");%>><%=bankTypes[i]%></option>
                         <%
                             }
                         %>
