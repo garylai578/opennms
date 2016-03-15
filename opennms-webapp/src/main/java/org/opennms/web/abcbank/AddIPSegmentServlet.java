@@ -53,7 +53,7 @@ public class AddIPSegmentServlet extends HttpServlet {
                 int end = Integer.parseInt(ip.getEndIP().trim().split("\\.")[3]);
                 int start = Integer.parseInt(ip.getStartIP().trim().split("\\.")[3]);
                 log.warn("id:" + id +". end:" + end + ". start:" +start + ". num:" + num);
-                if(end - start == num) {
+                if(end - start + 1 == num) {
                     //对停用时间超过7天的ip段进行重新分配
                     String stopTime = ip.getStopTime();
                     SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd");
@@ -67,7 +67,7 @@ public class AddIPSegmentServlet extends HttpServlet {
                             if (inten > 7) {
                                 op.updateByID(id, "state", "在用");
                                 op.updateByID(id, "createtime", sf.format(date));
-                                op.updateByID(id, "stoptime", "''");
+                                op.updateByID(id, "stoptime", "null");
                                 op.updateByID(id, "name", name);
                                 op.updateByID(id, "type", type);
                                 op.updateByID(id, "comment", comment);
