@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.apache.log4j.Logger;
 import org.opennms.core.bank.IPPoolCaculater;
 import org.opennms.core.bank.IPSegment;
 import org.opennms.core.bank.IPSegmentOperater;
@@ -22,6 +23,7 @@ import java.util.Date;
 public class AddIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = -3675392550713648442L;
     private ServletConfig config;
+    final static Logger log =  Logger.getLogger(IPSegmentOperater.class);
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -50,23 +52,27 @@ public class AddIPSegmentServlet extends HttpServlet {
                 int id = Integer.parseInt(ip.getId());
                 int end = Integer.parseInt(ip.getEndIP().trim().split("\\.")[3]);
                 int start = Integer.parseInt(ip.getStartIP().trim().split("\\.")[3]);
+                log.warn("id:" + id +". end:" + end + ". start:" +start + ". num:" + num);
                 if(end - start == num) {
                     //对停用时间超过7天的ip段进行重新分配
                     String stopTime = ip.getStopTime();
                     SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd");
                     if (stopTime != null) {
+                        log.warn("stoptime:" + stopTime);
                         try {
                             long today = sf2.parse(sf2.format(date)).getTime();
                             long stop = sf2.parse(stopTime).getTime();
                             long inten = (today - stop) / (1000 * 60 * 60 * 24);
+                            log.warn("inten:" + inten);
                             if (inten > 7) {
-                                op.updateByID(id, "state", "启用");
+                                op.updateByID(id, "state", "在用");
                                 op.updateByID(id, "createtime", sf.format(date));
-                                op.updateByID(id, "stoptime", "");
+                                op.updateByID(id, "stoptime", "''");
                                 op.updateByID(id, "name", name);
                                 op.updateByID(id, "type", type);
                                 op.updateByID(id, "comment", comment);
                                 flag = 1;
+                                log.debug("update ipsegment where id =" + id);
                                 break;
                             }
                         } catch (ParseException e) {

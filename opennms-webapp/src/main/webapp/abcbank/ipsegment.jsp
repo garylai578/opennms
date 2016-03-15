@@ -130,7 +130,7 @@
                 //如果停用的时间超过7天，则不显示
                 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
-                if(stopTime != null){
+                if(stopTime != null && state.equals("停用")){
                     try {
                         long today = sf.parse(sf.format(date)).getTime();
                         long stop = sf.parse(stopTime).getTime();
