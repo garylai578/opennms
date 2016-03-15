@@ -28,6 +28,7 @@ public class StartIPSegmentServlet extends HttpServlet {
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
             op.updateByID(id, "createtime", sf.format(date));
+            op.updateByID(id, "stoptime", "");
 
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();

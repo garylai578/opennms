@@ -57,6 +57,29 @@ public class IPSegmentOperater {
     }
 
     /**
+     * Select all unused ipsegment from table ipSegment
+     *
+     * @return IPSegment[]: all results.
+     * @throws SQLException
+     */
+    public IPSegment[] selectAllUnused() throws  SQLException {
+        IPSegment[] result = null;
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment WHERE state = '停用'");
+            d.watch(rs);
+            result = rs2IPSegment(rs);
+        } finally {
+            d.cleanUp();
+        }
+
+        return result;
+    }
+
+    /**
      * Select the last ip from table ipSegment.
      * @return the last ip
      */
@@ -183,6 +206,7 @@ public class IPSegmentOperater {
             ip.setEndIP(rs.getString("endip"));
             ip.setBankname(rs.getString("name"));
             ip.setCreateTime(rs.getString("createtime"));
+            ip.setStopTime(rs.getString("stoptime"));
             ip.setBanktype(rs.getString("type"));
             ip.setState(rs.getString("state"));
             ip.setComment(rs.getString("comment"));

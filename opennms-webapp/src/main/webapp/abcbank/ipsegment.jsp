@@ -16,6 +16,9 @@
 <%@page import="org.opennms.core.bank.IPSegmentOperater" %>
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.Properties" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.ParseException" %>
 
 <%
     IPSegmentOperater op = new IPSegmentOperater();
@@ -120,8 +123,24 @@
                 String name = ip.getBankname();
                 String type = ip.getBanktype();
                 String time = ip.getCreateTime();
+                String stopTime = ip.getStopTime();
                 String state = ip.getState();
                 String comment = ip.getComment();
+
+                //如果停用的时间超过7天，则不显示
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date();
+                if(stopTime != null){
+                    try {
+                        long today = sf.parse(sf.format(date)).getTime();
+                        long stop = sf.parse(stopTime).getTime();
+                        long inten = (today - stop) / (1000 * 60 * 60 * 24);
+                        if(inten > 7)
+                            continue;
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="7%" rowspan="2" align="center" style="vertical-align:middle;">

@@ -13,6 +13,7 @@ public class IPSegment {
     private String endIP;
     private String bankname;
     private String createTime;
+    private String stopTime;
     private String banktype;
     private String state;
     private String comment;
@@ -79,6 +80,14 @@ public class IPSegment {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getStopTime() {
+        return stopTime;
+    }
+
+    public void setStopTime(String stopTime) {
+        this.stopTime = stopTime;
     }
 
     public String getBanktype() {
