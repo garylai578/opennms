@@ -24,7 +24,7 @@ public class StartIPSegmentServlet extends HttpServlet {
         int id = Integer.parseInt(tmp);
         IPSegmentOperater op = new IPSegmentOperater();
         try {
-            op.updateByID(id, "state", "启用");
+            op.updateByID(id, "state", "在用");
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
             op.updateByID(id, "createtime", sf.format(date));
