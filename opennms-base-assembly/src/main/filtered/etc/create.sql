@@ -78,6 +78,7 @@ drop table group_user cascade;
 drop table category_user cascade;
 drop table category_group cascade;
 drop table ipSegment cascade;
+drop table ipaddress cascade;
 
 drop sequence catNxtId;
 drop sequence nodeNxtId;
@@ -218,6 +219,8 @@ CREATE TABLE accessLocks (
 --#  startIP     : the start ip of this ip segment
 --#  endIP       : the end ip of this ip segment
 --#  name        : the name of this bank_site
+--#  createtime  : the time of creating this ipsegment
+--#  stoptime    : the time of stopping this ipsegment
 --#  type        : the type of this bank_site
 --#  state       : the state of this ip segment(including: using and non-use
 --#  comment     : comment if necessary
@@ -234,6 +237,50 @@ create table ipSegment (
     stoptime date,
     type text not null,
     state text not null,
+    comment text
+);
+
+--########################################################################
+--# ipaddress table - store the ip address for each equipment of the bank
+--#
+--# This table contains the following fields:
+--#  id          : id
+--#  ip          : the ip of this equipment
+--#  mask        : the mask of this equipment
+--#  gateway     : the gateway of this equipment
+--#  mac         : the mac address of this equipment
+--#  network_type: the network type of this ip
+--#  start_date  : the start date of this ip
+--#  users       : the users of this equipment
+--#  bank        : the bank that owns this equipment
+--#  dept        : the department that owns this equipment
+--#  model       : the model of this equipment
+--#  equip_type  : the type of this equipment
+--#  equip_brand : the brand of this equipment
+--#  application : the application of this equipment
+--#  apply_date  : the apply date of this equipment
+--#  state       : the state of this equipment
+--#  comment     : comment
+--#
+--########################################################################
+create table ipaddress (
+    id serial,
+    ip text not null,
+    mask text not null,
+    gateway text not null,
+    mac text not null,
+    network_type text,
+    start_date date,
+    stop_date date,
+    apply_date date,
+    users text,
+    bank text,
+    dept text,
+    model text,
+    equip_type text,
+    equip_brand text,
+    application text,
+    state text,
     comment text
 );
 
