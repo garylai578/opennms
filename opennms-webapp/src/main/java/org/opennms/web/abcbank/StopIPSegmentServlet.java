@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by laiguanhui on 2016/2/22.
@@ -23,6 +25,9 @@ public class StopIPSegmentServlet extends HttpServlet {
         IPSegmentOperater op = new IPSegmentOperater();
         try {
             op.updateByID(id, "state", "停用");
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date = new Date();
+            op.updateByID(id, "stoptime", sf.format(date));
 
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
