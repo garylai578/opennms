@@ -231,6 +231,7 @@ create table ipSegment (
     endIP text not null,
     name text not null,
     createTime date,
+    stoptime date,
     type text not null,
     state text not null,
     comment text
