@@ -23,7 +23,7 @@ import java.util.Date;
 public class AddIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = -3675392550713648442L;
     private ServletConfig config;
-    final static Logger log =  Logger.getLogger(IPSegmentOperater.class);
+    final static Logger log =  Logger.getLogger(AddIPSegmentServlet.class);
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -58,12 +58,12 @@ public class AddIPSegmentServlet extends HttpServlet {
                     String stopTime = ip.getStopTime();
                     SimpleDateFormat sf2 = new SimpleDateFormat("yyyy-MM-dd");
                     if (stopTime != null) {
-                        log.warn("stoptime:" + stopTime);
+                        log.debug("stoptime:" + stopTime);
                         try {
                             long today = sf2.parse(sf2.format(date)).getTime();
                             long stop = sf2.parse(stopTime).getTime();
                             long inten = (today - stop) / (1000 * 60 * 60 * 24);
-                            log.warn("inten:" + inten);
+                            log.debug("inten:" + inten);
                             if (inten > 7) {
                                 op.updateByID(id, "state", "在用");
                                 op.updateByID(id, "createtime", sf.format(date));

@@ -182,7 +182,11 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String sql = "update ipSegment set " + colName + " = '" + newValue + "' where id =" + id;
+            String sql;
+            if(newValue.equals("null"))
+                sql = "update ipSegment set " + colName + " = " + newValue + " where id =" + id;
+            else
+                sql = "update ipSegment set " + colName + " = '" + newValue + "' where id =" + id;
             int rc = stmt.executeUpdate(sql);
             log.debug("IPSegmentOperater.update by id, SQL = " + sql + ". rc= " + rc);
         } finally {
