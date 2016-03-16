@@ -3,7 +3,6 @@ package org.opennms.core.bank;
 import org.apache.log4j.Logger;
 import org.opennms.core.resource.Vault;
 import org.opennms.core.utils.DBUtils;
-import org.opennms.core.utils.ThreadCategory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -131,8 +130,8 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            int rc = stmt.executeUpdate(("delete from ipSegment where gateway = '" + ipSegment.getIpPool().getStartIP() + "')"));
-            log().debug("IPSegmentOperater.delete: SQL update result = " + rc);
+            int rc = stmt.executeUpdate("delete from ipSegment where gateway = '" + ipSegment.getIpPool().getStartIP() + "'");
+            log.debug("IPSegmentOperater.delete: SQL update result = " + rc);
         } finally {
             d.cleanUp();
         }
@@ -150,8 +149,8 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            int rc = stmt.executeUpdate(("delete from ipSegment where gateway = '" + gateWay + "')"));
-            log().debug("IPSegmentOperater.delete: SQL update result = " + rc);
+            int rc = stmt.executeUpdate("delete from ipSegment where gateway = '" + gateWay + "'");
+            log.debug("IPSegmentOperater.delete: SQL update result = " + rc);
         } finally {
             d.cleanUp();
         }
@@ -192,10 +191,6 @@ public class IPSegmentOperater {
         } finally {
             d.cleanUp();
         }
-    }
-
-    private ThreadCategory log() {
-        return ThreadCategory.getInstance(getClass());
     }
 
     private IPSegment[] rs2IPSegment(ResultSet rs) throws SQLException {
