@@ -107,7 +107,7 @@
                 String name = "东城支行";
                 String type = "网点";
                 String time = "2016-2-22";
-                String state = "启用";
+                String state = "在用";
                 String comment ="无";
                 int id = 1;
         %>

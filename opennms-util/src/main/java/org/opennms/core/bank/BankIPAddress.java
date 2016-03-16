@@ -167,4 +167,29 @@ public class BankIPAddress {
         this.comment = comment;
     }
 
+    public String toInsertValue() {
+        String value = "";
+        String[] colsString = {mask, gateway, mac, network_type, users, bank, dept, model, equip_type, equip_brand, application, state, comment};
+        String[] colsDate = {start_date, stop_date, apply_date};
+
+        if(ip==null)
+            value += "''";
+        else
+            value += "'" + ip + "'";
+
+        for (String col: colsString) {
+            if(col == null)
+                value += ", ''";
+            else
+                value += ", '" + col + "'";
+        }
+
+        for(String col : colsDate)
+            if(col == null)
+                value += ", null";
+            else
+                value += ", '" + col + "'";
+
+        return value;
+    }
 }

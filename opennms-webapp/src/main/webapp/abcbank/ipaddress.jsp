@@ -52,13 +52,13 @@
 
 <script type="text/javascript" >
 
-    function addIPSegment()
+    function addIPAddress()
     {
-        document.allIPSegments.action="abcbank/newIPSegment.jsp";
+        document.allIPSegments.action="abcbank/newIPAddress.jsp";
         document.allIPSegments.submit();
     }
 
-    function stopIPSegment(id)
+    function stopIPAddress(id)
     {
         document.allIPSegments.action="abcbank/stopIPSegment";
         document.allIPSegments.ipSegID.value=id;
@@ -66,14 +66,14 @@
         document.allIPSegments.submit();
     }
 
-    function startIPSegment(id)
+    function startIPAddress(id)
     {
         document.allIPSegments.action="abcbank/startIPSegment";
         document.allIPSegments.ipSegID.value=id;
         document.allIPSegments.submit();
     }
 
-    function modifyIPSegment(id,row)
+    function modifyIPAddress(id,row)
     {
         document.allIPSegments.action="abcbank/updateIPSegment";
         document.allIPSegments.ipSegID.value=id;
@@ -95,8 +95,8 @@
 
     <h3>IP地址段分配</h3>
 
-    <a id="doNewIPSegment" href="javascript:addIPSegment()"><img src="images/add1.gif" alt="新增IP地址" border="0"></a>
-    <a href="javascript:addIPSegment()">新增IP地址</a>
+    <a id="doNewIPSegment" href="javascript:addIPAddress()"><img src="images/add1.gif" alt="新增IP地址" border="0"></a>
+    <a href="javascript:addIPAddress()">新增IP地址</a>
 
     <br/>
     <br/>
@@ -161,11 +161,11 @@
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>')">停用</a>
+                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>')">删除</a>
                 &nbsp;&nbsp;
-                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPSegment('<%=ipId%>')">启用</a>
+                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPAddress('<%=ipId%>')">启用</a>
                 &nbsp;&nbsp;
-                <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPSegment('<%=ipId%>', '<%=row%>')">修改</a>
+                <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPAddress('<%=ipId%>', '<%=row%>')">变更</a>
             </td>
 
             <td width="5%">
