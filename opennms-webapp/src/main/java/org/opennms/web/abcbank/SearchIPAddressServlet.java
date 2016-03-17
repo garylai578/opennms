@@ -26,15 +26,11 @@ public class SearchIPAddressServlet extends HttpServlet {
         PrintWriter pw=response.getWriter();
 
         try {
-            log.debug("here");
             BankIPAddress[] rs = op.search("ip", ip);
-            log.debug("here1");
-            if(rs != null){
-                log.debug("here2+" + rs.length);
+            if(rs != null && rs.length > 0){
                 request.setAttribute("ip_addresses", rs);
                 request.getRequestDispatcher("ipaddress.jsp").forward(request, response);
             } else {
-                log.debug("here3");
                 pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
                 pw.close();
             }
