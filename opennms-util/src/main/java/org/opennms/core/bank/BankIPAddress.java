@@ -185,7 +185,7 @@ public class BankIPAddress {
         }
 
         for(String col : colsDate)
-            if(col == null)
+            if(col == null || col.equals(""))
                 value += ", null";
             else
                 value += ", '" + col + "'";
