@@ -59,7 +59,7 @@
             isCommitted = false;
             return false;
         }else{
-            document.newIPs.action = "/abcbank/newIPAddress";
+            document.newIPs.action = "abcbank/newIPAddress";
             document.newIPs.submit();
             return true;
         }
