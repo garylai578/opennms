@@ -198,7 +198,9 @@ public class BankIPAddressOp {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("SELECT * FROM ipaddress WHERE" + col + " LIKE '%"+ key + "%'");
+            String sql = "SELECT * FROM ipaddress WHERE " + col + " LIKE '%"+ key + "%'";
+            log.debug("search sql: " + sql);
+            ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
             result = rs2IPAddress(rs);
         } finally {

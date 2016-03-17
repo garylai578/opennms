@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.apache.log4j.Logger;
 import org.opennms.core.bank.BankIPAddress;
 import org.opennms.core.bank.BankIPAddressOp;
 
@@ -16,6 +17,7 @@ import java.sql.SQLException;
  */
 public class SearchIPAddressServlet extends HttpServlet {
     private static final long serialVersionUID = 7199011739202086578L;
+    final static Logger log =  Logger.getLogger(SearchIPAddressServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String ip = request.getParameter("searchIP");
@@ -24,11 +26,15 @@ public class SearchIPAddressServlet extends HttpServlet {
         PrintWriter pw=response.getWriter();
 
         try {
+            log.debug("here");
             BankIPAddress[] rs = op.search("ip", ip);
+            log.debug("here1");
             if(rs != null){
+                log.debug("here2+" + rs.length);
                 request.setAttribute("ip_addresses", rs);
                 request.getRequestDispatcher("/opennms/abcbank/ipaddress.jsp").forward(request, response);
             } else {
+                log.debug("here3");
                 pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
                 pw.close();
             }
