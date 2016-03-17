@@ -12,8 +12,6 @@
         session="true"
 %>
 
-<%@page import="org.opennms.core.bank.IPSegment"%>
-<%@page import="org.opennms.core.bank.IPSegmentOperater" %>
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.Properties" %>
 <%@ page import="java.text.SimpleDateFormat" %>
@@ -40,7 +38,7 @@
 
     //通过key获取配置文件
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
-    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+//    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -60,23 +58,23 @@
 
     function stopIPAddress(id)
     {
-        document.allIPSegments.action="abcbank/stopIPSegment";
-        document.allIPSegments.ipSegID.value=id;
+        document.allIPSegments.action="abcbank/stopIPAddress";
+        document.allIPSegments.ipAddrID.value=id;
         this.method="post";
         document.allIPSegments.submit();
     }
 
     function startIPAddress(id)
     {
-        document.allIPSegments.action="abcbank/startIPSegment";
-        document.allIPSegments.ipSegID.value=id;
+        document.allIPSegments.action="abcbank/startIPAddress";
+        document.allIPSegments.ipAddrID.value=id;
         document.allIPSegments.submit();
     }
 
     function modifyIPAddress(id,row)
     {
         document.allIPSegments.action="abcbank/updateIPSegment";
-        document.allIPSegments.ipSegID.value=id;
+        document.allIPSegments.ipAddrID.value=id;
         document.allIPSegments.rowID.value=row;
         document.allIPSegments.bankName.value=document.getElementById("bank-"+row).value;
         document.allIPSegments.bankType.value=document.getElementById("equip_type-"+row).value;
@@ -87,7 +85,7 @@
 </script>
 
 <form method="post" name="allIPSegments">
-    <input type="hidden" name="ipSegID"/>
+    <input type="hidden" name="ipAddrID"/>
     <input type="hidden" name="rowID"/>
     <input type="hidden" name="bankName"/>
     <input type="hidden" name="bankType"/>
@@ -147,7 +145,9 @@
                 //如果停用的时间超过7天，则不显示
                 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
-                if(stop_date != null && state.equals("停用")){
+                if(stop_date != null && state.contains("停用")){
+                    out.print(ipId);
+                    out.close();
                     try {
                         long today = sf.parse(sf.format(date)).getTime();
                         long stop = sf.parse(stop_date).getTime();
@@ -161,7 +161,7 @@
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>')">删除</a>
+                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>')">停用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPAddress('<%=ipId%>')">启用</a>
                 &nbsp;&nbsp;
@@ -283,7 +283,7 @@
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td colspan="15">
                 <div>
-                    <input id="comment-<%=row%>" type="text" size="100" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
+                    <input id="comment-<%=row%>" type="text" size="100%" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
                 </div>
             </td>
         </tr>

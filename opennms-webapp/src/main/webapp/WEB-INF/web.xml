@@ -823,7 +823,15 @@
     <servlet-name>addIPAddress</servlet-name>
     <servlet-class>org.opennms.web.abcbank.AddIPAddressServlet</servlet-class>
   </servlet>
-  
+  <servlet>
+    <servlet-name>StopIPAddressServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.StopIPAddressServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>StartIPAddressServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.StartIPAddressServlet</servlet-class>
+  </servlet>
+
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
   
@@ -1170,9 +1178,19 @@
     <servlet-name>updateIPSegmentServlet</servlet-name>
     <url-pattern>/abcbank/updateIPSegment</url-pattern>
   </servlet-mapping>
+
   <servlet-mapping>
     <servlet-name>addIPAddress</servlet-name>
     <url-pattern>/abcbank/newIPAddress</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>StopIPAddressServlet</servlet-name>
+    <url-pattern>/abcbank/stopIPAddress</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StartIPAddressServlet</servlet-name>
+    <url-pattern>/abcbank/startIPAddress</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  
