@@ -184,4 +184,27 @@ public class BankIPAddressOp {
             insert(ipAddr);
     }
 
+    /**
+     * search the col with key
+     * @param col column name
+     * @param key key value
+     * @return the searching result
+     * @throws SQLException
+     */
+    public BankIPAddress[] search(String col, String key) throws SQLException {
+        BankIPAddress[] result = null;
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM ipaddress WHERE" + col + " LIKE '%"+ key + "%'");
+            d.watch(rs);
+            result = rs2IPAddress(rs);
+        } finally {
+            d.cleanUp();
+        }
+
+        return result;
+    }
 }

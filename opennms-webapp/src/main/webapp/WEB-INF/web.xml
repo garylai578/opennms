@@ -835,6 +835,10 @@
     <servlet-name>UpdateIPAddressServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.UpdateIPAddressServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>SearchIPAddressServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.SearchIPAddressServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1199,6 +1203,10 @@
   <servlet-mapping>
     <servlet-name>UpdateIPAddressServlet</servlet-name>
     <url-pattern>/abcbank/updateIPAddress</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchIPAddressServlet</servlet-name>
+    <url-pattern>/abcbank/searchIPAddress</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  

@@ -79,19 +79,39 @@
         document.allIPSegments.submit();
     }
 
+    function searchIPAddress()
+    {
+        var ip = document.getElementById("search").value;
+        if(ip==null || ip==0) {
+            alert("请输入IP地址！");
+            return;
+        }
+        document.allIPSegments.action="abcbank/searchIPAddress";
+        document.allIPSegments.searchIP.value=ip;
+        document.allIPSegments.submit();
+    }
+
 </script>
 
 <form method="post" name="allIPSegments">
     <input type="hidden" name="ipAddrID"/>
     <input type="hidden" name="rowID"/>
+    <input type="hidden" name="searchIP"/>
 
     <h3>IP地址段分配</h3>
+    <table>
 
-    <a id="doNewIPSegment" href="javascript:addIPAddress()"><img src="images/add1.gif" alt="新增IP地址" border="0"></a>
-    <a href="javascript:addIPAddress()">新增IP地址</a>
+    <td align="left">
+        <a id="doNewIPSegment" href="javascript:addIPAddress()"><img src="images/add1.gif" alt="新增IP地址" border="0"></a>
+        <a href="javascript:addIPAddress()">新增IP地址</a>
+    </td>
 
-    <br/>
-    <br/>
+    <td align="left">
+        <input id="search" name="search" size="18%" placeholder="请输入要搜索的IP" value="">
+        <a id="doSearch" href="javascript:searchIPAddress()"><img src="images/search.png" alt="搜索" border="0"></a>
+        <a id="" href="javascript:searchIPAddress()">搜索</a>
+    </td>
+    </table>
 
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
@@ -114,7 +134,10 @@
             <td width="3%"><b>使用情况</b></td>
         </tr>
         <%
-            BankIPAddress[] ips = op.selectAll();
+            BankIPAddress[] ips = (BankIPAddress[])request.getAttribute("ip_addresses");
+            if(ips == null)
+                ips = op.selectAll();
+
             int row = 0;
             for(BankIPAddress ip : ips){
                 String ipId = ip.getId();
@@ -213,7 +236,7 @@
 
             <td width="5%">
                 <div>
-                    <input  id="usres-<%=row%>" size="5" name="usres-<%=row%>" value="<%= ((usres == null || usres.equals("")) ? "&nbsp;" : usres) %>" >
+                    <input  id="users-<%=row%>" size="5" name="users-<%=row%>" value="<%= ((usres == null || usres.equals("")) ? "&nbsp;" : usres) %>" >
                 </div>
             </td>
 
