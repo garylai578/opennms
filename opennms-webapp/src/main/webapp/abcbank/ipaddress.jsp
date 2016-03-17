@@ -83,7 +83,7 @@
     {
         var ip = document.getElementById("search").value;
         if(ip==null || ip==0) {
-            alert("请输入IP地址！");
+            window.location.href="abcbank/ipaddress.jsp";
             return;
         }
         document.allIPSegments.action="abcbank/searchIPAddress";
