@@ -93,6 +93,7 @@ public class BankIPAddressOp {
             ip.setMac(rs.getString("mac"));
             ip.setNetwork_type(rs.getString("network_type"));
             ip.setStart_date(rs.getString("start_date"));
+            ip.setStop_date(rs.getString("stop_date"));
             ip.setApply_date(rs.getString("apply_date"));
             ip.setUsers(rs.getString("users"));
             ip.setBank(rs.getString("bank"));
