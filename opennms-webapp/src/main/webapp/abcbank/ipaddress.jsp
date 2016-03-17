@@ -73,12 +73,9 @@
 
     function modifyIPAddress(id,row)
     {
-        document.allIPSegments.action="abcbank/updateIPSegment";
+        document.allIPSegments.action="abcbank/updateIPAddress";
         document.allIPSegments.ipAddrID.value=id;
         document.allIPSegments.rowID.value=row;
-        document.allIPSegments.bankName.value=document.getElementById("bank-"+row).value;
-        document.allIPSegments.bankType.value=document.getElementById("equip_type-"+row).value;
-        document.allIPSegments.comments.value=document.getElementById("comment-"+row).value;
         document.allIPSegments.submit();
     }
 
@@ -87,9 +84,6 @@
 <form method="post" name="allIPSegments">
     <input type="hidden" name="ipAddrID"/>
     <input type="hidden" name="rowID"/>
-    <input type="hidden" name="bankName"/>
-    <input type="hidden" name="bankType"/>
-    <input type="hidden" name="comments"/>
 
     <h3>IP地址段分配</h3>
 
@@ -117,7 +111,7 @@
             <td width="5%"><b>设备品牌</b></td>
             <td width="5%"><b>设备型号</b></td>
             <td width="5%"><b>用途</b></td>
-            <td width="5%"><b>使用情况</b></td>
+            <td width="3%"><b>使用情况</b></td>
         </tr>
         <%
             BankIPAddress[] ips = op.selectAll();
@@ -146,8 +140,6 @@
                 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
                 if(stop_date != null && state.contains("停用")){
-                    out.print(ipId);
-                    out.close();
                     try {
                         long today = sf.parse(sf.format(date)).getTime();
                         long stop = sf.parse(stop_date).getTime();
@@ -176,7 +168,7 @@
 
             <td width="5%">
                 <div>
-                    <select id="network_type-<%=row%>">
+                    <select id="network_type-<%=row%>" name="network_type-<%=row%>">
                         <%
                             if(network_type == null || network_type.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
@@ -220,14 +212,14 @@
             </td>
 
             <td width="5%">
-                <div id="usres-<%=row%>">
-                    <%= ((usres == null || usres.equals("")) ? "&nbsp;" : usres) %>
+                <div>
+                    <input  id="usres-<%=row%>" size="5" name="usres-<%=row%>" value="<%= ((usres == null || usres.equals("")) ? "&nbsp;" : usres) %>" >
                 </div>
             </td>
 
             <td width="5%">
                 <div>
-                    <select id="bank-<%=row%>">
+                    <select id="bank-<%=row%>" name="bank-<%=row%>">
                         <%
                             if(bank == null || bank.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
@@ -244,36 +236,36 @@
             </td>
 
             <td width="5%">
-                <div id="dept-<%=row%>">
-                    <%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>
+                <div>
+                    <input id="dept-<%=row%>" name="dept-<%=row%>" size="6" value="<%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>">
                 </div>
             </td>
 
             <td width="5%">
                 <div id="model-<%=row%>">
-                    <%= ((model == null || model.equals("")) ? "&nbsp;" : model) %>
+                    <input id="model-<%=row%>" name="model-<%=row%>" size="6" value="<%= ((model == null || model.equals("")) ? "&nbsp;" : model) %>">
                 </div>
             </td>
 
             <td width="5%">
-                <div id="equip_brand-<%=row%>">
-                    <%= ((equip_brand == null || equip_brand.equals("")) ? "&nbsp;" : equip_brand) %>
+                <div>
+                    <input id="equip_brand-<%=row%>" name="equip_brand-<%=row%>" size="5" value="<%= ((equip_brand == null || equip_brand.equals("")) ? "&nbsp;" : equip_brand) %>">
                 </div>
             </td>
 
             <td width="5%">
-                <div id="equip_type-<%=row%>">
-                    <%= ((equip_type == null || equip_type.equals("")) ? "&nbsp;" : equip_type) %>
+                <div>
+                    <input id="equip_type-<%=row%>" name="equip_type-<%=row%>" size="6" value="<%= ((equip_type == null || equip_type.equals("")) ? "&nbsp;" : equip_type) %>">
                 </div>
             </td>
 
             <td width="5%">
-                <div id="app-<%=row%>">
-                    <%= ((app == null || app.equals("")) ? "&nbsp;" : app) %>
+                <div>
+                    <input id="app-<%=row%>" name="app-<%=row%>" size="6" value="<%= ((app == null || app.equals("")) ? "&nbsp;" : app) %>">
                 </div>
             </td>
 
-            <td width="5%">
+            <td width="3%">
                 <div id="state-<%=row%>">
                     <%= ((state == null || state.equals("")) ? "&nbsp;" : state) %>
                 </div>
