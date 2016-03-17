@@ -28,7 +28,7 @@ public class UpdateIPAddressServlet extends HttpServlet {
         String dept = request.getParameter("dept-" + row);
         String model = request.getParameter("model-" + row);
         String equip_brand = request.getParameter("equip_brand-" + row);
-        String equip_type = request.getParameter("equip_brand-" + row);
+        String equip_type = request.getParameter("equip_type-" + row);
         String application = request.getParameter("app-" + row);
         String comment = request.getParameter("comment-" + row);
 
