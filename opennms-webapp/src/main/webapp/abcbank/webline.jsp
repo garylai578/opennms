@@ -1,3 +1,4 @@
+<%@ taglib prefix="html" uri="http://jakarta.apache.org/struts/tags-html" %>
 <%--
   Created by IntelliJ IDEA.
   User: laiguanhui
@@ -92,6 +93,11 @@
             <input id="search" name="search" size="18%" placeholder="请输入要搜索的关键字" value="">
             <a id="doSearch" href="javascript:searchWebLine()"><img src="images/search.png" alt="搜索" border="0"></a>
             <a id="" href="javascript:searchWebLine()">搜索</a>
+        </td>
+
+        <td align="left">
+            <a id="output" href="javasrcipt:outputFile()"><img src="images/output.jpg" alt="输出报表" border=""0></a>
+            <a href="javasrcipt:outputFile()">输出报表</a>
         </td>
     </table>
 

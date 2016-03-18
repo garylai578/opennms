@@ -24,7 +24,9 @@ public class SearchWebLineServlet extends HttpServlet {
         PrintWriter pw=response.getWriter();
 
         try {
-            WebLine[] rs = op.search("applicant", key);
+            String[] cols = {"applicant", "dept", "start_date", "type"};
+            WebLine[] rs = op.search(cols, key);
+
             if(rs != null && rs.length > 0){
                 request.setAttribute("webLines", rs);
                 request.getRequestDispatcher("webline.jsp").forward(request, response);

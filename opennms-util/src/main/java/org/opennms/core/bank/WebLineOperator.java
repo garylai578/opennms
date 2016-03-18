@@ -105,23 +105,28 @@ public class WebLineOperator {
 
     /**
      * search the col with key
-     * @param col column name
+     * @param cols columns name
      * @param key key value
      * @return the searching result
      * @throws SQLException
      */
-    public WebLine[] search(String col, String key) throws SQLException {
+    public WebLine[] search(String[] cols, String key) throws SQLException {
         WebLine[] result = null;
         try {
             Connection conn = Vault.getDbConnection();
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String sql = "SELECT * FROM webline WHERE " + col + " LIKE '%"+ key + "%'";
+            String sql = "";
+            for(String col: cols) {
+                sql += "SELECT * FROM webline WHERE " + col + " LIKE '%" + key + "%' union all ";
+            }
+            sql = sql.substring(0, sql.length()-10);
             log.debug("search sql: " + sql);
             ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
             result = rs2WebLines(rs);
+
         } finally {
             d.cleanUp();
         }
