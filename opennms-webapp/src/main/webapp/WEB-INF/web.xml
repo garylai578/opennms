@@ -839,6 +839,18 @@
     <servlet-name>SearchIPAddressServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.SearchIPAddressServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>DeleteWebLineServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.DeleteWebLineServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddWebLineServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.AddWebLineServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SearchWebLineServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.SearchWebLineServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1207,6 +1219,19 @@
   <servlet-mapping>
     <servlet-name>SearchIPAddressServlet</servlet-name>
     <url-pattern>/abcbank/searchIPAddress</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>DeleteWebLineServlet</servlet-name>
+    <url-pattern>/abcbank/deleteWebLine</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddWebLineServlet</servlet-name>
+    <url-pattern>/abcbank/newWebLine</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchWebLineServlet</servlet-name>
+    <url-pattern>/abcbank/searchWebLine</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  

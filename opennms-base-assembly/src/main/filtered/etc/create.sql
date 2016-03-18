@@ -79,6 +79,7 @@ drop table category_user cascade;
 drop table category_group cascade;
 drop table ipSegment cascade;
 drop table ipaddress cascade;
+drop table webline cascade;
 
 drop sequence catNxtId;
 drop sequence nodeNxtId;
@@ -281,6 +282,40 @@ create table ipaddress (
     equip_brand text,
     application text,
     state text,
+    comment text
+);
+
+--########################################################################
+--# webline table - store the web line messages of the bank
+--#
+--# This table contains the following fields:
+--#  id          : id
+--#  type        : the type of this web line
+--#  applicant   : the applicant of this web line
+--#  approver    : the approver of this web line
+--#  contact     : the contact of applicant
+--#  dept        : the dept that using this web line
+--#  address     : the address of this web line
+--#  start_date  : the date when starting to use this web line
+--#  rent        : the rent of this web line
+--#  vlan_num    : the vlan number of this web line
+--#  port        : the physical port of this web line
+--#  interface   : the interface between the operator
+--#
+--########################################################################
+create table webline (
+    id serial,
+    type text not null,
+    applicant text not null,
+    approver text,
+    contact text not null,
+    dept text not null,
+    address text,
+    start_date date,
+    rent numeric,
+    vlan_num text,
+    port text,
+    interface text,
     comment text
 );
 
