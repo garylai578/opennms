@@ -119,7 +119,10 @@ public class WebLineOperator {
             d.watch(stmt);
             String sql = "";
             for(String col: cols) {
-                sql += "SELECT * FROM webline WHERE " + col + " LIKE '%" + key + "%' union all ";
+                if(col.equals("start_date"))
+                    sql += "SELECT * FROM webline WHERE " + col + " = '" + key + "' union all ";
+                else
+                    sql += "SELECT * FROM webline WHERE " + col + " LIKE '%" + key + "%' union all ";
             }
             sql = sql.substring(0, sql.length()-10);
             log.debug("search sql: " + sql);
