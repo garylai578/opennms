@@ -24,7 +24,7 @@ public class SearchWebLineServlet extends HttpServlet {
         PrintWriter pw=response.getWriter();
 
         try {
-            String[] cols = {"applicant", "dept", "start_date", "type"};
+            String[] cols = {"applicant", "dept", "type"};
             WebLine[] rs = op.search(cols, key);
 
             if(rs != null && rs.length > 0){
