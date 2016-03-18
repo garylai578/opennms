@@ -30,7 +30,7 @@ public class WebLineOperator {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String insert = "insert into webline(type, applicant, approver, contact, dept, address, rent, vlan_num, port, inter, comment, start_date" +
+            String insert = "insert into webline(type, applicant, approver, contact, dept, address, rent, vlan_num, port, interface, comment, start_date" +
                     ") values (" + value.toInsertValue() + ")";
             log.debug("insert sql = " + insert);
             int rc = stmt.executeUpdate(insert);

@@ -139,17 +139,8 @@
             </td>
 
             <td width="5%">
-                <div>
-                    <select id="type-<%=row%>" name="type-<%=row%>">
-                        <%
-                            if(type == null || type.equals(""))
-                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
-                        %>
-                        <option value="办公主线" <%if(type.equals("办公主线")) out.print("selected=\"\""); %>>办公主线</option>
-                        <option value="生产主线" <%if(type.equals("生产主线")) out.print("selected=\"\""); %>>生产主线</option>
-                        <option value="离行点专线" <%if(type.equals("离行点专线")) out.print("selected=\"\""); %>>离行点专线</option>
-                        <option value="互联网专线" <%if(type.equals("互联网专线")) out.print("selected=\"\""); %>>互联网专线</option>
-                    </select>
+                <div id="type-<%=row%>" name="type-<%=row%>">
+                    <%= ((type == null || type.equals("")) ? "&nbsp;" : type) %>
                 </div>
             </td>
 

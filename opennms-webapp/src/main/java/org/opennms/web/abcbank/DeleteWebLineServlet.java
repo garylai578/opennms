@@ -17,7 +17,7 @@ public class DeleteWebLineServlet extends HttpServlet {
     private static final long serialVersionUID = 4289429456093660875L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String tmp = request.getParameter("id");
+        String tmp = request.getParameter("webLineID");
         int id = Integer.parseInt(tmp);
         WebLineOperator op = new WebLineOperator();
         try {
