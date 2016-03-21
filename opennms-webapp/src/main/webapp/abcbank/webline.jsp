@@ -38,6 +38,13 @@
     //通过key获取配置文件
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
 //    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+
+    WebLineOperator op = new WebLineOperator();
+    WebLine[] lines = (WebLine[])request.getAttribute("webLines");
+    if(lines == null)
+        lines = op.selectAll();;
+
+    int row = 0;
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -74,12 +81,19 @@
         document.allWebLines.submit();
     }
 
+    function outputExcel(row){
+        document.allWebLines.action="abcbank/exportExcel";
+        document.allWebLines.rows.value=row;
+        document.allWebLines.submit();
+    }
+
 </script>
 
 <form method="post" name="allWebLines">
     <input type="hidden" name="webLineID"/>
     <input type="hidden" name="rowID"/>
     <input type="hidden" name="searchKey"/>
+    <input type="hidden" name="rows"/>
 
     <h3>线路台帐</h3>
     <table>
@@ -96,8 +110,8 @@
         </td>
 
         <td align="left">
-            <a id="output" href="javasrcipt:outputFile()"><img src="images/output.jpg" alt="输出报表" border=""0></a>
-            <a href="javasrcipt:outputFile()">输出报表</a>
+            <a id="output" href="javasrcipt:outputExcel(<%=row%>)"><img src="images/output.jpg" alt="输出报表" border=""0></a>
+            <a href="javasrcipt:outputExcel(<%=row%>)">输出报表</a>
         </td>
     </table>
 
@@ -118,12 +132,7 @@
             <td width="5%"><b>运营商接口号</b></td>
         </tr>
         <%
-            WebLineOperator op = new WebLineOperator();
-            WebLine[] lines = (WebLine[])request.getAttribute("webLines");
-            if(lines == null)
-                lines = op.selectAll();;
 
-            int row = 0;
             for(WebLine line : lines){
                 String lineId = line.getId();
                 String type = line.getType();
@@ -143,6 +152,7 @@
             <td width="5%" rowspan="2" align="center" style="vertical-align:middle;">
                 <a id="<%= "ips("+lineId+").doStop" %>" href="javascript:deleteWebLine('<%=lineId%>')" onclick="return confirm('确定要删除该专线？')">删除</a>
             </td>
+            <div style="display:none" name="id-<%=row%>"><%=lineId%></>
 
             <td width="5%">
                 <div id="type-<%=row%>" name="type-<%=row%>">
