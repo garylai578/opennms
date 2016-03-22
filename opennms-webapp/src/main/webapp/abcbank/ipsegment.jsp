@@ -99,6 +99,7 @@
     <input type="hidden" name="bankName"/>
     <input type="hidden" name="bankType"/>
     <input type="hidden" name="comments"/>
+    <input type="hidden" name="rows"/>
 
     <h3>IP地址段分配</h3>
 

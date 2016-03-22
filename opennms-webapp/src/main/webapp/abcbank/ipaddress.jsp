@@ -108,6 +108,7 @@
     <input type="hidden" name="ipAddrID"/>
     <input type="hidden" name="rowID"/>
     <input type="hidden" name="searchIP"/>
+    <input type="hidden" name="rows"/>
 
     <h3>IP地址段分配</h3>
     <table>
@@ -319,7 +320,7 @@
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td colspan="15">
                 <div>
-                    <input id="comment-<%=row%>" type="text" size="100%" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
+                    <input id="comment-<%=row%>" name="comment-<%=row%>" type="text" size="100%" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
                 </div>
             </td>
         </tr>
