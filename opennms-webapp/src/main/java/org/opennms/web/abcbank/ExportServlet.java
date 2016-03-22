@@ -48,10 +48,8 @@ public class ExportServlet extends HttpServlet {
             ex.exportExcel("retulst", headers, dataset, out);
             out.close();
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

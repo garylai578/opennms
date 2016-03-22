@@ -124,19 +124,14 @@ public class ExportExcel<T> {
                         cell.setCellValue(textValue);
                     }
                 } catch (SecurityException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (NoSuchMethodException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (IllegalArgumentException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } catch (InvocationTargetException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 } finally {
                     // 清理资源
@@ -147,7 +142,6 @@ public class ExportExcel<T> {
         try {
             workbook.write(out);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

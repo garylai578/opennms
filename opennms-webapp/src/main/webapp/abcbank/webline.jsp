@@ -45,6 +45,7 @@
         lines = op.selectAll();;
 
     int row = 0;
+    int nums = lines.length;
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -110,8 +111,8 @@
         </td>
 
         <td align="left">
-            <a id="output" href="javasrcipt:outputExcel(<%=row%>)"><img src="images/output.jpg" alt="输出报表" border=""0></a>
-            <a href="javasrcipt:outputExcel(<%=row%>)">输出报表</a>
+            <a id="output" href="javascript:outputExcel(<%=nums%>)"><img src="images/output.jpg" alt="输出报表" border=""0></a>
+            <a href="javascript:outputExcel(<%=nums%>)">输出报表</a>
         </td>
     </table>
 
@@ -132,7 +133,6 @@
             <td width="5%"><b>运营商接口号</b></td>
         </tr>
         <%
-
             for(WebLine line : lines){
                 String lineId = line.getId();
                 String type = line.getType();
