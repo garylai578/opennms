@@ -26,16 +26,16 @@ public class ExportServlet extends HttpServlet {
             line.setId(request.getParameter("id-"+i));
             line.setType(request.getParameter("type-"+i));
             line.setApplicant(request.getParameter("applicant-"+i));
-            line.setApplicant(request.getParameter("contact-"+i));
-            line.setApplicant(request.getParameter("approver-"+i));
-            line.setApplicant(request.getParameter("dept-"+i));
-            line.setApplicant(request.getParameter("address-"+i));
-            line.setApplicant(request.getParameter("start_date-"+i));
-            line.setApplicant(request.getParameter("rent-"+i));
-            line.setApplicant(request.getParameter("vlan_num-"+i));
-            line.setApplicant(request.getParameter("port-"+i));
-            line.setApplicant(request.getParameter("inter-"+i));
-            line.setApplicant(request.getParameter("comment-"+i));
+            line.setContact(request.getParameter("contact-"+i));
+            line.setApprover(request.getParameter("approver-"+i));
+            line.setDept(request.getParameter("dept-"+i));
+            line.setAddress(request.getParameter("address-"+i));
+            line.setStart_date(request.getParameter("start_date-"+i));
+            line.setRent(request.getParameter("rent-"+i));
+            line.setVlan_num(request.getParameter("vlan_num-"+i));
+            line.setPort(request.getParameter("port-"+i));
+            line.setInter(request.getParameter("inter-"+i));
+            line.setComment(request.getParameter("comment-"+i));
             dataset.add(line);
         }
 
