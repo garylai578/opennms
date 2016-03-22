@@ -113,8 +113,8 @@ public class ExportExcel<T> {
                     Method getMethod = tCls.getMethod(getMethodName, new Class[]{});
                     Object value = getMethod.invoke(t, new Object[]{});
                     // 判断值的类型后可以强制类型转换（此处省略）
-                    String textValue =  value.toString();
-                    if (textValue != null) {
+                    if(value != null){
+                        String textValue =  value.toString();
                         //为3.0的新特性
 //                        HSSFRichTextString richString = new HSSFRichTextString(textValue);
 //                        HSSFFont font3 = workbook.createFont();
