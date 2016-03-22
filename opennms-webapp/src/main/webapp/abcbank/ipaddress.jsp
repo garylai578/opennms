@@ -39,6 +39,11 @@
     //通过key获取配置文件
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
 //    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+
+    BankIPAddress[] ips = (BankIPAddress[])request.getAttribute("ip_addresses");
+    if(ips == null)
+        ips = op.selectAll();
+    int nums = ips.length;
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -91,6 +96,12 @@
         document.allIPSegments.submit();
     }
 
+    function outputExcel(row){
+        document.allIPSegments.action="abcbank/exportIPAddress";
+        document.allIPSegments.rows.value=row;
+        document.allIPSegments.submit();
+    }
+
 </script>
 
 <form method="post" name="allIPSegments">
@@ -111,6 +122,11 @@
         <a id="doSearch" href="javascript:searchIPAddress()"><img src="images/search.png" alt="搜索" border="0"></a>
         <a id="" href="javascript:searchIPAddress()">搜索</a>
     </td>
+
+        <td align="left">
+            <a id="output" href="javascript:outputExcel(<%=nums%>)"><img src="images/output.jpg" alt="输出报表" border=""0></a>
+            <a href="javascript:outputExcel(<%=nums%>)">输出报表</a>
+        </td>
     </table>
 
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
@@ -134,10 +150,6 @@
             <td width="3%"><b>使用情况</b></td>
         </tr>
         <%
-            BankIPAddress[] ips = (BankIPAddress[])request.getAttribute("ip_addresses");
-            if(ips == null)
-                ips = op.selectAll();
-
             int row = 0;
             for(BankIPAddress ip : ips){
                 String ipId = ip.getId();
@@ -183,9 +195,12 @@
                 <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPAddress('<%=ipId%>', '<%=row%>')">变更</a>
             </td>
 
+            <input type="hidden" name="id-<%=row%>" value="<%=ipId %>"/>
+
             <td width="5%">
                 <div id="ipaddr-<%=row%>">
                     <%= ((ipaddr == null || ipaddr.equals("")) ? "&nbsp;" : ipaddr) %>
+                    <input type="hidden" name="ipaddr-<%=row%>" value="<%= ((ipaddr == null || ipaddr.equals("")) ? "&nbsp;" : ipaddr) %>"/>
                 </div>
             </td>
 
@@ -207,30 +222,35 @@
             <td width="5%">
                 <div id="mask-<%=row%>">
                     <%= ((mask == null || mask.equals("")) ? "&nbsp;" : mask) %>
+                    <input type="hidden" name="mask-<%=row%>" value="<%= ((mask == null || mask.equals("")) ? "&nbsp;" : mask) %>"/>
                 </div>
             </td>
 
             <td width="5%">
                 <div id="gateway-<%=row%>">
                     <%= ((gateway == null || gateway.equals("")) ? "&nbsp;" : gateway) %>
+                    <input type="hidden" name="gateway-<%=row%>" value="<%= ((gateway == null || gateway.equals("")) ? "&nbsp;" : gateway) %>"/>
                 </div>
             </td>
 
             <td width="5%">
                 <div id="mac-<%=row%>">
                     <%= ((mac == null || mac.equals("")) ? "&nbsp;" : mac) %>
+                    <input type="hidden" name="mac-<%=row%>" value="<%= ((mac == null || mac.equals("")) ? "&nbsp;" : mac) %>"/>
                 </div>
             </td>
 
             <td width="5%">
                 <div id="apply_date-<%=row%>">
                     <%= ((apply_date == null || apply_date.equals("")) ? "&nbsp;" : apply_date) %>
+                    <input type="hidden" name="apply_date-<%=row%>" value="<%= ((apply_date == null || apply_date.equals("")) ? "&nbsp;" : apply_date) %>"/>
                 </div>
             </td>
 
             <td width="5%">
                 <div id="start_date-<%=row%>">
                     <%= ((start_date == null || start_date.equals("")) ? "&nbsp;" : start_date) %>
+                    <input type="hidden" name="start_date-<%=row%>" value="<%= ((start_date == null || start_date.equals("")) ? "&nbsp;" : start_date) %>"/>
                 </div>
             </td>
 
@@ -291,6 +311,7 @@
             <td width="3%">
                 <div id="state-<%=row%>">
                     <%= ((state == null || state.equals("")) ? "&nbsp;" : state) %>
+                    <input type="hidden" name="state-<%=row%>" value="<%= ((state == null || state.equals("")) ? "&nbsp;" : state) %>"/>
                 </div>
             </td>
         </tr>

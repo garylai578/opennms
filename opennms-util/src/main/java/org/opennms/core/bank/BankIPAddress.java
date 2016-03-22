@@ -6,22 +6,22 @@ package org.opennms.core.bank;
 public class BankIPAddress {
     String id;
     String ip;
+    String network_type;
     String mask;
     String gateway;
     String mac;
-    String network_type;
-    String start_date;
-    String stop_date;
     String apply_date;
+    String start_date;
     String users;
     String bank;
     String dept;
     String model;
-    String equip_type;
     String equip_brand;
+    String equip_type;
     String application;
     String state;
     String comment;
+    String stop_date;
 
     public String getId() {
         return id;
@@ -37,6 +37,14 @@ public class BankIPAddress {
 
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    public String getNetwork_type() {
+        return network_type;
+    }
+
+    public void setNetwork_type(String network_type) {
+        this.network_type = network_type;
     }
 
     public String getMask() {
@@ -63,12 +71,12 @@ public class BankIPAddress {
         this.mac = mac;
     }
 
-    public String getNetwork_type() {
-        return network_type;
+    public String getApply_date() {
+        return apply_date;
     }
 
-    public void setNetwork_type(String network_type) {
-        this.network_type = network_type;
+    public void setApply_date(String apply_date) {
+        this.apply_date = apply_date;
     }
 
     public String getStart_date() {
@@ -77,22 +85,6 @@ public class BankIPAddress {
 
     public void setStart_date(String start_date) {
         this.start_date = start_date;
-    }
-
-    public String getStop_date() {
-        return stop_date;
-    }
-
-    public void setStop_date(String stop_date) {
-        this.stop_date = stop_date;
-    }
-
-    public String getApply_date() {
-        return apply_date;
-    }
-
-    public void setApply_date(String apply_date) {
-        this.apply_date = apply_date;
     }
 
     public String getUsers() {
@@ -127,20 +119,20 @@ public class BankIPAddress {
         this.model = model;
     }
 
-    public String getEquip_type() {
-        return equip_type;
-    }
-
-    public void setEquip_type(String equip_type) {
-        this.equip_type = equip_type;
-    }
-
     public String getEquip_brand() {
         return equip_brand;
     }
 
     public void setEquip_brand(String equip_brand) {
         this.equip_brand = equip_brand;
+    }
+
+    public String getEquip_type() {
+        return equip_type;
+    }
+
+    public void setEquip_type(String equip_type) {
+        this.equip_type = equip_type;
     }
 
     public String getApplication() {
@@ -165,6 +157,14 @@ public class BankIPAddress {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getStop_date() {
+        return stop_date;
+    }
+
+    public void setStop_date(String stop_date) {
+        this.stop_date = stop_date;
     }
 
     public String toInsertValue() {

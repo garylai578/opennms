@@ -5,7 +5,7 @@ package org.opennms.core.bank;
  */
 public class WebLine {
 
-    private String id, type, applicant, approver, contact, dept, address, start_date, rent, vlan_num, port, inter, comment;
+    private String id, type, applicant, contact, approver, dept, address, start_date, rent, vlan_num, port, inter, comment;
 
     public String getId() {
         return id;
@@ -31,6 +31,13 @@ public class WebLine {
         this.applicant = applicant;
     }
 
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
     public String getApprover() {
         return approver;
     }
@@ -39,13 +46,6 @@ public class WebLine {
         this.approver = approver;
     }
 
-    public String getContact() {
-        return contact;
-    }
-
-    public void setContact(String contact) {
-        this.contact = contact;
-    }
 
     public String getDept() {
         return dept;

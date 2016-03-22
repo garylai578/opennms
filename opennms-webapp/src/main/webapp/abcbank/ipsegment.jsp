@@ -39,6 +39,9 @@
     //通过key获取配置文件
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
     String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+
+    IPSegment[] ips = op.selectAll();
+    int nums = ips.length;
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -82,6 +85,12 @@
         document.allIPSegments.submit();
     }
 
+    function outputExcel(row){
+        document.allIPSegments.action="abcbank/exportIPSegment";
+        document.allIPSegments.rows.value=row;
+        document.allIPSegments.submit();
+    }
+
 </script>
 
 <form method="post" name="allIPSegments">
@@ -93,11 +102,17 @@
 
     <h3>IP地址段分配</h3>
 
-    <a id="doNewIPSegment" href="javascript:addIPSegment()"><img src="images/add1.gif" alt="新增IP段" border="0"></a>
-    <a href="javascript:addIPSegment()">新增IP段</a>
+    <table>
+    <td align="left">
+        <a id="doNewIPSegment" href="javascript:addIPSegment()"><img src="images/add1.gif" alt="新增IP段" border="0"></a>
+        <a href="javascript:addIPSegment()">新增IP段</a>
+    </td>
 
-    <br/>
-    <br/>
+    <td align="left">
+        <a id="output" href="javascript:outputExcel(<%=nums%>)"><img src="images/output.jpg" alt="输出报表" border=""0></a>
+        <a href="javascript:outputExcel(<%=nums%>)">输出报表</a>
+    </td>
+    </table>
 
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
@@ -112,7 +127,6 @@
             <td width="5%"><b>使用情况</b></td>
         </tr>
         <%
-            IPSegment[] ips = op.selectAll();
             int row = 0;
             for(IPSegment ip : ips){
                 String ipId = ip.getId();
@@ -151,27 +165,33 @@
                 <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPSegment('<%=ipId%>', '<%=row%>')">修改</a>
             </td>
 
+            <input type="hidden" name="id-<%=row%>" value="<%=ipId %>"/>
+
             <td width="10%">
                 <div id="gateway-<%=row%>">
                     <%= ((gateway == null || gateway.equals("")) ? "&nbsp;" : gateway) %>
+                    <input type="hidden" name="gateway-<%=row%>" value="<%= ((gateway == null || gateway.equals("")) ? "&nbsp;" : gateway) %>"/>
                 </div>
             </td>
 
             <td width="10%">
                 <div id="mask-<%=row%>">
                     <%= ((mask == null || mask.equals("")) ? "&nbsp;" : mask) %>
+                    <input type="hidden" name="mask-<%=row%>" value="<%= ((mask == null || mask.equals("")) ? "&nbsp;" : mask) %>"/>
                 </div>
             </td>
 
             <td width="20%">
                 <div id="ipsegment-<%=row%>">
                     <%= ((startIP == null || startIP.equals("") || endIP == null || endIP.equals("")) ? "&nbsp;" : startIP + "-" + endIP) %>
+                    <input type="hidden" name="startIP-<%=row%>" value="<%= ((startIP == null || startIP.equals("")) ? "&nbsp;" : startIP) %>"/>
+                    <input type="hidden" name="endIP-<%=row%>" value="<%= ((endIP == null || endIP.equals("")) ? "&nbsp;" : endIP) %>"/>
                 </div>
             </td>
 
             <td width="10%">
                 <div>
-                    <select id="bankname-<%=row%>">
+                    <select id="bankname-<%=row%>" name="bankname-<%=row%>">
                         <%
                             if(name == null || name.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
@@ -189,7 +209,7 @@
 
             <td width="5%">
                 <div>
-                    <select id="banktype-<%=row%>">
+                    <select id="banktype-<%=row%>" name="banktype-<%=row%>">
                         <%
                             if(type == null || type.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
@@ -209,12 +229,14 @@
             <td width="10%">
                 <div id="createdate-<%=row%>">
                     <%= ((time == null || time.equals("")) ? "&nbsp;" : time) %>
+                    <input type="hidden" name="createdate-<%=row%>" value="<%= ((time == null || time.equals("")) ? "&nbsp;" : time) %>"/>
                 </div>
             </td>
 
             <td width="5%">
                 <div id=state-"<%=row%>">
                     <%= ((state == null || state.equals("")) ? "&nbsp;" : state) %>
+                    <input type="hidden" name="state-<%=row%>" value="<%= ((state == null || state.equals("")) ? "&nbsp;" : state) %>"/>
                 </div>
             </td>
         </tr>

@@ -78,7 +78,7 @@
     }
 
     function outputExcel(row){
-        document.allWebLines.action="abcbank/exportExcel";
+        document.allWebLines.action="abcbank/exportWeblineExcel";
         document.allWebLines.rows.value=row;
         document.allWebLines.submit();
     }

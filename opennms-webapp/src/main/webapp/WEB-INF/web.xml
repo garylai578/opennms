@@ -852,8 +852,16 @@
     <servlet-class>org.opennms.web.abcbank.SearchWebLineServlet</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>ExportServlet</servlet-name>
-    <servlet-class>org.opennms.web.abcbank.ExportServlet</servlet-class>
+    <servlet-name>ExportWebLineServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ExportWeblineServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ExportIPAddressServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ExportIPAddressServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ExportIPSegmentServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ExportIPSegmentServlet</servlet-class>
   </servlet>
 
   <!-- desktop graph servlet mapping -->
@@ -1239,10 +1247,17 @@
   </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>ExportServlet</servlet-name>
-    <url-pattern>/abcbank/exportExcel</url-pattern>
+    <servlet-name>ExportWebLineServlet</servlet-name>
+    <url-pattern>/abcbank/exportWeblineExcel</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+    <servlet-name>ExportIPAddressServlet</servlet-name>
+    <url-pattern>/abcbank/exportIPAddress</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExportIPSegmentServlet</servlet-name>
+    <url-pattern>/abcbank/exportIPSegment</url-pattern>
+  </servlet-mapping>
   <!-- WARMERGE: insert servlet -->  
   <!-- WARMERGE: insert servlet-mapping -->  
 
