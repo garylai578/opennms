@@ -5,17 +5,34 @@ package org.opennms.core.bank;
  * Created by laiguanhui on 2016/2/16.
  */
 public class IPSegment {
-    private int id;
-    private IPPool ipPool;
+    private String id;
     private String gateway;
     private String mask;
     private String startIP;
     private String endIP;
     private String bankname;
-    private String createTime;
     private String banktype;
+    private String createTime;
     private String state;
     private String comment;
+    private String stopTime;
+    private IPPool ipPool;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getGateway() {
+        return gateway;
+    }
+
+    public void setGateway(String gateway) {
+        this.gateway = gateway;
+    }
 
     public String getMask() {
         return mask;
@@ -41,34 +58,6 @@ public class IPSegment {
         this.endIP = endIP;
     }
 
-    public String getGateway() {
-        return gateway;
-    }
-
-    public void setGateway(String gateway) {
-        this.gateway = gateway;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public IPPool getIpPool() {
-        return ipPool;
-    }
-
-    public void setIpPool(IPPool ipPool) {
-        this.ipPool = ipPool;
-        this.mask = ipPool.getNetMask();
-        this.gateway = ipPool.getStartIP();
-        this.startIP = ipPool.getStartIP();
-        this.endIP = ipPool.getEndIP();
-    }
-
     public String getBankname() {
         return bankname;
     }
@@ -77,20 +66,20 @@ public class IPSegment {
         this.bankname = bankname;
     }
 
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
     public String getBanktype() {
         return banktype;
     }
 
     public void setBanktype(String banktype) {
         this.banktype = banktype;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getState() {
@@ -107,6 +96,26 @@ public class IPSegment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public String getStopTime() {
+        return stopTime;
+    }
+
+    public void setStopTime(String stopTime) {
+        this.stopTime = stopTime;
+    }
+
+    public IPPool getIpPool() {
+        return ipPool;
+    }
+
+    public void setIpPool(IPPool ipPool) {
+        this.ipPool = ipPool;
+        this.mask = ipPool.getNetMask();
+        this.gateway = ipPool.getStartIP();
+        this.startIP = ipPool.getStartIP();
+        this.endIP = ipPool.getEndIP();
     }
 
     public String toInsertValues() {

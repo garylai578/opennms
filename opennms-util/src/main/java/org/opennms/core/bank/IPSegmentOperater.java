@@ -1,8 +1,8 @@
 package org.opennms.core.bank;
 
+import org.apache.log4j.Logger;
 import org.opennms.core.resource.Vault;
 import org.opennms.core.utils.DBUtils;
-import org.opennms.core.utils.ThreadCategory;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class IPSegmentOperater {
     private final DBUtils d = new DBUtils(getClass());
-    private ThreadCategory log = log();
+    final static Logger log =  Logger.getLogger(IPSegmentOperater.class);
 
     public void insert(IPSegment ipSegment) throws SQLException {
         try {
@@ -45,7 +45,7 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipSegment");
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id");
             d.watch(rs);
             result = rs2IPSegment(rs);
         } finally {
@@ -53,6 +53,69 @@ public class IPSegmentOperater {
         }
 
         return result;
+    }
+
+    /**
+     * Select all unused ipsegment from table ipSegment
+     *
+     * @return IPSegment[]: all results.
+     * @throws SQLException
+     */
+    public IPSegment[] selectAllUnused() throws  SQLException {
+        IPSegment[] result = null;
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment WHERE state = '停用'");
+            d.watch(rs);
+            result = rs2IPSegment(rs);
+        } finally {
+            d.cleanUp();
+        }
+
+        return result;
+    }
+
+    /**
+     * Select the last ip from table ipSegment.
+     * @return the last ip
+     */
+    public String selectLastIP() throws SQLException {
+        String lastIP = null;
+        log.warn("select last ip start:");
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id DESC ");
+            d.watch(rs);
+            if(rs.next())
+                lastIP = rs.getString("endip");
+            log.debug("select last ip:" + lastIP);
+        } finally {
+            d.cleanUp();
+        }
+        return lastIP;
+    }
+
+    public IPSegment selectById(String id) throws  SQLException {
+        IPSegment[] result = null;
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            ResultSet rs = stmt.executeQuery("select * FROM ipSegment where id = " + id);
+            d.watch(rs);
+            result = rs2IPSegment(rs);
+        } finally {
+            d.cleanUp();
+        }
+
+        return result[0];
     }
 
     /**
@@ -67,8 +130,8 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            int rc = stmt.executeUpdate(("delete from ipSegment where gateway = '" + ipSegment.getIpPool().getStartIP() + "')"));
-            log().debug("IPSegmentOperater.delete: SQL update result = " + rc);
+            int rc = stmt.executeUpdate("delete from ipSegment where gateway = '" + ipSegment.getIpPool().getStartIP() + "'");
+            log.debug("IPSegmentOperater.delete: SQL update result = " + rc);
         } finally {
             d.cleanUp();
         }
@@ -86,8 +149,8 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            int rc = stmt.executeUpdate(("delete from ipSegment where gateway = '" + gateWay + "')"));
-            log().debug("IPSegmentOperater.delete: SQL update result = " + rc);
+            int rc = stmt.executeUpdate("delete from ipSegment where gateway = '" + gateWay + "'");
+            log.debug("IPSegmentOperater.delete: SQL update result = " + rc);
         } finally {
             d.cleanUp();
         }
@@ -118,37 +181,16 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            int rc = stmt.executeUpdate(("update ipSegment set " + colName + " = '" + newValue + "' where id =" + id));
-            log().debug("IPSegmentOperater.update by id: SQL update result = " + rc);
+            String sql;
+            if(newValue.equals("null"))
+                sql = "update ipSegment set " + colName + " = " + newValue + " where id =" + id;
+            else
+                sql = "update ipSegment set " + colName + " = '" + newValue + "' where id =" + id;
+            int rc = stmt.executeUpdate(sql);
+            log.debug("IPSegmentOperater.update by id, SQL = " + sql + ". rc= " + rc);
         } finally {
             d.cleanUp();
         }
-    }
-
-    /**
-     * Select the last ip from table ipSegment. @TODO
-     * @return the last ip
-     */
-    public String selectLastIP() throws SQLException {
-        String lastIP = null;
-        try {
-            Connection conn = Vault.getDbConnection();
-            d.watch(conn);
-            Statement stmt = conn.createStatement();
-            d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by endip");
-            d.watch(rs);
-
-        } finally {
-            d.cleanUp();
-        }
-
-
-        return lastIP;
-    }
-
-    private ThreadCategory log() {
-        return ThreadCategory.getInstance(getClass());
     }
 
     private IPSegment[] rs2IPSegment(ResultSet rs) throws SQLException {
@@ -157,20 +199,20 @@ public class IPSegmentOperater {
 
         while(rs.next()){
             IPSegment ip = new IPSegment();
+            ip.setId(String.valueOf(rs.getInt("id")));
             ip.setGateway(rs.getString("gateway"));
             ip.setMask(rs.getString("mask"));
             ip.setStartIP(rs.getString("startip"));
             ip.setEndIP(rs.getString("endip"));
             ip.setBankname(rs.getString("name"));
             ip.setCreateTime(rs.getString("createtime"));
+            ip.setStopTime(rs.getString("stoptime"));
             ip.setBanktype(rs.getString("type"));
             ip.setState(rs.getString("state"));
             ip.setComment(rs.getString("comment"));
             list.add(ip);
         }
-
         result = list.toArray(new IPSegment[list.size()]);
         return result;
-
     }
 }

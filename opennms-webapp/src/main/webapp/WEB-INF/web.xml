@@ -800,6 +800,10 @@
   <servlet>
     <servlet-name>addIPSegment</servlet-name>
     <servlet-class>org.opennms.web.abcbank.AddIPSegmentServlet</servlet-class>
+    <init-param>
+      <param-name>InitIP</param-name>
+      <param-value>172.16.0.0</param-value>
+    </init-param>
   </servlet>
   
   <servlet>
@@ -811,6 +815,55 @@
     <servlet-name>startIPSegment</servlet-name>
     <servlet-class>org.opennms.web.abcbank.StartIPSegmentServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>updateIPSegmentServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.UpdateIPSegmentServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>addIPAddress</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.AddIPAddressServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>StopIPAddressServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.StopIPAddressServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>StartIPAddressServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.StartIPAddressServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UpdateIPAddressServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.UpdateIPAddressServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SearchIPAddressServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.SearchIPAddressServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DeleteWebLineServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.DeleteWebLineServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddWebLineServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.AddWebLineServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SearchWebLineServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.SearchWebLineServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ExportWebLineServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ExportWeblineServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ExportIPAddressServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ExportIPAddressServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ExportIPSegmentServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ExportIPSegmentServlet</servlet-class>
+  </servlet>
+
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
   
@@ -1145,14 +1198,66 @@
   
   <servlet-mapping>
     <servlet-name>stopIPSegment</servlet-name>
-    <url-pattern>/bacbank/stopIPSegment</url-pattern>
+    <url-pattern>/abcbank/stopIPSegment</url-pattern>
   </servlet-mapping>
 
   <servlet-mapping>
     <servlet-name>startIPSegment</servlet-name>
-    <url-pattern>/bacbank/startIPSegment</url-pattern>
+    <url-pattern>/abcbank/startIPSegment</url-pattern>
   </servlet-mapping>
 
+  <servlet-mapping>
+    <servlet-name>updateIPSegmentServlet</servlet-name>
+    <url-pattern>/abcbank/updateIPSegment</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>addIPAddress</servlet-name>
+    <url-pattern>/abcbank/newIPAddress</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>StopIPAddressServlet</servlet-name>
+    <url-pattern>/abcbank/stopIPAddress</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StartIPAddressServlet</servlet-name>
+    <url-pattern>/abcbank/startIPAddress</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateIPAddressServlet</servlet-name>
+    <url-pattern>/abcbank/updateIPAddress</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchIPAddressServlet</servlet-name>
+    <url-pattern>/abcbank/searchIPAddress</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>DeleteWebLineServlet</servlet-name>
+    <url-pattern>/abcbank/deleteWebLine</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddWebLineServlet</servlet-name>
+    <url-pattern>/abcbank/newWebLine</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchWebLineServlet</servlet-name>
+    <url-pattern>/abcbank/searchWebLine</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ExportWebLineServlet</servlet-name>
+    <url-pattern>/abcbank/exportWeblineExcel</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExportIPAddressServlet</servlet-name>
+    <url-pattern>/abcbank/exportIPAddress</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExportIPSegmentServlet</servlet-name>
+    <url-pattern>/abcbank/exportIPSegment</url-pattern>
+  </servlet-mapping>
   <!-- WARMERGE: insert servlet -->  
   <!-- WARMERGE: insert servlet-mapping -->  
 

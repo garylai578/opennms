@@ -2,6 +2,10 @@ package org.opennms.core.bank;
 
 import junit.framework.TestCase;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class IPPoolCaculaterTest extends TestCase{
 
     public void testGetStartIP(){
@@ -62,8 +66,29 @@ public class IPPoolCaculaterTest extends TestCase{
 
         ic = new IPPoolCaculater("192.168.0.152", 128);
         assertEquals("255.255.255.128", ic.getIPPool().getNetMask());
-        assertEquals("0.0.0.0", ic.getIPPool().getStartIP());
-        assertEquals("0.0.0.0", ic.getIPPool().getEndIP());
+        assertEquals("192.168.1.0", ic.getIPPool().getStartIP());
+        assertEquals("192.168.1.127", ic.getIPPool().getEndIP());
+
+        ic = new IPPoolCaculater("172.16.0.191", 128);
+        assertEquals("255.255.255.128", ic.getIPPool().getNetMask());
+        assertEquals("172.16.1.0", ic.getIPPool().getStartIP());
+        assertEquals("172.16.1.127", ic.getIPPool().getEndIP());
+
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+
+        try {
+            long to = sf.parse(sf.format(date)).getTime();
+            long from = sf.parse("2016-03-4").getTime();
+            System.out.println((to - from) / (1000 * 60 * 60 * 24));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+//        ic = new IPPoolCaculater("172.16.0.191", 4);
+//        assertEquals("255.255.255.252", ic.getIPPool().getNetMask());
+//        assertEquals("172.16.0.192", ic.getIPPool().getStartIP());
+//        assertEquals("172.16.0.195", ic.getIPPool().getEndIP());
     }
 
 }
