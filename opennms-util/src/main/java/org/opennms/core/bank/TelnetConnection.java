@@ -4,6 +4,7 @@ package org.opennms.core.bank;
  * Created by laiguanhui on 2016/3/29.
  */
 import org.apache.commons.net.telnet.TelnetClient;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,7 @@ import java.net.SocketException;
  *
  */
 public class TelnetConnection {
+    final static Logger log =  Logger.getLogger(TelnetConnection.class);
 
     private TelnetClient telnet = null;
     private String prompt = "#$>]";
@@ -28,6 +30,7 @@ public class TelnetConnection {
         if(telnet == null) {
             telnet = new TelnetClient();
             try {
+                log.debug("telnet connect, host:" + host + ", port:"+ port);
                 telnet.connect(host, port);
                 in = telnet.getInputStream();
                 out = new PrintStream(telnet.getOutputStream());
@@ -57,7 +60,7 @@ public class TelnetConnection {
         write(username);
         readUntil(this.passwordPrompt);
         write(password);
-        System.out.println("登录成功");
+        log.debug("登录成功");
         readUntilPrompt(this.prompt);
 
         if(this.loginPrompt != null)
@@ -77,6 +80,7 @@ public class TelnetConnection {
             char ch = (char) in.read();
             while (true) {
                 sb.append(ch);
+                log.debug("sb:" + sb);
                 if (ch == lastChar) {
                     if (sb.toString().endsWith(pattern)) {
 //                        System.out.println(sb);
@@ -227,7 +231,7 @@ public class TelnetConnection {
 
     public static void main(String[] args) {
         try {
-            System.out.println("启动Telnet...");
+            log.debug("启动Telnet...");
             String ip = "172.16.3.254";
             int port = 23;
             String user = "admin";

@@ -187,7 +187,7 @@ public class BackupSwitcherServlet extends HttpServlet {
      */
     private String backup(){
         TelnetConnection telnet = new TelnetConnection(host, port);
-        telnet.setUsernamePrompt("login:");
+        telnet.setUsernamePrompt(":");
         telnet.setLoginPrompt(null);
         telnet.login(user, pwd, "");
         String result = telnet.sendCommand(backup);

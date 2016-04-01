@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %><
+<%@ page import="java.util.Properties" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="true"%>
 
 <jsp:include page="/includes/header.jsp" flush="false">

@@ -87,6 +87,6 @@ public class Switcher {
             else
                 value += "'" + col + "', ";
         }
-        return value;
+        return value.substring(0, value.length()-2);
     }
 }

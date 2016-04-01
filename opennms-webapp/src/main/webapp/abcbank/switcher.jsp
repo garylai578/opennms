@@ -48,34 +48,34 @@
 
     function addSwitcher()
     {
-        document.allSwitchers.action="newSwitcher.jsp";
+        document.allSwitchers.action="abcbank/newSwitcher.jsp";
         document.allSwitchers.submit();
     }
 
     function deleteSwitcher(id)
     {
-        document.allSwitchers.action="deleteSwitcher";
+        document.allSwitchers.action="abcbank/deleteSwitcher";
         document.allSwitchers.switcherId.value=id;
         document.allSwitchers.submit();
     }
 
     function recoverySwitcher(rowID)
     {
-        document.allSwitchers.action="recoverySwitcher";
+        document.allSwitchers.action="abcbank/recoverySwitcher";
         document.allSwitchers.rowID.value=rowID;
         document.allSwitchers.submit();
     }
 
     function backupSwitcher(rowID)
     {
-        document.allSwitchers.action="backupSwitcher";
+        document.allSwitchers.action="abcbank/backupSwitcher";
         document.allSwitchers.rowID.value=rowID;
         document.allSwitchers.submit();
     }
 
     function backupSwitcherCycle(rowID)
     {
-        document.allSwitchers.action="backupSwitcher";
+        document.allSwitchers.action="abcbank/backupSwitcher";
         document.allSwitchers.rowID.value=rowID;
         document.allSwitchers.isCycle.value=1;
         document.allSwitchers.submit();
@@ -152,7 +152,7 @@
         </td>
 
         <td>
-            <div><a id="log" href="switcher.log">日志</a></div>
+            <div><a id="log" href="abcbank/switcher.log">日志</a></div>
         </td>
     </table>
 
