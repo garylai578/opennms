@@ -133,6 +133,7 @@
     <div class="boxWrapper">
       <ul class="plain">  
         <li><a href="admin/discovery/modifyDiscoveryConfig">配置自动发现</a></li>
+        <li><a href="abcbank/switcher.jsp">交换机配置管理</a></li>
         <li><a href="javascript:snmpConfigPost()">通过IP配置SNMP团体名</a></li>
         <li><a href="javascript:snmpManagePost()">配置每个接口SNMP数据采集</a></li>
 		<!-- Removed this - see bug 586
@@ -209,6 +210,9 @@
         
         <p><b>配置自动发现</b>:配置IP地址(单一地址或地址段)给OpenNMS定期执行pings，以便及时发现新的节点。
          </p>
+
+        <p><b>交换机配置管理</b>:对交换机进行手工或定时的备份和恢复操作。
+        </p>
         
 	<P><B><B>通过IP配置SNMP团体名</B>:配置的团体名用来进行SNMP数据采集和其它SNMP操作。OpenNMS附带了一个默认为"public"的团体名。
 	如果你已经在设备上设置了不同的<em>读</em>团体名，则必须在这里进行设置，以便从这些设备上采集数据。
