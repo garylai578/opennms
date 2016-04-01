@@ -863,6 +863,22 @@
     <servlet-name>ExportIPSegmentServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.ExportIPSegmentServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>DeleteSwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.DeleteSwitcherServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>BackupSwithcerServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.BackupSwitcherServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>RecoverySwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.RecoverySwithcerServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddSwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.AddSwitcherServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1258,6 +1274,24 @@
     <servlet-name>ExportIPSegmentServlet</servlet-name>
     <url-pattern>/abcbank/exportIPSegment</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AddSwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/addSwitcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteSwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/deleteSwither</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BackupSwithcerServlet</servlet-name>
+    <url-pattern>/abcbank/backupSwitcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>RecoverySwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/recoverySwitcher</url-pattern>
+  </servlet-mapping>
+  
   <!-- WARMERGE: insert servlet -->  
   <!-- WARMERGE: insert servlet-mapping -->  
 

@@ -80,6 +80,7 @@ drop table category_group cascade;
 drop table ipSegment cascade;
 drop table ipaddress cascade;
 drop table webline cascade;
+drop table switcher CASCADE;
 
 drop sequence catNxtId;
 drop sequence nodeNxtId;
@@ -316,6 +317,31 @@ create table webline (
     vlan_num text,
     port text,
     interface text,
+    comment text
+);
+
+--########################################################################
+--# switcher table - store the switcher messages of the bank
+--#
+--# This table contains the following fields:
+--#  id          : id
+--#  brand       : the brand of the switcher
+--#  host        : the host ip of the switcher
+--#  username    : the user name to login the switcher
+--#  password    : the login password of the switcher
+--#  backup      : the backup instruction of the switcher
+--#  recovery    : the recovery instruction of the switcher
+--#  comment     : the comment of the record
+--#
+--########################################################################
+create table switcher (
+    id serial,
+    brand text,
+    host text not null,
+    username text not null,
+    password text not null,
+    backup text not null,
+    recovery text not null,
     comment text
 );
 
