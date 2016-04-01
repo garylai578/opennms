@@ -101,7 +101,7 @@ public class BackupSwitcherServlet extends HttpServlet {
         }
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw = response.getWriter();
-        pw.print("<script language='javascript'>alert('" + alertMsg + "' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
+        pw.print("<script language='javascript'>alert('" + fileName + "," + alertMsg + "' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
         pw.close();
     }
 
