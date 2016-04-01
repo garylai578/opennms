@@ -341,7 +341,7 @@ create table switcher (
     username text not null,
     password text not null,
     backup text not null,
-    recovery text not null,
+    recovery text,
     comment text
 );
 

@@ -46,8 +46,7 @@
         var host = new String(document.newSwitcher.host.value);
         var user = new String(document.newSwitcher.user.value);
         var password = new String(document.newSwitcher.password.value);
-        var backup = new String(document.newSwitcher.backup.value);;
-        var recovery = new String(document.newSwitcher.recovery.value);;
+        var backup = new String(document.newSwitcher.backup.value);
         if(host==0 || host=="") {
             alert("请填写管理IP！");
             isCommitted = false;
@@ -62,10 +61,6 @@
             return false;
         }else if(backup == 0 || backup ==""){
             alert("请填写交换机的备份命令！");
-            isCommitted = false;
-            return false;
-        }else if(recovery == 0 || recovery ==""){
-            alert("请填写交换机的恢复命令！");
             isCommitted = false;
             return false;
         }else{
@@ -130,7 +125,7 @@
         </tr>
 
         <tr>
-            <td>*恢复命令：</td>
+            <td>恢复命令：</td>
             <td>
                 <input id="recovery" name="recovery" type="text" size="100" required="required"/>
             </td>

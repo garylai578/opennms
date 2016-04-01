@@ -1281,7 +1281,7 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>DeleteSwitcherServlet</servlet-name>
-    <url-pattern>/abcbank/deleteSwither</url-pattern>
+    <url-pattern>/abcbank/deleteSwitcher</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>BackupSwithcerServlet</servlet-name>

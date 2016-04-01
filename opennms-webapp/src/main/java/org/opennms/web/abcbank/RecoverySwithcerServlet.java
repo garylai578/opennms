@@ -26,7 +26,7 @@ public class RecoverySwithcerServlet extends HttpServlet {
     private String fileName = "";
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        fileName = this.getServletContext().getRealPath("/") + "/opennms/abcbank/switcher.log";
+        fileName = this.getServletContext().getRealPath("/") + "/abcbank/switcher.log";
         String tmp = request.getParameter("rowID");
         int row = Integer.parseInt(tmp);
         host = request.getParameter("host-"+row);

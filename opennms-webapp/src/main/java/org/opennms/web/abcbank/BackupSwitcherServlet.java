@@ -49,7 +49,7 @@ public class BackupSwitcherServlet extends HttpServlet {
 
         Date nowDate = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        fileName = this.getServletContext().getRealPath("/") + "/opennms/abcbank/switcher.log";
+        fileName = this.getServletContext().getRealPath("/") + "/abcbank/switcher.log";
         System.out.println(fileName);
 
         //如果没有设置定时器，则马上执行，否则在定时时间执行
@@ -101,7 +101,7 @@ public class BackupSwitcherServlet extends HttpServlet {
         }
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw = response.getWriter();
-        pw.print("<script language='javascript'>alert('" + fileName + "," + alertMsg + "' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
+        pw.print("<script language='javascript'>alert('" + alertMsg + "' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
         pw.close();
     }
 

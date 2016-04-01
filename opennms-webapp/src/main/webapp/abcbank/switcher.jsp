@@ -61,9 +61,14 @@
 
     function recoverySwitcher(rowID)
     {
-        document.allSwitchers.action="abcbank/recoverySwitcher";
-        document.allSwitchers.rowID.value=rowID;
-        document.allSwitchers.submit();
+        var value = document.getElementById("recovery-"+rowID).getAttribute("value");
+        if(value==0 || value=="")
+                alert("备份命令为空！");
+        else {
+            document.allSwitchers.action = "abcbank/recoverySwitcher";
+            document.allSwitchers.rowID.value = rowID;
+            document.allSwitchers.submit();
+        }
     }
 
     function backupSwitcher(rowID)
@@ -159,9 +164,11 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
         <tr bgcolor="#999999">
-            <td width="5%" align="center"><b>品牌</b></td>
-            <td width="5%" align="center"><b>IP</b></td>
-            <td width="5%" align="center"><b>用户名</b></td>
+            <td width="3%" align="center"><b>品牌</b></td>
+            <td width="3%" align="center"><b>IP</b></td>
+            <td width="3%" align="center"><b>用户名</b></td>
+            <td width="8%" align="center"><b>备份命令</b></td>
+            <td width="8%" align="center"><b>恢复命令</b></td>
             <td width="5%" align="center"><b>备注</b></td>
             <td width="15%" align="center"><b>操作</b></td>
         </tr>
@@ -179,26 +186,41 @@
                 String comment = sw.getComment();
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
-            <td width="5%" align="center">
+            <td width="3%" align="center">
                 <div id="brand-<%=row%>">
                     <%= ((brand == null || brand.equals("")) ? "&nbsp;" : brand) %>
                     <input type="hidden" name="brand-<%=row%>" value="<%= ((brand == null || brand.equals("")) ? "&nbsp;" : brand) %>"/>
                 </div>
             </td>
 
-            <td width="5%" align="center">
+            <td width="3%" align="center">
                 <div id="host-<%=row%>">
                     <%= ((host == null || host.equals("")) ? "&nbsp;" : host) %>
                     <input type="hidden" name="host-<%=row%>" value="<%= ((host == null || host.equals("")) ? "&nbsp;" : host) %>"/>
                 </div>
             </td>
 
-            <td width="5%" align="center">
+            <td width="3%" align="center">
                 <div id="user-<%=row%>">
                     <%= ((user == null || user.equals("")) ? "&nbsp;" : user) %>
                     <input type="hidden" name="user-<%=row%>" value="<%= ((user == null || user.equals("")) ? "&nbsp;" : user) %>"/>
                 </div>
             </td>
+
+            <td width="8%" align="center">
+                <div id="backup-<%=row%>">
+                    <%= ((backup == null || backup.equals("")) ? "&nbsp;" : backup) %>
+                    <input type="hidden" name="backup-<%=row%>" value="<%= ((backup == null || backup.equals("")) ? "&nbsp;" : backup) %>"/>
+                </div>
+            </td>
+
+            <td width="8%" align="center">
+                <div>
+                    <%= ((recovery == null || recovery.equals("")) ? "&nbsp;" : recovery) %>
+                    <input type="hidden" name="recovery-<%=row%>" value="<%= ((recovery == null || recovery.equals("")) ? "&nbsp;" : recovery) %>"/>
+                </div>
+            </td>
+
             <td width="5%" align="center">
                 <div id="comment-<%=row%>">
                     <%= ((comment == null || comment.equals("")) ? "&nbsp;" : comment) %>
@@ -206,8 +228,6 @@
             </td>
 
             <input type="hidden" name="password-<%=row%>" value="<%= ((password == null || password.equals("")) ? "&nbsp;" : password) %>"/>
-            <input type="hidden" name="backup-<%=row%>" value="<%= ((backup == null || backup.equals("")) ? "&nbsp;" : backup) %>"/>
-            <input type="hidden" name="recovery-<%=row%>" value="<%= ((recovery == null || recovery.equals("")) ? "&nbsp;" : recovery) %>"/>
 
             <td width="15%" align="center" style="vertical-align:middle;">
                 <a id="<%= "ss("+id+").doDelete" %>" href="javascript:deleteSwitcher('<%=id%>')" onclick="return confirm('你确定要删除： <%=host%> ?')">删除</a>
