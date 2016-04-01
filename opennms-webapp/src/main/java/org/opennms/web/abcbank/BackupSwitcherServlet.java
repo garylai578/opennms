@@ -54,10 +54,10 @@ public class BackupSwitcherServlet extends HttpServlet {
 
         //如果没有设置定时器，则马上执行，否则在定时时间执行
         if(isCycle.equals("0") || isCycle.equals("") || isCycle==null) {
-            appendFile("\n" + format.format(nowDate) + " 执行手工备份：\n 交换机IP：" + host + ",\t" +
-                    "用户名："+ user + "\n");
+            appendFile("\r\n" + format.format(nowDate) + " 执行手工备份：\r\n 交换机IP：" + host + ",\t" +
+                    "用户名："+ user + "\r\n");
             String result = backup();
-            appendFile("备份结果：\n" + result);
+            appendFile("备份结果：\r\n" + result);
             alertMsg = "备份完成，请在日志中查看结果！";
         } else {
             Long[] res = new Long[0];
@@ -69,9 +69,9 @@ public class BackupSwitcherServlet extends HttpServlet {
             Runnable runnable = new Runnable() {
                 public void run() {
                     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    appendFile("\n" + format.format(new Date()) + " 执行定时备份：\n 交换机IP：" + host + ",\t用户名：" + user + "\n");
+                    appendFile("\r\n" + format.format(new Date()) + " 执行定时备份：\r\n 交换机IP：" + host + ",\t用户名：" + user + "\r\n");
                     String result = backup();
-                    appendFile("备份结果：\n" + result);
+                    appendFile("备份结果：\r\n" + result);
                 }
             };
             ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
@@ -80,7 +80,7 @@ public class BackupSwitcherServlet extends HttpServlet {
             service.scheduleAtFixedRate(runnable, res[1], res[0], TimeUnit.SECONDS);
 
             alertMsg = "定时备份设置完成！";
-            appendFile("\n将在 "+ format.format(new Date(nowDate.getTime()+res[1]*1000)) + " 执行定时备份。\n");
+            appendFile("\r\n将在 "+ format.format(new Date(nowDate.getTime()+res[1]*1000)) + " 执行定时备份。\r\n");
             /*Long inter = Long.valueOf(0);
             try {
                 getTime();

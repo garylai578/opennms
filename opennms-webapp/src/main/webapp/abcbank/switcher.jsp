@@ -61,7 +61,9 @@
 
     function recoverySwitcher(rowID)
     {
+
         var value = document.getElementById("recovery-"+rowID).getAttribute("value");
+
         if(value==0 || value=="")
                 alert("备份命令为空！");
         else {
@@ -217,7 +219,7 @@
             <td width="8%" align="center">
                 <div>
                     <%= ((recovery == null || recovery.equals("")) ? "&nbsp;" : recovery) %>
-                    <input type="hidden" name="recovery-<%=row%>" value="<%= ((recovery == null || recovery.equals("")) ? "&nbsp;" : recovery) %>"/>
+                    <input type="hidden" name="recovery-<%=row%>" id="recovery-<%=row%>" value="<%= ((recovery == null || recovery.equals("")) ? "" : recovery) %>"/>
                 </div>
             </td>
 

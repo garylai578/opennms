@@ -35,10 +35,10 @@ public class RecoverySwithcerServlet extends HttpServlet {
 
         Date nowDate = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        appendFile("\n" + format.format(nowDate) + " 执行手工恢复：\n 交换机IP：" + host + ",\t" +
-                "用户名："+ user + "\n");
+        appendFile("\r\n" + format.format(nowDate) + " 执行手工恢复：\r\n 交换机IP：" + host + ",\t" +
+                "用户名："+ user + "\r\n");
         String result = recovery();
-        appendFile("恢复结果：\n" + result);
+        appendFile("恢复结果：\r\n" + result);
 
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw = response.getWriter();
