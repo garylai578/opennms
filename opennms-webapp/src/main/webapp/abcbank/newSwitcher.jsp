@@ -127,7 +127,7 @@
         <tr>
             <td>恢复命令：</td>
             <td>
-                <input id="recovery" name="recovery" type="text" size="100" required="required"/>
+                <input id="recovery" name="recovery" type="text" size="100"/>
             </td>
         </tr>
 
