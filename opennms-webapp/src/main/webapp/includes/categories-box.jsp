@@ -64,7 +64,7 @@
 		m_category_list.isDisconnected(earliestUpdate);
 %>
 <%	if (opennmsDisconnect) { %>
-	    <h3 class="o-box">OpenNMS断开 -- OpenNMS的后台程序是否运行？ - 
+	    <h3 class="o-box">本断开 -- 后台程序是否运行？ -
 		最后更新:
 <%=		(earliestUpdate > 0 ?
 			 new Date(earliestUpdate).toString() :

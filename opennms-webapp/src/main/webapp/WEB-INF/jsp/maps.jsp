@@ -37,7 +37,7 @@
 	<jsp:param name="breadcrumb" value="地图" />
 </jsp:include>
 
-<h3 class="o-box">OpenNMS地图</h3>
+<h3 class="o-box">地图</h3>
 <div class="boxWrapper">
 <ul class="plain o-box">
 <c:forEach var="entry" items="${entries.entries}">

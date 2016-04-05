@@ -58,11 +58,11 @@
 
 
   <div class="TwoColLeft">
-  <h3>OpenNMS配置</h3>
+  <h3>系统配置</h3>
   	<div class="boxWrapper">
  	<table class="standard">
  	  <tr>
-    <td class="standardheader">OpenNMS版本:</td>
+    <td class="standardheader">系统版本:</td>
     <td class="standard"><%=Vault.getProperty("version.display")%></td>
   </tr>
  	<tr>

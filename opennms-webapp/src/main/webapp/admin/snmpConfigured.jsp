@@ -46,7 +46,7 @@
 <h3>配置SNMP完成</h3>
 
 <p>
-  OpenNMS并不需要重新启动。
+    本系统并不需要重新启动。
 </p>
 
 <jsp:include page="/includes/footer.jsp" flush="true"/>

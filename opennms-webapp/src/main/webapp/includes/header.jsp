@@ -101,7 +101,7 @@ final String baseHref = Util.calculateUrlBase( request );
     <c:forEach var="headTitle" items="${paramValues.headTitle}">
       <c:out value="${headTitle}" escapeXml="false"/> |
     </c:forEach>
-    OpenNMS Web 控制台
+    Web 控制台
   </title>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css"/>

@@ -48,7 +48,7 @@ org.opennms.web.element.NetworkElementFactory" %>
 
 <html>
 <head>
-    <title>Trace Route | OpenNMS Web Console</title>
+    <title>Trace Route | Web Console</title>
     <base HREF="<%=org.opennms.web.api.Util.calculateUrlBase( request )%>" />
     <link rel="stylesheet" type="text/css" href="includes/styles.css" />
 </head>

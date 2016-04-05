@@ -45,7 +45,7 @@
 
 <h3>完成删除节点</h3>
 <p>
-  OpenNMS应该不需要重新启动，但是分类可能需要一点时间被更新。
+  本系统应该不需要重新启动，但是分类可能需要一点时间被更新。
 </p>
 
 <jsp:include page="/includes/footer.jsp" flush="true"/>

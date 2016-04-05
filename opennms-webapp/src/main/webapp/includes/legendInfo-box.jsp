@@ -37,7 +37,7 @@
 <head>
   <title>
     
-    OpenNMS Web Console
+    Web 控制台
   </title>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css"/>

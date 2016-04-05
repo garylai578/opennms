@@ -44,7 +44,7 @@
 
 <html>
 <head>
-    <title>Trace Route | OpenNMS Web Console</title>
+    <title>Trace Route | Web 控制台</title>
     <base HREF="<%= Util.calculateUrlBase(request) %>" />
     <link rel="stylesheet" type="text/css" href="includes/styles.css" />
 </head>

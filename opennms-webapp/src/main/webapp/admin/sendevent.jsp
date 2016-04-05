@@ -192,7 +192,7 @@
 
 </script>
 
-<h3>发送事件到OpenNMS</h3>
+<h3>发送事件到本系统</h3>
 
 <form method="post" name="sendevent"
       id="form.sendevent"
