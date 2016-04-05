@@ -46,7 +46,7 @@
 <jsp:include page="/includes/header.jsp" flush="false" >
     <jsp:param name="title" value="线路台帐" />
     <jsp:param name="headTitle" value="线路台帐" />
-    <jsp:param name="breadcrumb" value="<a href='abcbank/index.jsp'>IP管理</a>" />
+    <jsp:param name="breadcrumb" value="<a href='abcbank/index.jsp'>台帐管理</a>" />
     <jsp:param name="breadcrumb" value="线路台帐" />
 </jsp:include>
 

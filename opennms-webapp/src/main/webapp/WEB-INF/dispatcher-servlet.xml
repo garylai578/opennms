@@ -583,8 +583,8 @@
                 </bean>
 
                 <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
-                    <property name="name" value="支持"/>
-                    <property name="url" value="support/about.jsp"/>
+                    <property name="name" value="台帐"/>
+                    <property name="url" value="abcbank/index.jsp"/>
                     <property name="locationMatch" value="support"/>
                 </bean>
             </list>
