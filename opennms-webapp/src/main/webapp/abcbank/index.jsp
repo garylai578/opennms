@@ -7,7 +7,6 @@
 <jsp:include page="/includes/header.jsp" flush="false" >
     <jsp:param name="title" value="台帐" />
     <jsp:param name="headTitle" value="台帐" />
-    <jsp:param name="location" value="admin" />
     <jsp:param name="breadcrumb" value="台帐" />
 </jsp:include>
 
