@@ -332,9 +332,8 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="2" >
         <tr>
           <td>
-                Assign and unassign users to the group using the select lists below. Also, change the ordering of
-                the selected users by highlighting a user in the "Currently in Group" list and click the "Move Up" and "Move Down" buttons.
-                The ordering of the users in the group will affect the order that the users are notified if this group is used in a notification.
+              使用“>>”或“<<”按钮将用户加入或移除出组。在组中选中用户后，可以通过“上移”或“下移”按钮改变其在组中的位置，
+              该位置将影响接收通知的优先级。
           </td>
         </tr>
 

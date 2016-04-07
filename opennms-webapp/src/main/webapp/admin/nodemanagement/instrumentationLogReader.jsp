@@ -44,10 +44,10 @@
 
 
 <jsp:include page="/includes/header.jsp" flush="false" >
-  <jsp:param name="title" value="Instrumentation Log Reader" />
-  <jsp:param name="headTitle" value="Instrumentation Log Reader" />
+  <jsp:param name="title" value="日志信息" />
+  <jsp:param name="headTitle" value="日志信息" />
   <jsp:param name="location" value="Instrumentation Log Reader" />  
-  <jsp:param name="breadcrumb" value="Instrumentation Log Reader" />
+  <jsp:param name="breadcrumb" value="日志信息" />
 </jsp:include>
 
 
@@ -105,16 +105,16 @@ pageContext.setAttribute("searchString",searchString);
 <div style="float:left;">
 <form id="ILRfilter" action="admin/nodemanagement/instrumentationLogReader.jsp" method=get>
 <tableborder="0" cellpadding="0" cellspacing="0">
-<th>Filtering</th>
+
 <br>
-<input type="text" name="searchString" size=15 value="${searchString}"></td>
-<input type="submit" value="Submit">
+<input type="text" name="searchString" size=15 value="${searchString}" placeholder="请输入过滤条件"></td>
+<input type="submit" value="确认">
 </form>
 </div>
 <div style="padding-top:20px">
 <form action="admin/nodemanagement/instrumentationLogReader.jsp" method=get>
 <input type="hidden" name="searchString" value="">
-<input type="submit" value="Reset">
+<input type="submit" value="重置">
 </form>
 </div>
 
@@ -145,9 +145,10 @@ Threads Used: ${collector.threadCount}
 
 <c:if test="${collector.startTime == null && collector.endTime == null}">
 <p>
-No service collector data is available. Be sure that the <strong>Collectd</strong> and
+	暂无日志信息
+<%--No service collector data is available. Be sure that the <strong>Collectd</strong> and
 <strong>Instrumentation</strong> appenders are set to log at <strong>DEBUG</strong> in
-the <em>log4j.properties</em> configuration file.
+the <em>log4j.properties</em> configuration file.--%>
 </p>
 </c:if>
 
@@ -155,136 +156,136 @@ the <em>log4j.properties</em> configuration file.
 
 <table>
 <tr>
-<th>Service</th>
+<th>服务</th>
 <c:choose>
 	<c:when test="${sortColumn == 'TOTALCOLLECTS' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALCOLLECTS&sortOrder=ASCENDING&&searchString=${searchString}">Collections ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALCOLLECTS&sortOrder=ASCENDING&&searchString=${searchString}">收集器 ^</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'TOTALCOLLECTS'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">Collections</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">收集器</a></th>
 	</c:when>
 	<c:otherwise>
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">Collections v</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">收集器</a></th>
 	</c:otherwise>
 </c:choose>
 
 <c:choose>
 	<c:when test="${sortColumn == 'AVGCOLLECTTIME' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGCOLLECTTIME&sortOrder=ASCENDING&&searchString=${searchString}">Average Collection Time ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGCOLLECTTIME&sortOrder=ASCENDING&&searchString=${searchString}">平均收集时间 ^</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'AVGCOLLECTTIME'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Average Collection Time</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">平均收集时间</a></th>
 	</c:when>
 	<c:otherwise>
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Average Collection Time v</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">平均收集时间</a></th>
 	</c:otherwise>	
 </c:choose>
 
-<c:choose>
+<%--<c:choose>
 	<c:when test="${sortColumn == 'AVGTIMEBETWEENCOLLECTS' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGTIMEBETWEENCOLLECTS&sortOrder=ASCENDING&&searchString=${searchString}">Average Time Between Collections ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGTIMEBETWEENCOLLECTS&sortOrder=ASCENDING&&searchString=${searchString}">收集器间的平均时间</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'AVGTIMEBETWEENCOLLECTS'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGTIMEBETWEENCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">Average Time Between Collections</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGTIMEBETWEENCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">收集器间的平均时间</a></th>
 	</c:when>
 	<c:otherwise>
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGTIMEBETWEENCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">Average Time Between Collections v</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGTIMEBETWEENCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">收集器间的平均时间</a></th>
 	</c:otherwise>
-</c:choose>
+</c:choose>--%>
 
 <c:choose>
 	<c:when test="${sortColumn == 'TOTALSUCCESSCOLLECTS' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALSUCCESSCOLLECTS&sortOrder=ASCENDING&&searchString=${searchString}">Successful Collections ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALSUCCESSCOLLECTS&sortOrder=ASCENDING&&searchString=${searchString}">成功的收集数量</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'TOTALSUCCESSCOLLECTS'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALSUCCESSCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">Successful Collections</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALSUCCESSCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">成功的收集数量</a></th>
 	</c:when>
 	<c:otherwise>
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALSUCCESSCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">Successful Collections v</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALSUCCESSCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">成功的收集数量</a></th>
 	</c:otherwise>
 </c:choose>
 
 <c:choose>
 	<c:when test="${sortColumn == 'SUCCESSPERCENTAGE' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=SUCCESSPERCENTAGE&sortOrder=ASCENDING&&searchString=${searchString}">Successful Percentage ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=SUCCESSPERCENTAGE&sortOrder=ASCENDING&&searchString=${searchString}">成功率</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'SUCCESSPERCENTAGE'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=SUCCESSPERCENTAGE&sortOrder=DESCENDING&&searchString=${searchString}">Successful Percentage</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=SUCCESSPERCENTAGE&sortOrder=DESCENDING&&searchString=${searchString}">成功率</a></th>
 	</c:when>
 	<c:otherwise>
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=SUCCESSPERCENTAGE&sortOrder=DESCENDING&&searchString=${searchString}">Successful Percentage v</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=SUCCESSPERCENTAGE&sortOrder=DESCENDING&&searchString=${searchString}">成功率</a></th>
 	</c:otherwise>
 </c:choose>
 
 <c:choose>
 	<c:when test="${sortColumn == 'AVGSUCCESSCOLLECTTIME' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGSUCCESSCOLLECTTIME&sortOrder=ASCENDING&&searchString=${searchString}">Average Successful Collection Time ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGSUCCESSCOLLECTTIME&sortOrder=ASCENDING&&searchString=${searchString}">平均成功的收集时间</a></th>
 	</c:when>
 	<c:when test="${sortColumn !='AVGSUCCESSCOLLECTTIME'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGSUCCESSCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Average Successful Collection Time</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGSUCCESSCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">平均成功的收集时间</a></th>
 	</c:when>
 	<c:otherwise>
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGSUCCESSCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Average Successful Collection Time v</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGSUCCESSCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">平均成功的收集时间</a></th>
 	</c:otherwise>
 </c:choose>
 
 <c:choose>
 	<c:when test="${sortColumn == 'TOTALUNSUCCESSCOLLECTS' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALUNSUCCESSCOLLECTS&sortOrder=ASCENDING&&searchString=${searchString}">Unsuccessful Collections ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALUNSUCCESSCOLLECTS&sortOrder=ASCENDING&&searchString=${searchString}">失败的收集数量</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'TOTALUNSUCCESSCOLLECTS'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALUNSUCCESSCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">Unsuccessful Collections</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALUNSUCCESSCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">失败的收集数量</a></th>
 	</c:when>
 	<c:otherwise>
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALUNSUCCESSCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">Unsuccessful Collections v</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALUNSUCCESSCOLLECTS&sortOrder=DESCENDING&&searchString=${searchString}">失败的收集数量</a></th>
 	</c:otherwise>
 </c:choose>	
 	
 <c:choose>	
 	<c:when test="${sortColumn == 'UNSUCCESSPERCENTAGE' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=UNSUCCESSPERCENTAGE&sortOrder=ASCENDING&&searchString=${searchString}">Unsuccessful Percentage ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=UNSUCCESSPERCENTAGE&sortOrder=ASCENDING&&searchString=${searchString}">失败率</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'UNSUCCESSPERCENTAGE'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=UNSUCCESSPERCENTAGE&sortOrder=DESCENDING&&searchString=${searchString}">Unsuccessful Percentage</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=UNSUCCESSPERCENTAGE&sortOrder=DESCENDING&&searchString=${searchString}">失败率</a></th>
 	</c:when>
 	<c:otherwise>
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=UNSUCCESSPERCENTAGE&sortOrder=DESCENDING&&searchString=${searchString}">Unsuccessful Percentage v</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=UNSUCCESSPERCENTAGE&sortOrder=DESCENDING&&searchString=${searchString}">失败率</a></th>
 	</c:otherwise>
 </c:choose>
 
 <c:choose>
 	<c:when test="${sortColumn == 'AVGUNSUCCESSCOLLECTTIME' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGUNSUCCESSCOLLECTTIME&sortOrder=ASCENDING&&searchString=${searchString}">Average Unsuccessful Collection Time ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGUNSUCCESSCOLLECTTIME&sortOrder=ASCENDING&&searchString=${searchString}">平均失败的收集时间</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'AVGUNSUCCESSCOLLECTTIME'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGUNSUCCESSCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Average Unsuccessful Collection Time</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGUNSUCCESSCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">平均失败的收集时间</a></th>
 	</c:when>
 	<c:otherwise>
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGUNSUCCESSCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Average Unsuccessful Collection Time v</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVGUNSUCCESSCOLLECTTIME&sortOrder=DESCENDING&&searchString=${searchString}">平均失败的收集时间</a></th>
 	</c:otherwise>
 </c:choose>
 
 <c:choose>
 	<c:when test="${sortColumn == 'AVERAGEPERSISTTIME' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVERAGEPERSISTTIME&sortOrder=ASCENDING&&searchString=${searchString}">Average Persistence Time ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVERAGEPERSISTTIME&sortOrder=ASCENDING&&searchString=${searchString}">平均持续时间</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'AVERAGEPERSISTTIME'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVERAGEPERSISTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Average Persistence Time</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVERAGEPERSISTTIME&sortOrder=DESCENDING&&searchString=${searchString}">平均持续时间</a></th>
 	</c:when>
 	<c:otherwise>
-	<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVERAGEPERSISTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Average Persistence Time v</a></th>
+	<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=AVERAGEPERSISTTIME&sortOrder=DESCENDING&&searchString=${searchString}">平均持续时间</a></th>
 	</c:otherwise>
 </c:choose>
 
 <c:choose>
 	<c:when test="${sortColumn == 'TOTALPERSISTTIME' && sortOrder == 'DESCENDING'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALPERSISTTIME&sortOrder=ASCENDING&&searchString=${searchString}">Total Persistence Time ^</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALPERSISTTIME&sortOrder=ASCENDING&&searchString=${searchString}">总持续时间</a></th>
 	</c:when>
 	<c:when test="${sortColumn != 'TOTALPERSISTTIME'}">
-		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALPERSISTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Total Persistence Time</a></th>
+		<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALPERSISTTIME&sortOrder=DESCENDING&&searchString=${searchString}">总持续时间</a></th>
 	</c:when>
 	<c:otherwise>
-	<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALPERSISTTIME&sortOrder=DESCENDING&&searchString=${searchString}">Total Persistence Time v</a></th>
+	<th><a href="admin/nodemanagement/instrumentationLogReader.jsp?sortColumn=TOTALPERSISTTIME&sortOrder=DESCENDING&&searchString=${searchString}">总持续时间</a></th>
 	</c:otherwise>
 </c:choose>
 </tr>
