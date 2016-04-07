@@ -135,8 +135,8 @@
           <td width="5%"><b>用户ID</b></td>
           <td width="15%"><b>全名</b></td>
           <td width="15%"><b>电子邮件</b></td>
-          <td width="15%"><b>寻呼机邮件</b></td>
-          <td width="15%"><b>XMPP Address</b></td>
+          <td width="15%"><b>移动电话</b></td>
+          <td width="15%"><b>工作电话</b></td>
           <!--
           <td width="10%"><b>Num Service</b></td>
           <td width="10%"><b>Num Pin</b></td>
@@ -151,8 +151,8 @@
               User curUser = (User)users.get(i.next());
 	      String userid = curUser.getUserId();
 	      String email = userFactory.getEmail(userid);
-	      String pagerEmail = userFactory.getPagerEmail(userid);
-	      String xmppAddress = userFactory.getXMPPAddress(userid);
+	      String pagerEmail = userFactory.getMobilePhone(userid);
+	      String xmppAddress = userFactory.getWorkPhone(userid);
 	      String numericService = userFactory.getNumericPage(userid);
 	      String textService = userFactory.getTextPage(userid);
 	      String numericPin = userFactory.getNumericPin(userid);
