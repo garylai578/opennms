@@ -316,15 +316,15 @@
                 <input id="email" type="text" size="35" name="email" value='<%= (email == null ? "":email) %>'/>
               </td>
             </tr>
-            <tr>
-              <td valign="top">
+            <tr style="display: none">
+              <td valign="top" >
                 <label id="pemailLabel" for="pemail">Pager Email:</label>
               </td>
               <td valign="top">
                 <input type="text" size="35" id="pemail" name="pemail" value='<%=(pagerEmail == null ? "":pagerEmail)%>'/>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="xmppAddressLabel" for="xmppAddress">XMPP Address:</label>
               </td>
@@ -340,7 +340,7 @@
                 <input type="text" size="35" id="microblog" name="microblog" value='<%=(microblog == null ? "":microblog)%>'/>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="numericalServiceLabel" for="numericalService">Numeric Service:</label>
               </td>
@@ -348,7 +348,7 @@
                 <input type="text" size="35" id="numericalService" name="numericalService" value='<%=(numericPage == null ? "":numericPage) %>'/>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="numericalPinLabel" for="numericalPin">Numeric PIN:</label>
               </td>
@@ -356,7 +356,7 @@
                 <input type="text" size="35" id="numericalPin" name="numericalPin" value='<%= (numericPin == null ? "":numericPin)%>'/>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="textServiceLabel" for="textService">Text Service:</label>
               </td>
@@ -364,7 +364,7 @@
                 <input type="text" size="35" id="textService" name="textService" value='<%= (textPage == null ? "":textPage)%>'/>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="textPinLabel" for="textPin">Text PIN:</label>
               </td>
@@ -405,26 +405,27 @@
   </p>
 
   <p>
-    <b>通知信息</b> 为你提供配置每个用户的联系信息，
-    contact information for each user, including any of <em>email</em>
-    address, <em>pager email</em> (in the case that the pager can be reached
-    as an email destination), <em>XMPP address</em> (for instant messages
-    using the Jabber XMPP protocol), <em>numeric service</em> (for pagers
-    that cannot display text messages), <em>text service</em> (for
-    alphanumeric pagers), and <em>work phone</em>, <em>mobile phone</em>, and
-    <em>home phone</em> for notifications by telephone. The <em>Telephone
-    PIN</em> is an optional numeric field used to authenticate called users.
+    <b>通知信息</b> 为你提供配置每个用户的联系信息。
+    <%--contact information for each user, including any of <em>email</em>--%>
+    <%--address, <em>pager email</em> (in the case that the pager can be reached--%>
+    <%--as an email destination), <em>XMPP address</em> (for instant messages--%>
+    <%--using the Jabber XMPP protocol), <em>numeric service</em> (for pagers--%>
+    <%--that cannot display text messages), <em>text service</em> (for--%>
+    <%--alphanumeric pagers), and <em>work phone</em>, <em>mobile phone</em>, and--%>
+    <%--<em>home phone</em> for notifications by telephone. The <em>Telephone--%>
+    <%--PIN</em> is an optional numeric field used to authenticate called users.--%>
   </p>
 
   <p>
-    <b>Duty Schedules</b> allow you to flexibility to determine when users
+    <b>值班表</b> 允许你对该用户进行值班安排
+<%--      ，allow you to flexibility to determine when users
     should receive notifications.  A duty schedule consists of a list of
     days for which the time will apply and a time range, presented in
     military time with no punctuation.  Using this standard, days run from
-    <em>0000</em> to <em>2359</em>.
+    <em>0000</em> to <em>2359</em>.--%>
   </p>
 
-  <p>
+<%--  <p>
     If your duty schedules span midnight, or if your users work multiple,
     non-contiguous time periods, you will need to configure multiple duty
     schedules.  To do so, select the number of duty schedules to add from
@@ -433,15 +434,15 @@
     create a duty schedule from the start time to 2359 on one day, and
     enter a second duty schedule which begins at 0000 and ends at the end
     of that users coverage.
-  </p>
+  </p>--%>
 
-  <p>
+<%--  <p>
     To remove configured duty schedules, put a check in the <em>Delete</em>
     column and click <b>[Remove Checked Schedules]</b>.
-  </p>
+  </p>--%>
 
   <p>
-   To save your configuration, click on <b>[Finish]</b>.
+   修改完成后请切记要点击本页左下角的 <b>完成</b> 按钮.
   </p>
 </div>
 
