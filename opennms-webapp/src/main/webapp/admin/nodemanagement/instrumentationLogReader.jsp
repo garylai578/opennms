@@ -46,7 +46,8 @@
 <jsp:include page="/includes/header.jsp" flush="false" >
   <jsp:param name="title" value="日志信息" />
   <jsp:param name="headTitle" value="日志信息" />
-  <jsp:param name="location" value="Instrumentation Log Reader" />  
+  <jsp:param name="location" value="Instrumentation Log Reader" />
+	<jsp:param name="breadcrumb" value="<a href='admin/index.jsp'>管理</a>" />
   <jsp:param name="breadcrumb" value="日志信息" />
 </jsp:include>
 
