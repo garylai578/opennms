@@ -879,6 +879,10 @@
     <servlet-name>AddSwitcherServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.AddSwitcherServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ManageSwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ManageSwitcherServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1290,6 +1294,10 @@
   <servlet-mapping>
     <servlet-name>RecoverySwitcherServlet</servlet-name>
     <url-pattern>/abcbank/recoverySwitcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ManageSwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/manageSwitcher</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  

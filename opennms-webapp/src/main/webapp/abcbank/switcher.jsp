@@ -88,6 +88,17 @@
         document.allSwitchers.submit();
     }
 
+    function managePorts(id){
+        document.allSwitchers.action="abcbank/manageSwitcherPorts.jsp?id="+id;
+        document.allSwitchers.submit();
+    }
+
+    function bundingIP(id){
+        document.allSwitchers.action="abcbank/bundingIP.jsp?id="+id;
+        document.allSwitchers.submit();
+    }
+
+
     time = new Array("1点","2点","3点","4点","5点","6点","7点","8点","9点","10点","11点","12点","13点","14点","15点",
             "16点","17点","18点","19点","20点","21点","22点","23点","24点");
     week = new Array("周一","周二","周三","周四","周五","周六","周日");
@@ -172,7 +183,6 @@
             <td width="8%" align="center"><b>备份命令</b></td>
             <td width="8%" align="center"><b>恢复命令</b></td>
             <td width="5%" align="center"><b>备注</b></td>
-            <td width="15%" align="center"><b>操作</b></td>
         </tr>
         <%
             Switcher[] ss = op.selectAll();
@@ -186,16 +196,19 @@
                 String backup = sw.getBackup();
                 String recovery = sw.getRecovery();
                 String comment = sw.getComment();
+                session.setAttribute("host-"+id, host);
+                session.setAttribute("user-"+id, user);
+                session.setAttribute("password-"+id, password);
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
-            <td width="3%" align="center">
+            <td width="3%" rowspan="2"  align="center">
                 <div id="brand-<%=row%>">
                     <%= ((brand == null || brand.equals("")) ? "&nbsp;" : brand) %>
                     <input type="hidden" name="brand-<%=row%>" value="<%= ((brand == null || brand.equals("")) ? "&nbsp;" : brand) %>"/>
                 </div>
             </td>
 
-            <td width="3%" align="center">
+            <td width="3%" rowspan="2" align="center">
                 <div id="host-<%=row%>">
                     <%= ((host == null || host.equals("")) ? "&nbsp;" : host) %>
                     <input type="hidden" name="host-<%=row%>" value="<%= ((host == null || host.equals("")) ? "&nbsp;" : host) %>"/>
@@ -231,8 +244,15 @@
 
             <input type="hidden" name="password-<%=row%>" value="<%= ((password == null || password.equals("")) ? "&nbsp;" : password) %>"/>
 
-            <td width="15%" align="center" style="vertical-align:middle;">
+        </tr>
+
+        <tr bgcolor="#cccccc">
+            <td width="15%" colspan="4"> &nbsp;&nbsp;<b>操作：</b>
                 <a id="<%= "ss("+id+").doDelete" %>" href="javascript:deleteSwitcher('<%=id%>')" onclick="return confirm('你确定要删除： <%=host%> ?')">删除</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="<%= "ss("+id+").ports" %>" href="javascript:managePorts('<%=id%>')">端口开关</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="<%= "ss("+id+").doBunding" %>" href="javascript:bundingIP('<%=id%>')">地址绑定</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a id="<%= "ss("+id+").doRecovery" %>" href="javascript:recoverySwitcher('<%=row%>')" onclick="return confirm('你确定要恢复： <%=host%>交换机的配置 ?')">恢复系统</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
