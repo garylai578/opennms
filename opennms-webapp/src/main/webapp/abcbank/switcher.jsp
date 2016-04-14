@@ -250,9 +250,9 @@
             <td width="15%" colspan="4"> &nbsp;&nbsp;<b>操作：</b>
                 <a id="<%= "ss("+id+").doDelete" %>" href="javascript:deleteSwitcher('<%=id%>')" onclick="return confirm('你确定要删除： <%=host%> ?')">删除</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a id="<%= "ss("+id+").ports" %>" href="javascript:managePorts('<%=id%>')">端口开关</a>
+                <a id="<%= "ss("+id+").ports" %>" href="javascript:managePorts('<%=row%>')">端口操作</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <a id="<%= "ss("+id+").doBunding" %>" href="javascript:bundingIP('<%=id%>')">地址绑定</a>
+                <a id="<%= "ss("+id+").doBunding" %>" href="javascript:bundingIP('<%=row%>')">地址绑定</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a id="<%= "ss("+id+").doRecovery" %>" href="javascript:recoverySwitcher('<%=row%>')" onclick="return confirm('你确定要恢复： <%=host%>交换机的配置 ?')">恢复系统</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;

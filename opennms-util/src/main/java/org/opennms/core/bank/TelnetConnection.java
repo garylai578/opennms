@@ -30,13 +30,15 @@ public class TelnetConnection {
         if(telnet == null) {
             telnet = new TelnetClient();
             try {
-                log.debug("telnet connect, host:" + host + ", port:"+ port);
+                log.debug("telnet connect, host ip:" + host + ", port:"+ port);
                 telnet.connect(host, port);
                 in = telnet.getInputStream();
                 out = new PrintStream(telnet.getOutputStream());
             } catch (SocketException e) {
+                log.error(e);
                 e.printStackTrace();
             } catch (IOException e) {
+                log.error(e);
                 e.printStackTrace();
             }
         }
@@ -57,8 +59,10 @@ public class TelnetConnection {
             this.prompt = prompt;
         }
         readUntil(this.usernamePrompt);
+        log.debug("发送用户名:" + username);
         write(username);
         readUntil(this.passwordPrompt);
+        log.debug("发送用密码:" + password);
         write(password);
         log.debug("登录成功");
         readUntilPrompt(this.prompt);
@@ -80,16 +84,17 @@ public class TelnetConnection {
             char ch = (char) in.read();
             while (true) {
                 sb.append(ch);
-                log.debug("sb:" + sb);
+//                log.debug("sb:" + sb);
                 if (ch == lastChar) {
                     if (sb.toString().endsWith(pattern)) {
-//                        System.out.println(sb);
+                        log.debug(sb);
                         return sb.toString();
                     }
                 }
                 ch = (char) in.read();
             }
         } catch (Exception e) {
+            log.error(e);
             e.printStackTrace();
         }
         return null;
@@ -106,11 +111,12 @@ public class TelnetConnection {
             while((len = in.read()) != -1) {
                 sb.append((char)len);
                 if(pattern.indexOf((char)len) != -1 || sb.toString().endsWith(pattern)) {
-//                    System.out.println(sb);
+                    log.debug(sb);
                     return sb.toString();
                 }
             }
         } catch (IOException e) {
+            log.error(e);
             e.printStackTrace();
         }
         return "";
@@ -124,6 +130,7 @@ public class TelnetConnection {
             out.println(value);
             out.flush();
         } catch (Exception e) {
+            log.error(e);
             e.printStackTrace();
         }
     }
@@ -134,10 +141,13 @@ public class TelnetConnection {
      * @return
      */
     public String sendCommand(String command) {
+        log.debug("发送交换机命令：" + command);
         try {
             write(command);
-            return readUntilPrompt(prompt + "");
+            String result = readUntilPrompt(prompt + "");
+            return result;
         } catch (Exception e) {
+            log.error(e);
             e.printStackTrace();
         }
         return "";
@@ -148,6 +158,7 @@ public class TelnetConnection {
         try {
             telnet.disconnect();
         } catch (Exception e) {
+            log.error(e);
             e.printStackTrace();
         }
     }
@@ -216,14 +227,18 @@ public class TelnetConnection {
         if(telnet != null) {
             try {
                 telnet.disconnect();
+                log.debug("关闭连接！");
             } catch (IOException e) {
+                log.error(e);
                 e.printStackTrace();
             }
         }
         if(this.telnet != null) {
             try {
                 this.telnet.disconnect();
+                log.debug("关闭连接！");
             } catch (IOException e) {
+                log.error(e);
                 e.printStackTrace();
             }
         }

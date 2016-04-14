@@ -1,5 +1,7 @@
 package org.opennms.core.bank;
 
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -9,6 +11,8 @@ import java.util.regex.Pattern;
  * Created by laiguanhui on 2016/4/12.
  */
 public class SwitcherUtil {
+
+    final static Logger log =  Logger.getLogger(SwitcherUtil.class);
 
     List<String> status = new ArrayList();
     List<String> interfaces = new ArrayList();
@@ -36,6 +40,7 @@ public class SwitcherUtil {
             String[] lines = result.split("/n");
             Pattern pattern = Pattern.compile("^[a-zA-Z]*Ethernet [0-9]{1,2}/[0-9]{1,2}"); //匹配“FastEthernet 0/48”或“GigabitEthernet 0/50”之类的
             for(String line : lines) {
+                log.debug("匹配行：" + line);
                 Matcher matcher = pattern.matcher(line);
                 if(matcher.find()){
                     interfaces.add(matcher.group(0));
@@ -145,6 +150,7 @@ public class SwitcherUtil {
         telnet.disconnect();
         return 1;
     }
+
 
     private void connect(){
         telnet = new TelnetConnection(host, 23);
