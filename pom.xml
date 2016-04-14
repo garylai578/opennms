@@ -909,7 +909,7 @@
 
     <!-- moved here from topology features -->
     <jungVersion>2.0.1</jungVersion>
-    <vaadinVersion>7.2.7</vaadinVersion>
+    <vaadinVersion>6.8.2</vaadinVersion>
     <paxVaadinVersion>0.1.0-ONMS-20121218</paxVaadinVersion>
 
   </properties>
