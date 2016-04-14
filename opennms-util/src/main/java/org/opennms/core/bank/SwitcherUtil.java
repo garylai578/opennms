@@ -37,7 +37,7 @@ public class SwitcherUtil {
             connect();
             //show interfaces status可以查看所有端口的开关状态，show run查看端口的dot1x认证状态
             String result = telnet.sendCommand("show interfaces status");
-            String[] lines = result.split("/n");
+            String[] lines = result.split("\n");
             Pattern pattern = Pattern.compile("^[a-zA-Z]*Ethernet [0-9]{1,2}/[0-9]{1,2}"); //匹配“FastEthernet 0/48”或“GigabitEthernet 0/50”之类的
             for(String line : lines) {
                 log.debug("匹配行：" + line);
