@@ -146,7 +146,7 @@ public class SwitcherUtil {
         connect();
         telnet.sendCommand("config");
         telnet.sendCommand("interface " + inter);
-        telnet.sendCommand("undo dot1x port-control auto");
+        telnet.sendCommand("no dot1x port-control auto");
         telnet.disconnect();
         return 1;
     }
