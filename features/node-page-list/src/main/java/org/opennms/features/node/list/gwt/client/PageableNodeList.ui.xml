@@ -40,7 +40,7 @@
             </g:LayoutPanel>
         </g:tab>
         <g:tab>
-            <g:header size='5' style="font-family: Lucida Grande, Verdana, sans-serif;">Physical Interfaces</g:header>
+            <g:header size='5' style="font-family: Lucida Grande, Verdana, sans-serif;">物理端口</g:header>
             <g:LayoutPanel>
                 <g:layer bottom="50px" top="0px" left="0" right="0">
                     <g:FlowPanel ui:field="m_physicalTableDiv">

@@ -17,10 +17,9 @@ public class ManageSwitcherServlet extends HttpServlet {
     private static final long serialVersionUID = -2653800565575021616L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
-        String host = request.getParameter("host-" + id);
-        String user = request.getParameter("user-" + id);
-        String password = request.getParameter("password-" + id);
+        String host = request.getParameter("host");
+        String user = request.getParameter("user");
+        String password = request.getParameter("password");
         String inter = request.getParameter("interface");
         SwitcherUtil util = new SwitcherUtil(host, user, password);
         String type = request.getParameter("type");

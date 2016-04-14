@@ -61,7 +61,9 @@
 <form method="post" name="manageSwticher">
     <input type="hidden" name="interface"/>
     <input type="hidden" name="type" />
-
+    <input type="hidden" name="host" value="<%=host%>"/>
+    <input type="hidden" name="user" value="<%=user%>"/>
+    <input type="hidden" name="password" value="<%=password%>"/>
 <br>
     <div>
         交换机IP：<%=host%>
