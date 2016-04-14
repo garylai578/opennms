@@ -151,14 +151,14 @@ public class SwitcherUtil {
         return 1;
     }
 
-
     private void connect(){
         telnet = new TelnetConnection(host, 23);
         telnet.setUsernamePrompt("Username:");
         telnet.setLoginPrompt(null);
         telnet.login(user, password, "");
-        telnet.setPrompt("Password:");
-        telnet.sendCommand("en");
-        telnet.setPrompt("#$>]");
+        telnet.write("en");
+        telnet.readUntil("Password:");
+        telnet.write(password);
+        telnet.readUntilPrompt("#$>]");
     }
 }
