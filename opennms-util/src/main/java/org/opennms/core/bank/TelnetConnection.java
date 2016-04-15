@@ -161,12 +161,8 @@ public class TelnetConnection {
 
     /** 关闭连接 */
     public void disconnect() {
-        try {
-            telnet.disconnect();
-        } catch (Exception e) {
-            log.error(e);
-            e.printStackTrace();
-        }
+        log.debug("disconnect");
+        close(telnet);
     }
 
     /**
