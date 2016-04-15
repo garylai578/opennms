@@ -150,6 +150,10 @@ public class SwitcherUtil {
         return 1;
     }
 
+    public void diconnect(){
+        telnet.disconnect();
+    }
+
     private void connect(){
         if(telnet == null || !telnet.isConnected()) {
             telnet = new TelnetConnection(host, 23);

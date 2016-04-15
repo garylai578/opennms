@@ -35,9 +35,11 @@ public class TelnetConnection {
                 in = telnet.getInputStream();
                 out = new PrintStream(telnet.getOutputStream());
             } catch (SocketException e) {
+                close(telnet);
                 log.error(e);
                 e.printStackTrace();
             } catch (IOException e) {
+                close(telnet);
                 log.error(e);
                 e.printStackTrace();
             }
@@ -94,6 +96,7 @@ public class TelnetConnection {
                 ch = (char) in.read();
             }
         } catch (Exception e) {
+            close(telnet);
             log.error(e);
             e.printStackTrace();
         }
@@ -116,6 +119,7 @@ public class TelnetConnection {
                 }
             }
         } catch (IOException e) {
+            close(telnet);
             log.error(e);
             e.printStackTrace();
         }
@@ -130,6 +134,7 @@ public class TelnetConnection {
             out.println(value);
             out.flush();
         } catch (Exception e) {
+            close(telnet);
             log.error(e);
             e.printStackTrace();
         }
@@ -147,6 +152,7 @@ public class TelnetConnection {
             String result = readUntilPrompt(prompt + "");
             return result;
         } catch (Exception e) {
+            close(telnet);
             log.error(e);
             e.printStackTrace();
         }

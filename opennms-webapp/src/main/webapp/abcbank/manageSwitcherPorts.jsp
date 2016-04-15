@@ -25,6 +25,14 @@
     String host = request.getParameter("host-" + id);
     String user = request.getParameter("user-" + id);
     String password = request.getParameter("password-" + id);
+    if(id == null)
+        id = (String)request.getAttribute("id");
+    if(host == null)
+        host = (String)request.getAttribute("host-" + id);
+    if(user == null)
+        user = (String)request.getAttribute("user-" + id);
+    if(password == null)
+        password = (String)request.getAttribute("password-" + id);
 %>
 
 <script type="text/javascript" >
@@ -35,7 +43,7 @@
 
             var inter = document.getElementById("choose-"+i);
             if (inter.checked == true)
-                interfaces += inter + "\t";
+                interfaces += document.getElementById("interfaces-"+i).value + "\t";
         }
         upInterface(interfaces);
     }
@@ -53,7 +61,7 @@
 
             var inter = document.getElementById("choose-"+i);
             if (inter.checked == true)
-                interfaces += inter + "\t";
+                interfaces += document.getElementById("interfaces-"+i).value + "\t";
         }
         downInterface(interfaces);
     }
@@ -71,7 +79,7 @@
 
             var inter = document.getElementById("choose-"+i);
             if (inter.checked == true)
-                interfaces += inter + "\t";
+                interfaces += document.getElementById("interfaces-"+i).value + "\t";
         }
         dot1x(interfaces);
     }
@@ -88,8 +96,9 @@
         for (var i = 0; i < rows; ++i) {
 
             var inter = document.getElementById("choose-"+i);
-            if (inter.checked == true)
-                interfaces += inter + "\t";
+            if (inter.checked == true) {
+                interfaces += document.getElementById("interfaces-"+i).value + "\t";
+            }
         }
         undoDot1x(interfaces);
     }
@@ -117,7 +126,7 @@
 
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
         <tr bgcolor="#999999">
-            <td width="3%" align="center"><b>序号</b></td>
+            <td width="3%" align="center"><b>选择</b></td>
             <td width="3%" align="center"><b>端口号</b></td>
             <td width="3%" align="center"><b>端口状态</b></td>
             <td width="3%" align="center"><b>dot1x认证</b></td>
@@ -129,6 +138,7 @@
             String[] interfaces = util.getInterfaces();
             String[] status = util.getStates();
             String[] dot1x = util.getDot1x();
+            util.diconnect();
             int size = interfaces.length;
             int row = 0;
             for(int i = 0; i < size; ++i){
@@ -144,6 +154,7 @@
             <td width="3%" align="center">
                 <div id="interface-<%=row%>">
                     <%= interfaces[i] %>
+                    <input id="interfaces-<%=row%>" type="hidden" value="<%=interfaces[i]%>">
                 </div>
             </td>
 
@@ -177,13 +188,13 @@
 
     </table>
 
-    <a id="ss('<%=row%>').doUp" href="javascript:upInterfaces('<%=row%>')">开启端口</a>
+    <input type="submit" id="ss('<%=row%>').doUp" href="javascript:upInterfaces('<%=row%>')" value="开启端口">
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <a id="ss('<%=row%>').doDown" href="javascript:downInterfaces('<%=row%>')" >关闭端口</a>
+    <input type="submit" id="ss('<%=row%>').doDown" href="javascript:downInterfaces('<%=row%>')" value="关闭端口">
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <a id="ss('<%=row%>').doDot1x"href="javascript:dot1xs('<%=row%>')">端口认证</a>
+    <input type="submit" id="ss('<%=row%>').doDot1x"href="javascript:dot1xs('<%=row%>')" value="端口认证">
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <a id="ss('<%=row%>').undoDot1x" href="javascript:undoDot1xs('<%=row%>')">取消认证</a>
+    <input type="submit" id="ss('<%=row%>').undoDot1x" href="javascript:undoDot1xs('<%=row%>')" value="取消认证">
     &nbsp;&nbsp;&nbsp;&nbsp;
 </form>
 
