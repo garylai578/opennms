@@ -28,11 +28,34 @@
 %>
 
 <script type="text/javascript" >
+
+    function upInterfaces(rows){
+        var interfaces="";
+        for (var i = 0; i < rows; ++i) {
+
+            var inter = document.getElementById("choose-"+i);
+            if (inter.checked == true)
+                interfaces += inter + "\t";
+        }
+        upInterface(interfaces);
+    }
+
     function upInterface(inter){
         document.manageSwticher.action="abcbank/manageSwitcher";
         document.manageSwticher.interface.value=inter;
         document.manageSwticher.type.value="up-interface";
         document.manageSwticher.submit();
+    }
+
+    function downInterfaces(rows){
+        var interfaces="";
+        for (var i = 0; i < rows; ++i) {
+
+            var inter = document.getElementById("choose-"+i);
+            if (inter.checked == true)
+                interfaces += inter + "\t";
+        }
+        downInterface(interfaces);
     }
 
     function downInterface(inter){
@@ -42,11 +65,33 @@
         document.manageSwticher.submit();
     }
 
+    function dot1xs(rows){
+        var interfaces="";
+        for (var i = 0; i < rows; ++i) {
+
+            var inter = document.getElementById("choose-"+i);
+            if (inter.checked == true)
+                interfaces += inter + "\t";
+        }
+        dot1x(interfaces);
+    }
+
     function dot1x(inter){
         document.manageSwticher.action="abcbank/manageSwitcher";
         document.manageSwticher.interface.value=inter;
         document.manageSwticher.type.value="dot1x";
         document.manageSwticher.submit();
+    }
+
+    function undoDot1xs(rows){
+        var interfaces="";
+        for (var i = 0; i < rows; ++i) {
+
+            var inter = document.getElementById("choose-"+i);
+            if (inter.checked == true)
+                interfaces += inter + "\t";
+        }
+        undoDot1x(interfaces);
     }
 
     function undoDot1x(inter){
@@ -92,7 +137,7 @@
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="3%" align="center">
                 <div id="id-<%=row%>">
-                    <%=row+1%>
+                    <input id="choose-<%=row%>" type="checkbox" value="" />
                 </div>
             </td>
 
@@ -131,6 +176,15 @@
         %>
 
     </table>
+
+    <a id="ss('<%=row%>').doUp" href="javascript:upInterfaces('<%=row%>')">开启端口</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a id="ss('<%=row%>').doDown" href="javascript:downInterfaces('<%=row%>')" >关闭端口</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a id="ss('<%=row%>').doDot1x"href="javascript:dot1xs('<%=row%>')">端口认证</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a id="ss('<%=row%>').undoDot1x" href="javascript:undoDot1xs('<%=row%>')">取消认证</a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
 </form>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />

@@ -20,25 +20,28 @@ public class ManageSwitcherServlet extends HttpServlet {
         String host = request.getParameter("host");
         String user = request.getParameter("user");
         String password = request.getParameter("password");
-        String inter = request.getParameter("interface");
+        String inters = request.getParameter("interface");
         SwitcherUtil util = new SwitcherUtil(host, user, password);
         String type = request.getParameter("type");
         int result = 0;
         String msg;
 
-        if(type.equals("up-interface"))
-            result = util.upInterface(inter);
-        else if(type.equals("down-interface"))
-            result = util.downInterface(inter);
-        else if(type.equals("dot1x"))
-            result = util.dot1X(inter);
-        else if(type.equals("undoDot1x"))
-            result = util.undoDot1X(inter);
+        String[] interfaces = inters.split("\t");
+        for(String inter : interfaces) {
+            if (type.equals("up-interface"))
+                result = util.upInterface(inter);
+            else if (type.equals("down-interface"))
+                result = util.downInterface(inter);
+            else if (type.equals("dot1x"))
+                result = util.dot1X(inter);
+            else if (type.equals("undoDot1x"))
+                result = util.undoDot1X(inter);
 
-        if(result < 0)
-            msg = "操作失败，请重试或联系管理员！";
-        else
-            msg = "操作成功！";
+            if (result < 0)
+                msg = "操作失败，请重试或联系管理员！";
+            else
+                msg = "操作成功！";
+        }
 
         request.setAttribute("id", id);
         request.setAttribute("host-"+id, host);
