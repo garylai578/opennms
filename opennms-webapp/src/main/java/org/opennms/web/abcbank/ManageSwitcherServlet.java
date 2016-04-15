@@ -44,7 +44,7 @@ public class ManageSwitcherServlet extends HttpServlet {
         request.setAttribute("host-"+id, host);
         request.setAttribute("user-"+id, user);
         request.setAttribute("password-"+id, password);
-        request.getRequestDispatcher("abcbank/manageSwitcherPorts.jsp").forward(request, response);
+        request.getRequestDispatcher("manageSwitcherPorts.jsp").forward(request, response);
 
        /* response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
