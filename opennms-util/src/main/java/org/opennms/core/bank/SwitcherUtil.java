@@ -160,10 +160,6 @@ public class SwitcherUtil {
             telnet.setUsernamePrompt("Username:");
             telnet.setLoginPrompt(null);
             telnet.login(user, password, "");
-            telnet.write("en");
-            telnet.readUntil("Password:");
-            telnet.write(password);
-            telnet.readUntilPrompt("#$>]");
         }
     }
 }

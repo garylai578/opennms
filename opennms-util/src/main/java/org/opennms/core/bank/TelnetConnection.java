@@ -47,30 +47,44 @@ public class TelnetConnection {
     }
 
     /**
-     * 登录到远程机器中<br>
-     * 说明：在登录前，先确认输入用户名的提示符，如果不是Username：，需要设置该值，使用setUsernamePrompt(prompt)；<br>
-     *       第二，确认输入密码时的提示符，如果不是Password：，需要设置该值,使用setPasswordPrompt(prompt)；<br>
-     *       第三，确认登录后查看是否有登录后的提示信息：如：%Apr 17 04:26:32:256 2000 Quidway SHELL/5/LOGIN:- 1 - admin(191.168.2.227) in unit1 login <br>
+     * 登录到远程机器的特权模式<br>
+     * 说明：第一，在登录前，先确认输入用户名的提示符，如果不是Username：，需要设置该值，使用setUsernamePrompt(prompt)；<br>
+     *       第二，password需要包含登录密码和特权模式密码，并且以“@pwd_split_tag@”隔开
+     *       第三，确认输入密码时的提示符，如果不是Password：，需要设置该值,使用setPasswordPrompt(prompt)；<br>
+     *       第四，确认登录后查看是否有登录后的提示信息：如：%Apr 17 04:26:32:256 2000 Quidway SHELL/5/LOGIN:- 1 - admin(191.168.2.227) in unit1 login <br>
      *              如果末尾不是login,需要指定最后一个单词，使用setLoginPrompt(prompt)。
      *              如果没有登录提示，设置setLoginPrompt(null);
-     *       第四，执行命令时，如果提示符不是 #、$、>、]中的一个，也需要指定最后一个符号，使用setPrompt(prompt).
+     *       第五，执行命令时，如果提示符不是 #、$、>、]中的一个，也需要指定最后一个符号，使用setPrompt(prompt).
      **/
     public void login(String username, String password, String prompt) {
         //处理命令行的提示字符
         if(prompt != null && !"".equals(prompt)) {
             this.prompt = prompt;
         }
+
+        String[] pwds = password.split("@pwd_split_tag@");
+        if(pwds.length != 2){
+            return ;
+        }
+
         readUntil(this.usernamePrompt);
         log.debug("发送用户名:" + username);
         write(username);
         readUntil(this.passwordPrompt);
-        log.debug("发送用密码:" + password);
-        write(password);
+        log.debug("发送登录密码:" + pwds[0]);
+        write(pwds[0]);
         log.debug("登录成功");
         readUntilPrompt(this.prompt);
 
         if(this.loginPrompt != null)
             readUntil(this.loginPrompt);
+
+        log.debug("发送特权模式密码:" + pwds[1]);
+        write("en");
+        readUntil(this.passwordPrompt);
+        write(pwds[1]);
+        readUntilPrompt(this.prompt);
+        log.debug("进入特权模式");
     }
 
     /**

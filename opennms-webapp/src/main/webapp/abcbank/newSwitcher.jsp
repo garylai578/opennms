@@ -43,9 +43,11 @@
         if(isCommitted == true)
             return false;
         isCommitted = true;
+        var group = new String(document.newSwitcher.group.value);
         var host = new String(document.newSwitcher.host.value);
         var user = new String(document.newSwitcher.user.value);
         var password = new String(document.newSwitcher.password.value);
+        var password2 = new String(document.newSwitcher.password2.value);
         var backup = new String(document.newSwitcher.backup.value);
         if(host==0 || host=="") {
             alert("请填写管理IP！");
@@ -59,11 +61,20 @@
             alert("请填写管理员密码！");
             isCommitted = false;
             return false;
+        }else if(password2 == 0 || password2 ==""){
+            alert("请填写特权模式密码！");
+            isCommitted = false;
+            return false;
         }else if(backup == 0 || backup ==""){
             alert("请填写交换机的备份命令！");
             isCommitted = false;
             return false;
+        }else if(group == 0 || group ==""){
+            alert("请选择交换机分组！");
+            isCommitted = false;
+            return false;
         }else{
+            document.newSwitcher.password.value = password + "@pwd_split_tag@" + password2;
             document.newSwitcher.action = "abcbank/addSwitcher";
             document.newSwitcher.submit();
             return true;
@@ -97,6 +108,20 @@
         </tr>
 
         <tr>
+            <td>*交换机分组：</td>
+            <td>
+                <select id="group" name="group">
+                    <option value="0" selected="">请选择</option>
+                    <option value="莞城">莞城</option>
+                    <option value="东城">东城</option>
+                    <option value="南城">南城</option>
+                    <option value="厚街">厚街</option>
+                    <option value="其他">其他</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
             <td>*管理IP地址：</td>
             <td>
                 <input id="host" name="host" type="text" size="100" required="required"/>
@@ -115,6 +140,13 @@
             <td>
                 <input id="password" name="password" type="password" size="100" required="required"/>
             </td>
+        </tr>
+
+        <tr>
+        <td>*特权模式密码：</td>
+        <td>
+            <input id="password2" name="password2" type="password" size="100" required="required"/>
+        </td>
         </tr>
 
         <tr>
