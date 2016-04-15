@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * Created by laiguanhui on 2016/4/12.
@@ -17,6 +16,7 @@ public class ManageSwitcherServlet extends HttpServlet {
     private static final long serialVersionUID = -2653800565575021616L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
         String host = request.getParameter("host");
         String user = request.getParameter("user");
         String password = request.getParameter("password");
@@ -39,10 +39,17 @@ public class ManageSwitcherServlet extends HttpServlet {
             msg = "操作失败，请重试或联系管理员！";
         else
             msg = "操作成功！";
-        response.setContentType("text/html;charset=gb2312");
+
+        request.setAttribute("id", id);
+        request.setAttribute("host-"+id, host);
+        request.setAttribute("user-"+id, user);
+        request.setAttribute("password-"+id, password);
+        request.getRequestDispatcher("abcbank/manageSwitcherPorts.jsp").forward(request, response);
+
+       /* response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
         pw.print("<script language='javascript'>alert('"+ msg +"' );window.location=('/opennms/abcbank/manageSwitcherPorts.jsp');</script>");
-        pw.close();
+        pw.close();*/
     }
 
 

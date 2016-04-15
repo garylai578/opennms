@@ -64,6 +64,7 @@
     <input type="hidden" name="host" value="<%=host%>"/>
     <input type="hidden" name="user" value="<%=user%>"/>
     <input type="hidden" name="password" value="<%=password%>"/>
+    <input type="hidden" name="id" value="<%=id%>"/>
 <br>
     <div>
         交换机IP：<%=host%>
