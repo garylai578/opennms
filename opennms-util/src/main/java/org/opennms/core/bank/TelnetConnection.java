@@ -220,6 +220,14 @@ public class TelnetConnection {
     }
 
     /**
+     * 判断是否连接
+     * @return
+     */
+    public boolean isConnected(){
+        return telnet.isConnected();
+    }
+
+    /**
      * 关闭打开的连接
      * @param telnet
      */

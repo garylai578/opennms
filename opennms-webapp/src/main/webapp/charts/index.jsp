@@ -35,10 +35,10 @@
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false">
-  <jsp:param name="title" value="Charts" />
-  <jsp:param name="headTitle" value="Charts" />
+  <jsp:param name="title" value="图标" />
+  <jsp:param name="headTitle" value="图标" />
   <jsp:param name="location" value="chart" />
-  <jsp:param name="breadcrumb" value="Charts" />
+  <jsp:param name="breadcrumb" value="图标" />
 </jsp:include>
 
 <%@ page import="org.opennms.netmgt.charts.ChartUtils" %>

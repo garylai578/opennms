@@ -86,7 +86,6 @@ public class SwitcherUtil {
                 else
                     dot1x.add("none");
             }
-            telnet.disconnect();
         }
         return dot1x.toArray(new String[dot1x.size()]);
     }
@@ -102,7 +101,7 @@ public class SwitcherUtil {
         telnet.sendCommand("config");
         telnet.sendCommand("interface " + inter);
         telnet.sendCommand("no shutdown");
-        telnet.disconnect();
+        telnet.sendCommand("end");
         return 1;
     }
 
@@ -117,7 +116,7 @@ public class SwitcherUtil {
         telnet.sendCommand("config");
         telnet.sendCommand("interface " + inter);
         telnet.sendCommand("shutdown");
-        telnet.disconnect();
+        telnet.sendCommand("end");
         return 1;
     }
 
@@ -132,7 +131,7 @@ public class SwitcherUtil {
         telnet.sendCommand("config");
         telnet.sendCommand("interface " + inter);
         telnet.sendCommand("dot1x port-control auto");
-        telnet.disconnect();
+        telnet.sendCommand("end");
         return 1;
     }
 
@@ -147,18 +146,20 @@ public class SwitcherUtil {
         telnet.sendCommand("config");
         telnet.sendCommand("interface " + inter);
         telnet.sendCommand("no dot1x port-control auto");
-        telnet.disconnect();
+        telnet.sendCommand("end");
         return 1;
     }
 
     private void connect(){
-        telnet = new TelnetConnection(host, 23);
-        telnet.setUsernamePrompt("Username:");
-        telnet.setLoginPrompt(null);
-        telnet.login(user, password, "");
-        telnet.write("en");
-        telnet.readUntil("Password:");
-        telnet.write(password);
-        telnet.readUntilPrompt("#$>]");
+        if(telnet == null || !telnet.isConnected()) {
+            telnet = new TelnetConnection(host, 23);
+            telnet.setUsernamePrompt("Username:");
+            telnet.setLoginPrompt(null);
+            telnet.login(user, password, "");
+            telnet.write("en");
+            telnet.readUntil("Password:");
+            telnet.write(password);
+            telnet.readUntilPrompt("#$>]");
+        }
     }
 }
