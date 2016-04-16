@@ -44,12 +44,21 @@
             return false;
         isCommitted = true;
         var group = new String(document.newSwitcher.group.value);
+        var name = new String(document.newSwitcher.name.value);
         var host = new String(document.newSwitcher.host.value);
         var user = new String(document.newSwitcher.user.value);
         var password = new String(document.newSwitcher.password.value);
         var password2 = new String(document.newSwitcher.password2.value);
         var backup = new String(document.newSwitcher.backup.value);
-        if(host==0 || host=="") {
+        if(name==0 || name=="") {
+            alert("请填写交换机名称！");
+            isCommitted = false;
+            return false;
+        }else if(group == 0 || group ==""){
+            alert("请选择交换机分组！");
+            isCommitted = false;
+            return false;
+        }else if(host==0 || host=="") {
             alert("请填写管理IP！");
             isCommitted = false;
             return false;
@@ -67,10 +76,6 @@
             return false;
         }else if(backup == 0 || backup ==""){
             alert("请填写交换机的备份命令！");
-            isCommitted = false;
-            return false;
-        }else if(group == 0 || group ==""){
-            alert("请选择交换机分组！");
             isCommitted = false;
             return false;
         }else{
@@ -94,6 +99,13 @@
 <form id="newSwitcher" method="post" name="newSwitcher" onsubmit="return validateFormInput();">
     <table>
         <tr>
+            <td>*交换机名称：</td>
+            <td>
+                <input id="name" name="name" type="text" size="100" required="required"/>
+            </td>
+        </tr>
+
+        <tr>
             <td>交换机品牌：</td>
             <td>
                 <select id="brand" name="brand">
@@ -110,7 +122,7 @@
         <tr>
             <td>*交换机分组：</td>
             <td>
-                <select id="group" name="group">
+                <select id="group" name="group" >
                     <option value="0" selected="">请选择</option>
                     <option value="莞城">莞城</option>
                     <option value="东城">东城</option>
@@ -162,6 +174,77 @@
                 <input id="recovery" name="recovery" type="text" size="100"/>
             </td>
         </tr>
+
+        <tr>
+            <td>广域网地址/掩码：</td>
+            <td>
+                <input id="wan_ip" name="wan_ip" type="text" size="100"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Lookback地址/掩码：</td>
+            <td>
+                <input id="lookback_ip" name="lookback_ip" type="text" size="100"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Vlan 150地址1/掩码：</td>
+            <td>
+                <input id="vlan150_ip1" name="vlan150_ip1" type="text" size="100"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Vlan 150地址2/掩码：</td>
+            <td>
+                <input id="vlan150_ip2" name="vlan150_ip2" type="text" size="100"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Vlan 160地址1/掩码：</td>
+            <td>
+                <input id="vlan160_ip1" name="vlan160_ip1" type="text" size="100"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Vlan 160地址2/掩码：</td>
+            <td>
+                <input id="vlan160_ip2" name="vlan160_ip2" type="text" size="100"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Vlan 170地址1/掩码：</td>
+            <td>
+                <input id="vlan170_ip1" name="vlan170_ip1" type="text" size="100"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Vlan 170地址2/掩码：</td>
+            <td>
+                <input id="vlan170_ip2" name="vlan170_ip2" type="text" size="100"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>ospf进程名：</td>
+            <td>
+                <input id="ospf" name="ospf" type="text" size="100"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>area号：</td>
+            <td>
+                <input id="area" name="area" type="text" size="100"/>
+            </td>
+        </tr>
+
 
         <tr>
             <td>备注：</td>

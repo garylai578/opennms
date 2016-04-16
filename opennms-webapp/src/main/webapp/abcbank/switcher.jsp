@@ -177,18 +177,32 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
         <tr bgcolor="#999999">
+            <td width="3%" align="center"><b>名称</b></td>
+            <td width="3%" align="center"><b>分组</b></td>
             <td width="3%" align="center"><b>品牌</b></td>
             <td width="3%" align="center"><b>IP</b></td>
             <td width="3%" align="center"><b>用户名</b></td>
-            <td width="8%" align="center"><b>备份命令</b></td>
-            <td width="8%" align="center"><b>恢复命令</b></td>
-            <td width="5%" align="center"><b>备注</b></td>
+            <td width="5%" align="center"><b>备份命令</b></td>
+            <td width="5%" align="center"><b>恢复命令</b></td>
+            <td width="3%" align="center"><b>广域网地址/掩码</b></td>
+            <td width="3%" align="center"><b>Lookback地址/掩码</b></td>
+            <td width="3%" align="center"><b>Vlan 150地址1/掩码</b></td>
+            <td width="3%" align="center"><b>Vlan 150地址2/掩码</b></td>
+            <td width="3%" align="center"><b>Vlan 160地址1/掩码</b></td>
+            <td width="3%" align="center"><b>Vlan 160地址2/掩码</b></td>
+            <td width="3%" align="center"><b>Vlan 170地址1/掩码</b></td>
+            <td width="3%" align="center"><b>Vlan 170地址2/掩码</b></td>
+            <td width="3%" align="center"><b>ospf进程名</b></td>
+            <td width="3%" align="center"><b>area号</b></td>
+            <td width="3%" align="center"><b>备注</b></td>
         </tr>
         <%
             Switcher[] ss = op.selectAll();
             int row = 0;
             for(Switcher sw : ss){
                 String id = sw.getId();
+                String name = sw.getName();
+                String group = sw.getGroup();
                 String host = sw.getHost();
                 String user = sw.getUser();
                 String password = sw.getPassword();
@@ -196,19 +210,43 @@
                 String backup = sw.getBackup();
                 String recovery = sw.getRecovery();
                 String comment = sw.getComment();
+                String wan_ip = sw.getWan_ip();
+                String lookback = sw.getLookback_ip();
+                String vlan150_ip1 = sw.getVlan150_ip1();
+                String vlan150_ip2 = sw.getVlan150_ip2();
+                String vlan160_ip1 = sw.getVlan160_ip1();
+                String vlan160_ip2 = sw.getVlan160_ip2();
+                String vlan170_ip1 = sw.getVlan170_ip1();
+                String vlan170_ip2 = sw.getVlan170_ip2();
+                String ospf = sw.getOspf();
+                String area = sw.getArea();
                 session.setAttribute("host-"+id, host);
                 session.setAttribute("user-"+id, user);
                 session.setAttribute("password-"+id, password);
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="3%" rowspan="2"  align="center">
+                <div>
+                    <%= ((name == null || name.equals("")) ? "&nbsp;" : name) %>
+                    <input type="hidden" name="name-<%=row%>" id="name-<%=row%>" value=""/>
+                </div>
+            </td>
+
+            <td width="3%" align="center">
+                <div>
+                    <%= ((group == null || group.equals("")) ? "&nbsp;" : group) %>
+                    <input type="hidden"  name="group-<%=row%>" id="group-<%=row%>" value=""/>
+                </div>
+            </td>
+
+            <td width="3%" align="center">
                 <div id="brand-<%=row%>">
                     <%= ((brand == null || brand.equals("")) ? "&nbsp;" : brand) %>
                     <input type="hidden" name="brand-<%=row%>" value="<%= ((brand == null || brand.equals("")) ? "&nbsp;" : brand) %>"/>
                 </div>
             </td>
 
-            <td width="3%" rowspan="2" align="center">
+            <td width="3%" align="center">
                 <div id="host-<%=row%>">
                     <%= ((host == null || host.equals("")) ? "&nbsp;" : host) %>
                     <input type="hidden" name="host-<%=row%>" value="<%= ((host == null || host.equals("")) ? "&nbsp;" : host) %>"/>
@@ -222,21 +260,72 @@
                 </div>
             </td>
 
-            <td width="8%" align="center">
+            <td width="5%" align="center">
                 <div id="backup-<%=row%>">
                     <%= ((backup == null || backup.equals("")) ? "&nbsp;" : backup) %>
                     <input type="hidden" name="backup-<%=row%>" value="<%= ((backup == null || backup.equals("")) ? "&nbsp;" : backup) %>"/>
                 </div>
             </td>
 
-            <td width="8%" align="center">
+            <td width="5%" align="center">
                 <div>
                     <%= ((recovery == null || recovery.equals("")) ? "&nbsp;" : recovery) %>
                     <input type="hidden" name="recovery-<%=row%>" id="recovery-<%=row%>" value="<%= ((recovery == null || recovery.equals("")) ? "" : recovery) %>"/>
                 </div>
             </td>
 
-            <td width="5%" align="center">
+            <td width="3%" align="center">
+                <div id="wan_ip-<%=row%>">
+                    <%= ((wan_ip == null || wan_ip.equals("")) ? "&nbsp;" : wan_ip) %>
+                </div>
+            </td>
+            <td width="3%" align="center">
+                <div id="lookback-<%=row%>">
+                    <%= ((lookback == null || lookback.equals("")) ? "&nbsp;" : lookback) %>
+                </div>
+            </td>
+            <td width="3%" align="center">
+                <div id="vlan150_ip1-<%=row%>">
+                    <%= ((vlan150_ip1 == null || vlan150_ip1.equals("")) ? "&nbsp;" : vlan150_ip1) %>
+                </div>
+            </td>
+            <td width="3%" align="center">
+                <div id="vlan150_ip2-<%=row%>">
+                    <%= ((vlan150_ip2 == null || vlan150_ip2.equals("")) ? "&nbsp;" : vlan150_ip2) %>
+                </div>
+            </td>
+            <td width="3%" align="center">
+                <div id="vlan160_ip1-<%=row%>">
+                    <%= ((vlan160_ip1 == null || vlan160_ip1.equals("")) ? "&nbsp;" : vlan160_ip1) %>
+                </div>
+            </td>
+            <td width="3%" align="center">
+                <div id="-<%=row%>">
+                    <%= ((vlan160_ip2 == null || vlan160_ip2.equals("")) ? "&nbsp;" : vlan160_ip2) %>
+                </div>
+            </td>
+            <td width="3%" align="center">
+                <div id="vlan170_ip1-<%=row%>">
+                    <%= ((vlan170_ip1 == null || vlan170_ip1.equals("")) ? "&nbsp;" : vlan170_ip1) %>
+                </div>
+            </td>
+            <td width="3%" align="center">
+                <div id="vlan170_ip2-<%=row%>">
+                    <%= ((vlan170_ip2 == null || vlan170_ip2.equals("")) ? "&nbsp;" : vlan170_ip2) %>
+                </div>
+            </td>
+            <td width="3%" align="center">
+                <div id="ospf-<%=row%>">
+                    <%= ((ospf == null || ospf.equals("")) ? "&nbsp;" : ospf) %>
+                </div>
+            </td>
+            <td width="3%" align="center">
+                <div id="area-<%=row%>">
+                    <%= ((area == null || area.equals("")) ? "&nbsp;" : area) %>
+                </div>
+            </td>
+
+            <td width="3%" align="center">
                 <div id="comment-<%=row%>">
                     <%= ((comment == null || comment.equals("")) ? "&nbsp;" : comment) %>
                 </div>
@@ -247,7 +336,7 @@
         </tr>
 
         <tr bgcolor="#cccccc">
-            <td width="15%" colspan="4"> &nbsp;&nbsp;<b>操作：</b>
+            <td width="15%" colspan="17"> &nbsp;&nbsp;<b>操作：</b>
                 <a id="<%= "ss("+id+").doDelete" %>" href="javascript:deleteSwitcher('<%=id%>')" onclick="return confirm('你确定要删除： <%=host%> ?')">删除</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a id="<%= "ss("+id+").ports" %>" href="javascript:managePorts('<%=row%>')">端口操作</a>

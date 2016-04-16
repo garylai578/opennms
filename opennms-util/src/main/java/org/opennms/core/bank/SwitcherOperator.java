@@ -29,7 +29,7 @@ public class SwitcherOperator {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String insert = "insert into switcher(brand, host, username, password, backup, recovery, comment) values ("
+            String insert = "insert into switcher(name, groups, brand, host, user,password,backup, recovery, wan_ip, lookback_ip, vlan150_ip1, vlan150_ip2, vlan160_ip1, vlan160_ip2, vlan170_ip1, vlan170_ip2, ospf, area, comment) values ("
                     + s.toInsertString() + ")";
             log.debug("insert sql = " + insert);
             int rc = stmt.executeUpdate(insert);
@@ -89,12 +89,24 @@ public class SwitcherOperator {
         while(rs.next()){
             Switcher switcher = new Switcher();
             switcher.setId(String.valueOf(rs.getInt("id")));
+            switcher.setName(rs.getString("name"));
+            switcher.setGroup(rs.getString("groups"));
             switcher.setBrand(rs.getString("brand"));
             switcher.setHost(rs.getString("host"));
             switcher.setUser(rs.getString("username"));
             switcher.setPassword(rs.getString("password"));
             switcher.setBackup(rs.getString("backup"));
             switcher.setRecovery(rs.getString("recovery"));
+            switcher.setWan_ip(rs.getString("wan_ip"));
+            switcher.setLookback_ip(rs.getString("lookback_ip"));
+            switcher.setVlan150_ip1(rs.getString("vlan150_ip1"));
+            switcher.setVlan150_ip2(rs.getString("vlan150_ip2"));
+            switcher.setVlan160_ip1(rs.getString("vlan160_ip1"));
+            switcher.setVlan160_ip2(rs.getString("vlan160_ip2"));
+            switcher.setVlan170_ip1(rs.getString("vlan170_ip1"));
+            switcher.setVlan170_ip2(rs.getString("vlan170_ip2"));
+            switcher.setOspf(rs.getString("ospf"));
+            switcher.setArea(rs.getString("area"));
             switcher.setComment(rs.getString("comment"));
             list.add(switcher);
         }

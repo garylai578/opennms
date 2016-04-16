@@ -325,6 +325,8 @@ create table webline (
 --#
 --# This table contains the following fields:
 --#  id          : id
+--#  name        : the name of the switcher
+--#  groups       : the group of the switcher
 --#  brand       : the brand of the switcher
 --#  host        : the host ip of the switcher
 --#  username    : the user name to login the switcher
@@ -336,12 +338,24 @@ create table webline (
 --########################################################################
 create table switcher (
     id serial,
+    name text not null,
+    groups text not NULL,
     brand text,
     host text not null,
     username text not null,
     password text not null,
     backup text not null,
     recovery text,
+    wan_ip text,
+    lookback_ip text,
+    vlan150_ip1 text,
+    vlan150_ip2 text,
+    vlan160_ip1 text,
+    vlan160_ip2 text,
+    vlan170_ip1 text,
+    vlan170_ip2 text,
+    ospf text,
+    area text,
     comment text
 );
 
