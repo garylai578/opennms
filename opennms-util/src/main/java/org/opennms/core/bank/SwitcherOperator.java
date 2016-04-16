@@ -29,7 +29,7 @@ public class SwitcherOperator {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String insert = "insert into switcher(name, groups, brand, host, user,password,backup, recovery, wan_ip, lookback_ip, vlan150_ip1, vlan150_ip2, vlan160_ip1, vlan160_ip2, vlan170_ip1, vlan170_ip2, ospf, area, comment) values ("
+            String insert = "insert into switcher(name, groups, brand, host, username,password,backup, recovery, wan_ip, lookback_ip, vlan150_ip1, vlan150_ip2, vlan160_ip1, vlan160_ip2, vlan170_ip1, vlan170_ip2, ospf, area, comment) values ("
                     + s.toInsertString() + ")";
             log.debug("insert sql = " + insert);
             int rc = stmt.executeUpdate(insert);
