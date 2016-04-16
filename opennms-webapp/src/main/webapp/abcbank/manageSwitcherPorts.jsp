@@ -17,7 +17,7 @@
     <jsp:param name="headTitle" value="交换机配置管理" />
     <jsp:param name="breadcrumb" value="<a href='admin/index.jsp'>管理</a>" />
     <jsp:param name="breadcrumb" value="<a href='abcbank/switcher.jsp'>交换机配置管理</a>" />
-    <jsp:param name="breadcrumb" value="交换机端口开关" />
+    <jsp:param name="breadcrumb" value="交换机端口操作" />
 </jsp:include>
 
 <%

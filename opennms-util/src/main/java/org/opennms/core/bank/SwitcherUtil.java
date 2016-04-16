@@ -20,12 +20,20 @@ public class SwitcherUtil {
     String host;
     String user;
     String password;
+    int port = 23;
     TelnetConnection telnet;
 
     public SwitcherUtil(String host, String user, String password){
         this.host = host;
         this.user = user;
         this.password = password;
+    }
+
+    public SwitcherUtil(String host, String user, String password, int port){
+        this.host = host;
+        this.user = user;
+        this.password = password;
+        this.port = port;
     }
 
     /**
@@ -150,13 +158,27 @@ public class SwitcherUtil {
         return 1;
     }
 
+    /**
+     * 绑定IP
+     * @param ips 待绑定的ip列表
+     * @param no_dot1x_before 绑定前是否先取消dot1x认证
+     * @param dot1x_after 绑定后是否添加dot1x认证
+     * @param inters 进行dot1x操作的端口列表
+     * @return 交换机的操作输出，每个ip的绑定结果以“@result_split_flag@”分隔
+     */
+    public String bundingIPs(String[] ips, boolean no_dot1x_before, boolean dot1x_after, String[] inters){
+        String result = "";
+//TODO
+        return result;
+    }
+
     public void diconnect(){
         telnet.disconnect();
     }
 
     private void connect(){
         if(telnet == null || !telnet.isConnected()) {
-            telnet = new TelnetConnection(host, 23);
+            telnet = new TelnetConnection(host, port);
             telnet.setUsernamePrompt("Username:");
             telnet.setLoginPrompt(null);
             telnet.login(user, password, "");

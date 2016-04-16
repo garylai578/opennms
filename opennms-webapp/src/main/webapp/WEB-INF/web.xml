@@ -883,6 +883,14 @@
     <servlet-name>ManageSwitcherServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.ManageSwitcherServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>BundingIPServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.BundingIPServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DelBundingMacServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.DelBundingMacServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1298,6 +1306,14 @@
   <servlet-mapping>
     <servlet-name>ManageSwitcherServlet</servlet-name>
     <url-pattern>/abcbank/manageSwitcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BundingIPServlet</servlet-name>
+    <url-pattern>/abcbank/bundingIP</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DelBundingMacServlet</servlet-name>
+    <url-pattern>/abcbank/deleteBundingMac</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  
