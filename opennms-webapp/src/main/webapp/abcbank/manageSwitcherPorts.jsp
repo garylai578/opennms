@@ -160,13 +160,23 @@
 
             <td width="3%" align="center">
                 <div id="status-<%=row%>">
-                    <%= status[i] %>
+                    <%
+                        if(status[i].equals("down"))
+                            out.print("<font color='red'>" + status[i] + "</font>");
+                        else if(status[i].equals("up"))
+                            out.print(status[i]);
+                    %>
                 </div>
             </td>
 
             <td width="3%" align="center">
                 <div id="dot1x-<%=row%>">
-                    <%= dot1x[i] %>
+                    <%
+                        if(dot1x[i].equals("none"))
+                            out.print("<font color='red'>" + dot1x[i] + "</font>");
+                        else if(dot1x[i].equals("auto"))
+                            out.print(dot1x[i]);
+                    %>
                 </div>
             </td>
 
@@ -188,6 +198,7 @@
 
     </table>
 
+    批量操作：
     <input type="submit" id="ss('<%=row%>').doUp" href="javascript:upInterfaces('<%=row%>')" value="开启端口">
     &nbsp;&nbsp;&nbsp;&nbsp;
     <input type="submit" id="ss('<%=row%>').doDown" href="javascript:downInterfaces('<%=row%>')" value="关闭端口">
