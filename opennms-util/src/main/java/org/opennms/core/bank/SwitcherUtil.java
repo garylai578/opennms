@@ -167,7 +167,7 @@ public class SwitcherUtil {
      * @return 交换机的操作输出，每个ip的绑定结果以“@result_split_flag@”分隔
      */
     public String bundingIPs(String[] ips, boolean no_dot1x_before, boolean dot1x_after, String[] inters){
-        String result = "";
+        String result = "return 1\n@result_split_flag@return 2\n@result_split_flag@resutn 3\n@result_split_flag@";
 //TODO
         return result;
     }

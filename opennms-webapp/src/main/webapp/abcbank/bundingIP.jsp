@@ -39,7 +39,7 @@
 
     String backContent = (String)request.getAttribute("backContent");
     String result = (String)request.getAttribute("result");
-
+    String ips = (String)request.getAttribute("ips");
 %>
 
 <script type="text/javascript" >
@@ -65,7 +65,7 @@
 </script>
 
 
-<form method="post" name="allSwitchers">
+<form method="post" name="allSwitchers"  onsubmit="return bundingIP();">
     <input type="hidden" name="host" value="<%=host%>"/>
     <input type="hidden" name="user" value="<%=user%>"/>
     <input type="hidden" name="password" value="<%=password%>" />
@@ -106,7 +106,7 @@
 
         <tr>
             <td>
-                <textarea id="ips" name="ips" rows="20" style="width:100%; overflow: auto;"></textarea>
+                <textarea id="ips" name="ips" rows="20" style="width:100%; overflow: auto;"><%=((ips == null || ips.equals("")) ? "&nbsp;" : ips)%></textarea>
             </td>
 
             <td>

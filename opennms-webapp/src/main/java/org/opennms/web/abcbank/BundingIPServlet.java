@@ -25,10 +25,11 @@ public class BundingIPServlet extends HttpServlet {
         String no_dot1x_before_s = request.getParameter("no_dot1x_before");
         String dot1x_after_s = request.getParameter("dot1x_after");
         String[] inters = {request.getParameter("inter0"), request.getParameter("inter1"), request.getParameter("inter2")};
-        String[] ips = request.getParameter("ips").split("\n");
+	String ip = request.getParameter("ips");
+        String[] ips = ip.split("\n");
 
         String[] backContent; //交换机的输出
-        String[] result;      //结果
+        String backResult = "";      //结果
         boolean no_dot1x_before = false;
         boolean dot1x_after = false;
 
@@ -41,18 +42,18 @@ public class BundingIPServlet extends HttpServlet {
         String results = su.bundingIPs(ips, no_dot1x_before, dot1x_after, inters);
         String successFlag = "";    //判断交换机返回结果是否成功的标志, 待确定 TODO
         backContent = results.split("@result_split_flag@");
-        result = new String[backContent.length];
         for(int i = 0; i < backContent.length; ++i) {
             if (backContent[i].contains(successFlag))
-                result[i] = "绑定成功";
+                backResult += "绑定成功" + "\n";
             else
-                result[i] = "绑定失败";
+                backResult += "绑定失败" + "\n";
         }
         request.setAttribute("host", host);
         request.setAttribute("user", user);
         request.setAttribute("password", password);
         request.setAttribute("backContent", results.replaceAll("@result_split_flag@", ""));
-        request.setAttribute("result", result);
+	request.setAttribute("ips", ip);
+        request.setAttribute("result", backResult);
 
         request.getRequestDispatcher("bundingIP.jsp").forward(request, response);
 
