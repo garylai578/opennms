@@ -138,7 +138,7 @@
             String[] interfaces = util.getInterfaces();
             String[] status = util.getStates();
             String[] dot1x = util.getDot1x();
-            util.diconnect();
+//            util.diconnect();
             int size = interfaces.length;
             int row = 0;
             for(int i = 0; i < size; ++i){

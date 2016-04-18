@@ -40,6 +40,7 @@
     String backContent = (String)request.getAttribute("backContent");
     String result = (String)request.getAttribute("result");
     String ips = (String)request.getAttribute("ips");
+    String macs = (String)request.getAttribute("macs");
 %>
 
 <script type="text/javascript" >
@@ -127,7 +128,7 @@
 
         <tr valign="top">
             <td>
-                <textarea id="macs" name="macs" type="text" rows="10" style="width:100%; overflow: auto;"></textarea>
+                <textarea id="macs" name="macs" type="text" rows="10" style="width:100%; overflow: auto;"><%= ((macs == null || macs.equals("")) ? "&nbsp;" : macs) %></textarea>
                 <input type="submit" href="javascript:delBundingMAC()" value="删除旧绑定关系"/>
             </td>
 

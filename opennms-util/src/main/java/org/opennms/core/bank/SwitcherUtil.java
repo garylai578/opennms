@@ -22,6 +22,7 @@ public class SwitcherUtil {
     String password;
     int port = 23;
     TelnetConnection telnet;
+    String bundingResult;
 
     public SwitcherUtil(String host, String user, String password){
         this.host = host;
@@ -163,13 +164,259 @@ public class SwitcherUtil {
      * @param ips 待绑定的ip列表
      * @param no_dot1x_before 绑定前是否先取消dot1x认证
      * @param dot1x_after 绑定后是否添加dot1x认证
-     * @param inters 进行dot1x操作的端口列表
+     * @param interRange 进行dot1x操作的端口范围，格式：fastEthernet 0/31-41
      * @return 交换机的操作输出，每个ip的绑定结果以“@result_split_flag@”分隔
      */
-    public String bundingIPs(String[] ips, boolean no_dot1x_before, boolean dot1x_after, String[] inters){
-        String result = "return 1\n@result_split_flag@return 2\n@result_split_flag@resutn 3\n@result_split_flag@";
-//TODO
-        return result;
+    public String bundingIPs(String[] ips, boolean no_dot1x_before, boolean dot1x_after, String interRange){
+        String flag = "@result_split_flag@";
+        bundingResult = "";
+        String tmp;
+
+        if(no_dot1x_before){
+            bundingResult = "执行前关闭端口：" + interRange + "的认证\n";
+            telnet.sendCommand("config");
+            telnet.sendCommand("interface range " + interRange);
+            telnet.sendCommand("no dot1x port-control auto");
+            telnet.sendCommand("end");
+        }
+
+        //查看交换机型号，对于不同型号，绑定的流程不一样
+        telnet.sendCommand("terminal width 256");
+        tmp = telnet.sendCommand("show version");
+
+        //如果是S5750P或者S3760E
+        if(tmp.contains("S5750P") || tmp.contains("S3760E")){
+            for(int i = 0; i < ips.length; ++i){
+                int find = bundingS5750P(ips[i]);
+                if(find == -1){
+                    bundingResult += "绑定失败\n";
+                }else if(find == 1){
+                    bundingResult += "重复绑定\n";
+                }else if(find == 0){
+                    bundingResult += "绑定成功\n";
+                }
+                bundingResult += flag;
+            }
+        }else if(tmp.contains("S3760-48")){  //如果是S3760-48
+            for(int i = 0; i < ips.length; ++i) {
+                int find = bundingS3760_48(ips[i]);
+                if(find == -1){
+                    bundingResult += "绑定失败\n";
+                }else if(find == 1){
+                    bundingResult += "重复绑定\n";
+                }else if(find == 0){
+                    bundingResult += "绑定成功\n";
+                }
+                bundingResult += flag;
+            }
+        }
+
+        if(dot1x_after){
+            bundingResult = "执行后开启端口：" + interRange + "的认证\n";
+            telnet.sendCommand("config");
+            telnet.sendCommand("interface range " + interRange);
+            telnet.sendCommand("dot1x port-control auto");
+            telnet.sendCommand("end");
+        }
+
+        telnet.disconnect();
+        return bundingResult;
+    }
+
+    //对锐捷S5750P或者S3760E型号的交换机做ACL安全通道
+    private int bundingS5750P(String ip) {
+        telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1");
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//        String port;
+        String mac;
+//        String vlan;
+        String result = telnet.sendCommand("sh arp " + ip);
+        //找出MAC和vlan号
+        String patt = ip + ".*(([0-9a-z]{4}\\.){2}[0-9a-z]{4}).*(VLAN.*[0-9])";
+        Pattern p1 = Pattern.compile(patt);
+        Matcher matcher = p1.matcher(result);
+        if (matcher.find()) {
+            mac = matcher.group(1);
+//            vlan = matcher.group(3);
+//            bundingResult += "MACAddress = [" + mac + "]\n";
+            log.debug("mac:" + mac);
+        }else{
+            bundingResult += "查找IP[" + ip + "]对应MAC地址失败!\n";
+            log.debug("查找IP[" + ip + "]对应MAC地址失败!");
+            return  -1;
+        }
+
+        //检查MAC地址是否已经做了静态绑定
+/*
+        result = telnet.sendCommand("sh mac-address-table static address " + mac);
+        patt = mac + ".*STATIC.*(FastEthernet.*[0-9]$)";
+        p1 = Pattern.compile(patt);
+        matcher = p1.matcher(result);
+        if(matcher.find()) {
+            port = matcher.group(1);
+            bundingResult += "PortNo = [" + port + "]\n";
+            bundingResult += "IP[" + ip + "]对应MAC地址[" + mac + "]已经做了静态绑定!\n";
+            return 1;
+        }else{
+            bundingResult += "IP[" + ip + "]对应MAC地址[" + mac + "]未做静态绑定!\n";
+        }
+*/
+
+        //对端口进行认证
+        bundingResult += "对IP[" + ip + "]对应的MAC地址[" + mac + "]进行ACL认证!\n";
+        telnet.sendCommand("configure terminal");
+        telnet.sendCommand("expert access-list extended no1x");
+        telnet.sendCommand("permit ip any host " + mac + " any any");
+        telnet.sendCommand("end");
+        return 0;
+    }
+
+    //对锐捷S3760-48型号的交换机进行静态地址绑定
+    private int bundingS3760_48(String ip) {
+        telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1");
+        try {
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        String port;
+        String mac;
+        String vlan;
+        String result = telnet.sendCommand("sh arp " + ip);
+        //找出MAC和vlan号
+        String patt = ip + ".*(([0-9a-z]{4}\\.){2}[0-9a-z]{4}).*(VLAN.*[0-9])";
+        Pattern p1 = Pattern.compile(patt);
+        Matcher matcher = p1.matcher(result);
+        if (matcher.find()) {
+            mac = matcher.group(1);
+            vlan = matcher.group(3);
+            bundingResult += "MACAddress = [" + mac + "]\nVLANNO = [" + vlan + "]\n";
+            log.debug("mac:" + mac + "\t vlan:" + vlan);
+        }else{
+            bundingResult += "查找IP[" + ip + "]对应MAC地址失败!\n";
+            log.debug("查找IP[" + ip + "]对应MAC地址失败!");
+            return  -1;
+        }
+
+        //检查MAC地址是否已经做了静态绑定
+        result = telnet.sendCommand("sh mac-address-table static address " + mac);
+        patt = mac + ".*STATIC.*(FastEthernet.*[0-9]$)";
+        p1 = Pattern.compile(patt);
+        matcher = p1.matcher(result);
+        if(matcher.find()) {
+            port = matcher.group(1);
+            bundingResult += "PortNo = [" + port + "]\n";
+            bundingResult += "IP[" + ip + "]对应MAC地址[" + mac + "]已经做了静态绑定!\n";
+            return 1;
+        }else{
+            bundingResult += "IP[" + ip + "]对应MAC地址[" + mac + "]未做静态绑定!\n";
+        }
+
+        //对没有做端口绑定进行绑定，首选需要找到vlan号
+        result = telnet.sendCommand("sh mac address " + mac);
+        matcher = p1.matcher(result);
+        if(matcher.find()){
+            port = matcher.group(1);
+            bundingResult += "PortNo = [" + port + "]\n";
+            //做静态地址绑定:mac-address-table static 001a.a923.d8f1 vlan 150 interface FastEthernet 0/24
+            telnet.sendCommand("configure terminal");
+            telnet.sendCommand("mac-address-table static " + mac + " " + vlan + " interface " + port);
+            telnet.sendCommand("end");
+        }else{
+            bundingResult += "查找IP[" + ip + "]MAC地址[" + mac + "]物理端口号失败!\n";
+            return  -1;
+        }
+        return 0;
+    }
+
+    public String deletBunding(String[] macs) {
+        String flag = "@result_split_flag@";
+        bundingResult = "";
+        String tmp;
+
+        //查看交换机型号，对于不同型号，绑定的流程不一样
+        telnet.sendCommand("terminal width 256");
+        tmp = telnet.sendCommand("show version");
+
+        //如果是S5750P或者S3760E
+        if(tmp.contains("S5750P") || tmp.contains("S3760E")){
+            for(int i = 0; i < macs.length; ++i){
+                bundingResult += "对MAC[" + macs[i] + "]进行解绑\n";
+                int find = unBundingS5750P(macs[i]);
+                if(find == -1){
+                    bundingResult += "解除绑定失败\n";
+                }else if(find == 0){
+                    bundingResult += "解除绑定成功\n";
+                }else if(find == 1){
+                    bundingResult += "找不到该mac地址对应的ACL";
+                }
+                bundingResult += flag;
+            }
+        }else if(tmp.contains("S3760-48")){  //如果是S3760-48
+            for(int i = 0; i < macs.length; ++i) {
+                int find = unBundingS3760_48(macs[i]);
+                if(find == -1){
+                    bundingResult += "解除绑定失败\n";
+                }else if(find == 0){
+                    bundingResult += "解除绑定成功\n";
+                }else if(find == 1){
+                    bundingResult += "未绑定该mac地址";
+                }
+                bundingResult += flag;
+            }
+        }
+
+        telnet.disconnect();
+        return bundingResult;
+    }
+
+    //"sh access -list"找到acl的号num，然后"expert access-list extended no1x"-->"no num"
+    private int unBundingS5750P(String mac) {
+        telnet.sendCommand("config");
+        String result = telnet.sendCommand("sh access-list");
+        String patt = "([0-9]*) permit ip any host " + mac + " any any";
+        Pattern p1 = Pattern.compile(patt);
+        Matcher matcher = p1.matcher(result);
+        String num;
+        if(matcher.find()) {
+            num = matcher.group(1);
+            bundingResult += "num=[" +num + "]\n";
+        }else{
+            return 1;
+        }
+        telnet.sendCommand("expert access-list extended no1x");
+        telnet.sendCommand("no " + num);
+        telnet.sendCommand("end");
+
+        return 0;
+    }
+
+    //no mac-address-table static b42c.922e.d06e vlan 160 interface FastEthernet 0/32
+    private int unBundingS3760_48(String mac) {
+        //通过"sh mac-address-table static address " + mac 获取vlan号和端口号
+        String result = telnet.sendCommand("sh mac-address-table static address " + mac);
+        String patt = "([0-9]{1,4}).*" + mac + ".*(FastEthernet.*[0-9])";
+        Pattern p1 = Pattern.compile(patt);
+        Matcher matcher = p1.matcher(result);
+        String vlan, port;
+        if(matcher.find()) {
+            vlan = matcher.group(1);
+            port = matcher.group(2);
+            bundingResult += "vlan no=[" +vlan + "]\tport=["+port+"]\n";
+        }else{
+            return 1;
+        }
+        //解除静态地址绑定:no mac-address-table static 001a.a923.d8f1 vlan 150 interface FastEthernet 0/24
+        telnet.sendCommand("configure terminal");
+        telnet.sendCommand("no mac-address-table static " + mac + " vlan " + vlan + " interface " + port);
+        telnet.sendCommand("end");
+        return 0;
     }
 
     public void diconnect(){

@@ -24,12 +24,12 @@ public class BundingIPServlet extends HttpServlet {
         int port = Integer.parseInt(p);
         String no_dot1x_before_s = request.getParameter("no_dot1x_before");
         String dot1x_after_s = request.getParameter("dot1x_after");
-        String[] inters = {request.getParameter("inter0"), request.getParameter("inter1"), request.getParameter("inter2")};
-	String ip = request.getParameter("ips");
+        String interRange = "fastEthernet " + request.getParameter("inter0")+ "/" + request.getParameter("inter1") + "-" + request.getParameter("inter2");
+	    String ip = request.getParameter("ips");
         String[] ips = ip.split("\n");
 
         String[] backContent; //交换机的输出
-        String backResult = "";      //结果
+        String backResult = "";      //输出的结果
         boolean no_dot1x_before = false;
         boolean dot1x_after = false;
 
@@ -39,20 +39,20 @@ public class BundingIPServlet extends HttpServlet {
             dot1x_after = false;
 
         SwitcherUtil su = new SwitcherUtil(host, user, password, port);
-        String results = su.bundingIPs(ips, no_dot1x_before, dot1x_after, inters);
-        String successFlag = "";    //判断交换机返回结果是否成功的标志, 待确定 TODO
+        String results = su.bundingIPs(ips, no_dot1x_before, dot1x_after, interRange);
+        String successFlag = "绑定成功";    //判断交换机返回结果是否成功的标志
         backContent = results.split("@result_split_flag@");
         for(int i = 0; i < backContent.length; ++i) {
             if (backContent[i].contains(successFlag))
                 backResult += "绑定成功" + "\n";
             else
-                backResult += "绑定失败" + "\n";
+                backResult += "绑定失败或重复绑定" + "\n";
         }
         request.setAttribute("host", host);
         request.setAttribute("user", user);
         request.setAttribute("password", password);
         request.setAttribute("backContent", results.replaceAll("@result_split_flag@", ""));
-	request.setAttribute("ips", ip);
+	    request.setAttribute("ips", ip);
         request.setAttribute("result", backResult);
 
         request.getRequestDispatcher("bundingIP.jsp").forward(request, response);
