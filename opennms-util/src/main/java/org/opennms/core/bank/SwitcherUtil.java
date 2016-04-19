@@ -188,6 +188,8 @@ public class SwitcherUtil {
         //如果是S5750P或者S3760E
         if(tmp.contains("S5750P") || tmp.contains("S3760E")){
             for(int i = 0; i < ips.length; ++i){
+                if(ips.equals(""))
+                    return "";
                 int find = bundingS5750P(ips[i]);
                 if(find == -1){
                     bundingResult += "绑定失败\n";
@@ -226,14 +228,16 @@ public class SwitcherUtil {
 
     //对锐捷S5750P或者S3760E型号的交换机做ACL安全通道
     private int bundingS5750P(String ip) {
-        telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1");
-/*
+        telnet.setPrompt("#");
+        telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1"); //会返回“<>”符号
+        telnet.setPrompt("#$>]");
+
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-*/
+
 
 //        String port;
         String mac;
@@ -282,12 +286,14 @@ public class SwitcherUtil {
 
     //对锐捷S3760-48型号的交换机进行静态地址绑定
     private int bundingS3760_48(String ip) {
-        telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1");
-/*        try {
-            Thread.sleep(2000);
+        telnet.setPrompt("#");
+        telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1"); //会返回“<>”符号
+        telnet.setPrompt("#$>]");
+        try {
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
 
         String port;
         String mac;
