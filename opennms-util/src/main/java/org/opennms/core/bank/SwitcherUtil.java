@@ -316,7 +316,7 @@ public class SwitcherUtil {
 
         //检查MAC地址是否已经做了静态绑定
         result = telnet.sendCommand("sh mac-address-table static address " + mac);
-        patt = mac + ".*STATIC.*(FastEthernet.*[0-9]$)";
+        patt = mac + ".*STATIC.*(FastEthernet.*[0-9])";
         p1 = Pattern.compile(patt);
         matcher = p1.matcher(result);
         if(matcher.find()) {
