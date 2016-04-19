@@ -107,7 +107,7 @@
 
         <tr>
             <td>
-                <textarea id="ips" name="ips" rows="20" style="width:100%; overflow: auto;"><%=((ips == null || ips.equals("")) ? "&nbsp;" : ips)%></textarea>
+                <textarea id="ips" name="ips" rows="20" style="width:100%; overflow: auto;"><%=((ips == null || ips.equals("")) ? "" : ips)%></textarea>
             </td>
 
             <td>
@@ -128,7 +128,7 @@
 
         <tr valign="top">
             <td>
-                <textarea id="macs" name="macs" type="text" rows="10" style="width:100%; overflow: auto;"><%= ((macs == null || macs.equals("")) ? "&nbsp;" : macs) %></textarea>
+                <textarea id="macs" name="macs" type="text" rows="10" style="width:100%; overflow: auto;"><%= ((macs == null || macs.equals("")) ? "" : macs) %></textarea>
                 <input type="submit" href="javascript:delBundingMAC()" value="删除旧绑定关系"/>
             </td>
 
