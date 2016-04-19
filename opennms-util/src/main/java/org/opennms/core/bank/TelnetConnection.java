@@ -130,6 +130,8 @@ public class TelnetConnection {
                 if(pattern.indexOf((char)len) != -1 || sb.toString().endsWith(pattern)) {
                     log.debug(sb);
                     return sb.toString();
+                }else if(sb.toString().contains("--More--")){
+                    write(" ");
                 }
             }
         } catch (IOException e) {
