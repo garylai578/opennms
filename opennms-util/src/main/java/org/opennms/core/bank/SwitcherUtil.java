@@ -208,7 +208,6 @@ public class SwitcherUtil {
                 }else if(find == 0){
                     bundingResult += "绑定成功\n";
                 }
-                bundingResult += flag;
             }
         }
 
@@ -220,6 +219,7 @@ public class SwitcherUtil {
             telnet.sendCommand("end");
         }
 
+        bundingResult += flag;
         telnet.disconnect();
         return bundingResult;
     }
