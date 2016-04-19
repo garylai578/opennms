@@ -227,11 +227,13 @@ public class SwitcherUtil {
     //对锐捷S5750P或者S3760E型号的交换机做ACL安全通道
     private int bundingS5750P(String ip) {
         telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1");
+/*
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+*/
 
 //        String port;
         String mac;
@@ -281,11 +283,11 @@ public class SwitcherUtil {
     //对锐捷S3760-48型号的交换机进行静态地址绑定
     private int bundingS3760_48(String ip) {
         telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1");
-        try {
+/*        try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
         String port;
         String mac;
