@@ -172,6 +172,7 @@ public class SwitcherUtil {
         bundingResult = "";
         String tmp;
 
+	connect();
         if(no_dot1x_before){
             bundingResult = "执行前关闭端口：" + interRange + "的认证\n";
             telnet.sendCommand("config");
@@ -340,6 +341,7 @@ public class SwitcherUtil {
         bundingResult = "";
         String tmp;
 
+	connect();
         //查看交换机型号，对于不同型号，绑定的流程不一样
         telnet.sendCommand("terminal width 256");
         tmp = telnet.sendCommand("show version");

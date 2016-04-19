@@ -252,7 +252,7 @@ public class TelnetConnection {
             try {
                 telnet.disconnect();
                 log.debug("关闭连接！");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 log.error(e);
                 e.printStackTrace();
             }
@@ -261,7 +261,7 @@ public class TelnetConnection {
             try {
                 this.telnet.disconnect();
                 log.debug("关闭连接！");
-            } catch (IOException e) {
+            } catch (Exception e) {
                 log.error(e);
                 e.printStackTrace();
             }
