@@ -172,7 +172,7 @@ public class SwitcherUtil {
         bundingResult = "";
         String tmp;
 
-	connect();
+	    connect();
         if(no_dot1x_before){
             bundingResult = "执行前关闭端口：" + interRange + "的认证\n";
             telnet.sendCommand("config");
@@ -213,7 +213,7 @@ public class SwitcherUtil {
         }
 
         if(dot1x_after){
-            bundingResult = "执行后开启端口：" + interRange + "的认证\n";
+            bundingResult += "执行后开启端口：" + interRange + "的认证\n";
             telnet.sendCommand("config");
             telnet.sendCommand("interface range " + interRange);
             telnet.sendCommand("dot1x port-control auto");
@@ -228,7 +228,7 @@ public class SwitcherUtil {
     private int bundingS5750P(String ip) {
         telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1");
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -281,7 +281,7 @@ public class SwitcherUtil {
     private int bundingS3760_48(String ip) {
         telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1");
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -341,7 +341,7 @@ public class SwitcherUtil {
         bundingResult = "";
         String tmp;
 
-	connect();
+	    connect();
         //查看交换机型号，对于不同型号，绑定的流程不一样
         telnet.sendCommand("terminal width 256");
         tmp = telnet.sendCommand("show version");
