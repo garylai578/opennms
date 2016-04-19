@@ -101,7 +101,7 @@
 
         <tr bgcolor="#999999">
             <td width="5%" align="center"><b>待绑定IP（一行一个）</b></td>
-            <td width="10%" align="center"><b>交换机返回内容</b></td>
+            <td width="10%" align="center"><b>返回内容</b></td>
             <td width="10%" align="center"><b>执行结果</b></td>
         </tr>
 

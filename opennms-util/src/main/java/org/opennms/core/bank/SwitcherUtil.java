@@ -23,6 +23,7 @@ public class SwitcherUtil {
     int port = 23;
     TelnetConnection telnet;
     String bundingResult;
+    String flag = "@result_split_flag@";
 
     public SwitcherUtil(String host, String user, String password){
         this.host = host;
@@ -168,7 +169,6 @@ public class SwitcherUtil {
      * @return 交换机的操作输出，每个ip的绑定结果以“@result_split_flag@”分隔
      */
     public String bundingIPs(String[] ips, boolean no_dot1x_before, boolean dot1x_after, String interRange){
-        String flag = "@result_split_flag@";
         bundingResult = "";
         String tmp;
 
@@ -198,7 +198,6 @@ public class SwitcherUtil {
                 }else if(find == 0){
                     bundingResult += "绑定成功\n";
                 }
-                bundingResult += flag;
             }
         }else if(tmp.contains("S3760-48")){  //如果是S3760-48
             for(int i = 0; i < ips.length; ++i) {
@@ -228,6 +227,7 @@ public class SwitcherUtil {
 
     //对锐捷S5750P或者S3760E型号的交换机做ACL安全通道
     private int bundingS5750P(String ip) {
+        bundingResult += "对ip=[" +ip + "]进行静态地址绑定...\n";
         telnet.setPrompt("#");
         telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1"); //会返回“<>”符号
         telnet.setPrompt("#$>]");
@@ -276,7 +276,7 @@ public class SwitcherUtil {
 */
 
         //对端口进行认证
-        bundingResult += "对IP[" + ip + "]对应的MAC地址[" + mac + "]进行ACL认证!\n";
+        bundingResult += "对IP[" + ip + "]对应的MAC地址[" + mac + "]进行ACL认证...\n";
         telnet.sendCommand("configure terminal");
         telnet.sendCommand("expert access-list extended no1x");
         telnet.sendCommand("permit ip any host " + mac + " any any");
@@ -286,6 +286,7 @@ public class SwitcherUtil {
 
     //对锐捷S3760-48型号的交换机进行静态地址绑定
     private int bundingS3760_48(String ip) {
+        bundingResult += "对ip=[" +ip + "]进行静态地址绑定...\n";
         telnet.setPrompt("#");
         telnet.sendCommand("ping " + ip + " ntimes 1 timeout 1"); //会返回“<>”符号
         telnet.setPrompt("#$>]");
@@ -347,8 +348,12 @@ public class SwitcherUtil {
         return 0;
     }
 
+    /**
+     * 对macs地址列表进行解绑
+     * @param macs 待解绑的macs地址列表
+     * @return 交换机的操作输出，每个mac的解绑结果以“@result_split_flag@”分隔
+     */
     public String deletBunding(String[] macs) {
-        String flag = "@result_split_flag@";
         bundingResult = "";
         String tmp;
 
@@ -391,6 +396,7 @@ public class SwitcherUtil {
 
     //"sh access -list"找到acl的号num，然后"expert access-list extended no1x"-->"no num"
     private int unBundingS5750P(String mac) {
+        bundingResult += "对mac=[" +mac + "]进行解除绑定...\n";
         telnet.sendCommand("config");
         String result = telnet.sendCommand("sh access-list");
         String patt = "([0-9]*) permit ip any host " + mac + " any any";
@@ -413,6 +419,7 @@ public class SwitcherUtil {
     //no mac-address-table static b42c.922e.d06e vlan 160 interface FastEthernet 0/32
     private int unBundingS3760_48(String mac) {
         //通过"sh mac-address-table static address " + mac 获取vlan号和端口号
+        bundingResult += "对mac=[" +mac + "]进行解除绑定...\n";
         String result = telnet.sendCommand("sh mac-address-table static address " + mac);
         String patt = "([0-9]{1,4}).*" + mac + ".*(FastEthernet.*[0-9])";
         Pattern p1 = Pattern.compile(patt);
