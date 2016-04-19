@@ -36,7 +36,7 @@ public class BundingIPServlet extends HttpServlet {
         if(no_dot1x_before_s.equals("1"))
             no_dot1x_before = true;
         if(dot1x_after_s.equals("1"))
-            dot1x_after = false;
+            dot1x_after = true;
 
         SwitcherUtil su = new SwitcherUtil(host, user, password, port);
         String results = su.bundingIPs(ips, no_dot1x_before, dot1x_after, interRange);
