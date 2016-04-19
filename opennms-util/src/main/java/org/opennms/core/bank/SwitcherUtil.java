@@ -299,7 +299,6 @@ public class SwitcherUtil {
         String mac;
         String vlan;
         String result = telnet.sendCommand("sh arp " + ip);
-        log.debug("sh arp: " + result);
         //找出MAC和vlan号
         String patt = ip + ".*(([0-9a-z]{4}\\.){2}[0-9a-z]{4}).*(VLAN.*[0-9])";
         Pattern p1 = Pattern.compile(patt);
@@ -329,11 +328,13 @@ public class SwitcherUtil {
             bundingResult += "IP[" + ip + "]对应MAC地址[" + mac + "]未做静态绑定!\n";
         }
 
-        //对没有做端口绑定进行绑定，首选需要找到vlan号
+        //对没有做端口绑定进行绑定，首选需要找到端口号
+        patt = "([0-9]{1,4}).*" + mac + ".*(FastEthernet.*[0-9])";
+        p1 = Pattern.compile(patt);
         result = telnet.sendCommand("sh mac address " + mac);
         matcher = p1.matcher(result);
         if(matcher.find()){
-            port = matcher.group(1);
+            port = matcher.group(2);
             bundingResult += "PortNo = [" + port + "]\n";
             //做静态地址绑定:mac-address-table static 001a.a923.d8f1 vlan 150 interface FastEthernet 0/24
             telnet.sendCommand("configure terminal");
