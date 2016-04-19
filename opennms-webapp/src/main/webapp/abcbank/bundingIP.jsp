@@ -66,7 +66,7 @@
 </script>
 
 
-<form method="post" name="allSwitchers"  onsubmit="return bundingIP();">
+<form method="post" name="allSwitchers">
     <input type="hidden" name="host" value="<%=host%>"/>
     <input type="hidden" name="user" value="<%=user%>"/>
     <input type="hidden" name="password" value="<%=password%>" />
@@ -92,7 +92,7 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <input id="dot1x" type="checkbox" value="" />执行后开认证
                 &nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" href="javascript:bundingIP()" value="执行">
+                <a href="javascript:bundingIP()" ><input type="button" value="执行"></a>
             </td>
         </tr>
     </table>
@@ -120,6 +120,7 @@
         </tr>
     </table>
 
+
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
         强制删除旧绑定关系
         <tr bgcolor="#999999">
@@ -129,7 +130,7 @@
         <tr valign="top">
             <td>
                 <textarea id="macs" name="macs" type="text" rows="10" style="width:100%; overflow: auto;"><%= ((macs == null || macs.equals("")) ? "" : macs) %></textarea>
-                <input type="submit" href="javascript:delBundingMAC()" value="删除旧绑定关系"/>
+                <a type="button" href="javascript:delBundingMAC()"><input type="button" value="删除旧绑定关系"/> </a>
             </td>
 
             <td valign="top">
@@ -137,7 +138,7 @@
             </td>
         </tr>
     </table>
-
 </form>
+
 
 <jsp:include page="/includes/footer.jsp" flush="false" />
