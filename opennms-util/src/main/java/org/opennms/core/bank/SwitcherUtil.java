@@ -237,6 +237,7 @@ public class SwitcherUtil {
         String mac;
 //        String vlan;
         String result = telnet.sendCommand("sh arp " + ip);
+        log.debug("sh arp: " + result);
         //找出MAC和vlan号
         String patt = ip + ".*(([0-9a-z]{4}\\.){2}[0-9a-z]{4}).*(VLAN.*[0-9])";
         Pattern p1 = Pattern.compile(patt);
@@ -290,6 +291,7 @@ public class SwitcherUtil {
         String mac;
         String vlan;
         String result = telnet.sendCommand("sh arp " + ip);
+        log.debug("sh arp: " + result);
         //找出MAC和vlan号
         String patt = ip + ".*(([0-9a-z]{4}\\.){2}[0-9a-z]{4}).*(VLAN.*[0-9])";
         Pattern p1 = Pattern.compile(patt);
