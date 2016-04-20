@@ -177,7 +177,7 @@ final String baseHref = Util.calculateUrlBase( request );
 
 	<!-- Header -->
 	<div id="header">
-		<h1 id="headerlogo"><a href="<%= baseHref %>index.jsp"><img src="<%= baseHref %>images/logo.png" alt="OpenNMS Web 控制台首页"/></a></h1>  
+		<h1 id="headerlogo"><a href="<%= baseHref %>index.jsp"><img src="<%= baseHref %>images/logo.png" alt="网络管理系统控制台首页"/></a></h1>
 		<div id="headerinfo">
 			<h2>${param.title}</h2>
 			<p align="right">
