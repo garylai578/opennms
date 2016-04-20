@@ -85,6 +85,7 @@ public class TelnetConnection {
         write(pwds[1]);
         readUntilPrompt(this.prompt);
         log.debug("进入特权模式");
+        sendCommand("terminal length 0");   //不限定交换机的输出长度，防止出现more等需要二次操作情况
     }
 
     /**
