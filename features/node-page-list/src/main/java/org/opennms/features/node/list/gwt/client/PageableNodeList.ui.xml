@@ -18,7 +18,7 @@
 	</ui:style>
 	<g:TabLayoutPanel barUnit='EM' barHeight='1.25' ui:field="m_tabLayoutPanel" >
         <g:tab>
-            <g:header size='5'>IP Interfaces</g:header>
+            <g:header size='5'>IP</g:header>
             <g:LayoutPanel>
                 <g:layer bottom="50px" top="0px" left="0" right="0">
                     <g:FlowPanel ui:field="m_ipInterfaceTableDiv">
