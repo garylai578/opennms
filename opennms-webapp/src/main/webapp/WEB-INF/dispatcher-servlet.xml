@@ -450,8 +450,8 @@
     </bean>
 
     <bean name="mapMenuEntries" class="org.opennms.web.navigate.MenuDropdownNavBarEntry">
-        <property name="name" value="地图" />
-        <property name="url" value="maps.htm" />
+        <property name="name" value="拓扑" />
+        <property name="url" value="http://172.16.84.3:8980/opennms/topology" />
         <property name="entries">
             <list>
                 <bean class="org.opennms.web.navigate.DistributedStatusNavBarEntry">
@@ -474,7 +474,7 @@
                     <property name="name" value="SVG"/>
                     <property name="url" value="map/index.jsp"/>
                     <property name="locationMatch" value="map"/>
-                    <property name="file" value="${opennms.home}/etc/map.enable"/>
+                    <property name="file" value="${opennms.home}/etc/map.enable1"/>
                 </bean>
             </list>
         </property>
@@ -506,17 +506,18 @@
                     <property name="locationMatch" value="outage"/>
                 </bean>
 
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+<!--                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
                     <property name="name" value="路径故障"/>
                     <property name="url" value="pathOutage/index.jsp"/>
                     <property name="locationMatch" value="pathOutage"/>
-                </bean>
+                </bean>-->
 
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+
+<!--                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
                     <property name="name" value="面板"/>
                     <property name="url" value="dashboard.jsp"/>
                     <property name="locationMatch" value="dashboard"/>
-                </bean>
+                </bean>-->
 
                 <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
                     <property name="name" value="事件"/>
@@ -536,11 +537,11 @@
                     <property name="locationMatch" value="notification"/>
                 </bean>
 
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+<!--                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
                     <property name="name" value="资产"/>
                     <property name="url" value="asset/index.jsp"/>
                     <property name="locationMatch" value="asset"/>
-                </bean>
+                </bean>-->
 
                 <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
                     <property name="name" value="报表"/>
@@ -548,11 +549,13 @@
                     <property name="locationMatch" value="report"/>
                 </bean>
 
+<!--
                 <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
                     <property name="name" value="图表"/>
                     <property name="url" value="charts/index.jsp"/>
                     <property name="locationMatch" value="chart"/>
                 </bean>
+-->
 
                 <bean class="org.opennms.web.navigate.SurveillanceViewNavBarEntry">
                     <property name="name" value="监视"/>
@@ -572,7 +575,7 @@
 
                 <bean class="org.opennms.web.navigate.ProvisionUserNavBarEntry">
                     <property name="name" value="添加节点"/>
-                    <property name="url" value="admin/node/add.htm"/>
+                    <property name="url" value="admin/discovery/modifyDiscoveryConfig"/>
                     <property name="locationMatch" value="addNode"/>
                 </bean>
 

@@ -61,7 +61,7 @@
       <ul class="plain">
         <li><a href="graph/index.jsp">资源图</a></li>
         <li><a href="KSC/index.htm">自定义性能，节点，域</a></li>
-        <li><a href="report/database/index.htm">数据库报表</a></li>
+<%--        <li><a href="report/database/index.htm">数据库报表</a></li>--%>
 <% if ("true".equalsIgnoreCase(Vault.getProperty("opennms.rancidIntegrationEnabled"))) {%>
         <li><a href="inventory/rancidReport.htm">清单</a></li>
 <% }%>
