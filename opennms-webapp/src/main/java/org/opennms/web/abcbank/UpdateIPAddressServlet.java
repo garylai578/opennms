@@ -46,7 +46,7 @@ public class UpdateIPAddressServlet extends HttpServlet {
 
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('成功启用' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
+            pw.print("<script language='javascript'>alert('修改成功' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
             pw.close();
 
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
