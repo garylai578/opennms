@@ -105,7 +105,7 @@ public class NavBarController extends AbstractController implements Initializing
         return "<div id='header'>" +
               "<h1 id='headerlogo'><a href='index.jsp'><img src=\"../images/logo.png\" alt='NMS Web Console Home'></a></h1>" +
           "<div id='headerinfo'>" +
-          "<h2>Topology Map</h2>" +
+          "<h2>拓扑图</h2>" +
           "<p align=\"right\" >" + 
           "User: <a href=\"/opennms/account/selfService/index.jsp\" title=\"Account self-service\"><strong>" + request.getRemoteUser() + "</strong></a>" +
           "&nbsp;(Notices " + getNoticeStatus() + " )" + 

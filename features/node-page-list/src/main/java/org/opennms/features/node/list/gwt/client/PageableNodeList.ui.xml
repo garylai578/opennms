@@ -35,7 +35,7 @@
                     <g:TextBox ui:field="m_ipTextBox" width="100%"/>
                 </g:layer>
                 <g:layer left="70%" right="0%" bottom="0px" height="25px">
-                    <g:Button ui:field="m_ipSearchBtn" width="100%" height="25px">Search</g:Button>
+                    <g:Button ui:field="m_ipSearchBtn" width="100%" height="25px">搜索</g:Button>
                 </g:layer>
             </g:LayoutPanel>
         </g:tab>
@@ -57,7 +57,7 @@
                     <g:TextBox ui:field="m_physTextBox" width="100%"/>
                 </g:layer>
                 <g:layer left="70%" right="0%" bottom="0px" height="25px">
-                    <g:Button ui:field="m_physSearchBtn" width="100%" height="25px">Search</g:Button>
+                    <g:Button ui:field="m_physSearchBtn" width="100%" height="25px">搜索</g:Button>
                 </g:layer>
             </g:LayoutPanel>
         </g:tab>
