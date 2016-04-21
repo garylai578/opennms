@@ -103,7 +103,7 @@ public class NavBarController extends AbstractController implements Initializing
     
     private String createHeaderHtml(HttpServletRequest request) {
         return "<div id='header'>" +
-              "<h1 id='headerlogo'><a href='index.jsp'><img src=\"../images/logo.png\" alt='NMS Web Console Home'></a></h1>" +
+              "<h1 id='headerlogo'><a href='index.jsp'><img src=\"/images/logo.png\" alt='NMS Web Console Home'></a></h1>" +
           "<div id='headerinfo'>" +
           "<h2>Topology Map</h2>" +
           "<p align=\"right\" >" + 
