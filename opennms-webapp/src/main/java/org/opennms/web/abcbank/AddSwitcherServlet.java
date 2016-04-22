@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.DesUtil;
 import org.opennms.core.bank.Switcher;
 import org.opennms.core.bank.SwitcherOperator;
 
@@ -40,6 +41,10 @@ public class AddSwitcherServlet extends HttpServlet {
         String comment = request.getParameter("comment");
 
         try{
+            //对密码进行DES加密
+            DesUtil du = new DesUtil();
+            password = du.encrypt(password);
+
             Switcher switcher = new Switcher();
             switcher.setName(name);
             switcher.setGroup(group);
@@ -63,6 +68,8 @@ public class AddSwitcherServlet extends HttpServlet {
             SwitcherOperator op = new SwitcherOperator();
             op.insert(switcher);
         }catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

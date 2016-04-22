@@ -26,12 +26,24 @@ public class SwitcherUtil {
     String flag = "@result_split_flag@";
 
     public SwitcherUtil(String host, String user, String password){
+        try {
+            DesUtil du = new DesUtil();
+            password = du.decrypt(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.host = host;
         this.user = user;
         this.password = password;
     }
 
     public SwitcherUtil(String host, String user, String password, int port){
+        try {
+            DesUtil du = new DesUtil();
+            password = du.decrypt(password);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.host = host;
         this.user = user;
         this.password = password;
