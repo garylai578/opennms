@@ -376,7 +376,7 @@ public class SwitcherUtil {
         if(bundingIPs.size() == 0) {
             connect();
             //sh arp可以查看所有ip,mac和vlan，sh mac-address-table static可以查看静态绑定列表中的ip，mac和interface
-            String result = telnet.sendCommand("show apr");
+            String result = telnet.sendCommand("show arp");
             String[] lines = result.split("\\n");
             Pattern pattern = Pattern.compile("((\\d{1,3}\\.){3}\\d{1,3}).*(([0-9a-z]{4}\\.){2}[0-9a-z]{4}).*(VLAN.*\\d)");
             for(String line : lines) {
