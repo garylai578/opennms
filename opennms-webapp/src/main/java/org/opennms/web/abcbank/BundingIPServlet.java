@@ -26,7 +26,7 @@ public class BundingIPServlet extends HttpServlet {
         String dot1x_after_s = request.getParameter("dot1x_after");
         String interRange = "fastEthernet " + request.getParameter("inter0")+ "/" + request.getParameter("inter1") + "-" + request.getParameter("inter2");
 	    String ip = request.getParameter("ips");
-        String[] ips = ip.split("\n");
+        String[] ips = ip.split("\r\n");
 
         String[] backContent; //交换机的输出
         String backResult = "";      //输出的结果

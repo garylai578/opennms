@@ -22,7 +22,7 @@ public class DelBundingMacServlet extends HttpServlet {
         String p = request.getParameter("port");
         int port = Integer.parseInt(p);
         String macs = request.getParameter("macs");
-        String[] macList = macs.split("\n");
+        String[] macList = macs.split("\r\n");
 
         SwitcherUtil su = new SwitcherUtil(host, user, password, port);
         String results = su.deletBunding(macList);
