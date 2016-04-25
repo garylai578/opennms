@@ -24,11 +24,11 @@ public class AddIPAddressServlet extends HttpServlet  {
     final static Logger log =  Logger.getLogger(AddIPSegmentServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ipAddr = request.getParameter("ipAddr");
+        String ipAddr = request.getParameter("ipAddr").trim();
         String network_type = request.getParameter("network_type");
-        String mask = request.getParameter("mask");
-        String gateway = request.getParameter("gateway");
-        String mac = request.getParameter("mac");
+        String mask = request.getParameter("mask").trim();
+        String gateway = request.getParameter("gateway").trim();
+        String mac = request.getParameter("mac").trim();
         String apply_date = request.getParameter("apply_date");
         String start_date = request.getParameter("start_date");
         String users = request.getParameter("users");

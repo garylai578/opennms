@@ -10,12 +10,6 @@
         session="true"
 %>
 
-<%@page import="org.opennms.core.bank.Switcher" %>
-<%@ page import="org.opennms.core.bank.SwitcherOperator" %>
-<%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %>
-<%@ page import="org.opennms.core.bank.SwitcherUtil" %>
-
 <jsp:include page="/includes/header.jsp" flush="false">
     <jsp:param name="title" value="交换机配置管理" />
     <jsp:param name="headTitle" value="交换机配置管理" />

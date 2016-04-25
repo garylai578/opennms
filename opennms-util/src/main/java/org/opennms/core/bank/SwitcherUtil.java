@@ -200,8 +200,9 @@ public class SwitcherUtil {
         //如果是S5750P或者S3760E
         if(tmp.contains("S5750P") || tmp.contains("S3760E")){
             for(int i = 0; i < ips.length; ++i){
-                if(ips.equals(""))
+                if(ips[i].equals(""))
                     return "";
+                ips[i] = ips[i].trim();
                 int find = bundingS5750P(ips[i]);
                 if(find == -1){
                     bundingResult += "绑定失败\n";
@@ -213,6 +214,7 @@ public class SwitcherUtil {
             }
         }else if(tmp.contains("S3760-48")){  //如果是S3760-48
             for(int i = 0; i < ips.length; ++i) {
+                ips[i] = ips[i].trim();
                 int find = bundingS3760_48(ips[i]);
                 if(find == -1){
                     bundingResult += "绑定失败\n";
@@ -377,6 +379,7 @@ public class SwitcherUtil {
         //如果是S5750P或者S3760E
         if(tmp.contains("S5750P") || tmp.contains("S3760E")){
             for(int i = 0; i < macs.length; ++i){
+                macs[i] = macs[i].trim();
                 bundingResult += "对MAC[" + macs[i] + "]进行解绑\n";
                 int find = unBundingS5750P(macs[i]);
                 if(find == -1){
@@ -390,6 +393,7 @@ public class SwitcherUtil {
             }
         }else if(tmp.contains("S3760-48")){  //如果是S3760-48
             for(int i = 0; i < macs.length; ++i) {
+                macs[i] = macs[i].trim();
                 int find = unBundingS3760_48(macs[i]);
                 if(find == -1){
                     bundingResult += "解除绑定失败\n";

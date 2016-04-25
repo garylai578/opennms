@@ -34,8 +34,10 @@
     //通过key获取配置文件
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
     String[] bankTypes = pro.getProperty("abc-banktype").split("/");
-%>
 
+
+%>
+<script type="text/javascript" src="js/abcbank.js"></script>
 <script type="text/javascript">
     var isCommitted = false;
     function validateFormInput()
@@ -45,11 +47,20 @@
         isCommitted = true;
         var group = new String(document.newSwitcher.group.value);
         var name = new String(document.newSwitcher.name.value);
-        var host = new String(document.newSwitcher.host.value);
+        var host = trimStr(new String(document.newSwitcher.host.value));
         var user = new String(document.newSwitcher.user.value);
         var password = new String(document.newSwitcher.password.value);
         var password2 = new String(document.newSwitcher.password2.value);
         var backup = new String(document.newSwitcher.backup.value);
+        var wan_ip = new String(document.newSwitcher.wan_ip.value);
+        var lookback_ip = trimStr(new String(document.newSwitcher.lookback_ip.value));
+        var vlan150_ip1 = trimStr(new String(document.newSwitcher.vlan150_ip1.value));
+        var vlan150_ip2 = trimStr(new String(document.newSwitcher.vlan150_ip2.value));
+        var vlan160_ip1 = trimStr(new String(document.newSwitcher.vlan160_ip1.value));
+        var vlan160_ip2 = trimStr(new String(document.newSwitcher.vlan160_ip2.value));
+        var vlan170_ip1 = trimStr(new String(document.newSwitcher.vlan170_ip1.value));
+        var vlan170_ip2 = trimStr(new String(document.newSwitcher.vlan170_ip2.value));
+
         if(name==0 || name=="") {
             alert("请填写交换机名称！");
             isCommitted = false;
@@ -58,8 +69,8 @@
             alert("请选择交换机分组！");
             isCommitted = false;
             return false;
-        }else if(host==0 || host=="") {
-            alert("请填写管理IP！");
+        }else if(host==0 || host=="" || !judgeIP(host)) {
+            alert("请填写正确的管理IP！");
             isCommitted = false;
             return false;
         }else if(user == 0 || user==""){
@@ -78,7 +89,39 @@
             alert("请填写交换机的备份命令！");
             isCommitted = false;
             return false;
-        }else{
+        }else if(wan_ip != "" && !judgeIPAndMask(wan_ip)){
+            alert("请填写正确的广域网地址/掩码！");
+            isCommitted = false;
+            return false;
+        }else if(lookback_ip != "" && !judgeIPAndMask(lookback_ip)){
+            alert("请填写正确的Lookback地址/掩码！");
+            isCommitted = false;
+            return false;
+        }else if(vlan150_ip1 != "" && !judgeIPAndMask(vlan150_ip1)){
+            alert("请填写正确的Vlan 150地址1/掩码！");
+            isCommitted = false;
+            return false;
+        }else if(vlan150_ip2 != "" && !judgeIPAndMask(vlan150_ip2)){
+            alert("请填写正确的Vlan 150地址2/掩码！");
+            isCommitted = false;
+            return false;
+        }else if(vlan160_ip1 != "" && !judgeIPAndMask(vlan160_ip1)){
+            alert("请填写正确的Vlan 160地址1/掩码！");
+            isCommitted = false;
+            return false;
+        }else if(vlan160_ip2 != "" && !judgeIPAndMask(vlan160_ip2)){
+            alert("请填写正确的Vlan 160地址2/掩码！");
+            isCommitted = false;
+            return false;
+        }else if(vlan170_ip1 != "" && !judgeIPAndMask(vlan170_ip1)){
+            alert("请填写正确的Vlan 150地址1/掩码！");
+            isCommitted = false;
+            return false;
+        }else if(vlan170_ip2 != "" && !judgeIPAndMask(vlan170_ip2)){
+            alert("请填写正确的Vlan 170地址2/掩码！");
+            isCommitted = false;
+            return false;
+        }else {
             document.newSwitcher.password.value = password + "@pwd_split_tag@" + password2;
             document.newSwitcher.action = "abcbank/addSwitcher";
             document.newSwitcher.submit();
