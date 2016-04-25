@@ -1,4 +1,5 @@
-<%--
+<%@ page import="org.opennms.core.bank.SwitcherUtil" %>
+<%@ page import="org.opennms.core.bank.BundingIP" %><%--
   Created by IntelliJ IDEA.
   User: laiguanhui
   Date: 2016/4/13
@@ -34,7 +35,6 @@
     String backContent = (String)request.getAttribute("backContent");
     String result = (String)request.getAttribute("result");
     String ips = (String)request.getAttribute("ips");
-    String macs = (String)request.getAttribute("macs");
 %>
 
 <script type="text/javascript" >
@@ -52,8 +52,15 @@
         document.allSwitchers.submit();
     }
 
-    function delBundingMAC()
-    {
+    function delBundingMacs(rows){
+        var macs="";
+        for (var i = 0; i < rows; ++i) {
+            var inter = document.getElementById("choose-"+i);
+            if (inter.checked == true)
+                macs += document.getElementById("mac-"+i).value + "\t";
+        }
+
+        document.allSwitchers.delBundingMACs.vlaue = macs;
         document.allSwitchers.action="abcbank/deleteBundingMac";
         document.allSwitchers.submit();
     }
@@ -66,6 +73,7 @@
     <input type="hidden" name="password" value="<%=password%>" />
     <input type="hidden" name="no_dot1x_before" value="0"/>
     <input type="hidden" name="dot1x_after" value="0"/>
+    <input type="hidden" name="delBundingMACs" value=""/>
 
     <h3>交换机IP：<%=host%></h3>
 
@@ -118,20 +126,66 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
         强制删除旧绑定关系
         <tr bgcolor="#999999">
-            <td width="5%" align="left" colspan="2"><b>在下面输入MAC列表，一行一个</b></td>
+            <td width="3%" align="center"><b>选择</b></td>
+            <td width="3%" align="center"><b>IP</b></td>
+            <td width="3%" align="center"><b>MAC</b></td>
+            <td width="3%" align="center"><b>端口</b></td>
+            <td width="8%" align="center"><b>VLAN</b></td>
         </tr>
 
-        <tr valign="top">
-            <td>
-                <textarea id="macs" name="macs" type="text" rows="10" style="width:100%; overflow: auto;"><%= ((macs == null || macs.equals("")) ? "" : macs) %></textarea>
-                <a type="button" href="javascript:delBundingMAC()"><input type="button" value="删除旧绑定关系"/> </a>
+        <%
+            SwitcherUtil util = new SwitcherUtil(host, user, password);
+            BundingIP[] bundingIPs = util.getBundingIPs();
+            int size = bundingIPs.length;
+            int row = 0;
+            for(int i = 0; i < size; ++i){
+                String ip = bundingIPs[i].getIp();
+                String mac = bundingIPs[i].getMac();
+                String inter = bundingIPs[i].getInter();
+                String vlan = bundingIPs[i].getVlan();
+        %>
+
+        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
+            <td width="3%" align="center">
+                <div id="id-<%=row%>">
+                    <input id="choose-<%=row%>" type="checkbox" value="" />
+                </div>
             </td>
 
-            <td valign="top">
-                如果该设备以前已经做过绑定但更换了交换机端口，需要删除就绑定，删除旧绑定需要管理员上报MAC
+            <td width="3%" align="center">
+                <div id="ip-<%=row%>">
+                    <%= ip %>
+                </div>
             </td>
+
+            <td width="3%" align="center">
+                <div id="mac-<%=row%>">
+                    <%=mac%>
+                    <input id="mac-<%=row%>" type="hidden" value="<%=mac%>">
+                </div>
+            </td>
+
+            <td width="3%" align="center">
+                <div id="inter-<%=row%>">
+                    <%=inter %>
+                </div>
+            </td>
+
+            <td width="3%" align="center">
+                <div id="vlan-<%=row%>">
+                    <%=vlan%>
+                </div>
+            </td>
+                <%
+                row++;
+            }
+                %>
         </tr>
     </table>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a type="button" href="javascript:delBundingMacs('<%=row%>')"><input type="button" value="删除旧绑定关系"/> </a>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    如果该设备以前已经做过绑定但更换了交换机端口，需要删除后绑定，删除旧绑定需要管理员上报MAC.
 </form>
 
 

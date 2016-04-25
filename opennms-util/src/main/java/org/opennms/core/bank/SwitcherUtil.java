@@ -14,9 +14,14 @@ public class SwitcherUtil {
 
     final static Logger log =  Logger.getLogger(SwitcherUtil.class);
 
-    List<String> status = new ArrayList();
+    //以下三个属性是“端口操作”页面的端口号，端口状态和dot1x认证
     List<String> interfaces = new ArrayList();
+    List<String> status = new ArrayList();
     List<String> dot1x = new ArrayList();
+
+    //“端口绑定”页面中对应的ip、mac、端口和vlan列表
+    List<BundingIP> bundingIPs = new ArrayList();
+
     String host;
     String user;
     String password;
@@ -360,6 +365,47 @@ public class SwitcherUtil {
             return  -1;
         }
         return 0;
+    }
+
+    /**
+     * 返回交换机静态绑定的ip信息
+     * @return
+     */
+    public BundingIP[] getBundingIPs(){
+        List<BundingIP> tmpList = new ArrayList();
+        if(bundingIPs.size() == 0) {
+            connect();
+            //sh arp可以查看所有ip,mac和vlan，sh mac-address-table static可以查看静态绑定列表中的ip，mac和interface
+            String result = telnet.sendCommand("show apr");
+            String[] lines = result.split("\\n");
+            Pattern pattern = Pattern.compile("((\\d{1,3}\\.){3}\\d{1,3}).*(([0-9a-z]{4}\\.){2}[0-9a-z]{4}).*(VLAN.*\\d)");
+            for(String line : lines) {
+                log.debug("匹配行：" + line);
+                Matcher matcher = pattern.matcher(line);
+                if(matcher.find()){
+                    BundingIP bundingIP = new BundingIP();
+                    bundingIP.setIp(matcher.group(1));
+                    bundingIP.setMac(matcher.group(3));
+                    bundingIP.setVlan(matcher.group(5));
+                    log.debug("ip:" + bundingIP.getIp() + "\t mac:" + bundingIP.getMac() + "\t vlan:" + bundingIP.getVlan());
+                    tmpList.add(bundingIP);
+                }
+            }
+
+            result = telnet.sendCommand("sh mac-address-table static");
+            for(BundingIP bundingIP : tmpList){
+                if(result.contains(bundingIP.getMac())){
+                    pattern = Pattern.compile(bundingIP.getMac() + ".* (.*Ethernet.*\\d)");
+                    Matcher matcher = pattern.matcher(result);
+                    if(matcher.find()) {
+                        log.debug("mac["+ bundingIP.getMac() + "] 对应的 interface:" + matcher.group(1));
+                        bundingIP.setInter(matcher.group(1));
+                        bundingIPs.add(bundingIP);
+                    }
+                }
+            }
+        }
+        return bundingIPs.toArray(new BundingIP[bundingIPs.size()]);
     }
 
     /**
