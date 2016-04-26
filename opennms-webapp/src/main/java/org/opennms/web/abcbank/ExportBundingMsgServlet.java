@@ -35,7 +35,7 @@ public class ExportBundingMsgServlet extends HttpServlet {
         }
 
         response.setContentType("octets/stream");
-        response.addHeader("Content-Disposition", "attachment;filename=result.xls");
+        response.addHeader("Content-Disposition", "attachment;filename=" + host + ".xls");
         ExportExcel<BundingIP> ex = new ExportExcel<BundingIP>();
         String[] headers = { "IP", "MAC", "端口", "VLAN"};
         try {
