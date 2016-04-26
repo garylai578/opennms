@@ -40,6 +40,7 @@ public class BundingIPServlet extends HttpServlet {
 
         SwitcherUtil su = new SwitcherUtil(host, user, password, port);
         String results = su.bundingIPs(ips, no_dot1x_before, dot1x_after, interRange);
+        su.diconnect();
         String successFlag = "绑定成功";    //判断交换机返回结果是否成功的标志
         backContent = results.split("@result_split_flag@");
         for(int i = 0; i < backContent.length; ++i) {

@@ -42,7 +42,7 @@ public class ManageSwitcherServlet extends HttpServlet {
             else
                 msg = "操作成功！";
         }
-//        util.diconnect();
+        util.diconnect();
 
         request.setAttribute("id", id);
         request.setAttribute("host-"+id, host);

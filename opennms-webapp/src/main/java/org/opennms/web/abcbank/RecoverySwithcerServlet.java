@@ -62,7 +62,7 @@ public class RecoverySwithcerServlet extends HttpServlet {
             result = telnet.sendCommand("Y");
             System.out.println("显示结果:");
             System.out.println(result);
-            telnet.disconnect();
+            telnet.sendCommand("exit");
         } catch (IOException e) {
             e.printStackTrace();
             return "交换机连接失败，请稍候再试\r\n" + e.getMessage();

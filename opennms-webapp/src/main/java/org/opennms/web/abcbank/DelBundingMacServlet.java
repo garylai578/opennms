@@ -26,6 +26,7 @@ public class DelBundingMacServlet extends HttpServlet {
 
         SwitcherUtil su = new SwitcherUtil(host, user, password, port);
         String results = su.deletBunding(macList);
+        su.diconnect();
 
         request.setAttribute("host", host);
         request.setAttribute("user", user);
