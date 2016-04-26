@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
-import java.net.SocketException;
 
 /**
  * @author XUQIANG
@@ -25,6 +24,7 @@ public class TelnetConnection {
     private String passwordPrompt = "Password:";
     private InputStream in;
     private PrintStream out;
+    private int timeout = 5000;
 
     public TelnetConnection(String host, int port) {
         if(telnet == null) {
@@ -34,11 +34,7 @@ public class TelnetConnection {
                 telnet.connect(host, port);
                 in = telnet.getInputStream();
                 out = new PrintStream(telnet.getOutputStream());
-            } catch (SocketException e) {
-                close(telnet);
-                log.error(e);
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 close(telnet);
                 log.error(e);
                 e.printStackTrace();
@@ -101,14 +97,19 @@ public class TelnetConnection {
             char ch = (char) in.read();
             while (true) {
                 sb.append(ch);
-//                log.debug("sb:" + sb);
                 if (ch == lastChar) {
                     if (sb.toString().endsWith(pattern)) {
                         log.debug(sb);
                         return sb.toString();
                     }
                 }
-                ch = (char) in.read();
+                try {
+                    telnet.setSoTimeout(timeout);   //设置读取的超时时间（毫秒）
+                    ch = (char) in.read();
+                }catch(IOException e){
+                    log.debug("read time out, break");
+                    break;
+                }
             }
         } catch (Exception e) {
             close(telnet);
@@ -251,6 +252,16 @@ public class TelnetConnection {
      * @param telnet
      */
     public void close(TelnetClient telnet) {
+        if(out != null)
+            out.close();
+        if(in != null){
+            try{
+                in.close();
+            }catch (IOException e){
+                log.error(e);
+                e.printStackTrace();
+            }
+        }
         if(telnet != null) {
             try {
                 telnet.disconnect();

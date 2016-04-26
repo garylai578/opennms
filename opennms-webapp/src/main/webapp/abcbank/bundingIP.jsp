@@ -1,4 +1,4 @@
-<%@ page import="org.opennms.core.bank.SwitcherUtil" %>
+﻿<%@ page import="org.opennms.core.bank.SwitcherUtil" %>
 <%@ page import="org.opennms.core.bank.BundingIP" %><%--
   Created by IntelliJ IDEA.
   User: laiguanhui
@@ -60,7 +60,7 @@
                 macs += document.getElementById("mac-"+i).value + "\t";
         }
 
-        document.allSwitchers.delBundingMACs.vlaue = macs;
+        document.allSwitchers.delBundingMACs.value = macs;
         document.allSwitchers.action="abcbank/deleteBundingMac";
         document.allSwitchers.submit();
     }
@@ -159,7 +159,7 @@
             </td>
 
             <td width="3%" align="center">
-                <div id="mac-<%=row%>">
+                <div>
                     <%=mac%>
                     <input id="mac-<%=row%>" type="hidden" value="<%=mac%>">
                 </div>

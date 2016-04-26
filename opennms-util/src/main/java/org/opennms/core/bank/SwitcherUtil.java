@@ -67,7 +67,7 @@ public class SwitcherUtil {
             String[] lines = result.split("\\n");
             Pattern pattern = Pattern.compile("^[a-zA-Z]*Ethernet [0-9]{1,2}/[0-9]{1,2}"); //匹配“FastEthernet 0/48”或“GigabitEthernet 0/50”之类的
             for(String line : lines) {
-                log.debug("匹配行：" + line);
+//                log.debug("匹配行：" + line);
                 Matcher matcher = pattern.matcher(line);
                 if(matcher.find()){
                     interfaces.add(matcher.group(0));
@@ -216,6 +216,7 @@ public class SwitcherUtil {
                 }else if(find == 0){
                     bundingResult += "绑定成功\n";
                 }
+                bundingResult += flag;
             }
         }else if(tmp.contains("S3760-48")){  //如果是S3760-48
             for(int i = 0; i < ips.length; ++i) {
@@ -228,6 +229,7 @@ public class SwitcherUtil {
                 }else if(find == 0){
                     bundingResult += "绑定成功\n";
                 }
+                bundingResult += flag;
             }
         }
 
@@ -239,8 +241,7 @@ public class SwitcherUtil {
             telnet.sendCommand("end");
         }
 
-        bundingResult += flag;
-        telnet.disconnect();
+//        telnet.disconnect();
         return bundingResult;
     }
 
@@ -452,7 +453,7 @@ public class SwitcherUtil {
             }
         }
 
-        telnet.disconnect();
+//        telnet.disconnect();
         return bundingResult;
     }
 

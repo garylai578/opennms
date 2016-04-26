@@ -51,7 +51,7 @@ public class BundingIPServlet extends HttpServlet {
         request.setAttribute("host", host);
         request.setAttribute("user", user);
         request.setAttribute("password", password);
-        request.setAttribute("backContent", results.replaceAll("@result_split_flag@", ""));
+        request.setAttribute("backContent", results.replaceAll("@result_split_flag@", "\n"));
 	    request.setAttribute("ips", ip);
         request.setAttribute("result", backResult);
 
