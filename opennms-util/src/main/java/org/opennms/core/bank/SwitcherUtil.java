@@ -57,11 +57,13 @@ public class SwitcherUtil {
 
     /**
      * 获取交换机的端口信息
-     * @return
+     * @return 交换机的端口信息，如果交换机连接失败，返回null
      */
     public String[] getInterfaces(){
         if(interfaces.size() == 0) {
-            connect();
+            if(!connect()){
+                return null;
+            }
             //show interfaces status可以查看所有端口的开关状态，show run查看端口的dot1x认证状态
             String result = telnet.sendCommand("show interfaces status");
             String[] lines = result.split("\\n");
@@ -104,7 +106,9 @@ public class SwitcherUtil {
             if(interfaces.size() == 0 )
                 getInterfaces();
 
-            connect();
+            if(!connect()){
+                return null;
+            }
             for(String inter : interfaces){
                 //show run interface FastEthernet 0/× 查看单个端口的dot1x状态
                 String result = telnet.sendCommand("show run interface " + inter );
@@ -120,11 +124,13 @@ public class SwitcherUtil {
     /**
      * 开启交换机的端口
      * @param inter 待开启的端口，例如fastEthernet 0/1
-     * @return
+     * @return 1 成功； -1 交换机连接失败
      */
     public int upInterface(String inter) {
         //在交换机的config模式下，进入interface：interface fastEthernet 0/××，输入no shutdown
-        connect();
+        if(!connect()){
+            return -1;
+        }
         telnet.sendCommand("config");
         telnet.sendCommand("interface " + inter);
         telnet.sendCommand("no shutdown");
@@ -135,11 +141,13 @@ public class SwitcherUtil {
     /**
      * 关闭交换机的端口
      * @param inter 待关闭的端口，例如fastEthernet 0/1
-     * @return
+     * @return 1 成功； -1 交换机连接失败
      */
     public int downInterface(String inter) {
         //在交换机的config模式下，进入interface：interface fastEthernet 0/××，输入no shutdown
-        connect();
+        if(!connect()){
+            return -1;
+        }
         telnet.sendCommand("config");
         telnet.sendCommand("interface " + inter);
         telnet.sendCommand("shutdown");
@@ -150,11 +158,13 @@ public class SwitcherUtil {
     /**
      * dot1x认证交换机端口
      * @param inter 待认证的端口，例如fastEthernet 0/1
-     * @return
+     * @return 1 成功；-1 交换机连接失败
      */
     public int dot1X(String inter) {
         //在交换机的config模式下，进入interface：interface fastEthernet 0/××，输入dot1x port-control auto
-        connect();
+        if(!connect()){
+            return -1;
+        }
         telnet.sendCommand("config");
         telnet.sendCommand("interface " + inter);
         telnet.sendCommand("dot1x port-control auto");
@@ -165,11 +175,13 @@ public class SwitcherUtil {
     /**
      * 取消交换机端口的dot1x认证
      * @param inter 待取消dot1x认证的端口，例如fastEthernet 0/1
-     * @return
+     * @return 1 成功；-1 交换机连接失败
      */
     public int undoDot1X(String inter) {
         //在交换机的config模式下，进入interface：interface fastEthernet 0/××，输入undo dot1x port-control auto
-        connect();
+        if(!connect()){
+            return -1;
+        }
         telnet.sendCommand("config");
         telnet.sendCommand("interface " + inter);
         telnet.sendCommand("no dot1x port-control auto");
@@ -189,7 +201,9 @@ public class SwitcherUtil {
         bundingResult = "";
         String tmp;
 
-	    connect();
+        if(!connect()){
+            return bundingResult;
+        }
         if(no_dot1x_before){
             bundingResult = "执行前关闭端口：" + interRange + "的认证\n";
             telnet.sendCommand("config");
@@ -375,7 +389,9 @@ public class SwitcherUtil {
     public BundingIP[] getBundingIPs(){
         List<BundingIP> tmpList = new ArrayList();
         if(bundingIPs.size() == 0) {
-            connect();
+            if(!connect()){
+                return null;
+            }
             //sh arp可以查看所有ip,mac和vlan，sh mac-address-table static可以查看静态绑定列表中的ip，mac和interface
             String result = telnet.sendCommand("show arp");
             String[] lines = result.split("\\n");
@@ -418,7 +434,10 @@ public class SwitcherUtil {
         bundingResult = "";
         String tmp;
 
-	    connect();
+        if(!connect()){
+            return bundingResult;
+        }
+
         //查看交换机型号，对于不同型号，绑定的流程不一样
         telnet.sendCommand("terminal width 256");
         tmp = telnet.sendCommand("show version");
@@ -506,18 +525,21 @@ public class SwitcherUtil {
         telnet.disconnect();
     }
 
-    private void connect(){
+    private boolean connect(){
         if(telnet == null || !telnet.isConnected()) {
             try {
                 telnet = new TelnetConnection(host, port);
+                telnet.setUsernamePrompt("Username:");
+                telnet.setLoginPrompt(null);
+                telnet.login(user, password, "");
+                return true;
             } catch (Exception e) {
-                bundingResult += "交换机连接失败：\n" + e.getMessage() + "\n";
+                bundingResult += "交换机连接失败，请稍候再试\n" + e.getMessage() + "\n";
                 log.error(e.getMessage());
                 e.printStackTrace();
+                return false;
             }
-            telnet.setUsernamePrompt("Username:");
-            telnet.setLoginPrompt(null);
-            telnet.login(user, password, "");
         }
+        return true;
     }
 }

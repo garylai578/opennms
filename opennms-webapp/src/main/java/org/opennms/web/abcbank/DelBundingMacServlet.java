@@ -30,7 +30,7 @@ public class DelBundingMacServlet extends HttpServlet {
         request.setAttribute("host", host);
         request.setAttribute("user", user);
         request.setAttribute("password", password);
-        request.setAttribute("backContent", results.replaceAll("@result_split_flag@", ""));
+        request.setAttribute("backContent", results.replaceAll("@result_split_flag@", "\n"));
         request.setAttribute("macs", macs);
 
         request.getRequestDispatcher("bundingIP.jsp").forward(request, response);

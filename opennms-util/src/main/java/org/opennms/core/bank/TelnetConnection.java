@@ -46,7 +46,7 @@ public class TelnetConnection {
      *              如果没有登录提示，设置setLoginPrompt(null);
      *       第五，执行命令时，如果提示符不是 #、$、>、]中的一个，也需要指定最后一个符号，使用setPrompt(prompt).
      **/
-    public void login(String username, String password, String prompt) {
+    public void login(String username, String password, String prompt) throws IOException {
         //处理命令行的提示字符
         if(prompt != null && !"".equals(prompt)) {
             this.prompt = prompt;
@@ -84,32 +84,28 @@ public class TelnetConnection {
      * @param pattern
      * @return
      */
-    public String readUntil(String pattern) {
-        try {
-            char lastChar = pattern.charAt(pattern.length() - 1);
-            StringBuffer sb = new StringBuffer();
-            char ch = (char) in.read();
-            while (true) {
-                sb.append(ch);
-                if (ch == lastChar) {
-                    if (sb.toString().endsWith(pattern)) {
-                        log.debug(sb);
-                        return sb.toString();
-                    }
-                }
-                try {
-                    telnet.setSoTimeout(timeout);   //设置读取的超时时间（毫秒）
-                    ch = (char) in.read();
-                }catch(IOException e){
-                    log.debug("read time out, break");
-                    break;
+    public String readUntil(String pattern) throws IOException {
+
+        char lastChar = pattern.charAt(pattern.length() - 1);
+        StringBuffer sb = new StringBuffer();
+        char ch = (char) in.read();
+        while (true) {
+            sb.append(ch);
+            if (ch == lastChar) {
+                if (sb.toString().endsWith(pattern)) {
+                    log.debug(sb);
+                    return sb.toString();
                 }
             }
-        } catch (Exception e) {
-//            close(telnet);
-            log.error(e.getMessage());
-            e.printStackTrace();
+            try {
+                telnet.setSoTimeout(timeout);   //设置读取的超时时间（毫秒）
+                ch = (char) in.read();
+            }catch(IOException e){
+                log.debug("read time out, break");
+                break;
+            }
         }
+
         return null;
     }
 
@@ -265,7 +261,7 @@ public class TelnetConnection {
                 e.printStackTrace();
             }
         }
-        if(this.telnet != null) {
+       /* if(this.telnet != null) {
             try {
                 this.telnet.disconnect();
                 log.debug("关闭连接！");
@@ -273,7 +269,7 @@ public class TelnetConnection {
                 log.error(e.getMessage());
                 e.printStackTrace();
             }
-        }
+        }*/
     }
 
     public static void main(String[] args) {
