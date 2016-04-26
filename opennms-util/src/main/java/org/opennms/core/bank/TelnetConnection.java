@@ -106,7 +106,7 @@ public class TelnetConnection {
                 }
             }
         } catch (Exception e) {
-            close(telnet);
+//            close(telnet);
             log.error(e.getMessage());
             e.printStackTrace();
         }
@@ -131,7 +131,7 @@ public class TelnetConnection {
                 }
             }
         } catch (IOException e) {
-            close(telnet);
+//            close(telnet);
             log.error(e.getMessage());
             e.printStackTrace();
         }
@@ -146,7 +146,7 @@ public class TelnetConnection {
             out.println(value);
             out.flush();
         } catch (Exception e) {
-            close(telnet);
+//            close(telnet);
             log.error(e.getMessage());
             e.printStackTrace();
         }
@@ -164,7 +164,7 @@ public class TelnetConnection {
             String result = readUntilPrompt(prompt + "");
             return result;
         } catch (Exception e) {
-            close(telnet);
+//            close(telnet);
             log.error(e.getMessage());
             e.printStackTrace();
         }
