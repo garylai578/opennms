@@ -387,43 +387,99 @@ public class SwitcherUtil {
      * @return
      */
     public BundingIP[] getBundingIPs(){
-        List<BundingIP> tmpList = new ArrayList();
+
         if(bundingIPs.size() == 0) {
             if(!connect()){
                 return null;
             }
-            //sh arp可以查看所有ip,mac和vlan，sh mac-address-table static可以查看静态绑定列表中的ip，mac和interface
-            String result = telnet.sendCommand("show arp");
-            String[] lines = result.split("\\n");
-            Pattern pattern = Pattern.compile("((\\d{1,3}\\.){3}\\d{1,3}).*(([0-9a-z]{4}\\.){2}[0-9a-z]{4}).*(VLAN.*\\d)");
-            for(String line : lines) {
-                log.debug("匹配行：" + line);
-                Matcher matcher = pattern.matcher(line);
-                if(matcher.find()){
-                    BundingIP bundingIP = new BundingIP();
-                    bundingIP.setIp(matcher.group(1));
-                    bundingIP.setMac(matcher.group(3));
-                    bundingIP.setVlan(matcher.group(5));
-                    log.debug("ip:" + bundingIP.getIp() + "\t mac:" + bundingIP.getMac() + "\t vlan:" + bundingIP.getVlan());
-                    tmpList.add(bundingIP);
-                }
+
+            //查看交换机型号，对于不同型号，绑定的流程不一样
+            telnet.sendCommand("terminal width 256");
+            String tmp = telnet.sendCommand("show version");
+
+            //如果是S5750P或者S3760E
+            if(tmp.contains("S5750P") || tmp.contains("S3760E")){
+                getBundingIPsS5750P();
+            }else if(tmp.contains("S3760-48")) {  //如果是S3760-48
+                getBundingIPsS3760_48();
             }
 
-            result = telnet.sendCommand("sh mac-address-table static");
-            for(BundingIP bundingIP : tmpList){
-                if(result.contains(bundingIP.getMac())){
-                    pattern = Pattern.compile(bundingIP.getMac() + ".* (.*Ethernet.*\\d)");
-                    Matcher matcher = pattern.matcher(result);
-                    if(matcher.find()) {
-                        log.debug("mac["+ bundingIP.getMac() + "] 对应的 interface:" + matcher.group(1));
-                        bundingIP.setInter(matcher.group(1));
-                        bundingIPs.add(bundingIP);
-                    }
-                }
-            }
         }
         return bundingIPs.toArray(new BundingIP[bundingIPs.size()]);
     }
+
+    private void getBundingIPsS5750P() {
+        List<BundingIP> tmpList = new ArrayList();
+        //首先找出ACL列表中的mac地址
+        String result = telnet.sendCommand("show access-lists");
+        String[] lines = result.split("\\n");
+        Pattern pattern = Pattern.compile("(([0-9a-z]{4}\\.){2}[0-9a-z]{4})");
+        for(String line : lines) {
+            Matcher matcher = pattern.matcher(line);
+            if(matcher.find()){
+                BundingIP bundingIP = new BundingIP();
+                bundingIP.setMac(matcher.group(1));
+                log.debug("acl mac:" + bundingIP.getMac() );
+                tmpList.add(bundingIP);
+            }
+        }
+
+        //然后对每个mac地址找到对应的ip、vlan和端口
+        result = telnet.sendCommand("sh arp");
+        for(BundingIP bundingIP : tmpList){
+            if(result.contains(bundingIP.getMac())){
+                pattern = Pattern.compile("((\\d{1,3}\\.){3}\\d{1,3}).*" + bundingIP.getMac() + ".*(VLAN.*\\d)");
+                Matcher m1 = pattern.matcher(result);
+                pattern = Pattern.compile(".* (.*Ethernet.*\\d)");
+                result = telnet.sendCommand("sh mac address " + bundingIP.getMac());
+                Matcher m2 = pattern.matcher(result);
+                if(m1.find()) {
+                    log.debug("mac["+ bundingIP.getMac() + "] 对应的 ip:" + m1.group(1) + "\t 对应的vlan：" + m1.group(3));
+                    bundingIP.setIp(m1.group(1));
+                    bundingIP.setVlan(m1.group(3));
+                }
+                if(m2.find()){
+                    log.debug("mac["+ bundingIP.getMac() + "] 对应的 inter:" + m2.group(1));
+                    bundingIP.setInter(m2.group(1));
+                }
+                bundingIPs.add(bundingIP);
+            }
+        }
+    }
+
+    private void getBundingIPsS3760_48() {
+        List<BundingIP> tmpList = new ArrayList();
+        //sh arp可以查看所有ip,mac和vlan，sh mac-address-table static可以查看静态绑定列表中的ip，mac和interface
+        String result = telnet.sendCommand("show arp");
+        String[] lines = result.split("\\n");
+        Pattern pattern = Pattern.compile("((\\d{1,3}\\.){3}\\d{1,3}).*(([0-9a-z]{4}\\.){2}[0-9a-z]{4}).*(VLAN.*\\d)");
+        for(String line : lines) {
+            log.debug("匹配行：" + line);
+            Matcher matcher = pattern.matcher(line);
+            if(matcher.find()){
+                BundingIP bundingIP = new BundingIP();
+                bundingIP.setIp(matcher.group(1));
+                bundingIP.setMac(matcher.group(3));
+                bundingIP.setVlan(matcher.group(5));
+                log.debug("ip:" + bundingIP.getIp() + "\t mac:" + bundingIP.getMac() + "\t vlan:" + bundingIP.getVlan());
+                tmpList.add(bundingIP);
+            }
+        }
+
+        result = telnet.sendCommand("sh mac-address-table static");
+        for(BundingIP bundingIP : tmpList){
+            if(result.contains(bundingIP.getMac())){
+                pattern = Pattern.compile(bundingIP.getMac() + ".* (.*Ethernet.*\\d)");
+                Matcher matcher = pattern.matcher(result);
+                if(matcher.find()) {
+                    log.debug("mac["+ bundingIP.getMac() + "] 对应的 interface:" + matcher.group(1));
+                    bundingIP.setInter(matcher.group(1));
+                    bundingIPs.add(bundingIP);
+                }
+            }
+        }
+    }
+
 
     /**
      * 对macs地址列表进行解绑
@@ -522,7 +578,7 @@ public class SwitcherUtil {
     }
 
     public void diconnect(){
-        telnet.disconnect();
+        telnet.sendCommand("exit");
     }
 
     private boolean connect(){
