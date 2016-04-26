@@ -29,8 +29,8 @@ public class ExportBundingMsgServlet extends HttpServlet {
             BundingIP bundingIP = new BundingIP();
             bundingIP.setIp(request.getParameter("ip-"+i));
             bundingIP.setMac(request.getParameter("mac-"+i));
-            bundingIP.setInter("inter-"+i);
-            bundingIP.setVlan("vlan-"+i);
+            bundingIP.setInter(request.getParameter("inter-"+i));
+            bundingIP.setVlan(request.getParameter("vlan-"+i));
             dataset.add(bundingIP);
         }
 
