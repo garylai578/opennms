@@ -891,6 +891,10 @@
     <servlet-name>DelBundingMacServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.DelBundingMacServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>ExportBundingMsgServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ExportBundingMsgServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1314,6 +1318,10 @@
   <servlet-mapping>
     <servlet-name>DelBundingMacServlet</servlet-name>
     <url-pattern>/abcbank/deleteBundingMac</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExportBundingMsgServlet</servlet-name>
+    <url-pattern>/abcbank/exportBundingMsg</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  

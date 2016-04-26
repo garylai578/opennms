@@ -64,6 +64,12 @@
         document.allSwitchers.action="abcbank/deleteBundingMac";
         document.allSwitchers.submit();
     }
+
+    function outputExcel(row){
+        document.allSwitchers.action="abcbank/exportBundingMsg";
+        document.allSwitchers.rows.value=row;
+        document.allSwitchers.submit();
+    }
 </script>
 
 
@@ -74,6 +80,7 @@
     <input type="hidden" name="no_dot1x_before" value="0"/>
     <input type="hidden" name="dot1x_after" value="0"/>
     <input type="hidden" name="delBundingMACs" value=""/>
+    <input type="hidden" name="rows" value=""/>
 
     <h3>交换机IP：<%=host%></h3>
 
@@ -156,27 +163,30 @@
             </td>
 
             <td width="3%" align="center">
-                <div id="ip-<%=row%>">
+                <div>
                     <%= ip %>
+                    <input id="ip-<%=row%>" name="ip-<%=row%>" type="hidden" value="<%=ip%>">
                 </div>
             </td>
 
             <td width="3%" align="center">
                 <div>
                     <%=mac%>
-                    <input id="mac-<%=row%>" type="hidden" value="<%=mac%>">
+                    <input id="mac-<%=row%>" name="mac-<%=row%>" type="hidden" value="<%=mac%>">
                 </div>
             </td>
 
             <td width="3%" align="center">
-                <div id="inter-<%=row%>">
+                <div>
                     <%=inter %>
+                    <input id="inter-<%=row%>" name="inter-<%=row%>" type="hidden" value="<%=inter%>">
                 </div>
             </td>
 
             <td width="3%" align="center">
-                <div id="vlan-<%=row%>">
+                <div>
                     <%=vlan%>
+                    <input id="vlan-<%=row%>" name="vlan-<%=row%>" type="hidden" value="<%=vlan%>">
                 </div>
             </td>
                 <%
@@ -185,6 +195,8 @@
                 %>
         </tr>
     </table>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a type="button" href="javascript:outputExcel('<%=row%>')"><input type="button" value="导出"/> </a>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <a type="button" href="javascript:delBundingMacs('<%=row%>')"><input type="button" value="删除旧绑定关系"/> </a>
     &nbsp;&nbsp;&nbsp;&nbsp;
