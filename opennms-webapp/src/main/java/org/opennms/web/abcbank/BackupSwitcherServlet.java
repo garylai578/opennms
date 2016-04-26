@@ -186,7 +186,13 @@ public class BackupSwitcherServlet extends HttpServlet {
      * @return the backup result
      */
     private String backup(){
-        TelnetConnection telnet = new TelnetConnection(host, port);
+        TelnetConnection telnet;
+        try {
+            telnet = new TelnetConnection(host, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "连接交换机失败：\r\n" + e.getMessage();
+        }
         telnet.setUsernamePrompt(":");
         telnet.setLoginPrompt(null);
         telnet.login(user, pwd, "");

@@ -51,7 +51,13 @@ public class RecoverySwithcerServlet extends HttpServlet {
     }
 
     private String recovery(){
-        TelnetConnection telnet = new TelnetConnection(host, port);
+        TelnetConnection telnet;
+        try {
+            telnet = new TelnetConnection(host, port);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "连接交换机失败：\r\n" + e.getMessage();
+        }
         telnet.setUsernamePrompt("login:");
         telnet.setLoginPrompt(null);
         telnet.login(user, pwd, "");

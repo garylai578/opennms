@@ -26,19 +26,13 @@ public class TelnetConnection {
     private PrintStream out;
     private int timeout = 5000;
 
-    public TelnetConnection(String host, int port) {
+    public TelnetConnection(String host, int port) throws IOException {
         if(telnet == null) {
             telnet = new TelnetClient();
-            try {
-                log.debug("telnet connect, host ip:" + host + ", port:"+ port);
-                telnet.connect(host, port);
-                in = telnet.getInputStream();
-                out = new PrintStream(telnet.getOutputStream());
-            } catch (Exception e) {
-                close(telnet);
-                log.error(e);
-                e.printStackTrace();
-            }
+            log.debug("telnet connect, host ip:" + host + ", port:"+ port);
+            telnet.connect(host, port);
+            in = telnet.getInputStream();
+            out = new PrintStream(telnet.getOutputStream());
         }
     }
 

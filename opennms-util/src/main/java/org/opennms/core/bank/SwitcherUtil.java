@@ -508,7 +508,13 @@ public class SwitcherUtil {
 
     private void connect(){
         if(telnet == null || !telnet.isConnected()) {
-            telnet = new TelnetConnection(host, port);
+            try {
+                telnet = new TelnetConnection(host, port);
+            } catch (Exception e) {
+                bundingResult += "交换机连接失败：\n" + e.getMessage() + "\n";
+                log.error(e.getMessage());
+                e.printStackTrace();
+            }
             telnet.setUsernamePrompt("Username:");
             telnet.setLoginPrompt(null);
             telnet.login(user, password, "");
