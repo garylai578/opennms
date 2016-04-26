@@ -430,14 +430,18 @@ public class SwitcherUtil {
             if(result.contains(bundingIP.getMac())){
                 pattern = Pattern.compile("((\\d{1,3}\\.){3}\\d{1,3}).*" + bundingIP.getMac() + ".*(VLAN.*\\d)");
                 Matcher m1 = pattern.matcher(result);
-                pattern = Pattern.compile(".* (.*Ethernet.*\\d)");
-                result = telnet.sendCommand("sh mac address " + bundingIP.getMac());
-                Matcher m2 = pattern.matcher(result);
                 if(m1.find()) {
                     log.debug("mac["+ bundingIP.getMac() + "] 对应的 ip:" + m1.group(1) + "\t 对应的vlan：" + m1.group(3));
                     bundingIP.setIp(m1.group(1));
                     bundingIP.setVlan(m1.group(3));
                 }
+				
+				telnet.setPrompt("#");
+				telnet.sendCommand("ping " + bundingIP.getIp() + " ntimes 1 timeout 1"); //会返回“<>”符号
+				telnet.setPrompt("#$>]");
+				pattern = Pattern.compile(".* (.*Ethernet.*\\d)");
+                String r2 = telnet.sendCommand("sh mac address " + bundingIP.getMac());
+                Matcher m2 = pattern.matcher(r2);
                 if(m2.find()){
                     log.debug("mac["+ bundingIP.getMac() + "] 对应的 inter:" + m2.group(1));
                     bundingIP.setInter(m2.group(1));
