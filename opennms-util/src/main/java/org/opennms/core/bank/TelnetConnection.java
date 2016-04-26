@@ -107,7 +107,7 @@ public class TelnetConnection {
             }
         } catch (Exception e) {
             close(telnet);
-            log.error(e);
+            log.error(e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -132,7 +132,7 @@ public class TelnetConnection {
             }
         } catch (IOException e) {
             close(telnet);
-            log.error(e);
+            log.error(e.getMessage());
             e.printStackTrace();
         }
         return "";
@@ -147,7 +147,7 @@ public class TelnetConnection {
             out.flush();
         } catch (Exception e) {
             close(telnet);
-            log.error(e);
+            log.error(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -165,7 +165,7 @@ public class TelnetConnection {
             return result;
         } catch (Exception e) {
             close(telnet);
-            log.error(e);
+            log.error(e.getMessage());
             e.printStackTrace();
         }
         return "";
@@ -252,7 +252,7 @@ public class TelnetConnection {
             try{
                 in.close();
             }catch (IOException e){
-                log.error(e);
+                log.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -261,7 +261,7 @@ public class TelnetConnection {
                 telnet.disconnect();
                 log.debug("关闭连接！");
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getMessage());
                 e.printStackTrace();
             }
         }
@@ -270,7 +270,7 @@ public class TelnetConnection {
                 this.telnet.disconnect();
                 log.debug("关闭连接！");
             } catch (Exception e) {
-                log.error(e);
+                log.error(e.getMessage());
                 e.printStackTrace();
             }
         }
