@@ -136,6 +136,7 @@
         <%
             SwitcherUtil util = new SwitcherUtil(host, user, password);
             BundingIP[] bundingIPs = util.getBundingIPs();
+            util.diconnect();
             int size = 0;
             if(bundingIPs != null)
                 size = bundingIPs.length;
