@@ -581,6 +581,24 @@ public class SwitcherUtil {
         return 0;
     }
 
+    /**
+     * 对交换机进行批量操作
+     * @param commands 批量执行的命令
+     * @return 操作结果
+     */
+    public String batchCommands(String[] commands){
+        String result = "连接交换机失败";
+
+        if(!connect()){
+            return result;
+        }
+        for(String command : commands){
+            result += telnet.sendCommand(command) + "\r\n";
+        }
+
+        return result;
+    }
+
     public void diconnect(){
         telnet.sendCommand("exit");
     }

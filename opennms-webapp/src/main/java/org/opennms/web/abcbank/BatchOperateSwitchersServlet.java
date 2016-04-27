@@ -1,7 +1,6 @@
 package org.opennms.web.abcbank;
 
-import org.opennms.core.bank.DesUtil;
-import org.opennms.core.bank.TelnetConnection;
+import org.opennms.core.bank.SwitcherUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -31,7 +30,6 @@ public class BatchOperateSwitchersServlet extends HttpServlet {
         String[] swList = sws.split("\t");
         String[] batchCommands = batchComm.split("\n");
         for(int i = 0; i < swList.length; ++i){
-
             String host = request.getParameter("host-" + swList[i]);
             String user = request.getParameter("user-" + swList[i]);
             String password = request.getParameter("password-" + swList[i]);
@@ -40,31 +38,10 @@ public class BatchOperateSwitchersServlet extends HttpServlet {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             appendFile("\r\n" + format.format(nowDate) + " 对交换机："+ host + "执行批量操作：");
 
-            try {
-                DesUtil du = new DesUtil();
-                password = du.decrypt(password);
-            } catch (Exception e) {
-                appendFile("对交换机密码解密错误：");
-                appendFile(e.getMessage());
-                continue;
-            }
-
-            try {
-                TelnetConnection tc = new TelnetConnection(host, 23);
-                tc.setUsernamePrompt("Username:");
-                tc.setLoginPrompt(null);
-                tc.login(user, password, "");
-                for(String comm : batchCommands){
-                    appendFile("发送命令：" + comm);
-                    String result = tc.sendCommand(comm);
-                    appendFile("返回结果：" + result);
-                }
-                tc.sendCommand("exit");
-            } catch (IOException e) {
-                appendFile("连接交换机失败或发送命令失败：");
-                appendFile(e.getMessage());
-                continue;
-            }
+            SwitcherUtil su = new SwitcherUtil(host, user, password);
+            String result = su.batchCommands(batchCommands);
+            appendFile(result);
+            su.diconnect();
         }
 
         pw.print("<script language='javascript'>alert('完成批量操作，请在日志中查看结果！' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
