@@ -587,10 +587,10 @@ public class SwitcherUtil {
      * @return 操作结果
      */
     public String batchCommands(String[] commands){
-        String result = "连接交换机失败";
+        String result = "";
 
         if(!connect()){
-            return result;
+            return "连接交换机失败";
         }
         for(String command : commands){
             result += telnet.sendCommand(command) + "\r\n";
