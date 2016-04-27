@@ -230,8 +230,7 @@
         </td>
 
         <td>
-            <div><a id="log" href="abcbank/switcher.log">查看日志</a> &nbsp;&nbsp;
-                <a id="delLog" href="abcbank/switcher.log">清空日志</a></div>
+            <div><a id="log" href="abcbank/switcher.log">查看日志</a></div>
         </td>
     </table>
 
