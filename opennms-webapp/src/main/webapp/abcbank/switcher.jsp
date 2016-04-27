@@ -42,6 +42,42 @@
     //通过key获取配置文件
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
     String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+
+    //读取交换机批量操作的文件内容
+    String batchComm = "";
+    int MAX_SIZE = 102400 * 102400;
+    String contentType = request.getContentType();
+    int formDataLength = 0;
+    DataInputStream in = null;
+    if (contentType != null && contentType.indexOf("multipart/form-data") >= 0) {
+        //读入上传的数据
+        in = new DataInputStream(request.getInputStream());
+        formDataLength = request.getContentLength();
+        if (formDataLength > MAX_SIZE) {
+            out.print("<script language='javascript'>alert('上传的文件字节数不可以超过：" +  MAX_SIZE + "');window.location=('index.jsp')</script>");
+            return;
+        }
+        byte dataBytes[] = new byte[formDataLength];
+        int byteRead = 0;
+        int totalBytesRead = 0;
+        //上传的数据保存在byte数组
+        while(totalBytesRead < formDataLength){
+            byteRead = in.read(dataBytes,totalBytesRead,formDataLength);
+            totalBytesRead += byteRead;
+        }
+        //根据byte数组创建字符串
+        String file = new String(dataBytes);
+        String startFlag = "#start";
+        String endFlag = "#end";
+        if(file.indexOf(startFlag) < 0 || file.indexOf(endFlag) < 0 ) {
+            out.print("<script language='javascript'>alert('上传文件格式不对，缺少#start或#end');window.location=('index.jsp')</script>");
+            return;
+        }
+        int startPos = file.indexOf(startFlag) + startFlag.length();
+        int endPos = file.indexOf(endFlag);
+
+        batchComm = file.substring(startPos, endPos);
+    }
 %>
 
 <script type="text/javascript" >
@@ -98,6 +134,18 @@
         document.allSwitchers.submit();
     }
 
+    function batchOperator(rows){
+        var sw="";
+        for (var i = 0; i < rows; ++i) {
+            var choose = document.getElementById("choose-"+i);
+            if (choose.checked == true)
+                sw += i + "\t";
+        }
+        document.allSwitchers.batchComm.value = <%=batchComm%>;
+        document.allSwitchers.sws.value = sw;
+        document.allSwitchers.action="abcbank/batchOperateSwitchers";
+        document.allSwitchers.submit();
+    }
 
     time = new Array("1点","2点","3点","4点","5点","6点","7点","8点","9点","10点","11点","12点","13点","14点","15点",
             "16点","17点","18点","19点","20点","21点","22点","23点","24点");
@@ -156,10 +204,12 @@
 
 </script>
 
-<form method="post" name="allSwitchers">
+<form method="post" name="allSwitchers" enctype="multipart/form-data">
     <input type="hidden" name="rowID"/>
     <input type="hidden" name="isCycle" value="0"/>
     <input type="hidden" name="switcherId" />
+    <input type="hidden" name="sws"/>
+    <input type="hidden" name="batchComm"/>
 
     <h3>交换机配置管理</h3>
 
@@ -177,6 +227,7 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
         <tr bgcolor="#999999">
+            <td width="3%" align="center"><b>选择</b></td>
             <td width="3%" align="center"><b>名称</b></td>
             <td width="3%" align="center"><b>分组</b></td>
             <td width="3%" align="center"><b>品牌</b></td>
@@ -225,6 +276,12 @@
                 session.setAttribute("password-"+id, password);
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
+            <td width="3%" rowspan="2" align="center">
+                <div>
+                    <input id="choose-<%=row%>" type="checkbox" value="" />
+                </div>
+            </td>
+
             <td width="3%" rowspan="2"  align="center">
                 <div>
                     <%= ((name == null || name.equals("")) ? "&nbsp;" : name) %>
@@ -369,6 +426,16 @@
             }
         %>
     </table>
+    &nbsp;&nbsp;
+    批量操作：请先选中需要批量操作的交换机，然后上传批量操作文件并点击确定
+    <br/>
+    &nbsp;&nbsp;
+    <input type="button" onclick="window.location='/opennms/abcbank/importFile.jsp'" value="上传">
+
+    <br/>
+    &nbsp;&nbsp;
+    <a href="javascript:batchOperator('<%=row%>')">确定</a>
+
 </form>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />

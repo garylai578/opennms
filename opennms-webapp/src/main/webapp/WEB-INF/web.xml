@@ -895,6 +895,10 @@
     <servlet-name>ExportBundingMsgServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.ExportBundingMsgServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>BatchOperateSwitchersServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.BatchOperateSwitchersServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1322,6 +1326,10 @@
   <servlet-mapping>
     <servlet-name>ExportBundingMsgServlet</servlet-name>
     <url-pattern>/abcbank/exportBundingMsg</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BatchOperateSwitchersServlet</servlet-name>
+    <url-pattern>/abcbank/batchOperateSwitchers</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  
