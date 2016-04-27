@@ -22,6 +22,7 @@ public class ExportBundingMsgServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String host = request.getParameter("host");
+        String name = request.getParameter("switcherName");
         String tmp = request.getParameter("rows");
         int rows = Integer.parseInt(tmp);
         List<BundingIP> dataset = new ArrayList<BundingIP>();
@@ -35,7 +36,7 @@ public class ExportBundingMsgServlet extends HttpServlet {
         }
 
         response.setContentType("octets/stream");
-        response.addHeader("Content-Disposition", "attachment;filename=" + host + ".xls");
+        response.addHeader("Content-Disposition", "attachment;filename=" + name + "-" + host + ".xls");
         ExportExcel<BundingIP> ex = new ExportExcel<BundingIP>();
         String[] headers = { "IP", "MAC", "端口", "VLAN"};
         try {

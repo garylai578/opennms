@@ -35,6 +35,7 @@
     String backContent = (String)request.getAttribute("backContent");
     String result = (String)request.getAttribute("result");
     String ips = (String)request.getAttribute("ips");
+    String switcherName;
 %>
 
 <script type="text/javascript" >
@@ -143,6 +144,7 @@
         <%
             SwitcherUtil util = new SwitcherUtil(host, user, password);
             BundingIP[] bundingIPs = util.getBundingIPs();
+            switcherName = util.getSwitcherName();
             util.diconnect();
             int size = 0;
             if(bundingIPs != null)
@@ -196,11 +198,13 @@
         </tr>
     </table>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <a type="button" href="javascript:outputExcel('<%=row%>')"><input type="button" value="导出"/> </a>
+    <input type="button"  onclick="javascript:outputExcel('<%=row%>')" value="导出"/>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <a type="button" href="javascript:delBundingMacs('<%=row%>')"><input type="button" value="删除旧绑定关系"/> </a>
+    <input type="button" onclick="javascript:delBundingMacs('<%=row%>')" value="删除旧绑定关系">
     &nbsp;&nbsp;&nbsp;&nbsp;
     如果该设备以前已经做过绑定但更换了交换机端口，需要删除后绑定，删除旧绑定需要管理员上报MAC.
+
+    <input type="hidden" name="switcherName" value="<%=switcherName%>"/>
 </form>
 
 

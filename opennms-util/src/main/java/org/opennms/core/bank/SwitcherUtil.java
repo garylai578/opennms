@@ -22,6 +22,7 @@ public class SwitcherUtil {
     //“端口绑定”页面中对应的ip、mac、端口和vlan列表
     List<BundingIP> bundingIPs = new ArrayList();
 
+    String name;
     String host;
     String user;
     String password;
@@ -599,6 +600,14 @@ public class SwitcherUtil {
         return result;
     }
 
+    /**
+     * 获取交换机名字
+     * @return 交换机名字
+     */
+    public String getSwitcherName() {
+        return name;
+    }
+
     public void diconnect(){
         telnet.sendCommand("exit");
     }
@@ -610,6 +619,8 @@ public class SwitcherUtil {
                 telnet.setUsernamePrompt("Username:");
                 telnet.setLoginPrompt(null);
                 telnet.login(user, password, "");
+                name = telnet.sendCommand("");
+                log.debug("name:" + name);
                 return true;
             } catch (Exception e) {
                 bundingResult += "交换机连接失败，请稍候再试\n" + e.getMessage() + "\n";
@@ -620,4 +631,5 @@ public class SwitcherUtil {
         }
         return true;
     }
+
 }
