@@ -135,13 +135,23 @@
     }
 
     function batchOperator(rows){
+        var op = document.allSwitchers.batchComm.value;
+        if(op == null || op == ""){
+            alert("请首先点击“上传”按钮");
+            return;
+        }
+
         var sw="";
         for (var i = 0; i < rows; ++i) {
             var choose = document.getElementById("choose-"+i);
             if (choose.checked == true)
                 sw += i + "\t";
         }
-        document.allSwitchers.batchComm.value = <%=batchComm%>;
+        if(sw==""){
+            alert("请选择需要操作的交换机");
+            return;
+        }
+
         document.allSwitchers.sws.value = sw;
         document.allSwitchers.action="abcbank/batchOperateSwitchers";
         document.allSwitchers.submit();
@@ -204,12 +214,12 @@
 
 </script>
 
-<form method="post" name="allSwitchers" enctype="multipart/form-data">
+<form method="post" name="allSwitchers">
     <input type="hidden" name="rowID"/>
     <input type="hidden" name="isCycle" value="0"/>
     <input type="hidden" name="switcherId" />
     <input type="hidden" name="sws"/>
-    <input type="hidden" name="batchComm"/>
+    <input type="hidden" name="batchComm" value="<%=((batchComm==null)?"":batchComm)%>"/>
 
     <h3>交换机配置管理</h3>
 
@@ -220,7 +230,8 @@
         </td>
 
         <td>
-            <div><a id="log" href="abcbank/switcher.log">日志</a></div>
+            <div><a id="log" href="abcbank/switcher.log">查看日志</a> &nbsp;&nbsp;
+                <a id="delLog" href="abcbank/switcher.log">清空日志</a></div>
         </td>
     </table>
 
@@ -429,12 +440,10 @@
     &nbsp;&nbsp;
     批量操作：请先选中需要批量操作的交换机，然后上传批量操作文件并点击确定
     <br/>
-    &nbsp;&nbsp;
-    <input type="button" onclick="window.location='/opennms/abcbank/importFile.jsp'" value="上传">
-
     <br/>
     &nbsp;&nbsp;
-    <a href="javascript:batchOperator('<%=row%>')">确定</a>
+    <input type="button" onclick="window.location='/opennms/abcbank/importFile.jsp'" value="上传">
+    <input type="button" onclick="javascript:batchOperator('<%=row%>')" value="确定">
 
 </form>
 
