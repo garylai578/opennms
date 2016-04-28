@@ -40,7 +40,9 @@
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
     String[] bankTypes = pro.getProperty("abc-banktype").split("/");
 
-    IPSegment[] ips = op.selectAll("");
+    IPSegment[] ips = (IPSegment[])request.getAttribute("ipSeg");
+    if(ips == null)
+        ips = op.selectAll("");
     int nums = ips.length;
 %>
 
@@ -91,6 +93,17 @@
         document.allIPSegments.submit();
     }
 
+    function searchIPSegment()
+    {
+        var ipSeg = document.getElementById("search").value;
+        if(ipSeg==null || ipSeg==0) {
+            window.location.href="abcbank/ipsegment.jsp";
+            return;
+        }
+        document.allIPSegments.action="abcbank/searchIPSegment";
+        document.allIPSegments.submit();
+    }
+
 </script>
 
 <form method="post" name="allIPSegments">
@@ -107,6 +120,12 @@
     <td align="left">
         <a id="doNewIPSegment" href="javascript:addIPSegment()"><img src="images/add1.gif" alt="新增IP段" border="0"></a>
         <a href="javascript:addIPSegment()">新增IP段</a>
+    </td>
+
+    <td align="left">
+        <input id="search" name="search" size="18%" placeholder="请选择要筛选的IP段" value="">
+        <a id="doSearch" href="javascript:searchIPSegment()"><img src="images/search.png" alt="筛选" border="0"></a>
+        <a id="" href="javascript:searchIPSegment()">筛选</a>
     </td>
 
     <td align="left">
@@ -252,7 +271,7 @@
         </tr>
 
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
-            <td colspan="7">
+            <td colspan="8">
                 <div>
                     <input id="comment-<%=row%>" type="text" size="100" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
                 </div>

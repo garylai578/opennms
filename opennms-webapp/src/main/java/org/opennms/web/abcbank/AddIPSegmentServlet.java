@@ -87,7 +87,7 @@ public class AddIPSegmentServlet extends HttpServlet {
                 String lastIP = op.selectLastIP(ipSeg);
 
                 if (lastIP == null) {
-                    lastIP = this.config.getInitParameter("InitIP");
+                    lastIP = ipSeg;
                 }
 
                 IPPoolCaculater cal = new IPPoolCaculater(lastIP, num);

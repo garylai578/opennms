@@ -899,6 +899,10 @@
     <servlet-name>BatchOperateSwitchersServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.BatchOperateSwitchersServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>SearchIPSegmentServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.SearchIPSegmentServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1330,6 +1334,10 @@
   <servlet-mapping>
     <servlet-name>BatchOperateSwitchersServlet</servlet-name>
     <url-pattern>/abcbank/batchOperateSwitchers</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchIPSegmentServlet</servlet-name>
+    <url-pattern>/abcbank/searchIPSegment</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  
