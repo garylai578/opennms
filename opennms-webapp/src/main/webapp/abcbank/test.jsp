@@ -4,11 +4,16 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script type="text/javascript" src="jquery-1.6.4.min.js"></script>
 
-    <title>无标题文档</title>
+    <title>${pageContext.request.remoteUser}</title>
 </head>
 
 
 <body>
+<%
+    String name = (String)request.getRemoteUser();
+    out.print("<br>name:" + name);
+%>
+
 <select id="select" onkeydown="Select.del(this,event)" onkeypress="Select.write(this,event)">
     <option value=""></option>
     <option value="aaa">aaa</option>
