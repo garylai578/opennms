@@ -51,10 +51,10 @@ public class SwitcherOperator {
             d.watch(stmt);
             String sql;
             boolean flag = false;
-            ResultSet rs = stmt.executeQuery("select * from switcher");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM switcher");
             ResultSetMetaData rsmd = rs.getMetaData();
             for(int i = 0; i <rsmd.getColumnCount(); ++i) {
-                if(rsmd.getColumnName(i).equals(column))
+                if(rsmd.getColumnName(i+1).equals(column))
                     flag = true;
             }
             log.debug("colunm:" + column + "\t key:" + key);
