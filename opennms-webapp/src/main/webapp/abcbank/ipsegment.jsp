@@ -44,6 +44,7 @@
     if(ips == null)
         ips = op.selectAll("");
     int nums = ips.length;
+    String[] ipSegs = op.getIPSegments();
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -123,7 +124,16 @@
     </td>
 
     <td align="left">
-        <input id="search" name="search" size="18%" placeholder="请选择要筛选的IP段" value="">
+        <select id="search" name="search">
+            <option value="">请选择需要筛选的IP段</option>
+            <%
+                for(String seg : ipSegs){
+            %>
+            <option value="<%=seg%>"><%=seg%></option>
+            <%
+                }
+            %>
+        </select>
         <a id="doSearch" href="javascript:searchIPSegment()"><img src="images/search.png" alt="筛选" border="0"></a>
         <a id="" href="javascript:searchIPSegment()">筛选</a>
     </td>

@@ -24,36 +24,40 @@ public class IPPoolCaculater {
         this.initIP = initIP;
         this.num = num;
         ipPool = new IPPool();
-        caculate();
     }
 
-    /**
-     * IPPool
+    /** 进行计算
+     * @return 1:计算成功；0：该地址段剩余ip数量不够分配； -1：分配失败
      */
-    private void caculate() {
+    public int caculate() {
         mask = caculateMask();
         ipPool.setNetMask(mask);
-        caculateStartIP();
+        int result = caculateStartIP();
+        if( result!= 1)
+            return result;
+        result = caculateEndIP();
+        if(result != 1)
+            return result;
         ipPool.setStartIP(startIP);
-        caculateEndIP();
         ipPool.setEndIP(endIP);
+        return 1;
     }
 
     /**
-     * ipipip
+     * 计算开始ip
      *
+     * @return 1:计算成功；0：该地址段剩余ip数量不够分配；-1：分配失败
      */
-    private void caculateStartIP() {
-
+    private int caculateStartIP() {
         String[] temp1 = initIP.trim().split("\\.");
         int tmp3 = Integer.parseInt(temp1[3]);
         if(tmp3 + num > 255) {
-            int tmp1 = Integer.parseInt(temp1[1]);
+/*            int tmp1 = Integer.parseInt(temp1[1]);
             int tmp2 = Integer.parseInt(temp1[2]) + 1;
             if(tmp2 > 255)
                 tmp1++;
-            startIP = temp1[0] + "." +  tmp1 + "." + tmp2 + ".0";
-            return;
+            startIP = temp1[0] + "." +  tmp1 + "." + tmp2 + ".0";*/
+            return 0;
         }
 
         String binary = Integer.toBinaryString(tmp3);
@@ -73,8 +77,9 @@ public class IPPoolCaculater {
             int start = (int) Math.pow(2, Math.floor(Math.log(tmp3) / Math.log(2))+1);
 
             if(start >= 256) {
-                int tmp2 = Integer.parseInt(temp1[2])+1;
-                startIP = temp1[0] + "." +  temp1[1] + "." + tmp2 + ".0";
+                /*int tmp2 = Integer.parseInt(temp1[2])+1;
+                startIP = temp1[0] + "." +  temp1[1] + "." + tmp2 + ".0";*/
+                return 0;
             }else {
                 if(start < num)
                     start = num;
@@ -83,13 +88,22 @@ public class IPPoolCaculater {
         } else {
             startIP = initIP;
         }
+        return 1;
     }
 
-    private void caculateEndIP() {
+    /**
+     * 计算结束ip
+     *
+     * @return 1:计算成功；0：该地址段剩余ip数量不够分配；-1：分配失败
+     */
+    private int caculateEndIP() {
         String[] temp = startIP.trim().split("\\.");
         int i = Integer.parseInt(temp[3]) + num - 1;
-        if (i <= 255)
+        if (i <= 255) {
             endIP = temp[0] + "." + temp[1] + "." + temp[2] + "." + i;
+            return 1;
+        }else
+            return 0;
     }
 
     /**
