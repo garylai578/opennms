@@ -58,7 +58,6 @@ public class SwitcherOperator {
             else
                 sql = "SELECT * FROM switcher WHERE " + column + " LIKE '%" + key + "%'";
 
-            sql = sql.substring(0, sql.length()-10);
             log.debug("search sql: " + sql);
             ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
