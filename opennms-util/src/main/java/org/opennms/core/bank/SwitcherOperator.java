@@ -47,13 +47,15 @@ public class SwitcherOperator {
      */
     public Switcher[] select(String column, String key) throws SQLException {
         Switcher[] result = null;
+        String cols = "id name groups brand host username password backup recovery wan_ip lookback_ip vlan150_ip1 vlan150_ip2 vlan160_ip1 " +
+                " vlan160_ip2  vlan170_ip1 vlan170_ip2 ospf area comment text";
         try {
             Connection conn = Vault.getDbConnection();
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
             String sql;
-            if(column == null || key == null)
+            if(column == null || key == null || !cols.contains(column) || key.equals(""))
                 sql = "SELECT * FROM switcher";
             else
                 sql = "SELECT * FROM switcher WHERE " + column + " LIKE '%" + key + "%'";
