@@ -212,6 +212,12 @@
         }
     }
 
+    function searchSwitcher()
+    {
+        document.allSwitchers.action="abcbank/searchSwitcher";
+        document.allSwitchers.submit();
+    }
+
 </script>
 
 <form method="post" name="allSwitchers">
@@ -227,6 +233,18 @@
         <td>
             <a id="doNewIPSegment" href="javascript:addSwitcher()"><img src="images/add1.gif" alt="新增交换机" border="0"></a>
             <a href="javascript:addSwitcher()">新增交换机</a>
+        </td>
+
+        <td align="left">
+            <select id="searchType" name="searchType">
+                <option value="">请选择筛选的字段</option>
+                <option value="switchName">名称</option>
+                <option value="switchGroup">分组</option>
+                <option value="switchIP">IP</option>
+            </select>
+            <input id="searchCont" name="searchCont" size="18%" placeholder="请输入要搜索的内容" value="">
+            <a id="doSearch" href="javascript:searchSwitcher()"><img src="images/search.png" alt="筛选" border="0"></a>
+            <a id="" href="javascript:searchSwitcher()">筛选</a>
         </td>
 
         <td>
@@ -258,7 +276,9 @@
             <td width="3%" align="center"><b>备注</b></td>
         </tr>
         <%
-            Switcher[] ss = op.selectAll();
+            Switcher[] ss = (Switcher[])request.getAttribute("switchers");
+            if(ss == null)
+                ss = op.selectAll();
             int row = 0;
             for(Switcher sw : ss){
                 String id = sw.getId();
