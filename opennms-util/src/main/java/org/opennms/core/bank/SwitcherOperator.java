@@ -40,27 +40,24 @@ public class SwitcherOperator {
     }
 
     /**
-     * 根据给定的content搜索指定的列column，如果col为空，则搜索“名称，分组，品牌，ip，备注”5个组
+     * 根据给定的content搜索指定的列column，如果col为空
      * @param column 待搜索的列
      * @param key 搜索的内容
      * @return 符合条件的Swither数组
      */
     public Switcher[] select(String column, String key) throws SQLException {
         Switcher[] result = null;
-        String[] cols = {"name", "groups", "brand", "host", "comment"};
         try {
             Connection conn = Vault.getDbConnection();
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String sql = "";
-            if(column!=null && column.equals("")) {
-                cols = new String[1];
-                cols[0] = column;
-            }
-            for(String col: cols) {
-                sql += "SELECT * FROM switcher WHERE " + col + " LIKE '%" + key + "%' union all ";
-            }
+            String sql;
+            if(column == null || key == null)
+                sql = "SELECT * FROM switcher";
+            else
+                sql = "SELECT * FROM switcher WHERE " + column + " LIKE '%" + key + "%'";
+
             sql = sql.substring(0, sql.length()-10);
             log.debug("search sql: " + sql);
             ResultSet rs = stmt.executeQuery(sql);

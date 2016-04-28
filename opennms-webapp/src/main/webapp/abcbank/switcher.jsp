@@ -238,9 +238,11 @@
         <td align="left">
             <select id="searchType" name="searchType">
                 <option value="">请选择筛选的字段</option>
-                <option value="switchName">名称</option>
-                <option value="switchGroup">分组</option>
-                <option value="switchIP">IP</option>
+                <option value="name">名称</option>
+                <option value="groups">分组</option>
+                <option value="brand">品牌</option>
+                <option value="host">IP</option>
+                <option value="comment">备注</option>
             </select>
             <input id="searchCont" name="searchCont" size="18%" placeholder="请输入要搜索的内容" value="">
             <a id="doSearch" href="javascript:searchSwitcher()"><img src="images/search.png" alt="筛选" border="0"></a>
