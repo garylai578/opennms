@@ -32,7 +32,7 @@ public class AddIPSegmentServlet extends HttpServlet {
 
     /** {@inheritDoc} */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String initIP = this.config.getInitParameter("InitIP");
+        String ipSeg = request.getParameter("ipSeg");
         PrintWriter pw=response.getWriter();
         try {
             int flag = 0;
@@ -47,12 +47,12 @@ public class AddIPSegmentServlet extends HttpServlet {
 
             //首先检查停用超过7天的ip段是否符合条件
             IPSegmentOperater op = new IPSegmentOperater();
-            IPSegment[] rs = op.selectAllUnused();
+            IPSegment[] rs = op.selectAllUnused(ipSeg);
             for(IPSegment ip : rs){
                 int id = Integer.parseInt(ip.getId());
                 int end = Integer.parseInt(ip.getEndIP().trim().split("\\.")[3]);
                 int start = Integer.parseInt(ip.getStartIP().trim().split("\\.")[3]);
-                log.warn("id:" + id +". end:" + end + ". start:" +start + ". num:" + num);
+//                log.warn("id:" + id +". end:" + end + ". start:" +start + ". num:" + num);
                 if(end - start + 1 == num) {
                     //对停用时间超过7天的ip段进行重新分配
                     String stopTime = ip.getStopTime();
@@ -84,14 +84,15 @@ public class AddIPSegmentServlet extends HttpServlet {
 
             //如果在已有停用的ip段里面找不到合适的，则新建一个。
             if(flag == 0) {
-                initIP = op.selectLastIP();
+                String lastIP = op.selectLastIP(ipSeg);
 
-                if (initIP == null) {
-                    initIP = this.config.getInitParameter("InitIP");
+                if (lastIP == null) {
+                    lastIP = this.config.getInitParameter("InitIP");
                 }
 
-                IPPoolCaculater cal = new IPPoolCaculater(initIP, num);
+                IPPoolCaculater cal = new IPPoolCaculater(lastIP, num);
                 IPSegment seg = new IPSegment();
+                seg.setSegment(ipSeg);
                 seg.setIpPool(cal.getIPPool());
                 seg.setState("在用");
                 seg.setBankname(name);

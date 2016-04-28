@@ -216,6 +216,7 @@ CREATE TABLE accessLocks (
 --#
 --# This table contains the following fields:
 --#  id          : id
+--#  segment     : the segment of this ip belong
 --#  gateway     : the gateway of this ip segment
 --#  mask        : the mask of this ip segment
 --#  startIP     : the start ip of this ip segment
@@ -230,6 +231,7 @@ CREATE TABLE accessLocks (
 --########################################################################
 create table ipSegment (
     id serial,
+    segment text not null,
     gateway text not null,
     mask text not null,
     startIP text not null,

@@ -2,48 +2,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style type="text/css">
-        #box,#box2,#box3,#box4{padding:10px;border:1px solid green;}
-    </style>
-    <script type="text/javascript">
-        //===========================点击展开关闭效果====================================
-        function openShutManager(oSourceObj,oTargetObj,shutAble,oOpenTip,oShutTip){
-            var sourceObj = typeof oSourceObj == "string" ? document.getElementById(oSourceObj) : oSourceObj;
-            var targetObj = typeof oTargetObj == "string" ? document.getElementById(oTargetObj) : oTargetObj;
-            var openTip = oOpenTip || "";
-            var shutTip = oShutTip || "";
-            if(targetObj.style.display!="none"){
-                if(shutAble) return;
-                targetObj.style.display="none";
-                if(openTip  &&  shutTip){
-                    sourceObj.innerHTML = shutTip;
-                }
-            } else {
-                targetObj.style.display="block";
-                if(openTip  &&  shutTip){
-                    sourceObj.innerHTML = openTip;
-                }
-            }
-        }
-    </script>
+    <script type="text/javascript" src="jquery-1.6.4.min.js"></script>
+
     <title>无标题文档</title>
 </head>
+
+
 <body>
-<p><a href="###" onclick="openShutManager(this,'box')">点击展开</a></p>
-<form id="box" style="display:none">
-    这里面放的是box的内容.
-</form>
-<p><a href="###" onclick="openShutManager(this,'box2',true)">点击展开</a></p>
-<p id="box2" style="display:none">
-    这里面放的是box的内容.
-</p>
-<p><a href="###" onclick="openShutManager(this,'box3',false,'点击关闭','点击展开')">点击展开</a></p>
-<p id="box3" style="display:none">
-    这里面放的是box的内容.
-</p>
-<p><button onclick="openShutManager(this,'box4',false,'点击关闭','点击展开')">点击展开</button></p>
-<p id="box4" style="display:none">
-    这里面放的是box的内容.
-</p>
+<select id="select" onkeydown="Select.del(this,event)" onkeypress="Select.write(this,event)">
+    <option value=""></option>
+    <option value="aaa">aaa</option>
+    <option value="bbb">bbb</option>
+    <option value="ccc">ccc</option>
+</select>
+<input type="button" value="获取选择值" id="test" onclick="test();"/>
+<script>
+    var Select = {
+        del : function(obj,e){
+            if((e.keyCode||e.which||e.charCode) == 8){
+                var opt = obj.options[0];
+                opt.text = opt.value = opt.value.substring(0, opt.value.length>0?opt.value.length-1:0);
+            }
+        },
+        write : function(obj,e){
+            if((e.keyCode||e.which||e.charCode) == 8)return ;
+            var opt = obj.options[0];
+            opt.selected = "selected";
+            opt.text = opt.value += String.fromCharCode(e.charCode||e.which||e.keyCode);
+        }
+    }
+    function test(){
+        alert(document.getElementById("select").value);
+    }
+</script><br />
 </body>
 </html>

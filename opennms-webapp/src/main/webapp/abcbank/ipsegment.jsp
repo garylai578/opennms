@@ -40,7 +40,7 @@
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
     String[] bankTypes = pro.getProperty("abc-banktype").split("/");
 
-    IPSegment[] ips = op.selectAll();
+    IPSegment[] ips = op.selectAll("");
     int nums = ips.length;
 %>
 
@@ -119,6 +119,7 @@
 
         <tr bgcolor="#999999">
             <td width="5%"><b>操作</b></td>
+            <td width="10"><b>IP段</b></td>
             <td width="10%"><b>网关</b></td>
             <td width="10%"><b>掩码</b></td>
             <td width="20%"><b>IP段</b></td>
@@ -131,6 +132,7 @@
             int row = 0;
             for(IPSegment ip : ips){
                 String ipId = ip.getId();
+                String ipSeg = ip.getSegment();
                 String gateway = ip.getGateway();
                 String mask = ip.getMask();
                 String startIP = ip.getStartIP();
@@ -167,6 +169,13 @@
             </td>
 
             <input type="hidden" name="id-<%=row%>" value="<%=ipId %>"/>
+
+            <td width="10%">
+                <div id="ipSeg-<%=row%>">
+                    <%= ((ipSeg == null || ipSeg.equals("")) ? "&nbsp;" : ipSeg) %>
+                    <input type="hidden" name="ipSeg-<%=row%>" value="<%= ((ipSeg == null || ipSeg.equals("")) ? "&nbsp;" : ipSeg) %>"/>
+                </div>
+            </td>
 
             <td width="10%">
                 <div id="gateway-<%=row%>">
