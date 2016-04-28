@@ -4,10 +4,7 @@ import org.apache.log4j.Logger;
 import org.opennms.core.resource.Vault;
 import org.opennms.core.utils.DBUtils;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,21 +44,27 @@ public class SwitcherOperator {
      */
     public Switcher[] select(String column, String key) throws SQLException {
         Switcher[] result = null;
-        String cols = "id name groups brand host username password backup recovery wan_ip lookback_ip vlan150_ip1 vlan150_ip2 vlan160_ip1 " +
-                " vlan160_ip2  vlan170_ip1 vlan170_ip2 ospf area comment text";
         try {
             Connection conn = Vault.getDbConnection();
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
             String sql;
-            if(column == null || key == null || !cols.contains(column) || key.equals(""))
+            boolean flag = false;
+            ResultSet rs = stmt.executeQuery("select * from switcher");
+            ResultSetMetaData rsmd = rs.getMetaData();
+            for(int i = 0; i <rsmd.getColumnCount(); ++i) {
+                if(rsmd.getColumnName(i).equals(column))
+                    flag = true;
+            }
+            log.debug("colunm:" + column + "\t key:" + key);
+            if(column == null || key == null || !flag || key.equals(""))
                 sql = "SELECT * FROM switcher";
             else
                 sql = "SELECT * FROM switcher WHERE " + column + " LIKE '%" + key + "%'";
 
             log.debug("search sql: " + sql);
-            ResultSet rs = stmt.executeQuery(sql);
+            rs = stmt.executeQuery(sql);
             d.watch(rs);
             result = rs2Switcher(rs);
         } finally {
