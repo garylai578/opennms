@@ -69,8 +69,11 @@ public class SaveUserServlet extends HttpServlet {
             try {
                 UserManager userFactory = UserFactory.getInstance();
                 userFactory.saveUser(newUser.getUserId(), newUser);
-            } catch (Throwable e) {
-                throw new ServletException("Error saving user " + newUser.getUserId(), e);
+            }catch(Exception e){
+
+            }
+            catch (Throwable e) {
+                throw new ServletException("保存用户失败： " + newUser.getUserId(), e);
             }
         }
 

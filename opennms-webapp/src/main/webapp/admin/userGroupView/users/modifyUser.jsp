@@ -71,7 +71,7 @@
 </jsp:include>
 
 <script type="text/javascript" >
-    
+
     function validate()
     {
         var minDurationMinsWarning = 5;
@@ -81,7 +81,7 @@
         {
             var beginName= "duty" + c + "Begin";
             var endName  = "duty" + c + "End";
-            
+
             var beginValue = new Number(document.modifyUser.elements[beginName].value);
             var endValue = new Number(document.modifyUser.elements[endName].value);
 
@@ -144,11 +144,11 @@
           document.modifyUser.submit();
         }
     }
-    
+
     function removeDutySchedules()
     {
         var ok = validate();
-        
+
         if(ok)
         {
           document.modifyUser.redirect.value="/admin/userGroupView/users/modifyUser.jsp";
@@ -156,7 +156,7 @@
           document.modifyUser.submit();
         }
     }
-    
+
     function saveUser()
     {
         var ok = validate();
@@ -170,13 +170,13 @@
         else
           document.modifyUser.redirect.value="/admin/userGroupView/users/modifyUser.jsp";
     }
-    
+
     function cancelUser()
     {
         document.modifyUser.action="<%= Util.calculateUrlBase(request, "admin/userGroupView/users/list.jsp") %>";
         document.modifyUser.submit();
     }
-    
+
 </script>
 
 
@@ -282,6 +282,14 @@
                 <input id="fullName" type="text" size="35" name="fullName" value="<%=(fullName == null ? "":fullName) %>" />
               </td>
             </tr>
+        <tr >
+            <td valign="top">
+                <label id="textServiceLabel" for="textService">所属支行:</label>
+            </td>
+            <td valign="top">
+                <input type="text" size="35" id="textService" name="textService" value='<%= (textPage == null ? "":textPage)%>'/>
+            </td>
+        </tr>
             <tr>
               <td valign="top">
                 <label id="userCommentsLabel" for="userComments">注释:</label>
@@ -290,7 +298,7 @@
                 <textarea rows="5" cols="33" id="userComments" name="userComments"><%=(comments == null ? "" : comments)%></textarea>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="tuiPinLabel" for="tuiPin">Telephone PIN:</label>
               </td>
@@ -356,14 +364,7 @@
                 <input type="text" size="35" id="numericalPin" name="numericalPin" value='<%= (numericPin == null ? "":numericPin)%>'/>
               </td>
             </tr>
-            <tr style="display: none">
-              <td valign="top">
-                <label id="textServiceLabel" for="textService">Text Service:</label>
-              </td>
-              <td valign="top">
-                <input type="text" size="35" id="textService" name="textService" value='<%= (textPage == null ? "":textPage)%>'/>
-              </td>
-            </tr>
+
             <tr style="display: none">
               <td valign="top">
                 <label id="textPinLabel" for="textPin">Text PIN:</label>
@@ -456,7 +457,7 @@
 Collection dutySchedules = user.getDutyScheduleCollection();
         %>
 				<input type="hidden" name="dutySchedules" value="<%=user.getDutyScheduleCount()%>"/>
-          
+
           <table width="100%" border="1" cellspacing="0" cellpadding="2" >
             <tr bgcolor="#999999">
               <td>&nbsp;</td>
