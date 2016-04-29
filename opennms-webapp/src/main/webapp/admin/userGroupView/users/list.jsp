@@ -132,17 +132,18 @@
           <td width="5%"><b>删除</b></td>
           <td width="5%"><b>修改</b></td>
           <td width="5%"><b>重命名</b></td>
-          <td width="5%"><b>用户ID</b></td>
-          <td width="15%"><b>全名</b></td>
-          <td width="15%"><b>电子邮件</b></td>
-          <td width="15%"><b>移动电话</b></td>
-          <td width="15%"><b>工作电话</b></td>
+          <td width="10%"><b>用户ID</b></td>
+          <td width="10%"><b>全名</b></td>
+             <td width="5%"><b>所属网点</b></td>
+             <td width="10%"><b>电子邮件</b></td>
+          <td width="10%"><b>移动电话</b></td>
+          <td width="10%"><b>工作电话</b></td>
           <!--
           <td width="10%"><b>Num Service</b></td>
-          <td width="10%"><b>Num Pin</b></td>
-          <td width="15%"><b>Text Service</b></td>
-          <td width="15%"><b>Text Pin</b></td>
-          -->
+          <td width="10%"><b>Num Pin</b></td>-->
+
+          <%--<td width="15%"><b>Text Pin</b></td>--%>
+             <td width="10%"><b>备注</b></td>
         </tr>
         <% Iterator i = users.keySet().iterator();
            int row = 0;
@@ -160,46 +161,51 @@
          %>
          <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
           <% if (!curUser.getUserId().equals("admin")) { %>
-          <td width="5%" rowspan="2" align="center"> 
+          <td width="5%"align="center">
             <a id="<%= "users("+curUser.getUserId()+").doDelete" %>" href="javascript:deleteUser('<%=curUser.getUserId()%>')" onclick="return confirm('你确定要删除用户 <%=curUser.getUserId()%>?')"><img src="images/trash.gif" alt="<%="删除 " + curUser.getUserId()%>"></a> 
             
           </td>
           <% } else { %>
-          <td width="5%" rowspan="2" align="center">
+          <td width="5%" align="center">
             <img id="<%= "users("+curUser.getUserId()+").doDelete" %>" src="images/trash.gif" alt="不能删除管理员用户">
           </td>
           <% } %>
-          <td width="5%" rowspan="2" align="center">
+          <td width="5%" align="center">
             <a id="<%= "users("+curUser.getUserId()+").doModify" %>" href="javascript:modifyUser('<%=curUser.getUserId()%>')"><img src="images/modify.gif"></a>
           </td>
-          <td width="5%" rowspan="2" align="center">
+          <td width="5%" align="center">
             <% if ( !curUser.getUserId().equals("admin")) { %>
                 <input id="<%= "users("+curUser.getUserId()+").doRename" %>" type="button" name="rename" value="重命名" onclick="renameUser('<%=curUser.getUserId()%>')">
               <% } else { %>
                 <input id="<%= "users("+curUser.getUserId()+").doRename" %>" type="button" name="rename" value="重命名" onclick="alert('抱歉，管理员用户不能更名。')">
               <% } %>
           </td>
-          <td width="5%">
+          <td width="10%">
             <a id="<%= "users("+curUser.getUserId()+").doDetails" %>" href="javascript:detailUser('<%=curUser.getUserId()%>')"><%=curUser.getUserId()%></a>
           </td>
-          <td width="15%">
+          <td width="10%">
            <div id="<%= "users("+curUser.getUserId()+").fullName" %>">
 	    <% if(curUser.getFullName() != null){ %>
 		    <%= (curUser.getFullName().equals("") ? "&nbsp;" : curUser.getFullName()) %>
 	    <% } %>
 	      </div>
           </td>
-          <td width="15%">
+             <td width="5%">
+                 <div id="<%= "users("+curUser.getUserId()+").textService" %>">
+                     <%= ((textService == null || textService.equals("")) ? "&nbsp;" : textService) %>
+                 </div>
+             </td>
+          <td width="10%">
             <div id="<%= "users("+curUser.getUserId()+").email" %>">
             <%= ((email == null || email.equals("")) ? "&nbsp;" : email) %>
             </div>
           </td>
-          <td width="15%">
+          <td width="10%">
            <div id="<%= "users("+curUser.getUserId()+").pagerEmail" %>">
             <%= ((pagerEmail == null || pagerEmail.equals("")) ? "&nbsp;" : pagerEmail) %>
             </div>
           </td>
-          <td width="15">
+          <td width="10">
            <div id="<%= "users("+curUser.getUserId()+").xmppAddress" %>">
             <%= ((xmppAddress == null || xmppAddress.equals("")) ? "&nbsp;" : xmppAddress) %>
            </div>
@@ -214,21 +220,14 @@
             <div id="<%= "users("+curUser.getUserId()+").numericPin" %>">
             <%= ((numericPin == null || numericPin.equals("")) ? "&nbsp;" : numericPin) %>
             </div>
-          </td>
-          <td width="15%">
-           <div id="<%= "users("+curUser.getUserId()+").textService" %>">
-            <%= ((textService == null || textService.equals("")) ? "&nbsp;" : textService) %>
-            </div>
-          </td>
-          <td width="15%">
+          </td>-->
+<%--          <td width="15%">
            <div id="<%= "users("+curUser.getUserId()+").textPin" %>">
             <%= ((textPin == null || textPin.equals("")) ? "&nbsp;" : textPin) %>
            </div>
-          </td>
-          -->
-          </tr>
-          <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
-            <td colspan="5">
+          </td>--%>
+
+            <td  width="10%">
              <div id="<%= "users("+curUser.getUserId()+").userComments" %>">
 	      <% if(curUser.getUserComments() != null){ %>
 		      <%= (curUser.getUserComments().equals("") ? "No Comments" : curUser.getUserComments()) %>

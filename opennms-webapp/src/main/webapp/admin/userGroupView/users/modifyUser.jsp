@@ -33,11 +33,18 @@
 	contentType="text/html"
 	session="true"
 %>
-<%@page import="java.util.*"%>
-<%@page import="java.text.*"%>
-<%@page import="org.opennms.netmgt.config.*"%>
-<%@page import="org.opennms.netmgt.config.users.*"%>
-<%@page import="org.opennms.web.api.Util" %>
+<%@page import="org.opennms.netmgt.config.UserFactory"%>
+<%@page import="org.opennms.netmgt.config.UserManager"%>
+<%@page import="org.opennms.netmgt.config.users.Contact"%>
+<%@page import="org.opennms.netmgt.config.users.DutySchedule"%>
+<%@page import="org.opennms.netmgt.config.users.User" %>
+<%@ page import="org.opennms.web.api.Util" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.text.ChoiceFormat" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.Properties" %>
+<%@ page import="java.util.Vector" %>
 <%
 
         final HttpSession userSession = request.getSession(false);
@@ -57,6 +64,22 @@
         }
 
         final String baseHref = Util.calculateUrlBase(request);
+
+    Properties pro = new Properties();
+    String path = application.getRealPath("/");
+    try{
+        //读取配置文件
+        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
+        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        pro.load(bf);
+    } catch(FileNotFoundException e){
+        out.println(e);
+    } catch(IOException e){
+        out.println(e);
+    }
+
+    //通过key获取配置文件
+    String[] bankNames = pro.getProperty("abc-bankname").split("/");
         %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -287,7 +310,19 @@
                 <label id="textServiceLabel" for="textService">所属支行:</label>
             </td>
             <td valign="top">
-                <input type="text" size="35" id="textService" name="textService" value='<%= (textPage == null ? "":textPage)%>'/>
+                <select id="textService" name="textService">
+                    <%
+                        if(textPage == null || textPage.equals(""))
+                            out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                    %>
+                    <%
+                        for(int i = 0; i < bankNames.length; ++i){
+                    %>
+                    <option value="<%=bankNames[i]%>" <%if(textPage != null && textPage.equals(bankNames[i])) out.print("selected=\"\"");%>><%=bankNames[i]%></option>
+                    <%
+                        }
+                    %>
+                </select>
             </td>
         </tr>
             <tr>
@@ -295,7 +330,7 @@
                 <label id="userCommentsLabel" for="userComments">注释:</label>
               </td>
               <td align="left" valign="top">
-                <textarea rows="5" cols="33" id="userComments" name="userComments"><%=(comments == null ? "" : comments)%></textarea>
+                <textarea rows="5" cols="33" id="userComments" name="userComments"><%=(comments == null ? "无" : comments)%></textarea>
               </td>
             </tr>
             <tr style="display: none">
