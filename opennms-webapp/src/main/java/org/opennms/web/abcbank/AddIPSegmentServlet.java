@@ -32,8 +32,10 @@ public class AddIPSegmentServlet extends HttpServlet {
 
     /** {@inheritDoc} */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String initIP = this.config.getInitParameter("InitIP");
+        String ipSeg = request.getParameter("ipSeg");
         PrintWriter pw=response.getWriter();
+        response.setContentType("text/html;charset=gb2312");
+        String backMsg = "成功添加！";
         try {
             int flag = 0;
             String numString = request.getParameter("ipNum");
@@ -47,12 +49,12 @@ public class AddIPSegmentServlet extends HttpServlet {
 
             //首先检查停用超过7天的ip段是否符合条件
             IPSegmentOperater op = new IPSegmentOperater();
-            IPSegment[] rs = op.selectAllUnused();
+            IPSegment[] rs = op.selectAllUnused(ipSeg);
             for(IPSegment ip : rs){
                 int id = Integer.parseInt(ip.getId());
                 int end = Integer.parseInt(ip.getEndIP().trim().split("\\.")[3]);
                 int start = Integer.parseInt(ip.getStartIP().trim().split("\\.")[3]);
-                log.warn("id:" + id +". end:" + end + ". start:" +start + ". num:" + num);
+//                log.warn("id:" + id +". end:" + end + ". start:" +start + ". num:" + num);
                 if(end - start + 1 == num) {
                     //对停用时间超过7天的ip段进行重新分配
                     String stopTime = ip.getStopTime();
@@ -84,25 +86,34 @@ public class AddIPSegmentServlet extends HttpServlet {
 
             //如果在已有停用的ip段里面找不到合适的，则新建一个。
             if(flag == 0) {
-                initIP = op.selectLastIP();
+                String lastIP = op.selectLastIP(ipSeg);
 
-                if (initIP == null) {
-                    initIP = this.config.getInitParameter("InitIP");
+                if (lastIP == null) {
+                    lastIP = ipSeg;
                 }
 
-                IPPoolCaculater cal = new IPPoolCaculater(initIP, num);
-                IPSegment seg = new IPSegment();
-                seg.setIpPool(cal.getIPPool());
-                seg.setState("在用");
-                seg.setBankname(name);
-                seg.setBanktype(type);
-                seg.setComment(comment);
-                seg.setCreateTime(sf.format(date));
-                op.insert(seg);
+                IPPoolCaculater cal = new IPPoolCaculater(lastIP, num);
+                int result = cal.caculate();
+                if(result == 0){
+                    pw.print("<script language='javascript'>alert('所选ip段不够分配，请选择其他ip段！' );window.location=('/opennms/abcbank/newIPSegment.jsp');</script>");
+                    pw.close();
+                    return;
+                }else if(result == 1) {
+                    IPSegment seg = new IPSegment();
+                    seg.setSegment(ipSeg);
+                    seg.setIpPool(cal.getIPPool());
+                    seg.setState("在用");
+                    seg.setBankname(name);
+                    seg.setBanktype(type);
+                    seg.setComment(comment);
+                    seg.setCreateTime(sf.format(date));
+                    op.insert(seg);
+                }else{
+                    backMsg = "分配ip段失败！";
+                }
             }
 
-            response.setContentType("text/html;charset=gb2312");
-            pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
+            pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
             pw.close();
 
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");

@@ -106,7 +106,7 @@
 <h3>完成删除接口，接口索引 <%= ifIndex %></h3>
 <% } %>
 <p>
-  OpenNMS应该不需要重新启动，但它可能需要片刻时间更新分类。
+    本系统应该不需要重新启动，但它可能需要片刻时间更新分类。
 </p>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />

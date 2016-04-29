@@ -51,7 +51,7 @@
 
 <html>
 <head>
-    <title>Ping | OpenNMS Web Console</title>
+    <title>Ping | Web Console</title>
     <base HREF="<%= Util.calculateUrlBase( request ) %>" />
     <link rel="stylesheet" type="text/css" href="includes/styles.css" />
 </head>

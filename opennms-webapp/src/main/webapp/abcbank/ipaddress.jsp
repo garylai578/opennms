@@ -12,15 +12,41 @@
         session="true"
 %>
 
-<%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.ParseException" %>
 <%@ page import="org.opennms.core.bank.BankIPAddress" %>
 <%@ page import="org.opennms.core.bank.BankIPAddressOp" %>
+<%@ page import="org.opennms.netmgt.config.UserFactory" %>
+<%@ page import="org.opennms.netmgt.config.UserManager" %>
+<%@ page import="org.opennms.netmgt.config.users.Contact" %>
+<%@ page import="org.opennms.netmgt.config.users.User" %>
+<%@ page import="org.opennms.web.springframework.security.Authentication" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.text.ParseException" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Properties" %>
 
 <%
+    final HttpSession userSession = request.getSession(false);
+    User user;
+    String userID = request.getRemoteUser();
+    UserManager userFactory;
+    String group="";
+    if (userSession != null) {
+        UserFactory.init();
+        userFactory = UserFactory.getInstance();
+        Map users = userFactory.getUsers();
+        user = (User) users.get(userID);
+        Contact[] con = user.getContact();
+        for(Contact c : con) {
+            if (c.getType() != null && c.getType().equals("textPage")) {
+                group = c.getServiceProvider();
+                break;
+            }
+        }
+//        group = con[5].getServiceProvider(); // 获取该用户所属分行
+    }
+
     BankIPAddressOp op = new BankIPAddressOp();
 
     Properties pro = new Properties();
@@ -37,19 +63,22 @@
     }
 
     //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-//    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+    String[] bankNames = pro.getProperty("abc-bankname").split("/");;
 
     BankIPAddress[] ips = (BankIPAddress[])request.getAttribute("ip_addresses");
-    if(ips == null)
-        ips = op.selectAll();
+    if(ips == null){
+        if(request.isUserInRole(Authentication.ROLE_ADMIN))
+            ips = op.selectAll("");
+        else
+            ips = op.selectAll(group);
+    }
     int nums = ips.length;
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
     <jsp:param name="title" value="IP地址台帐" />
     <jsp:param name="headTitle" value="IP地址台帐" />
-    <jsp:param name="breadcrumb" value="<a href='abcbank/index.jsp'>IP管理</a>" />
+    <jsp:param name="breadcrumb" value="<a href='abcbank/index.jsp'>台帐管理</a>" />
     <jsp:param name="breadcrumb" value="IP地址台帐" />
 </jsp:include>
 

@@ -88,7 +88,7 @@
     <c:forEach var="headTitle" items="${paramValues.headTitle}">
       <c:out value="${headTitle}" escapeXml="false"/> |
     </c:forEach>
-    OpenNMS Web Console
+    Web 控制台
   </title>
 <meta name="viewport" content="initial-scale=2.3, user-scalable=no" />
 <meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />

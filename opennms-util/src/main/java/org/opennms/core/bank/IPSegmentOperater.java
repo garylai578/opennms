@@ -25,7 +25,7 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            int rc = stmt.executeUpdate(("insert into ipSegment(gateway, mask, startIP, endIP, name, createTime, type, state, comment) values (" + ipSegment.toInsertValues() + ")"));
+            int rc = stmt.executeUpdate(("insert into ipSegment(segment, gateway, mask, startIP, endIP, name, createTime, type, state, comment) values (" + ipSegment.toInsertValues() + ")"));
             log.debug("IPSegmentOperater.insert: SQL update result = " + rc);
         } finally {
             d.cleanUp();
@@ -34,18 +34,22 @@ public class IPSegmentOperater {
 
     /**
      * Select all from table ipSegment
-     *
+     * @param ipSeg：待搜索的ip段，如果为空，则搜索所有
      * @return IPSegment[]: all results.
      * @throws SQLException
      */
-    public IPSegment[] selectAll() throws SQLException {
+    public IPSegment[] selectAll(String ipSeg) throws SQLException {
         IPSegment[] result = null;
         try {
             Connection conn = Vault.getDbConnection();
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id");
+            String sql = "select * FROM ipSegment";
+            if(ipSeg != null && !ipSeg.equals(""))
+                sql += " where segment='" + ipSeg + "'";
+            sql += " order by segment";
+            ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
             result = rs2IPSegment(rs);
         } finally {
@@ -58,17 +62,21 @@ public class IPSegmentOperater {
     /**
      * Select all unused ipsegment from table ipSegment
      *
+     * @param ipSeg 待查询的ip段，如果为空，则查询所有
      * @return IPSegment[]: all results.
      * @throws SQLException
      */
-    public IPSegment[] selectAllUnused() throws  SQLException {
+    public IPSegment[] selectAllUnused(String ipSeg) throws  SQLException {
         IPSegment[] result = null;
         try {
             Connection conn = Vault.getDbConnection();
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipSegment WHERE state = '停用'");
+            String sql = "select * FROM ipSegment WHERE state = '停用'";
+            if(ipSeg != null && !ipSeg.equals(""))
+                sql += " and segment='" + ipSeg + "'";
+            ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
             result = rs2IPSegment(rs);
         } finally {
@@ -79,10 +87,11 @@ public class IPSegmentOperater {
     }
 
     /**
-     * Select the last ip from table ipSegment.
+     * 在ip段ipSeg里查询最后一个ip.
+     * @param ipSeg 待查询的ip段，如果为空，则查询所有
      * @return the last ip
      */
-    public String selectLastIP() throws SQLException {
+    public String selectLastIP(String ipSeg) throws SQLException {
         String lastIP = null;
         log.warn("select last ip start:");
         try {
@@ -90,7 +99,11 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipSegment order by id DESC ");
+            String sql = "select * FROM ipSegment";
+            if(ipSeg != null && ! ipSeg.equals(""))
+                sql += " where segment='" + ipSeg + "'";
+            sql += " order by id DESC ";
+            ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
             if(rs.next())
                 lastIP = rs.getString("endip");
@@ -200,6 +213,7 @@ public class IPSegmentOperater {
         while(rs.next()){
             IPSegment ip = new IPSegment();
             ip.setId(String.valueOf(rs.getInt("id")));
+            ip.setSegment(rs.getString("segment"));
             ip.setGateway(rs.getString("gateway"));
             ip.setMask(rs.getString("mask"));
             ip.setStartIP(rs.getString("startip"));
@@ -214,5 +228,30 @@ public class IPSegmentOperater {
         }
         result = list.toArray(new IPSegment[list.size()]);
         return result;
+    }
+
+    /**
+     * 获取目前数据库中所有的IP段信息
+     * @return IP段数组
+     */
+    public String[] getIPSegments() {
+        List<String> list = new ArrayList<String>();
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            ResultSet rs = stmt.executeQuery("select distinct(segment) from ipsegment;");
+            d.watch(rs);
+            while(rs.next()){
+                list.add(rs.getString("segment"));
+            }
+        } catch(SQLException e){
+            e.printStackTrace();
+        } finally{
+            d.cleanUp();
+        }
+
+        return list.toArray(new String[list.size()]);
     }
 }

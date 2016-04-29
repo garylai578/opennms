@@ -115,7 +115,7 @@
                       </td>
                     </tr>
                     
-                    <tr>
+                    <tr style="display: none">
                       <td width="10%" valign="top">
                         <b>Pager Email:</b>
                       </td>
@@ -124,7 +124,7 @@
                       </td>
                     </tr>
                     
-                    <tr>
+                    <tr  style="display: none">
                       <td width="10%" valign="top">
                         <b>XMPP Address:</b>
                       </td>
@@ -133,7 +133,7 @@
                       </td>
                     </tr>
 
-                    <tr>
+                    <tr  style="display: none">
                       <td width="10%" valign="top">
                         <b>Numerical Service:</b>
                       </td>
@@ -142,7 +142,7 @@
                       </td>
                     </tr>
                     
-                    <tr>
+                    <tr  style="display: none">
                       <td width="10%" valign="top">
                         <b>Numerical Pin:</b>
                       </td>
@@ -151,7 +151,7 @@
                       </td>
                     </tr>
                     
-                    <tr>
+                    <tr  style="display: none">
                       <td width="10%" valign="top">
                         <b>Text Service:</b>
                       </td>
@@ -160,7 +160,7 @@
                       </td>
                     </tr>
                     
-                    <tr>
+                    <tr style="display: none">
                       <td width="10%" valign="top">
                         <b>Text Pin:</b>
                       </td>

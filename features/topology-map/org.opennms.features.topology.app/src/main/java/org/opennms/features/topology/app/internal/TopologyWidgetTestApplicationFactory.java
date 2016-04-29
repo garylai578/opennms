@@ -28,14 +28,7 @@
 
 package org.opennms.features.topology.app.internal;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
+import com.vaadin.Application;
 import org.opennms.web.api.OnmsHeaderProvider;
 import org.ops4j.pax.vaadin.AbstractApplicationFactory;
 import org.ops4j.pax.vaadin.ScriptTag;
@@ -43,7 +36,12 @@ import org.osgi.service.blueprint.container.BlueprintContainer;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 
-import com.vaadin.Application;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TopologyWidgetTestApplicationFactory extends AbstractApplicationFactory {
     
@@ -86,7 +84,7 @@ public class TopologyWidgetTestApplicationFactory extends AbstractApplicationFac
     @Override
     public List<ScriptTag> getAdditionalScripts() {
         final List<ScriptTag> tags = new ArrayList<ScriptTag>();
-        tags.add(new ScriptTag("http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js", "text/javascript", null));
+        tags.add(new ScriptTag("/opennms/js/CFInstall.min.js", "text/javascript", null));
         tags.add(new ScriptTag(null, "text/javascript", "CFInstall.check({ mode: \"overlay\" });"));
         return tags;
     }

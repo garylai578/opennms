@@ -37,7 +37,7 @@
 <head>
   <title>
     
-    OpenNMS Web Console
+    Web 控制台
   </title>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Style-Type" content="text/css"/>
@@ -71,7 +71,7 @@ Additional Legend Information
 </TITLE>
 
 <div id="header">
-<h1><a href="http://localhost:8980/opennms/index.jsp"><img alt="OpenNMS Web Console Home" src="http://localhost:8980/opennms/images/logo.png"></a></h1>
+<h1><a href="http://localhost:8980/opennms/index.jsp"><img alt="NMS Web Console Home" src="http://localhost:8980/opennms/images/logo.png"></a></h1>
 </div>
 
 <div id="content">

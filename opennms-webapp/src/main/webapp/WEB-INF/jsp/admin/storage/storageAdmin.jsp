@@ -237,8 +237,7 @@
   <div class="TwoColRight">
       <h3>Descriptions</h3>
       <div class="boxWrapper">
-      <p>Detailed Documentation on all options can be found on <a title="The OpenNMS Project wiki" href="http://www.opennms.org" target="new">the OpenNMS wiki</a>.
-      </p>
+
         <p><b>(Delete) Bucket Item</b>: Delete the specified image file from <em>bucket</em>.</p>
       
        <p><b>Upload Bucket</b>:  Add a file to <em>bucket</em>.

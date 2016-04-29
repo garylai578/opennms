@@ -40,14 +40,17 @@
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
     String[] bankTypes = pro.getProperty("abc-banktype").split("/");
 
-    IPSegment[] ips = op.selectAll();
+    IPSegment[] ips = (IPSegment[])request.getAttribute("ipSeg");
+    if(ips == null)
+        ips = op.selectAll("");
     int nums = ips.length;
+    String[] ipSegs = op.getIPSegments();
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
     <jsp:param name="title" value="IP地址段分配" />
     <jsp:param name="headTitle" value="IP地址段分配" />
-    <jsp:param name="breadcrumb" value="<a href='abcbank/index.jsp'>IP管理</a>" />
+    <jsp:param name="breadcrumb" value="<a href='abcbank/index.jsp'>台帐管理</a>" />
     <jsp:param name="breadcrumb" value="IP地址段分配" />
 </jsp:include>
 
@@ -91,6 +94,17 @@
         document.allIPSegments.submit();
     }
 
+    function searchIPSegment()
+    {
+        var ipSeg = document.getElementById("search").value;
+        if(ipSeg==null || ipSeg==0) {
+            window.location.href="abcbank/ipsegment.jsp";
+            return;
+        }
+        document.allIPSegments.action="abcbank/searchIPSegment";
+        document.allIPSegments.submit();
+    }
+
 </script>
 
 <form method="post" name="allIPSegments">
@@ -110,6 +124,21 @@
     </td>
 
     <td align="left">
+        <select id="search" name="search">
+            <option value="">请选择需要筛选的IP段</option>
+            <%
+                for(String seg : ipSegs){
+            %>
+            <option value="<%=seg%>"><%=seg%></option>
+            <%
+                }
+            %>
+        </select>
+        <a id="doSearch" href="javascript:searchIPSegment()"><img src="images/search.png" alt="筛选" border="0"></a>
+        <a id="" href="javascript:searchIPSegment()">筛选</a>
+    </td>
+
+    <td align="left">
         <a id="output" href="javascript:outputExcel(<%=nums%>)"><img src="images/output.jpg" alt="输出报表" border=""0></a>
         <a href="javascript:outputExcel(<%=nums%>)">输出报表</a>
     </td>
@@ -119,6 +148,7 @@
 
         <tr bgcolor="#999999">
             <td width="5%"><b>操作</b></td>
+            <td width="10"><b>IP段</b></td>
             <td width="10%"><b>网关</b></td>
             <td width="10%"><b>掩码</b></td>
             <td width="20%"><b>IP段</b></td>
@@ -131,6 +161,7 @@
             int row = 0;
             for(IPSegment ip : ips){
                 String ipId = ip.getId();
+                String ipSeg = ip.getSegment();
                 String gateway = ip.getGateway();
                 String mask = ip.getMask();
                 String startIP = ip.getStartIP();
@@ -167,6 +198,13 @@
             </td>
 
             <input type="hidden" name="id-<%=row%>" value="<%=ipId %>"/>
+
+            <td width="10%">
+                <div id="ipSeg-<%=row%>">
+                    <%= ((ipSeg == null || ipSeg.equals("")) ? "&nbsp;" : ipSeg) %>
+                    <input type="hidden" name="ipSeg-<%=row%>" value="<%= ((ipSeg == null || ipSeg.equals("")) ? "&nbsp;" : ipSeg) %>"/>
+                </div>
+            </td>
 
             <td width="10%">
                 <div id="gateway-<%=row%>">
@@ -243,7 +281,7 @@
         </tr>
 
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
-            <td colspan="7">
+            <td colspan="8">
                 <div>
                     <input id="comment-<%=row%>" type="text" size="100" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
                 </div>

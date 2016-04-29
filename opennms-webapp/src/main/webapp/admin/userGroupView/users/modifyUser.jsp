@@ -33,11 +33,18 @@
 	contentType="text/html"
 	session="true"
 %>
-<%@page import="java.util.*"%>
-<%@page import="java.text.*"%>
-<%@page import="org.opennms.netmgt.config.*"%>
-<%@page import="org.opennms.netmgt.config.users.*"%>
-<%@page import="org.opennms.web.api.Util" %>
+<%@page import="org.opennms.netmgt.config.UserFactory"%>
+<%@page import="org.opennms.netmgt.config.UserManager"%>
+<%@page import="org.opennms.netmgt.config.users.Contact"%>
+<%@page import="org.opennms.netmgt.config.users.DutySchedule"%>
+<%@page import="org.opennms.netmgt.config.users.User" %>
+<%@ page import="org.opennms.web.api.Util" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.text.ChoiceFormat" %>
+<%@ page import="java.util.Collection" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.Properties" %>
+<%@ page import="java.util.Vector" %>
 <%
 
         final HttpSession userSession = request.getSession(false);
@@ -57,6 +64,22 @@
         }
 
         final String baseHref = Util.calculateUrlBase(request);
+
+    Properties pro = new Properties();
+    String path = application.getRealPath("/");
+    try{
+        //读取配置文件
+        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
+        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        pro.load(bf);
+    } catch(FileNotFoundException e){
+        out.println(e);
+    } catch(IOException e){
+        out.println(e);
+    }
+
+    //通过key获取配置文件
+    String[] bankNames = pro.getProperty("abc-bankname").split("/");
         %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -71,7 +94,7 @@
 </jsp:include>
 
 <script type="text/javascript" >
-    
+
     function validate()
     {
         var minDurationMinsWarning = 5;
@@ -81,7 +104,7 @@
         {
             var beginName= "duty" + c + "Begin";
             var endName  = "duty" + c + "End";
-            
+
             var beginValue = new Number(document.modifyUser.elements[beginName].value);
             var endValue = new Number(document.modifyUser.elements[endName].value);
 
@@ -144,11 +167,11 @@
           document.modifyUser.submit();
         }
     }
-    
+
     function removeDutySchedules()
     {
         var ok = validate();
-        
+
         if(ok)
         {
           document.modifyUser.redirect.value="/admin/userGroupView/users/modifyUser.jsp";
@@ -156,7 +179,7 @@
           document.modifyUser.submit();
         }
     }
-    
+
     function saveUser()
     {
         var ok = validate();
@@ -170,13 +193,13 @@
         else
           document.modifyUser.redirect.value="/admin/userGroupView/users/modifyUser.jsp";
     }
-    
+
     function cancelUser()
     {
         document.modifyUser.action="<%= Util.calculateUrlBase(request, "admin/userGroupView/users/list.jsp") %>";
         document.modifyUser.submit();
     }
-    
+
 </script>
 
 
@@ -282,15 +305,35 @@
                 <input id="fullName" type="text" size="35" name="fullName" value="<%=(fullName == null ? "":fullName) %>" />
               </td>
             </tr>
+        <tr >
+            <td valign="top">
+                <label id="textServiceLabel" for="textService">所属支行:</label>
+            </td>
+            <td valign="top">
+                <select id="textService" name="textService">
+                    <%
+                        if(textPage == null || textPage.equals(""))
+                            out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                    %>
+                    <%
+                        for(int i = 0; i < bankNames.length; ++i){
+                    %>
+                    <option value="<%=bankNames[i]%>" <%if(textPage != null && textPage.equals(bankNames[i])) out.print("selected=\"\"");%>><%=bankNames[i]%></option>
+                    <%
+                        }
+                    %>
+                </select>
+            </td>
+        </tr>
             <tr>
               <td valign="top">
                 <label id="userCommentsLabel" for="userComments">注释:</label>
               </td>
               <td align="left" valign="top">
-                <textarea rows="5" cols="33" id="userComments" name="userComments"><%=(comments == null ? "" : comments)%></textarea>
+                <textarea rows="5" cols="33" id="userComments" name="userComments"><%=(comments == null ? "无" : comments)%></textarea>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="tuiPinLabel" for="tuiPin">Telephone PIN:</label>
               </td>
@@ -316,15 +359,15 @@
                 <input id="email" type="text" size="35" name="email" value='<%= (email == null ? "":email) %>'/>
               </td>
             </tr>
-            <tr>
-              <td valign="top">
+            <tr style="display: none">
+              <td valign="top" >
                 <label id="pemailLabel" for="pemail">Pager Email:</label>
               </td>
               <td valign="top">
                 <input type="text" size="35" id="pemail" name="pemail" value='<%=(pagerEmail == null ? "":pagerEmail)%>'/>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="xmppAddressLabel" for="xmppAddress">XMPP Address:</label>
               </td>
@@ -340,7 +383,7 @@
                 <input type="text" size="35" id="microblog" name="microblog" value='<%=(microblog == null ? "":microblog)%>'/>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="numericalServiceLabel" for="numericalService">Numeric Service:</label>
               </td>
@@ -348,7 +391,7 @@
                 <input type="text" size="35" id="numericalService" name="numericalService" value='<%=(numericPage == null ? "":numericPage) %>'/>
               </td>
             </tr>
-            <tr>
+            <tr style="display: none">
               <td valign="top">
                 <label id="numericalPinLabel" for="numericalPin">Numeric PIN:</label>
               </td>
@@ -356,15 +399,8 @@
                 <input type="text" size="35" id="numericalPin" name="numericalPin" value='<%= (numericPin == null ? "":numericPin)%>'/>
               </td>
             </tr>
-            <tr>
-              <td valign="top">
-                <label id="textServiceLabel" for="textService">Text Service:</label>
-              </td>
-              <td valign="top">
-                <input type="text" size="35" id="textService" name="textService" value='<%= (textPage == null ? "":textPage)%>'/>
-              </td>
-            </tr>
-            <tr>
+
+            <tr style="display: none">
               <td valign="top">
                 <label id="textPinLabel" for="textPin">Text PIN:</label>
               </td>
@@ -400,31 +436,33 @@
 </div>
 
 <div id="contentright">
+    <p></p>
   <p>
     这个面板允许你修改为每个用户的信息，包括他们的姓名，通知信息和值班表。
   </p>
 
   <p>
-    <b>通知信息</b> 为你提供配置每个用户的联系信息，
-    contact information for each user, including any of <em>email</em>
-    address, <em>pager email</em> (in the case that the pager can be reached
-    as an email destination), <em>XMPP address</em> (for instant messages
-    using the Jabber XMPP protocol), <em>numeric service</em> (for pagers
-    that cannot display text messages), <em>text service</em> (for
-    alphanumeric pagers), and <em>work phone</em>, <em>mobile phone</em>, and
-    <em>home phone</em> for notifications by telephone. The <em>Telephone
-    PIN</em> is an optional numeric field used to authenticate called users.
+    <b>通知信息</b> 为你提供配置每个用户的联系信息。
+    <%--contact information for each user, including any of <em>email</em>--%>
+    <%--address, <em>pager email</em> (in the case that the pager can be reached--%>
+    <%--as an email destination), <em>XMPP address</em> (for instant messages--%>
+    <%--using the Jabber XMPP protocol), <em>numeric service</em> (for pagers--%>
+    <%--that cannot display text messages), <em>text service</em> (for--%>
+    <%--alphanumeric pagers), and <em>work phone</em>, <em>mobile phone</em>, and--%>
+    <%--<em>home phone</em> for notifications by telephone. The <em>Telephone--%>
+    <%--PIN</em> is an optional numeric field used to authenticate called users.--%>
   </p>
 
   <p>
-    <b>Duty Schedules</b> allow you to flexibility to determine when users
+    <b>值班表</b> 允许你对该用户进行值班安排
+<%--      ，allow you to flexibility to determine when users
     should receive notifications.  A duty schedule consists of a list of
     days for which the time will apply and a time range, presented in
     military time with no punctuation.  Using this standard, days run from
-    <em>0000</em> to <em>2359</em>.
+    <em>0000</em> to <em>2359</em>.--%>
   </p>
 
-  <p>
+<%--  <p>
     If your duty schedules span midnight, or if your users work multiple,
     non-contiguous time periods, you will need to configure multiple duty
     schedules.  To do so, select the number of duty schedules to add from
@@ -433,15 +471,15 @@
     create a duty schedule from the start time to 2359 on one day, and
     enter a second duty schedule which begins at 0000 and ends at the end
     of that users coverage.
-  </p>
+  </p>--%>
 
-  <p>
+<%--  <p>
     To remove configured duty schedules, put a check in the <em>Delete</em>
     column and click <b>[Remove Checked Schedules]</b>.
-  </p>
+  </p>--%>
 
   <p>
-   To save your configuration, click on <b>[Finish]</b>.
+   修改完成后请切记要点击本页左下角的 <b>完成</b> 按钮.
   </p>
 </div>
 
@@ -454,7 +492,7 @@
 Collection dutySchedules = user.getDutyScheduleCollection();
         %>
 				<input type="hidden" name="dutySchedules" value="<%=user.getDutyScheduleCount()%>"/>
-          
+
           <table width="100%" border="1" cellspacing="0" cellpadding="2" >
             <tr bgcolor="#999999">
               <td>&nbsp;</td>

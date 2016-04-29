@@ -1,4 +1,9 @@
+<%@ page import="org.opennms.netmgt.config.UserFactory" %>
+<%@ page import="org.opennms.netmgt.config.UserManager" %>
+<%@ page import="org.opennms.netmgt.config.users.Contact" %>
+<%@ page import="org.opennms.netmgt.config.users.User" %>
 <%@ page import="java.io.*" %>
+<%@ page import="java.util.Map" %>
 <%@ page import="java.util.Properties" %><%--
   Created by IntelliJ IDEA.
   User: laiguanhui
@@ -17,6 +22,25 @@
 </jsp:include>
 
 <%
+    final HttpSession userSession = request.getSession(false);
+    User user;
+    String userID = request.getRemoteUser();
+    UserManager userFactory;
+    String group="";
+    if (userSession != null) {
+        UserFactory.init();
+        userFactory = UserFactory.getInstance();
+        Map users = userFactory.getUsers();
+        user = (User) users.get(userID);
+        Contact[] con = user.getContact();
+        for(Contact c : con) {
+            if (c.getType() != null && c.getType().equals("textPage")) {
+                group = c.getServiceProvider(); // 获取该用户所属分行
+                break;
+            }
+        }
+    }
+
     Properties pro = new Properties();
     String path = application.getRealPath("/");
     try{
@@ -31,8 +55,7 @@
     }
 
     //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+    String[] weblineTypes = pro.getProperty("abc-weblinetype").split("/");
 %>
 
 <script type="text/javascript">
@@ -114,16 +137,20 @@
     <input type="hidden" name="bankName"/>
     <input type="hidden" name="bankType"/>
     <input type="hidden" name="comments"/>
+    <input type="hidden" name="group" value="<%=group%>"/>
     <table>
         <tr>
             <td>*专线类型：</td>
             <td>
                 <select id="type" name="type">
                     <option value="0" selected="">请选择</option>
-                    <option value="办公主线">办公主线</option>
-                    <option value="生产主线">生产主线</option>
-                    <option value="离行点专线">离行点专线</option>
-                    <option value="互联网专线">互联网专线</option>
+                    <%
+                        for(String webline : weblineTypes){
+                    %>
+                    <option value="<%=webline%>"><%=webline%></option>
+                    <%
+                        }
+                    %>
                 </select>
             </td>
         </tr>

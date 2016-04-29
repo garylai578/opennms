@@ -20,6 +20,7 @@ public class AddWebLineServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String type = request.getParameter("type");
+        String group = request.getParameter("group");
         String applicant = request.getParameter("applicant");
         String approver = request.getParameter("approver");
         String contact = request.getParameter("contact");
@@ -46,6 +47,7 @@ public class AddWebLineServlet extends HttpServlet {
             line.setPort(port);
             line.setInter(inter);
             line.setComment(comment);
+            line.setGroup(group);
             WebLineOperator op = new WebLineOperator();
             op.insert(line);
         }catch (SQLException e) {

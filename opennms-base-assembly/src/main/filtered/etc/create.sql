@@ -80,6 +80,7 @@ drop table category_group cascade;
 drop table ipSegment cascade;
 drop table ipaddress cascade;
 drop table webline cascade;
+drop table switcher CASCADE;
 
 drop sequence catNxtId;
 drop sequence nodeNxtId;
@@ -215,6 +216,7 @@ CREATE TABLE accessLocks (
 --#
 --# This table contains the following fields:
 --#  id          : id
+--#  segment     : the segment of this ip belong
 --#  gateway     : the gateway of this ip segment
 --#  mask        : the mask of this ip segment
 --#  startIP     : the start ip of this ip segment
@@ -229,6 +231,7 @@ CREATE TABLE accessLocks (
 --########################################################################
 create table ipSegment (
     id serial,
+    segment text not null,
     gateway text not null,
     mask text not null,
     startIP text not null,
@@ -300,6 +303,7 @@ create table ipaddress (
 --#  rent        : the rent of this web line
 --#  vlan_num    : the vlan number of this web line
 --#  port        : the physical port of this web line
+--#  grp         : the group of this web line
 --#  interface   : the interface between the operator
 --#
 --########################################################################
@@ -316,6 +320,46 @@ create table webline (
     vlan_num text,
     port text,
     interface text,
+    grp text not null,
+    comment text
+);
+
+--########################################################################
+--# switcher table - store the switcher messages of the bank
+--#
+--# This table contains the following fields:
+--#  id          : id
+--#  name        : the name of the switcher
+--#  groups       : the group of the switcher
+--#  brand       : the brand of the switcher
+--#  host        : the host ip of the switcher
+--#  username    : the user name to login the switcher
+--#  password    : the login password of the switcher
+--#  backup      : the backup instruction of the switcher
+--#  recovery    : the recovery instruction of the switcher
+--#  comment     : the comment of the record
+--#
+--########################################################################
+create table switcher (
+    id serial,
+    name text not null,
+    groups text not NULL,
+    brand text,
+    host text not null,
+    username text not null,
+    password text not null,
+    backup text not null,
+    recovery text,
+    wan_ip text,
+    lookback_ip text,
+    vlan150_ip1 text,
+    vlan150_ip2 text,
+    vlan160_ip1 text,
+    vlan160_ip2 text,
+    vlan170_ip1 text,
+    vlan170_ip2 text,
+    ospf text,
+    area text,
     comment text
 );
 

@@ -79,10 +79,8 @@
 
     <div id="footer">
       <p>
-        OpenNMS <a href="support/about.jsp">Copyright</a> &copy; 2002-2014
-	    <a href="http://www.opennms.com/">The OpenNMS Group, Inc.</a>
-	    OpenNMS&reg; is a registered trademark of
-        <a href="http://www.opennms.com">The OpenNMS Group, Inc.</a>
+         Copyright &copy; 2016
+	    <a href="http://www.abchina.com/cn/">中国农业银行股份有限公司</a>东莞分行
 	  </p>
     </div>
   </c:otherwise>

@@ -36,6 +36,7 @@
     String[] networkTypes = pro.getProperty("abc-networktype").split("/");
 %>
 
+<script type="text/javascript" src="js/abcbank.js"></script>
 <script type="text/javascript">
     var isCommitted = false;
     function validateFormInput()
@@ -43,9 +44,10 @@
         if(isCommitted == true)
             return false;
         isCommitted = true;
-        var ip = new String(document.newIPs.ipAddr.value);
-        var mask = new String(document.newIPs.mask.value);
-        var gateway = new String(document.newIPs.gateway.value);
+        var ip = trimStr(new String(document.newIPs.ipAddr.value));
+        var mask = trimStr(new String(document.newIPs.mask.value));
+        var gateway = trimStr(new String(document.newIPs.gateway.value));
+        var bank = trimStr(new String(document.newIPs.bank.value));
         if(ip==null || ip==0) {
             alert("请输入IP地址！");
             isCommitted = false;
@@ -56,6 +58,22 @@
             return false;
         }else if(gateway == 0 || gateway == 0){
             alert("请输入网关！");
+            isCommitted = false;
+            return false;
+        }else if(!judgeIP(ip)){
+            alert("IP地址格式不正确！");
+            isCommitted = false;
+            return false;
+        }else if(!judgeIP(mask)){
+            alert("掩码地址格式不正确！");
+            isCommitted = false;
+            return false;
+        }else if(!judgeIP(gateway)){
+            alert("网关地址格式不正确！");
+            isCommitted = false;
+            return false;
+        }else if(bank == 0){
+            alert("请选择所属支行（分行）！");
             isCommitted = false;
             return false;
         }else{
@@ -78,7 +96,7 @@
 <form id="newIPs" method="post" name="newIPs" onsubmit="return validateFormInput();">
     <table>
         <tr>
-            <td>IP地址：</td>
+            <td>*IP地址：</td>
             <td>
                 <input id="ipAddr" name = "ipAddr" type="text" size="50"/>
             </td>
@@ -101,14 +119,14 @@
         </tr>
 
         <tr>
-            <td>掩码：</td>
+            <td>*掩码：</td>
             <td>
                 <input id="mask" name="mask" type="text" size="50"/>
             </td>
         </tr>
 
         <tr>
-            <td>网关：</td>
+            <td>*网关：</td>
             <td>
                 <input id="gateway" name="gateway" type="text" size="50"/>
             </td>
@@ -143,7 +161,7 @@
         </tr>
 
         <tr>
-            <td>所属支行（分行）：</td>
+            <td>*所属支行（分行）：</td>
             <td>
                 <select id="bank" name="bank">
                     <option value="0" selected="">请选择</option>

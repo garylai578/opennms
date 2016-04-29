@@ -46,7 +46,7 @@ DiscoveryConfiguration currConfig  = (DiscoveryConfiguration) sess.getAttribute(
 
 <html>
 <head>
-  <title>添加包括范围 | 管理 | OpenNMS Web控制台</title>
+  <title>添加包括范围 | 管理 | Web控制台</title>
   <base href="<%=org.opennms.web.api.Util.calculateUrlBase( request )%>" />
   <link rel="stylesheet" type="text/css" href="css/styles.css" />
   <script type='text/javascript' src='js/ipv6/ipv6.js'></script>

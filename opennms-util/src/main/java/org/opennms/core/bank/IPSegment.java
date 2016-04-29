@@ -6,6 +6,7 @@ package org.opennms.core.bank;
  */
 public class IPSegment {
     private String id;
+    private String segment;
     private String gateway;
     private String mask;
     private String startIP;
@@ -25,6 +26,10 @@ public class IPSegment {
     public void setId(String id) {
         this.id = id;
     }
+
+    public String getSegment(){ return segment; }
+
+    public void setSegment(String segment) {this.segment = segment; }
 
     public String getGateway() {
         return gateway;
@@ -119,7 +124,7 @@ public class IPSegment {
     }
 
     public String toInsertValues() {
-        return  "'" + gateway + "', '" + mask + "', '" + startIP + "', '" + endIP + "', '"  + bankname + "', '"  + createTime + "', '"   + banktype + "', '"  + state + "', '"  + comment +"'";
+        return  "'" + segment + "', '" + gateway + "', '" + mask + "', '" + startIP + "', '" + endIP + "', '"  + bankname + "', '"  + createTime + "', '"   + banktype + "', '"  + state + "', '"  + comment +"'";
 
     }
 }

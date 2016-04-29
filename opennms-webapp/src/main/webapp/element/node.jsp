@@ -23,7 +23,7 @@
  *
  * For more information contact:
  *     OpenNMS(R) Licensing <license@opennms.org>
- *     http://www.opennms.org/
+ *     http://www.opennms.org/Physical Interfaces
  *     http://www.opennms.com/
  *******************************************************************************/
 

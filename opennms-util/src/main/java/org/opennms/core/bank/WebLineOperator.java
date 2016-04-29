@@ -30,7 +30,7 @@ public class WebLineOperator {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String insert = "insert into webline(type, applicant, approver, contact, dept, address, rent, vlan_num, port, interface, comment, start_date" +
+            String insert = "insert into webline(type, applicant, approver, contact, dept, address, rent, vlan_num, port, interface, comment, grp, start_date" +
                     ") values (" + value.toInsertValue() + ")";
             log.debug("insert sql = " + insert);
             int rc = stmt.executeUpdate(insert);
@@ -41,18 +41,23 @@ public class WebLineOperator {
     }
 
     /**
-     * Select all web lines from table webline
-     * @return WebLine[]: all result
+     * 将所有属于group的专线信息检索出来
+     * @param group 所属分组，如果为""，则检索所有
+     * @return WebLine[]: 专线信息
      * @throws SQLException
      */
-    public WebLine[] selectAll() throws SQLException{
+    public WebLine[] selectAll(String group) throws SQLException{
         WebLine[] result = null;
         try {
             Connection conn = Vault.getDbConnection();
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM webline order by id");
+            String sql = "select * FROM webline";
+            if(!group.equals(""))
+                sql += " where grp='" + group + "'";
+            sql += " order by id";
+            ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
             result = rs2WebLines(rs);
         } finally {
@@ -156,6 +161,7 @@ public class WebLineOperator {
             webLine.setPort(rs.getString("port"));
             webLine.setInter(rs.getString("interface"));
             webLine.setComment(rs.getString("comment"));
+            webLine.setGroup(rs.getString("grp"));
             list.add(webLine);
         }
         result = list.toArray(new WebLine[list.size()]);

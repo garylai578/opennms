@@ -863,6 +863,50 @@
     <servlet-name>ExportIPSegmentServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.ExportIPSegmentServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>DeleteSwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.DeleteSwitcherServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>BackupSwithcerServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.BackupSwitcherServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>RecoverySwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.RecoverySwithcerServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>AddSwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.AddSwitcherServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ManageSwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ManageSwitcherServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>BundingIPServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.BundingIPServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>DelBundingMacServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.DelBundingMacServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ExportBundingMsgServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.ExportBundingMsgServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>BatchOperateSwitchersServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.BatchOperateSwitchersServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SearchIPSegmentServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.SearchIPSegmentServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SearchSwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.SearchSwitcherServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1258,6 +1302,52 @@
     <servlet-name>ExportIPSegmentServlet</servlet-name>
     <url-pattern>/abcbank/exportIPSegment</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AddSwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/addSwitcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DeleteSwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/deleteSwitcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BackupSwithcerServlet</servlet-name>
+    <url-pattern>/abcbank/backupSwitcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>RecoverySwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/recoverySwitcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ManageSwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/manageSwitcher</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BundingIPServlet</servlet-name>
+    <url-pattern>/abcbank/bundingIP</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DelBundingMacServlet</servlet-name>
+    <url-pattern>/abcbank/deleteBundingMac</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExportBundingMsgServlet</servlet-name>
+    <url-pattern>/abcbank/exportBundingMsg</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BatchOperateSwitchersServlet</servlet-name>
+    <url-pattern>/abcbank/batchOperateSwitchers</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchIPSegmentServlet</servlet-name>
+    <url-pattern>/abcbank/searchIPSegment</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SearchSwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/searchSwitcher</url-pattern>
+  </servlet-mapping>
+  
   <!-- WARMERGE: insert servlet -->  
   <!-- WARMERGE: insert servlet-mapping -->  
 

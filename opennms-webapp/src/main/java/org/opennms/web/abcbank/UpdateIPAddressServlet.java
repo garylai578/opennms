@@ -42,11 +42,11 @@ public class UpdateIPAddressServlet extends HttpServlet {
             op.updateByID(id, "equip_brand", "'" + equip_brand + "'");
             op.updateByID(id, "equip_type", "'" + equip_type + "'");
             op.updateByID(id, "application", "'" + application + "'");
-            op.updateByID(id, "comment", comment);
+            op.updateByID(id, "comment", "'" + comment + "'");
 
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('修改成功！');window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
+            pw.print("<script language='javascript'>alert('修改成功' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
             pw.close();
 
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");

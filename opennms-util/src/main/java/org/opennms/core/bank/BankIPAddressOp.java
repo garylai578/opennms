@@ -36,11 +36,12 @@ public class BankIPAddressOp {
     }
 
     /**
-     * Select all ipaddress from table ipaddress
-     * @return BankIPAddress[]: all result
+     * 将所属分行或支行的ip地址检索出来
+     * @param group 所属支行/分行，如果group为""，则检索所有
+     * @return BankIPAddress[]: ip地址信息
      * @throws SQLException
      */
-    public BankIPAddress[] selectAll() throws SQLException{
+    public BankIPAddress[] selectAll(String group) throws SQLException{
 //        List<BankIPAddress> list = new ArrayList<BankIPAddress>();
 //        BankIPAddress ip = new BankIPAddress();
 
@@ -50,7 +51,11 @@ public class BankIPAddressOp {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            ResultSet rs = stmt.executeQuery("select * FROM ipaddress order by id");
+            String sql = "select * FROM ipaddress";
+            if(!group.equals(""))
+                sql += " where bank='" + group + "'";
+            sql += " order by id";
+            ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
             result = rs2IPAddress(rs);
         } finally {

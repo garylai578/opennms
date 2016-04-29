@@ -70,7 +70,7 @@ function validateId() {
   <div class="TwoColRight">
       <h3>故障和服务级别可用性</h3>
 		<div class="boxWrapper">
-			<p>OpenNMS通过轮询服务来跟踪故障。如果本次轮询服务不响应，服务故障将被创建并且影响服务可用性级别。
+			<p>系统通过轮询服务来跟踪故障。如果本次轮询服务不响应，服务故障将被创建并且影响服务可用性级别。
 			服务故障会创建通知。</p>
 		</div>
   </div>

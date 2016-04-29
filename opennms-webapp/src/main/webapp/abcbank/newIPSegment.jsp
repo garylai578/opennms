@@ -1,5 +1,6 @@
 <%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %><%--
+<%@ page import="java.util.Properties" %>
+<%@ page import="org.opennms.core.bank.IPSegmentOperater" %><%--
   Created by IntelliJ IDEA.
   User: laiguanhui
   Date: 2016/2/22
@@ -33,7 +34,30 @@
     //通过key获取配置文件
     String[] bankNames = pro.getProperty("abc-bankname").split("/");
     String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+
+    IPSegmentOperater operater = new IPSegmentOperater();
+    String[] ipsegs = operater.getIPSegments();
 %>
+
+<script>
+    var Select = {
+        del : function(obj,e){
+            if((e.keyCode||e.which||e.charCode) == 8){
+                var opt = obj.options[0];
+                opt.text = opt.value = opt.value.substring(0, opt.value.length>0?opt.value.length-1:0);
+            }
+        },
+        write : function(obj,e){
+            if((e.keyCode||e.which||e.charCode) == 8)return ;
+            var opt = obj.options[0];
+            opt.selected = "selected";
+            opt.text = opt.value += String.fromCharCode(e.charCode||e.which||e.keyCode);
+        }
+    }
+    function test(){
+        alert(document.getElementById("select").value);
+    }
+</script>
 
 <script type="text/javascript">
     var isCommitted = false;
@@ -42,10 +66,16 @@
         if(isCommitted == true)
             return false;
         isCommitted = true;
-        var num = new String(document.newIPs.ip_num.value);
-        var name = new String(document.newIPs.bank_name.value);
-        var type = new String(document.newIPs.bank_type.value);
-        if(num==0) {
+        var seg = new String(document.newIPs.ipSeg.value);
+        var num = new String(document.newIPs.ipNum.value);
+        var name = new String(document.newIPs.bankName.value);
+        var type = new String(document.newIPs.bankType.value);
+        if(seg==null || seg==0){
+            alert("请选择或输入所属的IP段");
+            isCommitted = false;
+            return false;
+        }
+        else if(num==0) {
             alert("请选择所需的IP数量！");
             isCommitted = false;
             return false;
@@ -59,10 +89,6 @@
             return false;
         }else{
             document.newIPs.action = "abcbank/newIPSegment";
-            document.newIPs.ipNum.value = num;
-            document.newIPs.bankName.value = name;
-            document.newIPs.bankType.value = type;
-            document.newIPs.comments.value = document.getElementById("comment").value;
             document.newIPs.submit();
             return true;
         }
@@ -79,15 +105,27 @@
 <h3>请填写以下资料</h3>
 
 <form id="newIPs" method="post" name="newIPs" onsubmit="return validateFormInput();">
-    <input type="hidden" name="ipNum"/>
-    <input type="hidden" name="bankName"/>
-    <input type="hidden" name="bankType"/>
-    <input type="hidden" name="comments"/>
     <table>
         <tr>
-            <td>所需IP数量：</td>
+            <td>*所属IP段：</td>
             <td>
-                <select id="ip_num">
+                <select id="ipSeg" name="ipSeg" onkeydown="Select.del(this,event)" onkeypress="Select.write(this,event)">
+                    <option value=""></option>
+                    <%
+                        for(String seg : ipsegs){
+                    %>
+                    <option value="<%=seg%>"><%=seg%></option>
+                    <%
+                        }
+                    %>
+                </select>（请选择或直接输入）
+            </td>
+        </tr>
+
+        <tr>
+            <td>*所需IP数量：</td>
+            <td>
+                <select id="ipNum" name="ipNum">
                     <option value="0" selected="">0</option>
                     <option value="2">2</option>
                     <option value="4">4</option>
@@ -101,9 +139,9 @@
         </tr>
 
         <tr>
-            <td>网点名称：</td>
+            <td>*网点名称：</td>
             <td>
-                <select id="bank_name">
+                <select id="bankName" name="bankName">
                     <option value="0" selected="">请选择</option>
                     <%
                         for(int i = 0; i < bankNames.length; ++i){
@@ -117,9 +155,9 @@
         </tr>
 
         <tr>
-            <td>网点类型：</td>
+            <td>*网点类型：</td>
             <td>
-                <select id="bank_type">
+                <select id="bankType" name="bankType">
                     <option value="0" selected="">请选择</option>
                     <%
                         for(int i = 0; i < bankTypes.length; ++i){
@@ -135,7 +173,7 @@
         <tr>
             <td>备注：</td>
             <td>
-                <input id="comment" type="text" size="100"/>
+                <input id="comments" name="comments" type="text" size="100"/>
             </td>
         </tr>
 

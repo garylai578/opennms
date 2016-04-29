@@ -28,13 +28,6 @@
 
 package org.opennms.web.controller;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.opennms.netmgt.config.NotifdConfigFactory;
 import org.opennms.web.api.OnmsHeaderProvider;
 import org.opennms.web.navigate.DisplayStatus;
@@ -44,6 +37,12 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>NavBarController class.</p>
@@ -104,9 +103,9 @@ public class NavBarController extends AbstractController implements Initializing
     
     private String createHeaderHtml(HttpServletRequest request) {
         return "<div id='header'>" +
-              "<h1 id='headerlogo'><a href='index.jsp'><img src=\"../images/logo.png\" alt='OpenNMS Web Console Home'></a></h1>" +
+              "<h1 id='headerlogo'><a href='index.jsp'><img src=\"../images/logo.png\" alt='NMS Web Console Home'></a></h1>" +
           "<div id='headerinfo'>" +
-          "<h2>Topology Map</h2>" +
+          "<h2>拓扑图</h2>" +
           "<p align=\"right\" >" + 
           "User: <a href=\"/opennms/account/selfService/index.jsp\" title=\"Account self-service\"><strong>" + request.getRemoteUser() + "</strong></a>" +
           "&nbsp;(Notices " + getNoticeStatus() + " )" + 

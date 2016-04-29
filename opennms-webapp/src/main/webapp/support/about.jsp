@@ -65,7 +65,7 @@
   <jsp:param name="breadcrumb" value="About" />
 </jsp:include>
 
-<h3>OpenNMS Web Console</h3>
+<h3>Web Console</h3>
 
 <table class="standard">
   <tr>
