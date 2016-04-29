@@ -51,8 +51,9 @@
 <%@page language="java"
 	contentType="text/html"
 	session="true"
-	import="org.opennms.web.api.Util,org.opennms.netmgt.config.NotifdConfigFactory"
+	import="org.opennms.netmgt.config.NotifdConfigFactory,org.opennms.web.api.Util"
 %>
+<%@ page import="org.opennms.web.springframework.security.Authentication" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -177,7 +178,19 @@ final String baseHref = Util.calculateUrlBase( request );
 
 	<!-- Header -->
 	<div id="header">
-		<h1 id="headerlogo"><a href="<%= baseHref %>index.jsp"><img src="<%= baseHref %>images/logo.png" alt="网络管理系统控制台首页"/></a></h1>
+		<h1 id="headerlogo">
+            <%
+                if(request.isUserInRole(Authentication.ROLE_ADMIN)){
+            %>
+            <a href="<%= baseHref %>index.jsp"><img src="<%= baseHref %>images/logo.png" alt="网络管理系统控制台首页"/></a>
+            <%
+                }else{
+            %>
+            <img src="<%= baseHref %>images/logo.png" alt="网络管理系统控制台首页"/>
+            <%
+                }
+            %>
+        </h1>
 		<div id="headerinfo">
 			<h2>${param.title}</h2>
 			<p align="right">
@@ -232,7 +245,14 @@ final String baseHref = Util.calculateUrlBase( request );
 <div class="onms">
 <h2>
 <c:if test="${((param.nonavbar != 'true') && (!empty pageContext.request.remoteUser)) && param.nobreadcrumbs != 'true'}">
-   <a href="<%= baseHref %>index.jsp">首页</a>
+    <%
+        if(request.isUserInRole(Authentication.ROLE_ADMIN)){
+    %>
+    <a href="<%= baseHref %>index.jsp">首页</a>
+    <%
+        }
+    %>
+
    <c:forEach var="breadcrumb" items="${paramValues.breadcrumb}">
      <c:if test="${breadcrumb != ''}">
            / <c:out value="${breadcrumb}" escapeXml="false"/>
