@@ -5,7 +5,7 @@ package org.opennms.core.bank;
  */
 public class WebLine {
 
-    private String id, type, applicant, contact, approver, dept, address, start_date, rent, vlan_num, port, inter, comment;
+    private String id, type, applicant, contact, approver, dept, address, start_date, rent, vlan_num, port, inter, comment, group;
 
     public String getId() {
         return id;
@@ -111,9 +111,13 @@ public class WebLine {
         this.comment = comment;
     }
 
+    public String getGroup() { return group; }
+
+    public void setGroup(String group) { this.group = group; }
+
     public String toInsertValue() {
         String value = "";
-        String[] colsString = {type, applicant, approver, contact, dept, address, rent, vlan_num, port, inter, comment};
+        String[] colsString = {type, applicant, approver, contact, dept, address, rent, vlan_num, port, inter, comment, group};
 
         for (String col: colsString) {
             if(col == null)

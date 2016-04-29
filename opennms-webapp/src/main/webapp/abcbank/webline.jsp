@@ -11,33 +11,21 @@
         session="true"
 %>
 
-<%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %>
 <%@ page import="org.opennms.core.bank.WebLine" %>
 <%@ page import="org.opennms.core.bank.WebLineOperator" %>
+<%@ page import="org.opennms.web.springframework.security.Authentication" %>
+
+<%@include file="/abcbank/getGroup.jsp"%>
 
 <%
-    Properties pro = new Properties();
-    String path = application.getRealPath("/");
-    try{
-        //读取配置文件
-        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
-        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        pro.load(bf);
-    } catch(FileNotFoundException e){
-        out.println(e);
-    } catch(IOException e){
-        out.println(e);
-    }
-
-    //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-//    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
-
     WebLineOperator op = new WebLineOperator();
     WebLine[] lines = (WebLine[])request.getAttribute("webLines");
-    if(lines == null)
-        lines = op.selectAll();;
+    if(lines == null){
+        if(request.isUserInRole(Authentication.ROLE_ADMIN))
+            lines = op.selectAll("");
+        else
+            lines = op.selectAll(group);
+    }
 
     int row = 0;
     int nums = lines.length;

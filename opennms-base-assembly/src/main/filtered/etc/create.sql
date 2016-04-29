@@ -303,6 +303,7 @@ create table ipaddress (
 --#  rent        : the rent of this web line
 --#  vlan_num    : the vlan number of this web line
 --#  port        : the physical port of this web line
+--#  grp         : the group of this web line
 --#  interface   : the interface between the operator
 --#
 --########################################################################
@@ -319,6 +320,7 @@ create table webline (
     vlan_num text,
     port text,
     interface text,
+    grp text not null,
     comment text
 );
 
