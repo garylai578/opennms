@@ -49,7 +49,7 @@ public interface AssetPageConstants extends com.google.gwt.i18n.client.Constants
     @Key("address1")
     String address1();
 
-    @DefaultStringValue("设备所处地址 ，用于技术人员派遣")
+    @DefaultStringValue("设备所处地址，用于技术人员派遣")
     @Key("address1Help")
     String address1Help();
 
@@ -126,11 +126,11 @@ public interface AssetPageConstants extends com.google.gwt.i18n.client.Constants
     @Key("categoryHelp")
     String categoryHelp();
 
-    @DefaultStringValue("线路 ID")
+    @DefaultStringValue("线路编号")
     @Key("circuitId")
     String circuitId();
 
-    @DefaultStringValue("设备线路ID，一般由ISP网络供应商提供")
+    @DefaultStringValue("线路编号，一般由ISP网络供应商提供")
     @Key("circuitIdHelp")
     String circuitIdHelp();
 
@@ -298,15 +298,15 @@ public interface AssetPageConstants extends com.google.gwt.i18n.client.Constants
     @Key("enablePasswordHelp")
     String enablePasswordHelp();
 
-    @DefaultStringValue("获取资产数据失败，节点 ID：")
+    @DefaultStringValue("获取资产数据失败，节点编号：")
     @Key("errorFatchingAssetData")
     String errorFatchingAssetData();
 
-    @DefaultStringValue("获取资产建议数据失败，节点 ID：")
+    @DefaultStringValue("获取资产建议数据失败，节点编号：")
     @Key("errorFetchingAssetSuggData")
     String errorFetchingAssetSuggData();
 
-    @DefaultStringValue("保存资产数据失败，节点 ID：")
+    @DefaultStringValue("保存资产数据失败，节点编号：")
     @Key("errorSavingAssetData")
     String errorSavingAssetData();
 
