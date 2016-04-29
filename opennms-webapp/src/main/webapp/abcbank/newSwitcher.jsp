@@ -32,10 +32,8 @@
     }
 
     //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
-
-
+    String[] switcherBrands = pro.getProperty("abc-switcherbrand").split("/");
+    String[] switcherGroups = pro.getProperty("abc-switcherGroup").split("/");
 %>
 <script type="text/javascript" src="js/abcbank.js"></script>
 <script type="text/javascript">
@@ -153,11 +151,13 @@
             <td>
                 <select id="brand" name="brand">
                     <option value="0" selected="">请选择</option>
-                    <option value="华为">华为</option>
-                    <option value="华三">华三</option>
-                    <option value="思科">思科</option>
-                    <option value="锐捷">锐捷</option>
-                    <option value="其他">其他</option>
+                    <%
+                        for(String switcherBrand : switcherBrands){
+                    %>
+                    <option value="<%=switcherBrand%>"><%=switcherBrand%></option>
+                    <%
+                        }
+                    %>
                 </select>
             </td>
         </tr>
@@ -167,11 +167,13 @@
             <td>
                 <select id="group" name="group" >
                     <option value="0" selected="">请选择</option>
-                    <option value="莞城">莞城</option>
-                    <option value="东城">东城</option>
-                    <option value="南城">南城</option>
-                    <option value="厚街">厚街</option>
-                    <option value="其他">其他</option>
+                    <%
+                        for(String switcherGroup : switcherGroups){
+                    %>
+                    <option value="<%=switcherGroup%>"><%=switcherGroup%></option>
+                    <%
+                        }
+                    %>
                 </select>
             </td>
         </tr>

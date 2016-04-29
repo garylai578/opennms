@@ -31,8 +31,7 @@
     }
 
     //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+    String[] weblineTypes = pro.getProperty("abc-weblinetype").split("/");
 %>
 
 <script type="text/javascript">
@@ -120,10 +119,13 @@
             <td>
                 <select id="type" name="type">
                     <option value="0" selected="">请选择</option>
-                    <option value="办公主线">办公主线</option>
-                    <option value="生产主线">生产主线</option>
-                    <option value="离行点专线">离行点专线</option>
-                    <option value="互联网专线">互联网专线</option>
+                    <%
+                        for(String webline : weblineTypes){
+                    %>
+                    <option value="<%=webline%>"><%=webline%></option>
+                    <%
+                        }
+                    %>
                 </select>
             </td>
         </tr>
