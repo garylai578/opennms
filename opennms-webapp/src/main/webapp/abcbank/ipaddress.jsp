@@ -38,7 +38,13 @@
         Map users = userFactory.getUsers();
         user = (User) users.get(userID);
         Contact[] con = user.getContact();
-        group = con[5].getServiceProvider(); // 获取该用户所属分行
+        for(Contact c : con) {
+            if (c.getType() != null && c.getType().equals("textPage")) {
+                group = c.getServiceProvider();
+                break;
+            }
+        }
+//        group = con[5].getServiceProvider(); // 获取该用户所属分行
     }
 
     BankIPAddressOp op = new BankIPAddressOp();
