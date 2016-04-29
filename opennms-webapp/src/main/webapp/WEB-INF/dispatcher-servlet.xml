@@ -488,19 +488,19 @@
     <bean id="headerProvider" name="/navBar.htm" class="org.opennms.web.controller.NavBarController">
         <property name="navBarItems">
             <list>
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+                <bean class="org.opennms.web.navigate.AdminUserNavBarEntry">
                     <property name="name" value="节点列表"/>
                     <property name="url" value="element/nodeList.htm"/>
                     <property name="locationMatch" value="nodelist"/>
                 </bean>
 
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+                <bean class="org.opennms.web.navigate.AdminUserNavBarEntry">
                     <property name="name" value="查询"/>
                     <property name="url" value="element/index.jsp"/>
                     <property name="locationMatch" value="element"/>
                 </bean>
 
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+                <bean class="org.opennms.web.navigate.AdminUserNavBarEntry">
                     <property name="name" value="故障"/>
                     <property name="url" value="outage/index.jsp"/>
                     <property name="locationMatch" value="outage"/>
@@ -519,19 +519,19 @@
                     <property name="locationMatch" value="dashboard"/>
                 </bean>-->
 
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+                <bean class="org.opennms.web.navigate.AdminUserNavBarEntry">
                     <property name="name" value="事件"/>
                     <property name="url" value="event/index.jsp"/>
                     <property name="locationMatch" value="event"/>
                 </bean>
 
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+                <bean class="org.opennms.web.navigate.AdminUserNavBarEntry">
                     <property name="name" value="告警"/>
                     <property name="url" value="alarm/index.jsp"/>
                     <property name="locationMatch" value="alarm"/>
                 </bean>
 
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+                <bean class="org.opennms.web.navigate.AdminUserNavBarEntry">
                     <property name="name" value="通知"/>
                     <property name="url" value="notification/index.jsp"/>
                     <property name="locationMatch" value="notification"/>
@@ -543,7 +543,7 @@
                     <property name="locationMatch" value="asset"/>
                 </bean>-->
 
-                <bean class="org.opennms.web.navigate.LocationBasedNavBarEntry">
+                <bean class="org.opennms.web.navigate.AdminUserNavBarEntry">
                     <property name="name" value="报表"/>
                     <property name="url" value="report/index.jsp"/>
                     <property name="locationMatch" value="report"/>
@@ -557,12 +557,12 @@
                 </bean>
 -->
 
-                <bean class="org.opennms.web.navigate.SurveillanceViewNavBarEntry">
+<!--                <bean class="org.opennms.web.navigate.SurveillanceViewNavBarEntry">
                     <property name="name" value="监视"/>
                     <property name="url" value=""/>
                     <property name="locationMatch" value="surveillance"/>
                     <property name="surveillanceViewConfigDao" ref="surveillanceViewConfigDao"/>
-                </bean>
+                </bean>-->
 
                 <bean class="org.opennms.web.navigate.DistributedStatusNavBarEntry">
                     <property name="name" value="分布式状态"/>
