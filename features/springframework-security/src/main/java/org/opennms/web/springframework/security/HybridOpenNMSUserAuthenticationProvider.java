@@ -74,7 +74,7 @@ public class HybridOpenNMSUserAuthenticationProvider implements AuthenticationPr
         final OnmsUser user = m_userDao.getByUsername(authUsername);
 
         if (user == null) {
-            throw new BadCredentialsException("Bad credentials");
+            throw new BadCredentialsException("用户名密码错误");
         }
 
         try {
@@ -84,7 +84,7 @@ public class HybridOpenNMSUserAuthenticationProvider implements AuthenticationPr
             try {
                 m_userManager.reload();
             } catch (final Exception reloadException) {
-                LogUtils.debugf(this, reloadException, "Failed to reload UserManager.");
+                LogUtils.debugf(this, reloadException, "无法重新加载用户信息");
             }
             checkUserPassword(authUsername, authPassword, user);
         }
@@ -102,16 +102,16 @@ public class HybridOpenNMSUserAuthenticationProvider implements AuthenticationPr
         try {
             hasUser = m_userManager.hasUser(user.getUsername());
         } catch (final Exception e) {
-            throw new AuthenticationServiceException("An error occurred while checking for " + authUsername + " in the UserManager", e);
+            throw new AuthenticationServiceException("查询用户：" + authUsername + " 的登录信息时出错", e);
         }
 
         if (hasUser) {
             if (!m_userManager.comparePasswords(authUsername, authPassword)) {
-                throw new BadCredentialsException("Bad credentials");
+                throw new BadCredentialsException("用户名密码错误");
             }
         } else {
             if (!m_userManager.checkSaltedPassword(authPassword, existingPassword)) {
-                throw new BadCredentialsException("Bad credentials");
+                throw new BadCredentialsException("用户名密码错误");
             }
         }
     }
