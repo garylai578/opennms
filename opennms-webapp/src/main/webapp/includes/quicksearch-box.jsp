@@ -58,7 +58,7 @@
       <input type="submit" value="查询"/>
     </form>
     <form action="element/nodeList.htm" method="get">
-      <font style="font-size: 70%; line-height: 1.25em; align=left">TCP/IP地址like:</font><br />
+      <font style="font-size: 70%; line-height: 1.25em; align=left">TCP/IP地址:</font><br />
       <input type="hidden" name="listInterfaces" value="false"/>
       <input type="text" name="iplike" value="" placeholder="*.*.*.*" />
       <input type="submit" value="查询"/>               
