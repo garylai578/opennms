@@ -44,7 +44,7 @@
   <jsp:param name="breadcrumb" value="密码已更改" />
 </jsp:include>
 
-<h3>Password successfully changed.</h3>
+<h3>密码已修改。</h3>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />
 
