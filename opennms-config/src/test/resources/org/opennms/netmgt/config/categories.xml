@@ -13,14 +13,14 @@
         <categories>
             <category>
                 <label><![CDATA[网络服务全局可用性]]></label>
-                <comment>This category reflects availability of all services currently being monitored by OpenNMS.</comment>
+                <comment>当前监控的所有网络服务的全局可用性。</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <rule><![CDATA[ipaddr IPLIKE *.*.*.*]]></rule>
             </category>
             <category>
                 <label><![CDATA[网络接口]]></label>
-                <comment>This category reflects the ability to 'ping' managed devices and SNMP agents.  'Ping', using the ICMP protocol, tests a devices network connectivity/availability.</comment>
+                <comment>通过Ping命令感知的网络设备连通性和可用性。</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>ICMP</service>
@@ -29,7 +29,7 @@
             </category>
             <category>
                 <label><![CDATA[邮件服务器]]></label>
-                <comment>This category includes all managed interfaces which are running an Email service, including SMTP, POP3, or IMAP.  This will include MS Exchange servers running these protocols.</comment>
+                <comment>当前网络中运行SMTP、POP3、IMAP等协议的邮件服务器的可用性。</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>SMTP</service>
@@ -39,7 +39,7 @@
             </category>
             <category>
                 <label><![CDATA[Web服务器]]></label>
-                <comment>This category includes all managed interfaces which are running an HTTP (Web) server on port 80 or other common ports.</comment>
+                <comment>当前网络中Web服务器（HTTP）的可用性。</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>HTTP</service>
@@ -50,7 +50,7 @@
             </category>
             <category>
                 <label><![CDATA[JMX服务器]]></label>
-                <comment>This category includes all managed interfaces which are running JMX servers.</comment>
+                <comment>当前网络中JMX服务器的可用性。</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>JBoss4</service>
@@ -60,7 +60,7 @@
             </category>
             <category>
                 <label><![CDATA[DNS/DHCP服务器]]></label>
-                <comment>This category includes all managed interfaces which are running either DNS (name resolution) servers or DHCP servers.</comment>
+                <comment>当前网络中DNS、DHCP服务器（域名解析）的可用性。</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>DNS</service>
@@ -78,7 +78,7 @@
             </category>
             <category>
                 <label><![CDATA[其他类型服务器]]></label>
-                <comment>This category includes all managed interfaces which are running FTP (file transfer protocol) servers or SSH (secure shell) servers.</comment>
+                <comment>当前网络中其他类型服务器（如FTP、SSH等）的可用性。</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>FTP</service>
@@ -87,7 +87,7 @@
             </category>
             <category>
                 <label><![CDATA[Internet连通性]]></label>
-                <comment>This category reflects the ability to 'ping' the router at the ISP-end of your Internet connection.</comment>
+                <comment>通过Ping命令感知的ISP供应商路由器的网络连通性和可用性。</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>ICMP</service>
