@@ -51,7 +51,7 @@ public class FrontPageController {
     @RequestMapping(method = RequestMethod.GET)
     protected ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String userID = request.getRemoteUser();
-        BankLogWriter logWriter = BankLogWriter.getInstance();
+        BankLogWriter logWriter = new BankLogWriter();
         logWriter.writeLog("用户登录：" + userID);
         if (request.isUserInRole(Authentication.ROLE_DASHBOARD)) {
             return new ModelAndView("redirect:/dashboard.jsp");

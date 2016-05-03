@@ -1,6 +1,7 @@
 package org.opennms.core.bank;
 
 import org.apache.log4j.Logger;
+import org.opennms.core.resource.Vault;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -12,17 +13,24 @@ import java.util.Date;
 public class BankLogWriter {
 
     final static Logger log =  Logger.getLogger(BankLogWriter.class);
-    //Log文件路径
-    private String filePath;
+    //Log文件
     private String fileName;
     private BufferedOutputStream out;
     private BufferedReader in;
 
-    private BankLogWriter(){
-//        filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
-
+    /**
+     * 日志文件保存在{opennms.home}/logs/abc_日期.log
+     *
+     * @return 日志文件操作的单例
+     */
+    public BankLogWriter(){
+        String filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         fileName = filePath + "abc_" + df.format(new Date()) + ".log";
+        initOut();
+    }
+
+    private void initOut(){
         log.debug("log file：" + fileName);
         File file = new File(fileName);
         if(!file.exists()){
@@ -34,17 +42,6 @@ public class BankLogWriter {
                 e.printStackTrace();
             }
         }
-    }
-
-    private static final BankLogWriter single = new BankLogWriter();
-
-    /**
-     * 获取日志文件操作的单例，日志文件保存在{opennms.home}/logs/abc.log
-     *
-     * @return 日志文件操作的单例
-     */
-    public static BankLogWriter getInstance(){
-        return single;
     }
 
     /**
@@ -85,21 +82,12 @@ public class BankLogWriter {
     }
 
     /**
-     * 设置Log文件路径
-     * @param filePath 文件路径，必须以系统路径分隔符结尾
+     * 设置Log文件
+     * @param fileName 文件
      *
      */
-    public void setOutputFilePath(String filePath){
-        this.filePath = filePath;
-        File file = new File(filePath);
-        if(!file.exists()){
-            try {
-                file.createNewFile();
-                out=new BufferedOutputStream(new FileOutputStream(file,true));
-            } catch (IOException e) {
-                log.error(e.getMessage());
-                e.printStackTrace();
-            }
-        }
+    public void setOutputFilePath(String fileName){
+        this.fileName = fileName;
+        initOut();
     }
 }
