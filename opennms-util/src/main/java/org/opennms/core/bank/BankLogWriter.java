@@ -22,6 +22,7 @@ public class BankLogWriter {
     private BankLogWriter(){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         fileName = filePath + "abc_" + df.format(new Date()) + ".log";
+        log.debug("log文件路径：" + fileName);
         File file = new File(fileName);
         if(!file.exists()){
             try {
