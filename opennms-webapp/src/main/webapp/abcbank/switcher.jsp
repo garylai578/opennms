@@ -14,7 +14,6 @@
 <%@page import="org.opennms.core.bank.Switcher" %>
 <%@ page import="org.opennms.core.bank.SwitcherOperator" %>
 <%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %>
 
 <jsp:include page="/includes/header.jsp" flush="false">
     <jsp:param name="title" value="交换机配置管理" />
@@ -25,23 +24,6 @@
 
 <%
     SwitcherOperator op = new SwitcherOperator();
-
-    Properties pro = new Properties();
-    String path = application.getRealPath("/");
-    try{
-        //读取配置文件
-        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
-        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        pro.load(bf);
-    } catch(FileNotFoundException e){
-        out.println(e);
-    } catch(IOException e){
-        out.println(e);
-    }
-
-    //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
 
     //读取交换机批量操作的文件内容
     String batchComm = "";

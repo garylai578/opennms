@@ -18,6 +18,7 @@ public class BankIPAddressOp {
 
     private final DBUtils d = new DBUtils(getClass());
     final static Logger log =  Logger.getLogger(BankIPAddressOp.class);
+    BankLogWriter logWriter = new BankLogWriter();
 
     public void insert(BankIPAddress ipaddr) throws SQLException {
         try {
@@ -28,6 +29,7 @@ public class BankIPAddressOp {
             String insert = "insert into ipaddress(ip,mask, gateway, mac, network_type, users, bank, dept, model, equip_type, equip_brand, application, state, comment, start_date, stop_date, apply_date" +
                     ") values (" + ipaddr.toInsertValue() + ")";
             log.debug("insert sql = " + insert);
+            logWriter.writeLog("新增IP地址：" + ipaddr.getIp());
             int rc = stmt.executeUpdate(insert);
             log.debug( "and the rc = " + rc);
         } finally {
@@ -129,6 +131,7 @@ public class BankIPAddressOp {
             d.watch(stmt);
             String sql = "delete from ipaddress where ip = '" + ipAddr.getIp() + "'";
             log.debug("delete ipAddr, SQL =" +  sql);
+            logWriter.writeLog("删除ip:" + ipAddr.getIp());
             int rc = stmt.executeUpdate(sql);
             log.debug(", and rc =" + rc);
         } finally {
@@ -150,6 +153,7 @@ public class BankIPAddressOp {
             d.watch(stmt);
             String sql = "delete from ipaddress where id = " + id + "";
             log.debug("delete by id, SQL =" +  sql);
+            logWriter.writeLog("删除ip，其在数据库中的id是：" + id);
             int rc = stmt.executeUpdate(sql);
             log.debug(", and rc =" + rc);
         } finally {
@@ -173,6 +177,7 @@ public class BankIPAddressOp {
             String sql;
             sql = "update ipaddress set " + colName + " = " + newValue + " where id =" + id;
             log.debug("update by id, SQL = " + sql);
+            logWriter.writeLog("更新IP地址，id[" + id + "], 列名[]" );
             int rc = stmt.executeUpdate(sql);
             log.debug(", and the rc= " + rc);
         } finally {

@@ -1,5 +1,4 @@
-<%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: laiguanhui
   Date: 2016/3/16
@@ -16,25 +15,7 @@
     <jsp:param name="breadcrumb" value="新增IP地址" />
 </jsp:include>
 
-<%
-    Properties pro = new Properties();
-    String path = application.getRealPath("/");
-    try{
-        //读取配置文件
-        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
-        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        pro.load(bf);
-    } catch(FileNotFoundException e){
-        out.println(e);
-    } catch(IOException e){
-        out.println(e);
-    }
-
-    //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-//    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
-    String[] networkTypes = pro.getProperty("abc-networktype").split("/");
-%>
+<%@include file="/abcbank/getVars.jsp"%>
 
 <script type="text/javascript" src="js/abcbank.js"></script>
 <script type="text/javascript">

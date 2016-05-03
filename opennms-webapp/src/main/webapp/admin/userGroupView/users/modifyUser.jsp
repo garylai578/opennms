@@ -99,6 +99,11 @@
     {
         var minDurationMinsWarning = 5;
         var warnMinDuration = true;
+        var group = document.modifyUser.textService.value;
+        if(group==0){
+            alert("请选择所属支行！");
+            return false;
+        }
 
         for (var c = 0; c < document.modifyUser.dutySchedules.value; c++)
         {
@@ -307,7 +312,7 @@
             </tr>
         <tr >
             <td valign="top">
-                <label id="textServiceLabel" for="textService">所属支行:</label>
+                <label id="textServiceLabel" for="textService">*所属支行:</label>
             </td>
             <td valign="top">
                 <select id="textService" name="textService">

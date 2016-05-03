@@ -14,31 +14,14 @@
 
 <%@page import="org.opennms.core.bank.IPSegment"%>
 <%@page import="org.opennms.core.bank.IPSegmentOperater" %>
-<%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.text.ParseException" %>
 
+<%@include file="/abcbank/getVars.jsp"%>
+
 <%
     IPSegmentOperater op = new IPSegmentOperater();
-
-    Properties pro = new Properties();
-    String path = application.getRealPath("/");
-    try{
-        //读取配置文件
-        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
-        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        pro.load(bf);
-    } catch(FileNotFoundException e){
-        out.println(e);
-    } catch(IOException e){
-        out.println(e);
-    }
-
-    //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
 
     IPSegment[] ips = (IPSegment[])request.getAttribute("ipSeg");
     if(ips == null)

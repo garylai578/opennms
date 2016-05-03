@@ -15,7 +15,7 @@
 <%@ page import="org.opennms.core.bank.WebLineOperator" %>
 <%@ page import="org.opennms.web.springframework.security.Authentication" %>
 
-<%@include file="/abcbank/getGroup.jsp"%>
+<%@include file="/abcbank/getVars.jsp"%>
 
 <%
     WebLineOperator op = new WebLineOperator();

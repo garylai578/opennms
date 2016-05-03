@@ -5,8 +5,6 @@
   Time: 16:36
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="true"%>
 
 <jsp:include page="/includes/header.jsp" flush="false">
@@ -17,24 +15,8 @@
     <jsp:param name="breadcrumb" value="新增交换机" />
 </jsp:include>
 
-<%
-    Properties pro = new Properties();
-    String path = application.getRealPath("/");
-    try{
-        //读取配置文件
-        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
-        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        pro.load(bf);
-    } catch(FileNotFoundException e){
-        out.println(e);
-    } catch(IOException e){
-        out.println(e);
-    }
+<%@include file="/abcbank/getVars.jsp"%>
 
-    //通过key获取配置文件
-    String[] switcherBrands = pro.getProperty("abc-switcherbrand").split("/");
-    String[] switcherGroups = pro.getProperty("abc-switcherGroup").split("/");
-%>
 <script type="text/javascript" src="js/abcbank.js"></script>
 <script type="text/javascript">
     var isCommitted = false;

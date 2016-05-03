@@ -1,6 +1,7 @@
 package org.opennms.web.abcbank;
 
 import org.apache.log4j.Logger;
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.IPPoolCaculater;
 import org.opennms.core.bank.IPSegment;
 import org.opennms.core.bank.IPSegmentOperater;
@@ -113,6 +114,9 @@ public class AddIPSegmentServlet extends HttpServlet {
                 }
             }
 
+            BankLogWriter logWriter = new BankLogWriter();
+//            logWriter.setOutputFilePath(getServletContext().getRealPath("/") + "abc.log");
+            logWriter.writeLog("新增IP段: " + backMsg);
             pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
             pw.close();
 

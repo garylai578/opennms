@@ -1,5 +1,3 @@
-<%@ page import="java.io.*" %>
-<%@ page import="java.util.Properties" %>
 <%@ page import="org.opennms.core.bank.IPSegmentOperater" %><%--
   Created by IntelliJ IDEA.
   User: laiguanhui
@@ -17,24 +15,9 @@
     <jsp:param name="breadcrumb" value="新增IP段" />
 </jsp:include>
 
+<%@include file="/abcbank/getVars.jsp"%>
+
 <%
-    Properties pro = new Properties();
-    String path = application.getRealPath("/");
-    try{
-        //读取配置文件
-        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
-        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        pro.load(bf);
-    } catch(FileNotFoundException e){
-        out.println(e);
-    } catch(IOException e){
-        out.println(e);
-    }
-
-    //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
-
     IPSegmentOperater operater = new IPSegmentOperater();
     String[] ipsegs = operater.getIPSegments();
 %>
