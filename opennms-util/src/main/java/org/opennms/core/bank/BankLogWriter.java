@@ -14,12 +14,14 @@ public class BankLogWriter {
 
     final static Logger log =  Logger.getLogger(BankLogWriter.class);
     //Log文件路径
-    private String filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
+    private String filePath;
     private String fileName;
     private BufferedOutputStream out;
     private BufferedReader in;
 
     private BankLogWriter(){
+        log.debug("i am here");
+        filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         fileName = filePath + "abc_" + df.format(new Date()) + ".log";
         log.debug("log文件路径：" + fileName);
