@@ -28,6 +28,7 @@
 
 package org.opennms.web.controller;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.web.springframework.security.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,6 +50,9 @@ public class FrontPageController {
 
     @RequestMapping(method = RequestMethod.GET)
     protected ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String userID = request.getRemoteUser();
+        BankLogWriter logWriter = BankLogWriter.getInstance();
+        logWriter.writeLog("用户登录：" + userID);
         if (request.isUserInRole(Authentication.ROLE_DASHBOARD)) {
             return new ModelAndView("redirect:/dashboard.jsp");
         } else if(request.isUserInRole(Authentication.ROLE_ADMIN)){
