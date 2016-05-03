@@ -1,7 +1,6 @@
 package org.opennms.core.bank;
 
 import org.apache.log4j.Logger;
-import org.opennms.core.resource.Vault;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -20,7 +19,8 @@ public class BankLogWriter {
     private BufferedReader in;
 
     private BankLogWriter(){
-        filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
+//        filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
+
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         fileName = filePath + "abc_" + df.format(new Date()) + ".log";
         log.debug("log file：" + fileName);
@@ -91,5 +91,15 @@ public class BankLogWriter {
      */
     public void setOutputFilePath(String filePath){
         this.filePath = filePath;
+        File file = new File(filePath);
+        if(!file.exists()){
+            try {
+                file.createNewFile();
+                out=new BufferedOutputStream(new FileOutputStream(file,true));
+            } catch (IOException e) {
+                log.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 }
