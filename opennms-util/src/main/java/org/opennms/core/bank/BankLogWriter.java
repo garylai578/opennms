@@ -20,11 +20,10 @@ public class BankLogWriter {
     private BufferedReader in;
 
     private BankLogWriter(){
-        log.debug("i am here");
         filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         fileName = filePath + "abc_" + df.format(new Date()) + ".log";
-        log.debug("log文件路径：" + fileName);
+        log.debug("log file：" + fileName);
         File file = new File(fileName);
         if(!file.exists()){
             try {
@@ -32,6 +31,7 @@ public class BankLogWriter {
                 out=new BufferedOutputStream(new FileOutputStream(file,true));
             } catch (IOException e) {
                 log.error(e.getMessage());
+                e.printStackTrace();
             }
         }
     }
@@ -63,6 +63,7 @@ public class BankLogWriter {
             out.flush();
         } catch (IOException e) {
             log.error(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -78,6 +79,7 @@ public class BankLogWriter {
             in.close();
         } catch (IOException e) {
             log.error(e.getMessage());
+            e.printStackTrace();
         }
         return result;
     }
