@@ -18,6 +18,7 @@ public class BankIPAddressOp {
 
     private final DBUtils d = new DBUtils(getClass());
     final static Logger log =  Logger.getLogger(BankIPAddressOp.class);
+    BankLogWriter logWriter = BankLogWriter.getInstance();
 
     public void insert(BankIPAddress ipaddr) throws SQLException {
         try {
@@ -28,6 +29,7 @@ public class BankIPAddressOp {
             String insert = "insert into ipaddress(ip,mask, gateway, mac, network_type, users, bank, dept, model, equip_type, equip_brand, application, state, comment, start_date, stop_date, apply_date" +
                     ") values (" + ipaddr.toInsertValue() + ")";
             log.debug("insert sql = " + insert);
+            logWriter.writeLog("新增IP地址：" + insert);
             int rc = stmt.executeUpdate(insert);
             log.debug( "and the rc = " + rc);
         } finally {
