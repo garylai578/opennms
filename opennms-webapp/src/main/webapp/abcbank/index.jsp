@@ -1,9 +1,16 @@
 <%@ page import="org.opennms.web.springframework.security.Authentication" %>
+<%@ page import="org.opennms.core.bank.BankLogWriter" %>
 <%@page language="java"
         contentType="text/html"
         session="true"
 %>
 
+<%
+    BankLogWriter logWriter = new BankLogWriter();
+    String file = request.getContextPath() + "/abc.log";
+    logWriter.setOutputFilePath(file);
+    logWriter.writeLog("file:" + file );
+%>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
     <jsp:param name="title" value="台帐" />

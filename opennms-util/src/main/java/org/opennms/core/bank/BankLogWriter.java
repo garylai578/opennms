@@ -88,6 +88,7 @@ public class BankLogWriter {
      */
     public void setOutputFilePath(String fileName){
         this.fileName = fileName;
+        log.debug("set output file : " + fileName);
         initOut();
     }
 }

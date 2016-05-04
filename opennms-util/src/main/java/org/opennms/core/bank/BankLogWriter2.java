@@ -66,7 +66,7 @@ public class BankLogWriter2 {
             e.printStackTrace();
         }
 		*/
-		log.debug("write log");
+		log.debug(msg);
     }
 
     public String readLog() {

@@ -14,13 +14,59 @@
 
 <%@page import="org.opennms.core.bank.IPSegment"%>
 <%@page import="org.opennms.core.bank.IPSegmentOperater" %>
+<%@ page import="org.opennms.netmgt.config.UserFactory" %>
+<%@ page import="org.opennms.netmgt.config.UserManager" %>
+<%@ page import="org.opennms.netmgt.config.users.Contact" %>
+<%@ page import="org.opennms.netmgt.config.users.User" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.text.ParseException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="java.text.ParseException" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Properties" %>
+<%@ page import="org.opennms.core.bank.BankLogWriter3" %>
 
-<%@include file="/abcbank/getVars.jsp"%>
 
 <%
+    BankLogWriter3 writer3 = new BankLogWriter3();
+    writer3.writeLog("writer3");
+
+    final HttpSession userSession = request.getSession(false);
+    User user;
+    String userID = request.getRemoteUser();
+    UserManager userFactory;
+    String group="";
+    if (userSession != null) {
+        UserFactory.init();
+        userFactory = UserFactory.getInstance();
+        Map users = userFactory.getUsers();
+        user = (User) users.get(userID);
+        Contact[] con = user.getContact();
+        for(Contact c : con) {
+            if (c.getType() != null && c.getType().equals("textPage")) {
+                group = c.getServiceProvider(); // 获取该用户所属分行
+                break;
+            }
+        }
+    }
+
+    Properties pro = new Properties();
+    String path = application.getRealPath("/");
+    try{
+        //读取配置文件
+        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
+        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        pro.load(bf);
+    } catch(FileNotFoundException e){
+        out.println(e);
+    } catch(IOException e){
+        out.println(e);
+    }
+
+    //通过key获取配置文件
+    String[] bankNames = pro.getProperty("abc-bankname").split("/");
+    String[] bankTypes = pro.getProperty("abc-banktype").split("/");
+
     IPSegmentOperater op = new IPSegmentOperater();
 
     IPSegment[] ips = (IPSegment[])request.getAttribute("ipSeg");
@@ -130,7 +176,7 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
         <tr bgcolor="#999999">
-            <td width="5%"><b>操作</b></td>
+            <td width="8%"><b>操作</b></td>
             <td width="10"><b>IP段</b></td>
             <td width="10%"><b>网关</b></td>
             <td width="10%"><b>掩码</b></td>
@@ -172,7 +218,7 @@
                 }
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
-            <td width="7%" rowspan="2" align="center" style="vertical-align:middle;">
+            <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
                 <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>')">停用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPSegment('<%=ipId%>')">启用</a>
