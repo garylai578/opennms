@@ -24,13 +24,8 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.util.Properties" %>
-<%@ page import="org.opennms.core.bank.BankLogWriter3" %>
-
 
 <%
-    BankLogWriter3 writer3 = new BankLogWriter3();
-    writer3.writeLog("writer3");
-
     final HttpSession userSession = request.getSession(false);
     User user;
     String userID = request.getRemoteUser();

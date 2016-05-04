@@ -71,7 +71,7 @@ public class BankLogWriter2 {
 
     public String readLog() {
         String result="";
-        try {
+        /*try {
             in = new BufferedReader(new FileReader(new File(fileName)));
             String line;
             // 一次读入一行，直到读入null为文件结束
@@ -82,7 +82,7 @@ public class BankLogWriter2 {
         } catch (IOException e) {
             log.error(e.getMessage());
             e.printStackTrace();
-        }
+        }*/
         return result;
     }
 

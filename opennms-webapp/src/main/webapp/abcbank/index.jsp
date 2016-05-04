@@ -1,15 +1,7 @@
 <%@ page import="org.opennms.web.springframework.security.Authentication" %>
-<%@ page import="org.opennms.core.bank.BankLogWriter" %>
 <%@page language="java"
         contentType="text/html"
         session="true"
-%>
-
-<%
-    BankLogWriter logWriter = BankLogWriter.getSingle();
-    String file = request.getContextPath() + "/abc.log";
-    logWriter.setOutputFilePath(file);
-    logWriter.writeLog("file:" + file );
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >

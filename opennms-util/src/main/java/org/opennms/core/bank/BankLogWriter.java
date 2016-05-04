@@ -19,12 +19,12 @@ public class BankLogWriter {
     private BufferedReader in;
     private static final BankLogWriter single = new BankLogWriter();
 
-    public static BankLogWriter getSingle(){return single;}
     /**
-     * 日志文件保存在{opennms.home}/logs/abc_日期.log
-     *
+     * 获取日志文件的单例，日志文件保存在{opennms.home}/logs/abc_日期.log，若要修改，setOutputFilePath(String fileName)方法
      * @return 日志文件操作的单例
      */
+    public static BankLogWriter getSingle(){return single;}
+    
     private BankLogWriter(){
         String filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
@@ -58,7 +58,7 @@ public class BankLogWriter {
             if(out == null)
                 initOut();
             out.append(msg);
-            out.write(System.getProperty("line.separator"));
+            out.append(System.getProperty("line.separator"));
             out.flush();
         } catch (IOException e) {
             log.error(e.getMessage());
