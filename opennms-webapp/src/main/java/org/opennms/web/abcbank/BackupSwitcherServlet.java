@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.TelnetConnection;
 
 import javax.servlet.ServletException;
@@ -36,6 +37,7 @@ public class BackupSwitcherServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request. setCharacterEncoding("UTF-8");
         String alertMsg;
+        String userId = request.getRemoteUser();
         String tmp = request.getParameter("rowID");
         int row = Integer.parseInt(tmp);
         host = request.getParameter("host-"+row);
@@ -99,6 +101,8 @@ public class BackupSwitcherServlet extends HttpServlet {
                 }
             }, inter);*/
         }
+
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]备份交换机[" + host + "]系统，" + alertMsg);
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw = response.getWriter();
         pw.print("<script language='javascript'>alert('" + alertMsg + "' );window.location=('/opennms/abcbank/switcher.jsp');</script>");

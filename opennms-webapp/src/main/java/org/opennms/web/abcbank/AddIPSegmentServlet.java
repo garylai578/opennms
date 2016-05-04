@@ -33,10 +33,13 @@ public class AddIPSegmentServlet extends HttpServlet {
 
     /** {@inheritDoc} */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         String ipSeg = request.getParameter("ipSeg");
         PrintWriter pw=response.getWriter();
         response.setContentType("text/html;charset=gb2312");
         String backMsg = "成功添加！";
+        String startIP = "";
+        String endIP = "";
         try {
             int flag = 0;
             String numString = request.getParameter("ipNum");
@@ -76,6 +79,8 @@ public class AddIPSegmentServlet extends HttpServlet {
                                 op.updateByID(id, "comment", comment);
                                 flag = 1;
                                 log.debug("update ipsegment where id =" + id);
+                                startIP = ip.getStartIP();
+                                endIP = ip.getEndIP();
                                 break;
                             }
                         } catch (ParseException e) {
@@ -109,14 +114,14 @@ public class AddIPSegmentServlet extends HttpServlet {
                     seg.setComment(comment);
                     seg.setCreateTime(sf.format(date));
                     op.insert(seg);
+                    startIP = seg.getStartIP();
+                    endIP = seg.getEndIP();
                 }else{
                     backMsg = "分配ip段失败！";
                 }
             }
 
-            BankLogWriter logWriter = new BankLogWriter();
-//            logWriter.setOutputFilePath(getServletContext().getRealPath("/") + "abc.log");
-            logWriter.writeLog("新增IP段: " + backMsg);
+            BankLogWriter.getSingle().writeLog("用户[" + userId +"]新增IP段[" + startIP + "-" + endIP + "]：" + backMsg);
             pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
             pw.close();
 

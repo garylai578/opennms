@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.TelnetConnection;
 
 import javax.servlet.ServletException;
@@ -27,6 +28,7 @@ public class RecoverySwithcerServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         fileName = this.getServletContext().getRealPath("/") + "/abcbank/switcher.log";
+        String userId = request.getRemoteUser();
         String tmp = request.getParameter("rowID");
         int row = Integer.parseInt(tmp);
         host = request.getParameter("host-"+row);
@@ -40,6 +42,7 @@ public class RecoverySwithcerServlet extends HttpServlet {
         String result = recovery();
         appendFile("恢复结果：\r\n" + result);
 
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]恢复交换机[" + host + "]系统，操作结果：" + result);
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw = response.getWriter();
         pw.print("<script language='javascript'>alert('恢复完成，请在日志中查看结果!' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
@@ -60,8 +63,6 @@ public class RecoverySwithcerServlet extends HttpServlet {
             telnet.login(user, pwd, "");
             telnet.sendCommand(recovery);
             result = telnet.sendCommand("Y");
-            System.out.println("显示结果:");
-            System.out.println(result);
             telnet.sendCommand("exit");
         } catch (IOException e) {
             e.printStackTrace();

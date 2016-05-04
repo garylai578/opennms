@@ -609,7 +609,8 @@ public class SwitcherUtil {
     }
 
     public void diconnect(){
-        telnet.sendCommand("exit");
+        if(telnet != null)
+            telnet.sendCommand("exit");
     }
 
     private boolean connect(){

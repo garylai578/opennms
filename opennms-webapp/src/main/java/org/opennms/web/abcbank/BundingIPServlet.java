@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.SwitcherUtil;
 
 import javax.servlet.ServletException;
@@ -16,7 +17,7 @@ public class BundingIPServlet extends HttpServlet {
     private static final long serialVersionUID = -1120246812517867864L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String userId = request.getRemoteUser();
         String host = request.getParameter("host");
         String user = request.getParameter("user");
         String password = request.getParameter("password");
@@ -56,6 +57,10 @@ public class BundingIPServlet extends HttpServlet {
 	    request.setAttribute("ips", ip);
         request.setAttribute("result", backResult);
 
+        String logs = "";
+        for(int i = 0 ; i < ips.length; ++i)
+            logs += "ip[" + ips[i] + "]" + backContent[i] + ", ";
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]对交换机[" + host + "]进行IP绑定，绑定结果是：" + logs.substring(0, logs.length()-3));
         request.getRequestDispatcher("bundingIP.jsp").forward(request, response);
 
     }

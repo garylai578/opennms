@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.SwitcherUtil;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ public class ManageSwitcherServlet extends HttpServlet {
     private static final long serialVersionUID = -2653800565575021616L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         String id = request.getParameter("id");
         String host = request.getParameter("host");
         String user = request.getParameter("user");
@@ -24,23 +26,30 @@ public class ManageSwitcherServlet extends HttpServlet {
         SwitcherUtil util = new SwitcherUtil(host, user, password);
         String type = request.getParameter("type");
         int result = 0;
-        String msg;
+        String msg, manage="";
 
         String[] interfaces = inters.split("\t");
         for(String inter : interfaces) {
-            if (type.equals("up-interface"))
+            if (type.equals("up-interface")) {
+                manage = "开启交换机[" + host + "]的端口[" + inter + "]";
                 result = util.upInterface(inter);
-            else if (type.equals("down-interface"))
+            }else if (type.equals("down-interface")) {
+                manage = "关闭交换机[" + host + "]的端口[" + inter + "]";
                 result = util.downInterface(inter);
-            else if (type.equals("dot1x"))
+            }else if (type.equals("dot1x")) {
+                manage = "开启交换机[" + host + "]的端口认证[" + inter + "]";
                 result = util.dot1X(inter);
-            else if (type.equals("undoDot1x"))
+            }else if (type.equals("undoDot1x")) {
+                manage = "取消交换机[" + host + "]的端口认证[" + inter + "]";
                 result = util.undoDot1X(inter);
+            }
 
-            if (result < 0)
-                msg = "操作失败，请重试或联系管理员！";
-            else
+            if (result == 1)
                 msg = "操作成功！";
+            else
+                msg = "操作失败，请重试或联系管理员！！";
+
+            BankLogWriter.getSingle().writeLog("用户[" + userId + "]" + manage + "，" + msg);
         }
         util.diconnect();
 

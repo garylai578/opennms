@@ -3,6 +3,7 @@ package org.opennms.web.abcbank;
 import org.apache.log4j.Logger;
 import org.opennms.core.bank.BankIPAddress;
 import org.opennms.core.bank.BankIPAddressOp;
+import org.opennms.core.bank.BankLogWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -43,6 +44,7 @@ public class AddIPAddressServlet extends HttpServlet  {
         PrintWriter pw=response.getWriter();
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
+        String userId = request.getRemoteUser();
 
         try {
             //首先检查是否有停用超过7天的ip，有则更新，没有则新建
@@ -98,6 +100,8 @@ public class AddIPAddressServlet extends HttpServlet  {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]新增IP[" + ipAddr + "]");
 
         response.setContentType("text/html;charset=gb2312");
         pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");

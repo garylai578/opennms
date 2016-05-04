@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.ExportExcel;
 import org.opennms.core.bank.IPSegment;
 
@@ -20,6 +21,7 @@ public class ExportIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = -1675062974497371498L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         String tmp = request.getParameter("rows");
         int rows = Integer.parseInt(tmp);
         List<IPSegment> dataset = new ArrayList<IPSegment>();
@@ -51,6 +53,8 @@ public class ExportIPSegmentServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        BankLogWriter.getSingle().writeLog("用户[" + userId +"]导出IP地址段分配报表");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

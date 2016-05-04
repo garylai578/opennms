@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.IPSegmentOperater;
 
 import javax.servlet.ServletException;
@@ -25,11 +26,17 @@ public class UpdateIPSegmentServlet extends HttpServlet {
         String banktype = request.getParameter("bankType");
         String comment =request.getParameter("comments");
 
+        String userId = request.getRemoteUser();
+        String startIP = request.getParameter("startIP-"+row);
+        String endIP = request.getParameter("endIP-"+row);
+
         IPSegmentOperater op = new IPSegmentOperater();
         try{
             op.updateByID(id, "name", bankname);
             op.updateByID(id, "type", banktype);
             op.updateByID(id, "comment", comment);
+
+            BankLogWriter.getSingle().writeLog("用户[" + userId + "]修改IP段[" + startIP + "-" + endIP + "]，网点名称修改为：" + bankname + "；网点类型修改为：" + banktype + "；备注修改为：" + comment);
 
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();

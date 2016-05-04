@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.DesUtil;
 import org.opennms.core.bank.Switcher;
 import org.opennms.core.bank.SwitcherOperator;
@@ -20,6 +21,7 @@ public class AddSwitcherServlet extends HttpServlet {
     private static final long serialVersionUID = 1706602049908810024L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         String name = request.getParameter("name");
         String group = request.getParameter("group");
         String brand = request.getParameter("brand");
@@ -73,6 +75,7 @@ public class AddSwitcherServlet extends HttpServlet {
             e.printStackTrace();
         }
 
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]新增交换机[" + host + "]");
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
         pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/opennms/abcbank/switcher.jsp');</script>");

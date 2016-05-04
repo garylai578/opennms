@@ -1,6 +1,7 @@
 package org.opennms.web.abcbank;
 
 import org.opennms.core.bank.BankIPAddress;
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.ExportExcel;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ public class ExportIPAddressServlet extends HttpServlet {
     private static final long serialVersionUID = -3000148969246492052L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         String tmp = request.getParameter("rows");
         int rows = Integer.parseInt(tmp);
         List<BankIPAddress> dataset = new ArrayList<BankIPAddress>();
@@ -59,6 +61,8 @@ public class ExportIPAddressServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        BankLogWriter.getSingle().writeLog("用户[" + userId +"]导出IP地址台帐报表");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

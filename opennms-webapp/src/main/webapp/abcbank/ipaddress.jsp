@@ -18,10 +18,51 @@
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-
-<%@include file="/abcbank/getVars.jsp"%>
+<%@ page import="org.opennms.netmgt.config.UserFactory" %>
+<%@ page import="org.opennms.netmgt.config.UserManager" %>
+<%@ page import="org.opennms.netmgt.config.users.Contact" %>
+<%@ page import="org.opennms.netmgt.config.users.User" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.Properties" %>
 
 <%
+    final HttpSession userSession = request.getSession(false);
+    User user;
+    String userID = request.getRemoteUser();
+    UserManager userFactory;
+    String group="";
+    if (userSession != null) {
+        UserFactory.init();
+        userFactory = UserFactory.getInstance();
+        Map users = userFactory.getUsers();
+        user = (User) users.get(userID);
+        Contact[] con = user.getContact();
+        for(Contact c : con) {
+            if (c.getType() != null && c.getType().equals("textPage")) {
+                group = c.getServiceProvider(); // 获取该用户所属分行
+                break;
+            }
+        }
+    }
+
+    Properties pro = new Properties();
+    String path = application.getRealPath("/");
+    try{
+        //读取配置文件
+        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
+        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        pro.load(bf);
+    } catch(FileNotFoundException e){
+        out.println(e);
+    } catch(IOException e){
+        out.println(e);
+    }
+
+    //通过key获取配置文件
+    String[] bankNames = pro.getProperty("abc-bankname").split("/");
+    String[] networkTypes = pro.getProperty("abc-networktype").split("/");
+
     BankIPAddressOp op = new BankIPAddressOp();
 
     BankIPAddress[] ips = (BankIPAddress[])request.getAttribute("ip_addresses");
@@ -49,18 +90,20 @@
         document.allIPSegments.submit();
     }
 
-    function stopIPAddress(id)
+    function stopIPAddress(id, row)
     {
         document.allIPSegments.action="abcbank/stopIPAddress";
         document.allIPSegments.ipAddrID.value=id;
+        document.allIPSegments.rowID.value=row;
         this.method="post";
         document.allIPSegments.submit();
     }
 
-    function startIPAddress(id)
+    function startIPAddress(id, row)
     {
         document.allIPSegments.action="abcbank/startIPAddress";
         document.allIPSegments.ipAddrID.value=id;
+        document.allIPSegments.rowID.value=row;
         document.allIPSegments.submit();
     }
 
@@ -98,7 +141,7 @@
     <input type="hidden" name="searchIP"/>
     <input type="hidden" name="rows"/>
 
-    <h3>IP地址段分配</h3>
+    <h3>IP地址台帐管理</h3>
     <table>
 
     <td align="left">
@@ -177,9 +220,9 @@
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>')">停用</a>
+                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>', '<%=row%>')" onclick="return confirm('确定要停用该IP？')">停用</a>
                 &nbsp;&nbsp;
-                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPAddress('<%=ipId%>')">启用</a>
+                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPAddress('<%=ipId%>', '<%=row%>')">启用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPAddress('<%=ipId%>', '<%=row%>')">变更</a>
             </td>
@@ -200,10 +243,13 @@
                             if(network_type == null || network_type.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
                         %>
-                        <option value="生产网" <%if(network_type.equals("生产网")) out.print("selected=\"\""); %>>生产网</option>
-                        <option value="办公网" <%if(network_type.equals("办公网")) out.print("selected=\"\""); %>>办公网</option>
-                        <option value="监控网" <%if(network_type.equals("监控网")) out.print("selected=\"\""); %>>监控网</option>
-                        <option value="外网" <%if(network_type.equals("外网")) out.print("selected=\"\""); %>>外网</option>
+                        <%
+                            for(int i = 0; i < networkTypes.length; ++i){
+                        %>
+                        <option value="<%=networkTypes[i]%>" <%if(network_type.equals(networkTypes[i])) out.print("selected=\"\"");%>><%=networkTypes[i]%></option>
+                        <%
+                            }
+                        %>
                     </select>
                 </div>
             </td>

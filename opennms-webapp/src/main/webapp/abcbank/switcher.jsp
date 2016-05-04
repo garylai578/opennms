@@ -70,10 +70,11 @@
         document.allSwitchers.submit();
     }
 
-    function deleteSwitcher(id)
+    function deleteSwitcher(id, host)
     {
         document.allSwitchers.action="abcbank/deleteSwitcher";
         document.allSwitchers.switcherId.value=id;
+        document.allSwitchers.switchHost.value=host;
         document.allSwitchers.submit();
     }
 
@@ -206,6 +207,7 @@
     <input type="hidden" name="rowID"/>
     <input type="hidden" name="isCycle" value="0"/>
     <input type="hidden" name="switcherId" />
+    <input type="hidden" name="switchHost"/>
     <input type="hidden" name="sws"/>
     <input type="hidden" name="batchComm" value="<%=((batchComm==null)?"":batchComm)%>"/>
 
@@ -408,7 +410,7 @@
 
         <tr bgcolor="#cccccc">
             <td width="15%" colspan="17"> &nbsp;&nbsp;<b>操作：</b>
-                <a id="<%= "ss("+id+").doDelete" %>" href="javascript:deleteSwitcher('<%=id%>')" onclick="return confirm('你确定要删除： <%=host%> ?')">删除</a>
+                <a id="<%= "ss("+id+").doDelete" %>" href="javascript:deleteSwitcher('<%=id%>', '<%=host%>')" onclick="return confirm('你确定要删除： <%=host%> ?')">删除</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a id="<%= "ss("+id+").ports" %>" href="javascript:managePorts('<%=row%>')">端口操作</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;

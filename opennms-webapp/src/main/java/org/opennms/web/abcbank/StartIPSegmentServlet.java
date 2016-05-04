@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.IPSegmentOperater;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,10 @@ public class StartIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = -1759156388543404811L;
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
+        String rowID = request.getParameter("rowID");
+        String startIP = request.getParameter("startIP-"+rowID);
+        String endIP = request.getParameter("endIP-"+rowID);
         String tmp = request.getParameter("ipSegID");
         int id = Integer.parseInt(tmp);
         IPSegmentOperater op = new IPSegmentOperater();
@@ -29,6 +34,8 @@ public class StartIPSegmentServlet extends HttpServlet {
             Date date = new Date();
             op.updateByID(id, "createtime", sf.format(date));
             op.updateByID(id, "stoptime", "null");
+
+            BankLogWriter.getSingle().writeLog("用户[" + userId + "]启用IP段[" + startIP + "-" + endIP + "]");
 
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();

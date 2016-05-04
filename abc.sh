@@ -1,4 +1,5 @@
 #!/bin/sh
+export LANG=en.US_UTF-8
 git pull
 ./compile.pl
 ./assemble.pl -Dopennms.home=/opt/opennms

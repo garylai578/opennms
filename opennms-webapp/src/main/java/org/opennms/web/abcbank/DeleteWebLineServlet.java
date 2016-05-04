@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.WebLineOperator;
 
 import javax.servlet.ServletException;
@@ -17,11 +18,13 @@ public class DeleteWebLineServlet extends HttpServlet {
     private static final long serialVersionUID = 4289429456093660875L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         String tmp = request.getParameter("webLineID");
         int id = Integer.parseInt(tmp);
         WebLineOperator op = new WebLineOperator();
         try {
             op.delete(id);
+            BankLogWriter.getSingle().writeLog("用户[" + userId + "]删除专线id[" + id + "]");
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
             pw.print("<script language='javascript'>alert('成功删除！' );window.location=('/opennms/abcbank/webline.jsp');</script>");

@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.SwitcherUtil;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ public class DelBundingMacServlet extends HttpServlet {
     private static final long serialVersionUID = 1125829759773406226L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         String host = request.getParameter("host");
         String user = request.getParameter("user");
         String password = request.getParameter("password");
@@ -34,6 +36,11 @@ public class DelBundingMacServlet extends HttpServlet {
         request.setAttribute("backContent", results.replaceAll("@result_split_flag@", "\n"));
         request.setAttribute("macs", macs);
 
+        String logs = "";
+        String[] backContent = results.split("@result_split_flag@");
+        for(int i = 0 ; i < macList.length; ++i)
+            logs += "mac[" + macList[i] + "]" + backContent[i] + ", ";
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]删除交换机[" + host + "]旧的绑定关系，结果是：" + logs.substring(0, logs.length()-3));
         request.getRequestDispatcher("bundingIP.jsp").forward(request, response);
     }
 

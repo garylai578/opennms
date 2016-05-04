@@ -1,6 +1,7 @@
 package org.opennms.web.abcbank;
 
 import org.opennms.core.bank.BankIPAddressOp;
+import org.opennms.core.bank.BankLogWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,7 @@ public class UpdateIPAddressServlet extends HttpServlet {
     private static final long serialVersionUID = 1697488814583614306L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         request.setCharacterEncoding("UTF-8");
         String tmp = request.getParameter("ipAddrID");
         int id = Integer.parseInt(tmp);
@@ -31,6 +33,7 @@ public class UpdateIPAddressServlet extends HttpServlet {
         String equip_type = request.getParameter("equip_type-" + row);
         String application = request.getParameter("app-" + row);
         String comment = request.getParameter("comment-" + row);
+        String ip = request.getParameter("ipaddr-"+row);
 
         BankIPAddressOp op = new BankIPAddressOp();
         try{
@@ -44,6 +47,9 @@ public class UpdateIPAddressServlet extends HttpServlet {
             op.updateByID(id, "application", "'" + application + "'");
             op.updateByID(id, "comment", "'" + comment + "'");
 
+            BankLogWriter.getSingle().writeLog("用户[" + userId + "]更新IP[" + ip  + "]，网络类型更新为：" + network_type + ", 设备使用人更新为：" + users + "，所属支行（分行）更新为："
+                    + bank + "，所属网点（部门）更新为：" + dept + ", 设备类型更新为：" + model + ", 设备品牌更新为：" + equip_brand + "，设备型号更新为：" + equip_type
+                    + "，用途更新为：" + application + "，备注更新为：" + comment);
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
             pw.print("<script language='javascript'>alert('修改成功' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");

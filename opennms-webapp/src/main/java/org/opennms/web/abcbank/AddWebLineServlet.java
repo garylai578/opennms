@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.WebLine;
 import org.opennms.core.bank.WebLineOperator;
 
@@ -32,6 +33,7 @@ public class AddWebLineServlet extends HttpServlet {
         String port = request.getParameter("port");
         String inter = request.getParameter("inter");
         String comment = request.getParameter("comment");
+        String userId = request.getRemoteUser();
 
         try{
             WebLine line = new WebLine();
@@ -50,6 +52,7 @@ public class AddWebLineServlet extends HttpServlet {
             line.setGroup(group);
             WebLineOperator op = new WebLineOperator();
             op.insert(line);
+            BankLogWriter.getSingle().writeLog("用户[" + userId + "]新增专线[" + line + "]");
         }catch (SQLException e) {
             e.printStackTrace();
         }

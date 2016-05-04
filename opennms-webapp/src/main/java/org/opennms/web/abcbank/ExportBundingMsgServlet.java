@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.BundingIP;
 import org.opennms.core.bank.ExportExcel;
 
@@ -21,6 +22,7 @@ public class ExportBundingMsgServlet extends HttpServlet {
     private static final long serialVersionUID = 2417982866821484913L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         String host = request.getParameter("host");
         String name = request.getParameter("switcherName");
         String tmp = request.getParameter("rows");
@@ -48,6 +50,7 @@ public class ExportBundingMsgServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]导出交换机[" + host + "]的绑定关系报表");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

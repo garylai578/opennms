@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.SwitcherUtil;
 
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ public class BatchOperateSwitchersServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         fileName = this.getServletContext().getRealPath("/") + "/abcbank/switcher.log";
+        String userId = request.getRemoteUser();
         String sws = request.getParameter("sws");
         String batchComm = request.getParameter("batchComm");
         response.setContentType("text/html;charset=gb2312");
@@ -42,6 +44,7 @@ public class BatchOperateSwitchersServlet extends HttpServlet {
             String result = su.batchCommands(batchCommands);
             appendFile(result);
             su.diconnect();
+            BankLogWriter.getSingle().writeLog("用户[" + userId + "]对交换机[" + host + "]进行批量操作");
         }
 
         pw.print("<script language='javascript'>alert('完成批量操作，请在日志中查看结果！' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
