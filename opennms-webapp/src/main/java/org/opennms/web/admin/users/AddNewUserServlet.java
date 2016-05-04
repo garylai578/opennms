@@ -28,7 +28,11 @@
 
 package org.opennms.web.admin.users;
 
-import java.io.IOException;
+import org.opennms.core.bank.BankLogWriter;
+import org.opennms.netmgt.config.UserFactory;
+import org.opennms.netmgt.config.UserManager;
+import org.opennms.netmgt.config.users.Password;
+import org.opennms.netmgt.config.users.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,11 +40,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import org.opennms.netmgt.config.UserFactory;
-import org.opennms.netmgt.config.UserManager;
-import org.opennms.netmgt.config.users.Password;
-import org.opennms.netmgt.config.users.User;
+import java.io.IOException;
 
 /**
  * A servlet that handles adding a new user
@@ -63,7 +63,7 @@ public class AddNewUserServlet extends HttpServlet {
         try {
             UserFactory.init();
         } catch (Throwable e) {
-            throw new ServletException("AddNewUserServlet: Error initialising user factory." + e);
+            throw new ServletException("AddNewUserServlet: 初始化UserFactory出错." + e);
         }
         UserManager userFactory = UserFactory.getInstance();
 
@@ -74,7 +74,7 @@ public class AddNewUserServlet extends HttpServlet {
         try {
             hasUser = userFactory.hasUser(userID);
         } catch (Throwable e) {
-            throw new ServletException("can't determine if user " + userID + " already exists in users.xml.", e);
+            throw new ServletException("不能确定用户 " + userID + "是否已经存在于users.xml.", e);
         }
 
         if (hasUser) {
@@ -92,6 +92,8 @@ public class AddNewUserServlet extends HttpServlet {
             final HttpSession userSession = request.getSession(false);
             userSession.setAttribute("user.modifyUser.jsp", newUser);
 
+            String userId = request.getRemoteUser();
+            BankLogWriter.getSingle().writeLog("用户[" + userId + "]新增用户[" + userID + "]");
             // forward the request for proper display
             RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/admin/userGroupView/users/modifyUser.jsp");
             dispatcher.forward(request, response);
