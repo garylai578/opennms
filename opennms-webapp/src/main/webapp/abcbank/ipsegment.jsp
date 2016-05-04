@@ -90,7 +90,7 @@
     {
         document.allIPSegments.action="abcbank/stopIPSegment";
         document.allIPSegments.ipSegID.value=id;
-        document.allIPSegments.rowID = rowID;
+        document.allIPSegments.rowID.value = rowID;
         this.method="post";
         document.allIPSegments.submit();
     }
@@ -99,7 +99,7 @@
     {
         document.allIPSegments.action="abcbank/startIPSegment";
         document.allIPSegments.ipSegID.value=id;
-        document.allIPSegments.rowID = rowID;
+        document.allIPSegments.rowID.value = rowID;
         document.allIPSegments.submit();
     }
 
@@ -216,9 +216,9 @@
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>, <%=row%>')" onclick="return confirm('确定要停用该IP段？')">停用</a>
+                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>', '<%=row%>')" onclick="return confirm('确定要停用该IP段？')">停用</a>
                 &nbsp;&nbsp;
-                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPSegment('<%=ipId%>, <%=row%>')">启用</a>
+                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPSegment('<%=ipId%>', '<%=row%>')">启用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPSegment('<%=ipId%>', '<%=row%>')">修改</a>
             </td>
