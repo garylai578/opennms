@@ -12,15 +12,15 @@
         </common>
         <categories>
             <category>
-                <label><![CDATA[网络服务全局可用性]]></label>
-                <comment>当前监控的所有网络服务的全局可用性。</comment>
+                <label><![CDATA[Overall Service Availability]]></label>
+                <comment>This category reflects availability of all services currently being monitored by OpenNMS.</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <rule><![CDATA[IPADDR != '0.0.0.0']]></rule>
             </category>
             <category>
-                <label><![CDATA[网络接口]]></label>
-                <comment>通过Ping命令感知的网络设备连通性和可用性。</comment>
+                <label><![CDATA[Network Interfaces]]></label>
+                <comment>This category reflects the ability to 'ping' managed devices and SNMP agents.  'Ping', using the ICMP protocol, tests a devices network connectivity/availability.</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>ICMP</service>
@@ -28,8 +28,8 @@
                 <rule><![CDATA[(isICMP | isSNMP) & (IPADDR != '0.0.0.0')]]></rule>
             </category>
             <category>
-                <label><![CDATA[邮件服务器]]></label>
-                <comment>当前网络中运行SMTP、POP3、IMAP等协议的邮件服务器的可用性。</comment>
+                <label><![CDATA[Email Servers]]></label>
+                <comment>This category includes all managed interfaces which are running an Email service, including SMTP, POP3, or IMAP.  This will include MS Exchange servers running these protocols.</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>SMTP</service>
@@ -38,8 +38,8 @@
                 <rule><![CDATA[isSMTP | isPOP3 | isIMAP]]></rule>
             </category>
             <category>
-                <label><![CDATA[Web服务器]]></label>
-                <comment>当前网络中Web服务器（HTTP）的可用性。</comment>
+                <label><![CDATA[Web Servers]]></label>
+                <comment>This category includes all managed interfaces which are running an HTTP (Web) server on port 80 or other common ports.</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>HTTP</service>
@@ -49,8 +49,8 @@
                 <rule><![CDATA[isHTTP | isHTTPS | isHTTP-8000 | isHTTP-8080]]></rule>
             </category>
             <category>
-                <label><![CDATA[JMX服务器]]></label>
-                <comment>当前网络中JMX服务器的可用性。</comment>
+                <label><![CDATA[JMX Servers]]></label>
+                <comment>This category includes all managed interfaces which are running JMX servers.</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>JBoss4</service>
@@ -59,8 +59,8 @@
                 <rule><![CDATA[isJBoss4 | isJBoss32 | isJVM]]></rule>
             </category>
             <category>
-                <label><![CDATA[DNS/DHCP服务器]]></label>
-                <comment>当前网络中DNS、DHCP服务器（域名解析）的可用性。</comment>
+                <label><![CDATA[DNS and DHCP Servers]]></label>
+                <comment>This category includes all managed interfaces which are running either DNS (name resolution) servers or DHCP servers.</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>DNS</service>
@@ -68,8 +68,8 @@
                 <rule><![CDATA[isDNS | isDHCP]]></rule>
             </category>
             <category>
-                <label><![CDATA[数据库服务器]]></label>
-                <comment>当前网络中数据库服务器的可用性。</comment>
+                <label><![CDATA[Database Servers]]></label>
+                <comment>This category includes all managed interfaces which are currently running PostgreSQL, MySQL, SQLServer, or Oracle database servers.</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>MySQL</service>
@@ -79,8 +79,8 @@
                 <rule><![CDATA[isMySQL | isOracle | isPostgres | isSQLServer]]></rule>
             </category>
             <category>
-                <label><![CDATA[其他类型服务器]]></label>
-                <comment>当前网络中其他类型服务器（如FTP、SSH等）的可用性。</comment>
+                <label><![CDATA[Other Servers]]></label>
+                <comment>This category includes all managed interfaces which are running FTP (file transfer protocol) servers or SSH (secure shell) servers.</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>FTP</service>
@@ -88,8 +88,8 @@
                 <rule><![CDATA[isFTP | isSSH]]></rule>
             </category>
             <category>
-                <label><![CDATA[Internet连通性]]></label>
-                <comment>通过Ping命令感知的ISP供应商路由器的网络连通性和可用性。</comment>
+                <label><![CDATA[Internet Connectivity]]></label>
+                <comment>This category reflects the ability to 'ping' the router at the ISP-end of your Internet connection.</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>ICMP</service>
