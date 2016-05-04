@@ -31,17 +31,17 @@ public class ManageSwitcherServlet extends HttpServlet {
         String[] interfaces = inters.split("\t");
         for(String inter : interfaces) {
             if (type.equals("up-interface")) {
-                result = util.upInterface(inter);
                 manage = "开启交换机[" + host + "]的端口[" + inter + "]";
+                result = util.upInterface(inter);
             }else if (type.equals("down-interface")) {
-                result = util.downInterface(inter);
                 manage = "关闭交换机[" + host + "]的端口[" + inter + "]";
+                result = util.downInterface(inter);
             }else if (type.equals("dot1x")) {
-                result = util.dot1X(inter);
                 manage = "开启交换机[" + host + "]的端口认证[" + inter + "]";
+                result = util.dot1X(inter);
             }else if (type.equals("undoDot1x")) {
-                result = util.undoDot1X(inter);
                 manage = "取消交换机[" + host + "]的端口认证[" + inter + "]";
+                result = util.undoDot1X(inter);
             }
 
             if (result == 1)
