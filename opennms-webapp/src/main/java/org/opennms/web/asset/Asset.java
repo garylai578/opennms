@@ -40,28 +40,28 @@ import java.util.Date;
 public class Asset extends Object {
 
     /** Constant <code>UNSPECIFIED_CATEGORY="Unspecified"</code> */
-    public static final String UNSPECIFIED_CATEGORY = "Unspecified";
+    public static final String UNSPECIFIED_CATEGORY = "未分类";
 
     /** Constant <code>INFRASTRUCTURE_CATEGORY="Infrastructure"</code> */
-    public static final String INFRASTRUCTURE_CATEGORY = "Infrastructure";
+    public static final String INFRASTRUCTURE_CATEGORY = "基础设施";
 
     /** Constant <code>SERVER_CATEGORY="Server"</code> */
-    public static final String SERVER_CATEGORY = "Server";
+    public static final String SERVER_CATEGORY = "服务器";
 
     /** Constant <code>DESKTOP_CATEGORY="Desktop"</code> */
-    public static final String DESKTOP_CATEGORY = "Desktop";
+    public static final String DESKTOP_CATEGORY = "台式电脑";
 
     /** Constant <code>LAPTOP_CATEGORY="Laptop"</code> */
-    public static final String LAPTOP_CATEGORY = "Laptop";
+    public static final String LAPTOP_CATEGORY = "笔记本电脑";
 
     /** Constant <code>PRINTER_CATEGORY="Printer"</code> */
-    public static final String PRINTER_CATEGORY = "Printer";
+    public static final String PRINTER_CATEGORY = "打印机";
 
     /** Constant <code>TELEPHONY_CATEGORY="Telephony"</code> */
-    public static final String TELEPHONY_CATEGORY = "Telephony";
+    public static final String TELEPHONY_CATEGORY = "电话";
 
     /** Constant <code>OTHER_CATEGORY="Other"</code> */
-    public static final String OTHER_CATEGORY = "Other";
+    public static final String OTHER_CATEGORY = "其他";
 
     /** Constant <code>CATEGORIES="new String[] { UNSPECIFIED_CATEGORY, IN"{trunked}</code> */
     public static final String[] CATEGORIES = new String[] { UNSPECIFIED_CATEGORY, INFRASTRUCTURE_CATEGORY, SERVER_CATEGORY, DESKTOP_CATEGORY, LAPTOP_CATEGORY, PRINTER_CATEGORY, TELEPHONY_CATEGORY, OTHER_CATEGORY };

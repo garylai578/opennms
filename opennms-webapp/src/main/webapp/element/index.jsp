@@ -73,7 +73,7 @@
             </form>
 
             <form action="element/nodeList.htm" method="get">
-					<p align="right">TCP/IP地址like:          
+					<p align="right">TCP/IP地址:
               <input type="hidden" name="listInterfaces" value="false"/>
               <input type="text" name="iplike" value="" placeholder="*.*.*.*" />
               <input type="submit" value="查询"/></p>                
@@ -115,7 +115,7 @@
             </form>
             
             <form action="element/nodeList.htm" method="get">
-                    <p align="right">Foreign Source name like:
+                    <p align="right">外部资源名称:
                         <input type="hidden" name="listInterfaces" value="false"/>
                         <input type="text" name="foreignSource"/>
                         <input type="submit" value="查询"/>
