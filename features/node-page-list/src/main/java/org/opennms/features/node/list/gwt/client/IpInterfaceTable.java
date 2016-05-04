@@ -77,7 +77,7 @@ public class IpInterfaceTable extends CellTable<IpInterface> {
                 return ipIface.getIpAddress();
             }
         };
-        addColumn(ipAddressColumn, "IP Address");
+        addColumn(ipAddressColumn, "IP地址");
         
         DblClickTextColumn<IpInterface> ipHostNameColumn = new DblClickTextColumn<IpInterface>() {
 
@@ -87,7 +87,7 @@ public class IpInterfaceTable extends CellTable<IpInterface> {
             }
             
         };
-        addColumn(ipHostNameColumn, "IP Host Name");
+        addColumn(ipHostNameColumn, "IP主机名");
         
         DblClickTextColumn<IpInterface> ifIndexColumn = new DblClickTextColumn<IpInterface>() {
             
@@ -105,7 +105,7 @@ public class IpInterfaceTable extends CellTable<IpInterface> {
                 return ipIface.getManaged();
             }
         };
-        addColumn(managedColumn, "Managed");
+        addColumn(managedColumn, "是否被管理");
         
         
         final SingleSelectionModel<IpInterface> selectionModel = new SingleSelectionModel<IpInterface>();
