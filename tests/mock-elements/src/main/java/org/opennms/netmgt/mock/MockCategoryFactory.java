@@ -71,7 +71,7 @@ public class MockCategoryFactory implements CatFactory {
 	    "  </common>" +
 	    "  <categories>" +
 	    "   <category>" +
-	    "    <label><![CDATA[网络接口]]></label>" +
+	    "    <label><![CDATA[Network Interfaces]]></label>" +
 	    "    <comment>This is a very simple category</comment>" +
 	    "    <normal>99</normal>" +
 	    "    <warning>97</warning>" +
@@ -80,7 +80,7 @@ public class MockCategoryFactory implements CatFactory {
 	    "    <rule><![CDATA[(isICMP | isSNMP) & (ipaddr != \"0.0.0.0\")]]></rule>" +
 		"   </category>" +
 		" <category>" +
-	    "    <label><![CDATA[Web服务器]]></label>" +
+	    "    <label><![CDATA[Web Servers]]></label>" +
 	    "    <comment>This is a more complex category</comment>" +
 	    "    <normal>99</normal>" +
 	    "    <warning>97</warning>" +
