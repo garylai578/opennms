@@ -90,18 +90,20 @@
         document.allIPSegments.submit();
     }
 
-    function stopIPAddress(id)
+    function stopIPAddress(id, row)
     {
         document.allIPSegments.action="abcbank/stopIPAddress";
         document.allIPSegments.ipAddrID.value=id;
+        document.allIPSegments.rowID.value=row;
         this.method="post";
         document.allIPSegments.submit();
     }
 
-    function startIPAddress(id)
+    function startIPAddress(id, row)
     {
         document.allIPSegments.action="abcbank/startIPAddress";
         document.allIPSegments.ipAddrID.value=id;
+        document.allIPSegments.rowID.value=row;
         document.allIPSegments.submit();
     }
 
@@ -218,9 +220,9 @@
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>')">停用</a>
+                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>', '<%=row%>')" onclick="return confirm('确定要停用该IP？')">停用</a>
                 &nbsp;&nbsp;
-                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPAddress('<%=ipId%>')">启用</a>
+                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPAddress('<%=ipId%>', '<%=row%>')">启用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPAddress('<%=ipId%>', '<%=row%>')">变更</a>
             </td>
