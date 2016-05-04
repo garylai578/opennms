@@ -9,7 +9,7 @@
         <user>
             <user-id>admin</user-id>
             <full-name>Administrator</full-name>
-            <user-comments>Default administrator, do not delete</user-comments>
+            <user-comments>系统默认管理员，请勿删除</user-comments>
             <password>350310B6DE1650447EC723B1A5DF8E96</password>
         </user>
     </users>

@@ -28,14 +28,14 @@
 
 package org.opennms.web.category;
 
-import java.io.IOException;
-import java.util.Date;
-import java.util.Enumeration;
-
 import org.exolab.castor.xml.MarshalException;
 import org.exolab.castor.xml.ValidationException;
 import org.opennms.core.utils.ThreadCategory;
 import org.opennms.netmgt.xml.rtc.Node;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.Enumeration;
 
 /**
  * Adapts the functionality of the category definition and RTC category updates
@@ -337,7 +337,7 @@ public class Category {
      */
     public String getOutageText() {
         if (m_lastUpdated == null) {
-            return "Calculating...";
+            return "正在计算...";
         } else {
             return getServiceDownCount() + " of " + getServiceCount();
         }
@@ -350,7 +350,7 @@ public class Category {
      */
     public String getAvailText() {
         if (m_lastUpdated == null) {
-            return "Calculating...";
+            return "正在计算...";
         } else {
             return CategoryUtil.valueFormat.format(getValue()) + "%";
         }
