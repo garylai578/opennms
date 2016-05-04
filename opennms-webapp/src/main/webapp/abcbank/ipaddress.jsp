@@ -139,7 +139,7 @@
     <input type="hidden" name="searchIP"/>
     <input type="hidden" name="rows"/>
 
-    <h3>IP地址段分配</h3>
+    <h3>IP地址台帐管理</h3>
     <table>
 
     <td align="left">
