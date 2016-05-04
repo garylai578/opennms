@@ -460,7 +460,7 @@
 		&lt;/common&gt;
 		&lt;categories&gt;
 			&lt;category&gt;
-				&lt;label&gt;&lt;![CDATA[Overall Service Availability]]&gt;&lt;/label&gt;
+				&lt;label&gt;&lt;![CDATA[网络服务全局可用性]]&gt;&lt;/label&gt;
 				&lt;comment&gt;This category reflects overall availability of every device on the 192.168.*.* network.&lt;/comment&gt;
 				&lt;normal&gt;99.99&lt;/normal&gt;
 				&lt;warning&gt;97&lt;/warning&gt;

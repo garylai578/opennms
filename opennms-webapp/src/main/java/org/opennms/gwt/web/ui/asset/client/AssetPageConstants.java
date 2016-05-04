@@ -37,142 +37,142 @@ package org.opennms.gwt.web.ui.asset.client;
  */
 public interface AssetPageConstants extends com.google.gwt.i18n.client.Constants {
 
-    @DefaultStringValue("Additional hardware")
+    @DefaultStringValue("附属硬件设备")
     @Key("additionalhardware")
     String additionalhardware();
 
-    @DefaultStringValue("Additional hardware")
+    @DefaultStringValue("附属硬件设备")
     @Key("additionalhardwareHelp")
     String additionalhardwareHelp();
 
-    @DefaultStringValue("Address 1")
+    @DefaultStringValue("地址 1")
     @Key("address1")
     String address1();
 
-    @DefaultStringValue("Street address of this device (For technician dispatch)")
+    @DefaultStringValue("设备所处地址，用于技术人员派遣")
     @Key("address1Help")
     String address1Help();
 
-    @DefaultStringValue("Longitude")
+    @DefaultStringValue("经度")
     @Key("longitude")
     String longitude();
 
-    @DefaultStringValue("Geo Longitude")
+    @DefaultStringValue("经度")
     @Key("longitudeHelp")
     String longitudeHelp();
 
-    @DefaultStringValue("Latitude")
+    @DefaultStringValue("纬度")
     @Key("latitude")
     String latitude();
 
-    @DefaultStringValue("Geo Latitude")
+    @DefaultStringValue("纬度")
     @Key("latitudeHelp")
     String latitudeHelp();
 
-    @DefaultStringValue("Address 2")
+    @DefaultStringValue("地址 2")
     @Key("address2")
     String address2();
 
-    @DefaultStringValue("Continuation of address")
+    @DefaultStringValue("地址（续）")
     @Key("address2Help")
     String address2Help();
 
-    @DefaultStringValue("Admin")
+    @DefaultStringValue("管理员")
     @Key("admin")
     String admin();
 
-    @DefaultStringValue("Admin contact at the given location")
+    @DefaultStringValue("所属区域管理员联系方式")
     @Key("adminHelp")
     String adminHelp();
 
-    @DefaultStringValue("Asset Number")
+    @DefaultStringValue("资产编号")
     @Key("assetNumber")
     String assetNumber();
 
-    @DefaultStringValue("This field should be used if the organization employs asset tags for inventory purposes")
+    @DefaultStringValue("若因库存管理而建立资产标签后，该字段需相应启用")
     @Key("assetNumberHelp")
     String assetNumberHelp();
 
-    @DefaultStringValue("Error saving: One or more fields contains an invalid value. Please correct your input and try again. ")
+    @DefaultStringValue("保存失败：1个或多个字段存在无效输入，请更正后再次尝试保存")
     @Key("assetPageNotValidDontSave")
     String assetPageNotValidDontSave();
 
     /* Authentication */
-    @DefaultStringValue("Authentication")
+    @DefaultStringValue("身份验证")
     @Key("authenticationHeader")
     String authenticationHeader();
 
-    @DefaultStringValue("AutoEnable")
+    @DefaultStringValue("自动启用")
     @Key("autoEnable")
     String autoEnable();
 
-    @DefaultStringValue("Whether the provided authentication user goes directly into 'enable' mode on this node upon login.")
+    @DefaultStringValue("当通过验证的用户登录后该节点后，自动将其模式设为‘启用’")
     @Key("autoEnableHelp")
     String autoEnableHelp();
 
-    @DefaultStringValue("Building")
+    @DefaultStringValue("建筑")
     @Key("building")
     String building();
 
-    @DefaultStringValue("If this address is part of a complex/campus, this field allows additional granularity.")
+    @DefaultStringValue("大楼、中心、机房等")
     @Key("buildingHelp")
     String buildingHelp();
 
-    @DefaultStringValue("Category")
+    @DefaultStringValue("类别")
     @Key("category")
     String category();
 
-    @DefaultStringValue("This column is to be used to specify what category of Network Element this device would fall into (E.G. WAN Router, Firewall, Etc.)")
+    @DefaultStringValue("设备类别（例如WAN路由器，防火墙等)")
     @Key("categoryHelp")
     String categoryHelp();
 
-    @DefaultStringValue("Circuit ID")
+    @DefaultStringValue("线路编号")
     @Key("circuitId")
     String circuitId();
 
-    @DefaultStringValue("This field should contain the Circuit ID of the ISP/Carrier's designation to which this equipment terminates a connection. For DSL a phone number (or whatever identifying charistic of the LEC should be populated here) to this device's Voice or Data egress.")
+    @DefaultStringValue("线路编号，一般由ISP网络供应商提供")
     @Key("circuitIdHelp")
     String circuitIdHelp();
 
-    @DefaultStringValue("City")
+    @DefaultStringValue("城市")
     @Key("city")
     String city();
 
-    @DefaultStringValue("Continuation of address")
+    @DefaultStringValue("城市")
     @Key("cityHelp")
     String cityHelp();
 
-    @DefaultStringValue("Comment")
+    @DefaultStringValue("备注")
     @Key("comment")
     String comment();
 
-    @DefaultStringValue("Comments for this asset")
+    @DefaultStringValue("备注及说明")
     @Key("commentHelp")
     String commentHelp();
 
     /* Comments */
-    @DefaultStringValue("Comments")
+    @DefaultStringValue("备注")
     @Key("commentsHeader")
     String commentsHeader();
 
     /* Configuration Categories */
-    @DefaultStringValue("Configuration Categories")
+    @DefaultStringValue("配置类别")
     @Key("configurationCatHeader")
     String configurationCatHeader();
 
-    @DefaultStringValue("Connection")
+    @DefaultStringValue("连接")
     @Key("connection")
     String connection();
 
-    @DefaultStringValue("Connection")
+    @DefaultStringValue("连接")
     @Key("connectionHelp")
     String connectionHelp();
 
-    @DefaultStringValue("Contract Expires")
+    @DefaultStringValue("合同失效期")
     @Key("contractExpires")
     String contractExpires();
 
-    @DefaultStringValue("Date when maintenance contract expires")
+    @DefaultStringValue("运维合同失效的日期")
     @Key("contractExpiresHelp")
     String contractExpiresHelp();
 
@@ -180,405 +180,405 @@ public interface AssetPageConstants extends com.google.gwt.i18n.client.Constants
     @Key("cpu")
     String cpu();
 
-    @DefaultStringValue("Type of CPU in this node")
+    @DefaultStringValue("CPU类型")
     @Key("cpuHelp")
     String cpuHelp();
 
-    @DefaultStringValue("Custom")
+    @DefaultStringValue("客户")
     @Key("custom")
     String custom();
 
-    @DefaultStringValue("Customer contract")
+    @DefaultStringValue("客户合同")
     @Key("customerContract")
     String customerContract();
 
-    @DefaultStringValue("Customer contract expires")
+    @DefaultStringValue("客户合同失效期")
     @Key("customerContractExp")
     String customerContractExp();
 
-    @DefaultStringValue("Customer contract expires")
+    @DefaultStringValue("客户合同失效期")
     @Key("customerContractExpHelp")
     String customerContractExpHelp();
 
-    @DefaultStringValue("Customer contract")
+    @DefaultStringValue("客户合同")
     @Key("customerContractHelp")
     String customerContractHelp();
 
     /* Customer */
-    @DefaultStringValue("Customer")
+    @DefaultStringValue("客户")
     @Key("customerHeader")
     String customerHeader();
 
-    @DefaultStringValue("Customer mail")
+    @DefaultStringValue("客户邮件")
     @Key("customerMail")
     String customerMail();
 
-    @DefaultStringValue("Customer mail")
+    @DefaultStringValue("客户邮件")
     @Key("customerMailHelp")
     String customerMailHelp();
 
-    @DefaultStringValue("Customer name")
+    @DefaultStringValue("客户名称")
     @Key("customerName")
     String customerName();
 
-    @DefaultStringValue("Customer name")
+    @DefaultStringValue("客户名称")
     @Key("customerNameHelp")
     String customerNameHelp();
 
-    @DefaultStringValue("Customer number")
+    @DefaultStringValue("客户编号")
     @Key("customerNumber")
     String customerNumber();
 
-    @DefaultStringValue("Customer number")
+    @DefaultStringValue("客户编号")
     @Key("customerNumberHelp")
     String customerNumberHelp();
 
-    @DefaultStringValue("Customer phone")
+    @DefaultStringValue("客户电话")
     @Key("customerPhone")
     String customerPhone();
 
-    @DefaultStringValue("Customer phone")
+    @DefaultStringValue("客户电话")
     @Key("customerPhoneHelp")
     String customerPhoneHelp();
 
     /* Custom */
-    @DefaultStringValue("Custom")
+    @DefaultStringValue("客户")
     @Key("customHeader")
     String customHeader();
 
-    @DefaultStringValue("Custom")
+    @DefaultStringValue("客户")
     @Key("customHelp")
     String customHelp();
 
-    @DefaultStringValue("Date Installed")
+    @DefaultStringValue("安装日期")
     @Key("dateInstalled")
     String dateInstalled();
 
-    @DefaultStringValue("A handy dandy place to keep the date this equipment went into service, just in case the bean counters or your boss ask you for any particulars on this device")
+    @DefaultStringValue("设备安装日期")
     @Key("dateInstalledHelp")
     String dateInstalledHelp();
 
-    @DefaultStringValue("Department")
+    @DefaultStringValue("部门")
     @Key("department")
     String department();
 
-    @DefaultStringValue("More of the above, but more simple (E.G. Accounting, Collections, IT, Etc.)")
+    @DefaultStringValue("部门")
     @Key("departmentHelp")
     String departmentHelp();
 
-    @DefaultStringValue("Description")
+    @DefaultStringValue("设备描述")
     @Key("description")
     String description();
 
-    @DefaultStringValue("Description of the device's purpose (E.G. Core P2P Router, Egress Internet Router, Etc.)")
+    @DefaultStringValue("设备描述，如用途、功能等")
     @Key("descriptionHelp")
     String descriptionHelp();
 
-    @DefaultStringValue("Display Category")
+    @DefaultStringValue("显示类别")
     @Key("displayCategory")
     String displayCat();
 
-    @DefaultStringValue("This column is to be used to specify what category of Network Element this device would fall into (E.G. WAN Router, Firewall, Etc.).")
+    @DefaultStringValue("显示类别")
     @Key("displayCategoryHelp")
     String displayCatHelp();
 
-    @DefaultStringValue("Division")
+    @DefaultStringValue("科室")
     @Key("division")
     String division();
 
-    @DefaultStringValue("Standard corporate mumbo jumbo for the bean counters getting ever more granular on where money gets spent. Populate as you fee fit, or as dictated.")
+    @DefaultStringValue("科室")
     @Key("divisionHelp")
     String divisionHelp();
 
-    @DefaultStringValue("Enable Password")
+    @DefaultStringValue("启用密码")
     @Key("enablePassword")
     String enablePassword();
 
-    @DefaultStringValue("Enable Password: used only if AutoEnable is not set to 'A'")
+    @DefaultStringValue("启用密码：仅当‘自动启用’未设置为‘A’时可用")
     @Key("enablePasswordHelp")
     String enablePasswordHelp();
 
-    @DefaultStringValue("Error fetching asset data for node with ID: ")
+    @DefaultStringValue("获取资产数据失败，节点编号：")
     @Key("errorFatchingAssetData")
     String errorFatchingAssetData();
 
-    @DefaultStringValue("Error fetching asset suggestion data for node ID: ")
+    @DefaultStringValue("获取资产建议数据失败，节点编号：")
     @Key("errorFetchingAssetSuggData")
     String errorFetchingAssetSuggData();
 
-    @DefaultStringValue("Error saving asset data for node ID: ")
+    @DefaultStringValue("保存资产数据失败，节点编号：")
     @Key("errorSavingAssetData")
     String errorSavingAssetData();
 
-    @DefaultStringValue("Fax")
+    @DefaultStringValue("传真")
     @Key("fax")
     String fax();
 
-    @DefaultStringValue("Fax number of the above vendor")
+    @DefaultStringValue("传真")
     @Key("faxHelp")
     String faxHelp();
 
-    @DefaultStringValue("Floor")
+    @DefaultStringValue("楼层")
     @Key("floor")
     String floor();
 
-    @DefaultStringValue("Floor on which this node is located, for technician dispatch.")
+    @DefaultStringValue("楼层")
     @Key("floorHelp")
     String floorHelp();
 
     /* Hardware */
-    @DefaultStringValue("Hardware")
+    @DefaultStringValue("硬件")
     @Key("hardwareHeader")
     String hardwareHeader();
 
-    @DefaultStringValue("HDD")
+    @DefaultStringValue("硬盘")
     @Key("hdd")
     String hdd();
 
-    @DefaultStringValue("Hard disk drive information")
+    @DefaultStringValue("硬盘")
     @Key("hddHelp")
     String hddHelp();
 
     /* Identification */
-    @DefaultStringValue("Identification")
+    @DefaultStringValue("身份认证")
     @Key("identificationHeader")
     String identificationHeader();
 
-    @DefaultStringValue("Asset Info of Node: ")
+    @DefaultStringValue("资产信息，节点: ")
     @Key("infoAsset")
     String infoAsset();
 
-    @DefaultStringValue("Loading Asset Info of Node: ")
+    @DefaultStringValue("资产信息加载中，节点: ")
     @Key("infoAssetLoging")
     String infoAssetLoging();
 
-    @DefaultStringValue("Resetting Asset Info of Node: ")
+    @DefaultStringValue("资产信息重置中，节点: ")
     @Key("infoAssetRestting")
     String infoAssetRestting();
 
-    @DefaultStringValue("Saved Asset Info of Node: ")
+    @DefaultStringValue("资产信息已保存，节点: ")
     @Key("infoAssetSaved")
     String infoAssetSaved();
 
-    @DefaultStringValue("Saving Asset Info of Node: ")
+    @DefaultStringValue("资产信息保存中，节点: ")
     @Key("infoAssetSaving")
     String infoAssetSaving();
 
-    @DefaultStringValue("Inputpower")
+    @DefaultStringValue("电源")
     @Key("inputpower")
     String inputpower();
 
-    @DefaultStringValue("Input power type")
+    @DefaultStringValue("电源类型")
     @Key("inputpowerHelp")
     String inputpowerHelp();
 
-    @DefaultStringValue("Last Modified: ")
+    @DefaultStringValue("最近修改：")
     @Key("lastModified")
     String lastModified();
 
-    @DefaultStringValue("Lease")
+    @DefaultStringValue("租赁")
     @Key("lease")
     String lease();
 
-    @DefaultStringValue("Lease Expires")
+    @DefaultStringValue("租赁失效期")
     @Key("leaseExpires")
     String leaseExpires();
 
-    @DefaultStringValue("If all goes according to plan, this should be a date after you’ve got new equipment commissioned to take over for the service this equipment provides")
+    @DefaultStringValue("租赁失效期")
     @Key("leaseExpiresHelp")
     String leaseExpiresHelp();
 
-    @DefaultStringValue("A nice spot to populate the name of the leasing company or lease ID for this equipment")
+    @DefaultStringValue("租赁信息")
     @Key("leaseHelp")
     String leaseHelp();
 
-    @DefaultStringValue("Changed value, valid")
+    @DefaultStringValue("已修改")
     @Key("legendGreen")
     String legendGreen();
 
-    @DefaultStringValue("Already saved value")
+    @DefaultStringValue("已保存")
     @Key("legendGrey")
     String legendGrey();
 
-    @DefaultStringValue("legend")
+    @DefaultStringValue("图例")
     @Key("legendHeadline")
     String legendHeadline();
 
-    @DefaultStringValue("Changed value with error, can't be saved")
+    @DefaultStringValue("已修改但出错，无法保存")
     @Key("legendRed")
     String legendRed();
 
-    @DefaultStringValue("Changed value with warning, save possible")
+    @DefaultStringValue("已修改但有警告，可能可以保存")
     @Key("legendYellow")
     String legendYellow();
 
     /* Location */
-    @DefaultStringValue("Location")
+    @DefaultStringValue("地址")
     @Key("locationHeader")
     String locationHeader();
 
-    @DefaultStringValue("Maint Contract Number")
+    @DefaultStringValue("运维合同")
     @Key("maintContract")
     String maintContract();
 
-    @DefaultStringValue("Number / ID of maintenance contract")
+    @DefaultStringValue("运维合同编号")
     @Key("maintContractHelp")
     String maintContractHelp();
 
-    @DefaultStringValue("Maint Phone")
+    @DefaultStringValue("运维电话")
     @Key("maintPhone")
     String maintPhone();
 
-    @DefaultStringValue("Phone number for technical operational support for the device in question (Think Helpdesk, Phone Company, ISP NOC, Etc.)")
+    @DefaultStringValue("运维电话")
     @Key("maintPhoneHelp")
     String maintPhoneHelp();
 
-    @DefaultStringValue("Manufacturer")
+    @DefaultStringValue("生产商")
     @Key("manufacturer")
     String manufacturer();
 
-    @DefaultStringValue("Manufacturer -Self explanatory")
+    @DefaultStringValue("生产商")
     @Key("manufacturerHelp")
     String manufacturerHelp();
 
-    @DefaultStringValue("Model Number")
+    @DefaultStringValue("型号")
     @Key("modelNumber")
     String modelNumber();
 
-    @DefaultStringValue("Model number of the device (E.G. Cisco 3845, Oki B4400, Etc.)")
+    @DefaultStringValue("设备型号，例如Cisco 3845，Oki B4400等")
     @Key("modelNumberHelp")
     String modelNumberHelp();
 
-    @DefaultStringValue("Node ID: ")
+    @DefaultStringValue("节点ID：")
     @Key("nodeIdLabel")
     String nodeIdLabel();
 
-    @DefaultStringValue("General Information")
+    @DefaultStringValue("节点信息")
     @Key("nodeInfoLink")
     String nodeInfoLink();
 
-    @DefaultStringValue("Parameter node is not an parseable Node ID: ")
+    @DefaultStringValue("参数有误，节点：")
     @Key("nodeParamNotValidInt")
     String nodeParamNotValidInt();
 
-    @DefaultStringValue("Notification Category")
+    @DefaultStringValue("告警类别")
     @Key("notificationCategory")
     String notificationCat();
 
-    @DefaultStringValue("This could be something like 'serverAdmin' or 'networkAdmin' to be used in filter rules for directing notifications.")
+    @DefaultStringValue("告警类别")
     @Key("notificationCategoryHelp")
     String notificationCatHelp();
 
-    @DefaultStringValue("Number of power supplies")
+    @DefaultStringValue("电源数量")
     @Key("numpowersupplies")
     String numpowersupplies();
 
-    @DefaultStringValue("Number of power supplies")
+    @DefaultStringValue("电源数量")
     @Key("numpowersuppliesHelp")
     String numpowersuppliesHelp();
 
-    @DefaultStringValue("Operating System")
+    @DefaultStringValue("操作系统")
     @Key("operatingSystem")
     String operatingSystem();
 
-    @DefaultStringValue("Self explanatory")
+    @DefaultStringValue("操作系统")
     @Key("operatingSystemHelp")
     String operatingSystemHelp();
 
-    @DefaultStringValue("Password")
+    @DefaultStringValue("密码")
     @Key("password")
     String password();
 
-    @DefaultStringValue("Password")
+    @DefaultStringValue("密码")
     @Key("passwordHelp")
     String passwordHelp();
 
-    @DefaultStringValue("Phone")
+    @DefaultStringValue("电话")
     @Key("phone")
     String phone();
 
-    @DefaultStringValue("Phone number of vendor that services (or provides service to) this equipment (E.G. ISP, PBX Vendor, Phone company, etc.)")
+    @DefaultStringValue("电话")
     @Key("phoneHelp")
     String phoneHelp();
 
-    @DefaultStringValue("Poller Category")
+    @DefaultStringValue("Poller类别")
     @Key("pollerCategory")
     String pollerCat();
 
-    @DefaultStringValue("This is to be used in filter rules to define devices in a particular poller package.")
+    @DefaultStringValue("Poller类别")
     @Key("pollerCategoryHelp")
     String pollerCatHelp();
 
-    @DefaultStringValue("Port")
+    @DefaultStringValue("端口")
     @Key("port")
     String port();
 
-    @DefaultStringValue("Port on a given card or device being monitored")
+    @DefaultStringValue("端口")
     @Key("portHelp")
     String portHelp();
 
-    @DefaultStringValue("Rack")
+    @DefaultStringValue("机架")
     @Key("rack")
     String rack();
 
-    @DefaultStringValue("This field should be used to designate the rack in specific that this piece of equipment is located in at a given location (E.G. Server3; Network5; Isle C-Bay5;105.12, Etc.) preferably by using both Bay & Isle coordinates")
+    @DefaultStringValue("机架")
     @Key("rackHelp")
     String rackHelp();
 
-    @DefaultStringValue("Rack unit height")
+    @DefaultStringValue("机架高度")
     @Key("rackUnitHeight")
     String rackUnitHeight();
 
-    @DefaultStringValue("Rack unit height of node: 1, 2, 3, ...")
+    @DefaultStringValue("机架高度")
     @Key("rackUnitHeightHelp")
     String rackUnitHeightHelp();
 
-    @DefaultStringValue("RAM")
+    @DefaultStringValue("内存")
     @Key("ram")
     String ram();
 
-    @DefaultStringValue("RAM")
+    @DefaultStringValue("内存")
     @Key("ramHelp")
     String ramHelp();
 
-    @DefaultStringValue("Region")
+    @DefaultStringValue("区域")
     @Key("region")
     String region();
 
-    @DefaultStringValue("On a geographically or otherwise determined regional basis")
+    @DefaultStringValue("区域")
     @Key("regionHelp")
     String regionHelp();
 
-    @DefaultStringValue("Reset")
+    @DefaultStringValue("重置")
     @Key("resetButton")
     String resetButton();
 
-    @DefaultStringValue("Room")
+    @DefaultStringValue("房间")
     @Key("room")
     String room();
 
-    @DefaultStringValue("Room number where this node is located, for technician dispatch")
+    @DefaultStringValue("房间")
     @Key("roomHelp")
     String roomHelp();
 
     /* Submit */
-    @DefaultStringValue("Save")
+    @DefaultStringValue("保存")
     @Key("saveButton")
     String saveButton();
 
-    @DefaultStringValue("Serial Number")
+    @DefaultStringValue("序列号")
     @Key("serialNumber")
     String serialNumber();
 
-    @DefaultStringValue("Self explanatory")
+    @DefaultStringValue("序列号")
     @Key("serialNumberHelp")
     String serialNumberHelp();
 
-    @DefaultStringValue("Slot")
+    @DefaultStringValue("槽位")
     @Key("slot")
     String slot();
 
-    @DefaultStringValue("This field should be used to designate what slot in a chassis/shelf this node occupies")
+    @DefaultStringValue("槽位")
     @Key("slotHelp")
     String slotHelp();
 
@@ -586,190 +586,190 @@ public interface AssetPageConstants extends com.google.gwt.i18n.client.Constants
     @Key("snmpcommunity")
     String snmpcommunity();
 
-    @DefaultStringValue("SNMP community string")
+    @DefaultStringValue("SNMP团体名")
     @Key("snmpcommunityHelp")
     String snmpcommunityHelp();
 
     /* SNMP Labels */
-    @DefaultStringValue("SNMP Info")
+    @DefaultStringValue("SNMP信息")
     @Key("snmpHeader")
     String snmpHeader();
 
-    @DefaultStringValue("State")
+    @DefaultStringValue("省")
     @Key("state")
     String state();
 
-    @DefaultStringValue("Continuation of address")
+    @DefaultStringValue("省")
     @Key("stateHelp")
     String stateHelp();
 
-    @DefaultStringValue("Storage Controller")
+    @DefaultStringValue("存储控制器")
     @Key("storagectrl")
     String storagectrl();
 
-    @DefaultStringValue("Storage Controller")
+    @DefaultStringValue("存储控制器")
     @Key("storagectrlHelp")
     String storagectrlHelp();
 
-    @DefaultStringValue("Can't read given text as date. Please use the date picker.")
+    @DefaultStringValue("无法识别日期，请从日历中选取")
     @Key("stringNotADate")
     String stringNotADate();
 
-    @DefaultStringValue("Input is not an parseable as Integer: ")
+    @DefaultStringValue("输入内容不属于Integer：")
     @Key("stringNoValidInteger")
     String stringNoValidInteger();
 
-    @DefaultStringValue("The text is too long; maximum length is: ")
+    @DefaultStringValue("输入内容过长。该字段最大长度：")
     @Key("stringToLongError")
     String stringToLongError();
 
-    @DefaultStringValue("Please just use A-Z a-z 0-9 or - and _ to avoid configuration problems")
+    @DefaultStringValue("仅限输入A-Z、a-z、0-9、‘-’、和‘_’")
     @Key("stringBasicValidationError")
     String stringBasicValidationError();
 
-    @DefaultStringValue("The text contains whitespaces; please remove them")
+    @DefaultStringValue("输入中有空格，请去除")
     @Key("stringContainsWhiteSpacesError")
     String stringContainsWhiteSpacesError();
 
-    @DefaultStringValue("The text dosen't maches the ergexp; ")
+    @DefaultStringValue("输入不符合正则表达式")
     @Key("stringNotMatchingRegexpError")
     String stringNotMatchingRegexpError();
 
-    @DefaultStringValue("System Contact")
+    @DefaultStringValue("系统联系人")
     @Key("systemContact")
     String systemContact();
 
-    @DefaultStringValue("System Contact, information from SNMP agent")
+    @DefaultStringValue("系统联系人")
     @Key("systemContactHelp")
     String systemContactHelp();
 
-    @DefaultStringValue("System Description")
+    @DefaultStringValue("系统描述")
     @Key("systemDescription")
     String systemDescription();
 
-    @DefaultStringValue("System Description, information from SNMP agent")
+    @DefaultStringValue("系统描述")
     @Key("systemDescriptionHelp")
     String systemDescriptionHelp();
 
-    @DefaultStringValue("System Id")
+    @DefaultStringValue("系统编号")
     @Key("systemId")
     String systemId();
 
-    @DefaultStringValue("System ID, information from SNMP agent")
+    @DefaultStringValue("系统编号")
     @Key("systemIdHelp")
     String systemIdHelp();
 
-    @DefaultStringValue("System Location")
+    @DefaultStringValue("系统位置")
     @Key("systemLocation")
     String systemLocation();
 
-    @DefaultStringValue("System Location, information from SNMP agent")
+    @DefaultStringValue("系统位置")
     @Key("systemLocationHelp")
     String systemLocationHelp();
 
-    @DefaultStringValue("System Name")
+    @DefaultStringValue("系统名称")
     @Key("systemName")
     String systemName();
 
-    @DefaultStringValue("System Name, information from SNMP agent")
+    @DefaultStringValue("系统名称")
     @Key("systemNameHelp")
     String systemNameHelp();
 
-    @DefaultStringValue("Threshold Category")
+    @DefaultStringValue("阈值类别")
     @Key("thresholdCategory")
     String thresholdCat();
 
-    @DefaultStringValue("This is to be used in filter rules to define devices in a particular thresholding package.")
+    @DefaultStringValue("阈值类别")
     @Key("thresholdCategoryHelp")
     String thresholdCatHelp();
 
-    @DefaultStringValue("Username")
+    @DefaultStringValue("用户名")
     @Key("username")
     String username();
 
-    @DefaultStringValue("Username")
+    @DefaultStringValue("用户名")
     @Key("usernameHelp")
     String usernameHelp();
 
-    @DefaultStringValue("Vendor Asset")
+    @DefaultStringValue("供应商资产")
     @Key("vendorAsset")
     String vendorAsset();
 
-    @DefaultStringValue("If the vendor that supplies this equipment uses a asset tag of their own, populate that data here")
+    @DefaultStringValue("供应商资产")
     @Key("vendorAssetHelp")
     String vendorAssetHelp();
 
     /* Vendor */
-    @DefaultStringValue("Vendor")
+    @DefaultStringValue("供应商")
     @Key("vendorHeader")
     String vendorHeader();
 
-    @DefaultStringValue("Name")
+    @DefaultStringValue("供应商名称")
     @Key("vendorName")
     String vendorName();
 
-    @DefaultStringValue("Vendor who provides service for this device (If applicable, E.G. ISP, Local PBX Maintenance vendor, etc.)")
+    @DefaultStringValue("供应商名称")
     @Key("vendorNameHelp")
     String vendorNameHelp();
 
-    @DefaultStringValue("ZIP")
+    @DefaultStringValue("邮编")
     @Key("zip")
     String zip();
 
-    @DefaultStringValue("Postal code (ZIP code)")
+    @DefaultStringValue("邮编")
     @Key("zipHelp")
     String zipHelp();
 
-    @DefaultStringValue("Country")
+    @DefaultStringValue("国家")
     @Key("country")
     String country();
 
-    @DefaultStringValue("Country")
+    @DefaultStringValue("国家")
     @Key("countryHelp")
     String countryHelp();
 
     /* VMware asset fields */
-    @DefaultStringValue("VMware")
+    @DefaultStringValue("虚拟机")
     @Key("vmwareHeader")
     String vmwareHeader();
 
-    @DefaultStringValue("VMware managed object ID")
+    @DefaultStringValue("虚拟机管理对象编号")
     @Key("vmwareManagedObjectId")
     String vmwareManagedObjectId();
 
-    @DefaultStringValue("Internal id in VMware vCenter")
+    @DefaultStringValue("虚拟机内部编号")
     @Key("vmwareManagedObjectIdHelp")
     String vmwareManagedObjectIdHelp();
 
-    @DefaultStringValue("VMware managed entity type")
+    @DefaultStringValue("虚拟机管理对象类别")
     @Key("vmwareManagedEntityType")
     String vmwareManagedEntityType();
 
-    @DefaultStringValue("Defines a VMware host system or virtual machine")
+    @DefaultStringValue("虚拟机管理对象类别")
     @Key("vmwareManagedEntityTypeHelp")
     String vmwareManagedEntityTypeHelp();
 
-    @DefaultStringValue("VMware management server")
+    @DefaultStringValue("虚拟机管理服务器")
     @Key("vmwareManagementServer")
     String vmwareManagementServer();
 
-    @DefaultStringValue("VMware vCenter host")
+    @DefaultStringValue("虚拟机vCenter主机")
     @Key("vmwareManagementServerHelp")
     String vmwareManagementServerHelp();
 
-    @DefaultStringValue("VMware Topology Info")
+    @DefaultStringValue("虚拟机拓扑信息")
     @Key("vmwareTopologyInfo")
     String vmwareTopologyInfo();
 
-    @DefaultStringValue("VMware topology information")
+    @DefaultStringValue("虚拟机拓扑信息")
     @Key("vmwareTopologyInfoHelp")
     String vmwareTopologyInfoHelp();
 
-    @DefaultStringValue("VMware state")
+    @DefaultStringValue("虚拟机状态")
     @Key("vmwareState")
     String vmwareState();
 
-    @DefaultStringValue("VMware managed entity state")
+    @DefaultStringValue("虚拟机状态")
     @Key("vmwareStateHelp")
     String vmwareStateHelp();
 }

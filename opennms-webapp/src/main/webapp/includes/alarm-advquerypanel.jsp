@@ -62,7 +62,7 @@
         <table width="100%" border="0" cellpadding="2" cellspacing="0" >
           <tr>
             <td>告警文本:</td>
-            <td>TCP/IP地址like:</td>
+            <td>TCP/IP地址:</td>
           </tr>
 
           <tr>
