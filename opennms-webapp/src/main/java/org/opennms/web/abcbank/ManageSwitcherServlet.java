@@ -44,10 +44,10 @@ public class ManageSwitcherServlet extends HttpServlet {
                 manage = "取消交换机[" + host + "]的端口认证[" + inter + "]";
             }
 
-            if (result < 0)
-                msg = "操作失败，请重试或联系管理员！";
-            else
+            if (result == 1)
                 msg = "操作成功！";
+            else
+                msg = "操作失败，请重试或联系管理员！！";
 
             BankLogWriter.getSingle().writeLog("用户[" + userId + "]" + manage + "，" + msg);
         }
