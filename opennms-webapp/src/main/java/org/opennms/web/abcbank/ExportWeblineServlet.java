@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.bank.ExportExcel;
 import org.opennms.core.bank.WebLine;
 
@@ -20,6 +21,7 @@ public class ExportWeblineServlet extends HttpServlet {
     private static final long serialVersionUID = -5404657771205785976L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getRemoteUser();
         String tmp = request.getParameter("rows");
         int rows = Integer.parseInt(tmp);
         List<WebLine> dataset = new ArrayList<WebLine>();
@@ -54,6 +56,7 @@ public class ExportWeblineServlet extends HttpServlet {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]导出专线台帐报表");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
