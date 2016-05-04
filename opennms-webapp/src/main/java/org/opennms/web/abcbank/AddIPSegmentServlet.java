@@ -114,7 +114,7 @@ public class AddIPSegmentServlet extends HttpServlet {
                 }
             }
 
-            BankLogWriter logWriter = new BankLogWriter();
+            BankLogWriter logWriter = BankLogWriter.getSingle();
 //            logWriter.setOutputFilePath(getServletContext().getRealPath("/") + "abc.log");
             logWriter.writeLog("新增IP段: " + backMsg);
             pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");

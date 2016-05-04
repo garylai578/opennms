@@ -18,7 +18,7 @@ public class BankIPAddressOp {
 
     private final DBUtils d = new DBUtils(getClass());
     final static Logger log =  Logger.getLogger(BankIPAddressOp.class);
-    BankLogWriter logWriter = new BankLogWriter();
+    BankLogWriter logWriter = BankLogWriter.getSingle();
 
     public void insert(BankIPAddress ipaddr) throws SQLException {
         try {

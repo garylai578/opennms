@@ -15,15 +15,17 @@ public class BankLogWriter {
     final static Logger log =  Logger.getLogger(BankLogWriter.class);
     //Log文件
     private String fileName;
-    private BufferedOutputStream out;
+    private OutputStreamWriter out;
     private BufferedReader in;
+    private static final BankLogWriter single = new BankLogWriter();
 
+    public static BankLogWriter getSingle(){return single;}
     /**
      * 日志文件保存在{opennms.home}/logs/abc_日期.log
      *
      * @return 日志文件操作的单例
      */
-    public BankLogWriter(){
+    private BankLogWriter(){
         String filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         fileName = filePath + "abc_" + df.format(new Date()) + ".log";
@@ -31,12 +33,12 @@ public class BankLogWriter {
     }
 
     private void initOut(){
-        log.debug("log file：" + fileName);
+        log.debug("abc log file：" + fileName);
         File file = new File(fileName);
         if(!file.exists()){
             try {
                 file.createNewFile();
-                out=new BufferedOutputStream(new FileOutputStream(file,true));
+                out=new OutputStreamWriter(new FileOutputStream(file,true), "UTF-8");
             } catch (IOException e) {
                 log.error(e.getMessage());
                 e.printStackTrace();
@@ -54,9 +56,9 @@ public class BankLogWriter {
         msg = time + msg;
         try {
             if(out == null)
-                out=new BufferedOutputStream(new FileOutputStream(new File(fileName),true));
-            out.write(msg.getBytes());
-            out.write(System.getProperty("line.separator").getBytes());
+                initOut();
+            out.append(msg);
+            out.write(System.getProperty("line.separator"));
             out.flush();
         } catch (IOException e) {
             log.error(e.getMessage());

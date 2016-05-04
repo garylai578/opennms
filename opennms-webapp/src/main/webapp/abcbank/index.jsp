@@ -6,7 +6,7 @@
 %>
 
 <%
-    BankLogWriter logWriter = new BankLogWriter();
+    BankLogWriter logWriter = BankLogWriter.getSingle();
     String file = request.getContextPath() + "/abc.log";
     logWriter.setOutputFilePath(file);
     logWriter.writeLog("file:" + file );
