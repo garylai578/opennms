@@ -216,7 +216,7 @@
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>, <%=row%>')">停用</a>
+                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>, <%=row%>')" onclick="return confirm('确定要停用该IP段？')">停用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPSegment('<%=ipId%>, <%=row%>')">启用</a>
                 &nbsp;&nbsp;
