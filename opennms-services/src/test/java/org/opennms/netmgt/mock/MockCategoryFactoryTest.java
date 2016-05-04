@@ -61,7 +61,7 @@ public class MockCategoryFactoryTest extends TestCase {
 	    "  </common>" +
 	    "  <categories>" +
 	    "   <category>" +
-	    "    <label><![CDATA[网络接口]]></label>" +
+	    "    <label><![CDATA[Network Interfaces]]></label>" +
 	    "    <comment>This is a very simple category</comment>" +
 	    "    <normal>99</normal>" +
 	    "    <warning>97</warning>" +
