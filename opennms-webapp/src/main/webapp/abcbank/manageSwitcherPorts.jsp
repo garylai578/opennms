@@ -113,8 +113,8 @@
 </script>
 
 <form method="post" name="manageSwticher">
-    <input type="hidden" name="interface"/>
-    <input type="hidden" name="type" />
+    <input type="hidden" name="interface" value=""/>
+    <input type="hidden" name="type" value=""/>
     <input type="hidden" name="host" value="<%=host%>"/>
     <input type="hidden" name="user" value="<%=user%>"/>
     <input type="hidden" name="password" value="<%=password%>"/>
@@ -201,13 +201,13 @@
     </table>
 
     批量操作：
-    <input type="submit" id="ss('<%=row%>').doUp" href="javascript:upInterfaces('<%=row%>')" value="开启端口">
+    <a id="ss('<%=row%>').doUp" href="javascript:upInterfaces('<%=row%>')">开启端口</a>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="submit" id="ss('<%=row%>').doDown" href="javascript:downInterfaces('<%=row%>')" value="关闭端口">
+    <a id="ss('<%=row%>').doDown" href="javascript:downInterfaces('<%=row%>')" >关闭端口</a>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="submit" id="ss('<%=row%>').doDot1x"href="javascript:dot1xs('<%=row%>')" value="端口认证">
+    <a id="ss('<%=row%>').doDot1x"href="javascript:dot1xs('<%=row%>')">端口认证</a>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="submit" id="ss('<%=row%>').undoDot1x" href="javascript:undoDot1xs('<%=row%>')" value="取消认证">
+    <a id="ss('<%=row%>').undoDot1x" href="javascript:undoDot1xs('<%=row%>')">取消认证</a>
     &nbsp;&nbsp;&nbsp;&nbsp;
 </form>
 
