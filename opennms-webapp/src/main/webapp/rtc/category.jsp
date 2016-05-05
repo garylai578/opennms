@@ -45,6 +45,7 @@
 		org.springframework.security.core.context.SecurityContextHolder
 		"
 %>
+<%--<%@ page import="org.opennms.core.bank.NodeUtil" %>--%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 
@@ -88,7 +89,7 @@
     //put the nodes in a tree map to sort by name
     TreeMap<String,Node> nodeMap = new TreeMap<String,Node>();
     Enumeration<Node> nodeEnum = category.enumerateNode();
-    
+
     while (nodeEnum.hasMoreElements()) {
         Node node = nodeEnum.nextElement();
         int nodeId = (int)node.getNodeid();
@@ -96,11 +97,15 @@
 		NetworkElementFactory.getInstance(getServletContext()).getNodeLabel(nodeId);
         // nodeMap.put( nodeLabel, node );
 
+        //TODO 将“节点的IP和网点名称”加到nodeLabel里
+/*        NodeUtil nu = new NodeUtil();
+        String des = nu.getContent(nodeId, "description");*/
         if (accessChecker.isNodeAccessible(nodeId)) {
             if (nodeLabel != null && !nodeMap.containsKey(nodeLabel)) {
                 nodeMap.put(nodeLabel, node);
             } else if (nodeLabel != null) {
-                nodeMap.put(nodeLabel+" (nodeid="+node.getNodeid()+")", node);
+                nodeMap.put(nodeLabel+" (nodeid="+node.getNodeid()+ ")", node);
+//                nodeMap.put(nodeLabel+" (nodeid="+node.getNodeid()+", 网点名称=" + des + ")", node);
             } else {
                 nodeMap.put("nodeId=" + node.getNodeid(), node);
             }
@@ -138,15 +143,15 @@
         } %>
 
               <input type="radio" name="showout" <%=(showoutages.equals("all") ? "checked" : "")%>
-               onclick="top.location = '<%= Util.calculateUrlBase( req , "rtc/category.jsp?category=" + Util.encode(category.getName()) + "&amp;showoutages=all") %>'" ></input>所有
+               onclick="top.location = '<%= Util.calculateUrlBase( req , "rtc/category.jsp?category=" + Util.encode(category.getName()) + "&amp;showoutages=all") %>'" />所有
 
 
               <input type="radio" name="showout" <%=(showoutages.equals("outages") ? "checked" : "")%>
-               onclick="top.location = '<%= Util.calculateUrlBase( req , "rtc/category.jsp?category=" + Util.encode(category.getName()) + "&amp;showoutages=outages") %>'" ></input>有故障
+               onclick="top.location = '<%= Util.calculateUrlBase( req , "rtc/category.jsp?category=" + Util.encode(category.getName()) + "&amp;showoutages=outages") %>'" />有故障
 
 
               <input type="radio" name="showout" <%=(showoutages.equals("avail") ? "checked" : "")%>
-               onclick="top.location = '<%= Util.calculateUrlBase( req , "rtc/category.jsp?category=" + Util.encode(category.getName()) + "&amp;showoutages=avail") %>'" ></input>可用性 &lt; 100% 
+               onclick="top.location = '<%= Util.calculateUrlBase( req , "rtc/category.jsp?category=" + Util.encode(category.getName()) + "&amp;showoutages=avail") %>'"/>可用性 &lt; 100%
 
   </p>
 </form>
@@ -195,7 +200,7 @@
                       <td class="<%=outageClass%>" align="right"><%=serviceDownCount%> of <%=serviceCount%></td>
                       <td class="<%=availClass%>" align="right" width="30%"><b><%=CategoryUtil.formatValue(value)%>%</b></td>
                     </tr>
-            	    <%  } 
+            	    <%  }
 		    if (value < 100 )
 		        ++valuecnt;
 		    if (serviceDownCount > 0 )

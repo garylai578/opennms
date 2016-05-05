@@ -66,6 +66,7 @@
         <li><a href="inventory/rancidReport.htm">清单</a></li>
 <% }%>
         <li><a href="statisticsReports/index.htm">统计报表</a></li>
+          <li><a href="report/switcher.jsp">交换机流量统计</a></li>
       </ul>
     </div>
   <!-- more reports will follow -->

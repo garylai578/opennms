@@ -266,11 +266,11 @@ public interface AssetPageConstants extends com.google.gwt.i18n.client.Constants
     @Key("departmentHelp")
     String departmentHelp();
 
-    @DefaultStringValue("设备描述")
+    @DefaultStringValue("所属网点名称")
     @Key("description")
     String description();
 
-    @DefaultStringValue("设备描述，如用途、功能等")
+    @DefaultStringValue("设备所属网点名称")
     @Key("descriptionHelp")
     String descriptionHelp();
 
