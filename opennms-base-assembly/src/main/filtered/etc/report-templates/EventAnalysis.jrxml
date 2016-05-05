@@ -501,7 +501,7 @@ ON
 								<textElement>
 									<font size="10" isBold="true"/>
 								</textElement>
-								<text><![CDATA[总览]]></text>
+								<text><![CDATA[Total]]></text>
 							</staticText>
 						</jr:tableFooter>
 						<jr:detailCell height="20" rowSpan="1">
