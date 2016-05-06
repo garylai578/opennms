@@ -38,15 +38,15 @@
 
 <script type="text/javascript">
 
-    function cancel()
-    {
-        document.switcher.action="report/switcher.jsp";
+    function deleteSwitcher(id){
+        document.switcher.ip.value = id;
+        document.switcher.action="/abcbank/delSwitcherStats";
         document.switcher.submit();
     }
 </script>
 
 <form method="post" name="switcher">
-    <input type="hidden" name="ips"/>
+    <input type="hidden" name="ip"/>
 
     <h3>交换机流量统计(请先配置需要统计流量的交换机)</h3>
 
@@ -72,7 +72,7 @@
         %>
         <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
             <td width="3%" rowspan="2" align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+ip+").doStop" %>" href="javascript:delete('<%=ip%>')" onclick="return confirm('确定要移除该交换机？')">移除</a>
+                <a id="<%= "ips("+ip+").doStop" %>" href="javascript:deleteSwitcher('<%=ip%>')" onclick="return confirm('确定要移除该交换机？')">移除</a>
             </td>
 
             <td width="5%" rowspan="2" align="center" style="vertical-align:middle;">
@@ -113,6 +113,8 @@
             }
         %>
     </table>
+
+    <input id="add" type="button" value="增加交换机"  onclick="location.href='/opennms/report/configSwitchers.jsp'"/>
 </form>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />

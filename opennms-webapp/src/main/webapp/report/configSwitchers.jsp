@@ -90,7 +90,7 @@
     }
 </script>
 
-<form method="post" name="switcher">
+<form method="post" name="switcher"  onsubmit="return statistics();">
     <input type="hidden" name="ips"/>
 
     <h3>交换机流量统计配置</h3>
