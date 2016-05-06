@@ -113,7 +113,7 @@ public class SwitcherStats {
 
         for (String col: colsString) {
             if(col == null)
-                value += "'',";
+                value += "'', ";
             else
                 value += "'" + col + "', ";
         }
