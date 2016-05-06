@@ -90,7 +90,7 @@
     }
 </script>
 
-<form method="post" name="switcher"  onsubmit="return statistics();">
+<form method="post" name="switcher">
     <input type="hidden" name="ips"/>
 
     <h3>交换机流量统计配置</h3>
@@ -139,7 +139,7 @@
     </div>
     <div class="spacer"><!-- --></div>
     &nbsp;&nbsp;
-    <input id="doOK" type="submit" value="确认"  href="javascript:statistics()"/>
+    <input id="doOK" type="button" value="确认" onclick="javascript:statistics()"/>
     &nbsp;&nbsp;
     <input id="doCancel" type="button" value="取消" onclick="cancel()"/>
 </form>
