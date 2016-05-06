@@ -57,13 +57,10 @@
 </jsp:include>
 
 
-<h1>Category Not Found</h1>
+<h1>没有找到相关分类</h1>
 
 <p>
-  No information is currently available for the
-  <strong><%=cnfe.getCategory()%></strong> category.
-  Either the category does not exist, or its information is still being
-  calculated.  
+  对于“<strong><%=cnfe.getCategory()%></strong>”分类，目前没有相关可用信息，可能是该分类不存在，或者是仍在计算相关信息。
 </p>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />

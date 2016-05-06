@@ -81,6 +81,7 @@ drop table ipSegment cascade;
 drop table ipaddress cascade;
 drop table webline cascade;
 drop table switcher CASCADE;
+drop table switcherStats CASCADE;
 
 drop sequence catNxtId;
 drop sequence nodeNxtId;
@@ -361,6 +362,26 @@ create table switcher (
     ospf text,
     area text,
     comment text
+);
+
+--########################################################################
+--# switcher statistic table - store the switcher flow messages
+--#
+--# This table contains the following fields:
+--#  id          : the ip of the switcher, unique
+--#  name        : the name of the switcher
+--#  groups      : the group of the switcher
+--#  flow        : the flows of the switcher
+--#  comment     : the comment of the record
+--#
+--########################################################################
+create table switcherStats (
+    ip text not null,
+    name text,
+    groups text,
+    flow text,
+    comment text,
+    PRIMARY KEY(ip)
 );
 
 --########################################################################

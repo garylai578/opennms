@@ -5,20 +5,27 @@ import java.util.Comparator;
 /**
  * Created by laiguanhui on 2016/5/5.
  */
-public class SwitcherIP {
+public class SwitcherStats {
     private String ip;
     private String name;
+    private String group;
+    private String flow;
+    private String comment;
 
-    public SwitcherIP(String ip, String name){
+    public SwitcherStats(String ip, String name){
         this.ip = ip;
         this.name = name;
+    }
+
+    public SwitcherStats(String ip){
+        this.ip = ip;
     }
 
     public static Comparator IPComparator=new Comparator(){
         @Override
         public int compare(Object arg0, Object arg1) {
-            SwitcherIP ip1=(SwitcherIP)arg0;
-            SwitcherIP ip2=(SwitcherIP)arg1;
+            SwitcherStats ip1=(SwitcherStats)arg0;
+            SwitcherStats ip2=(SwitcherStats)arg1;
             return compartTo(ip1.ip,ip2.ip);
         }
     };
@@ -76,5 +83,40 @@ public class SwitcherIP {
         this.name = name;
     }
 
+    public String getGroup() {
+        return group;
+    }
 
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getFlow() {
+        return flow;
+    }
+
+    public void setFlow(String flow) {
+        this.flow = flow;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public String toInsertValue() {
+        String value = "";
+        String[] colsString = {ip, name, group, flow, comment};
+
+        for (String col: colsString) {
+            if(col == null)
+                value += "'',";
+            else
+                value += "'" + col + "', ";
+        }
+        return value.substring(0, value.length()-2);
+    }
 }
