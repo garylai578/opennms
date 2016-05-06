@@ -20,10 +20,13 @@ import java.util.List;
 public class ConfigSwitcherStatsServlet extends HttpServlet {
 
     private static final long serialVersionUID = 7336480973529686866L;
-    List<String> oldIPs = new ArrayList<String>();
-    List<String> newIPs = new ArrayList<String>();
+    List<String> oldIPs;
+    List<String> newIPs;
     
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        oldIPs = new ArrayList<String>();
+        newIPs = new ArrayList<String>();
+
         String userId = request.getRemoteUser();
         String selIPs = request.getParameter("ips");
         String inputIPs = request.getParameter("input-ips");
