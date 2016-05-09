@@ -59,9 +59,9 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
         try {
             SwitcherStats[] sws = operator.selectAll();
             for(SwitcherStats sw : sws){
+                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
                 SimpleDateFormat df = new SimpleDateFormat("HH");//设置日期格式
-                String hour2 = df.format(new Date());
-                BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2);
+                String hour2 = df.format(new Date());;
                 SimpleDateFormat df2 = new SimpleDateFormat("dd");
                 String day2 = df2.format(new Date());
                 BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2 + "; day1:" + day1 + ", day2: " + day2);
@@ -80,7 +80,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     t = 1;
                 }
 
-                if(hour2.equals(hour1)){   //同一个小时内的流量进行累计
+                if(hour2.equals(hour1) || t > 2){   //同一个小时内的流量进行累计
                     t++;
                     hourInFlow += inFlowValue;
                     hourOutFlow += outFlowValue;
