@@ -71,7 +71,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
 
                 //如果是新的一天则先重置
                 if(!day1.equals(day2)){
-                    operator.update(sw.getIp(), "flow", "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-/t-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-" );
+                    operator.update(sw.getIp(), "flow", "'-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-/t-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-'" );
                     day1 = day2;
                     hour1 = hour2;
                     t = 1;
@@ -87,15 +87,16 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     String oldValue = operator.getColunm(sw.getIp(), "flow");
                     String[] oldSplit = oldValue.split(",");
 
-                    oldSplit[t-1] = hourInFlow + "";
-                    oldSplit[t + 24 - 1] = hourOutFlow + "";
+                    BankLogWriter.getSingle().writeLog("时间：" + hour1);
+                    oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
+                    oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
 
                     String newString ="";
                     for(int j=0; j < oldSplit.length; ++j){
                         newString += oldSplit[j] + ",";
                     }
                     newString = newString.substring(0, newString.length() -1);
-                    operator.update(sw.getIp(), "flow", newString );
+                    operator.update(sw.getIp(), "flow", "'" + newString + "'" );
 
                     hour1 = hour2;
                     t = 1;
