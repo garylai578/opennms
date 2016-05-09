@@ -27,10 +27,14 @@ public class BankLogWriter {
     public static BankLogWriter getSingle(){return single;}
     
     private BankLogWriter(){
-        initOut();
+        try {
+            initOut();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private void initOut(){
+    private void initOut() throws IOException {
         String filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
         date = df.format(new Date());
@@ -38,14 +42,9 @@ public class BankLogWriter {
         log.debug("abc log file：" + fileName);
         File file = new File(fileName);
         if(!file.exists()){
-            try {
-                file.createNewFile();
-                out=new OutputStreamWriter(new FileOutputStream(file,true), "UTF-8");
-            } catch (IOException e) {
-                log.error(e.getMessage());
-                e.printStackTrace();
-            }
+            file.createNewFile();
         }
+        out=new OutputStreamWriter(new FileOutputStream(file,true), "UTF-8");
     }
 
     /**
@@ -95,6 +94,10 @@ public class BankLogWriter {
     public void setOutputFilePath(String fileName){
         this.fileName = fileName;
         log.debug("set output file : " + fileName);
-        initOut();
+        try {
+            initOut();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
