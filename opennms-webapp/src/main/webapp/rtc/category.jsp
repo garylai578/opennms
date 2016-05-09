@@ -33,18 +33,24 @@
 	contentType="text/html"
 	session="true"
 	import="
-		org.opennms.web.category.*,
+		org.opennms.core.bank.NodeUtil,
+		org.opennms.netmgt.xml.rtc.Node,
 		org.opennms.web.api.Util,
+		org.opennms.web.category.Category,
+		org.opennms.web.category.CategoryModel,
+		org.opennms.web.category.CategoryNotFoundException,
+		org.opennms.web.category.CategoryUtil,
 		org.opennms.web.element.NetworkElementFactory,
 		org.opennms.web.servlet.MissingParameterException,
-		java.util.*,
-		org.opennms.netmgt.xml.rtc.Node,
-		org.opennms.web.servlet.XssRequestWrapper,
-		org.opennms.web.springframework.security.AclUtils,
-		org.opennms.web.springframework.security.AclUtils.NodeAccessChecker,
-		org.springframework.security.core.context.SecurityContextHolder
+		org.opennms.web.servlet.XssRequestWrapper
 		"
 %>
+<%@ page import="org.opennms.web.springframework.security.AclUtils" %>
+<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
+<%@ page import="java.util.Enumeration" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.Set" %>
+<%@ page import="java.util.TreeMap" %>
 <%--<%@ page import="org.opennms.core.bank.NodeUtil" %>--%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
@@ -98,16 +104,17 @@
         // nodeMap.put( nodeLabel, node );
 
         //TODO 将“节点的IP和网点名称”加到nodeLabel里
-/*        NodeUtil nu = new NodeUtil();
-        String des = nu.getContent(nodeId, "description");*/
+        NodeUtil nu = new NodeUtil();
+        String des = nu.getContent(nodeId, "description");
+        nodeLabel += "(" + des + ")";
         if (accessChecker.isNodeAccessible(nodeId)) {
             if (nodeLabel != null && !nodeMap.containsKey(nodeLabel)) {
                 nodeMap.put(nodeLabel, node);
             } else if (nodeLabel != null) {
-                nodeMap.put(nodeLabel+" (nodeid="+node.getNodeid()+ ")", node);
-//                nodeMap.put(nodeLabel+" (nodeid="+node.getNodeid()+", 网点名称=" + des + ")", node);
+//                nodeMap.put(nodeLabel+" (nodeid="+node.getNodeid()+ ")", node);
+                nodeMap.put(nodeLabel+" (nodeid="+node.getNodeid()+", 网点名称=" + des + ")", node);
             } else {
-                nodeMap.put("nodeId=" + node.getNodeid(), node);
+                nodeMap.put("nodeId=" + node.getNodeid() +", 网点名称=" + des + ")", node);
             }
         }
     }
