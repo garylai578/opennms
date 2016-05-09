@@ -18,6 +18,7 @@ public class BankLogWriter {
     private OutputStreamWriter out;
     private BufferedReader in;
     private static final BankLogWriter single = new BankLogWriter();
+    private String date;
 
     /**
      * 获取日志文件的单例，日志文件保存在{opennms.home}/logs/abc_日期.log，若要修改，setOutputFilePath(String fileName)方法
@@ -26,13 +27,14 @@ public class BankLogWriter {
     public static BankLogWriter getSingle(){return single;}
     
     private BankLogWriter(){
-        String filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
-        fileName = filePath + "abc_" + df.format(new Date()) + ".log";
         initOut();
     }
 
     private void initOut(){
+        String filePath = Vault.getHomeDir() + System.getProperty("file.separator") + "logs" + System.getProperty("file.separator");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+        date = df.format(new Date());
+        fileName = filePath + "abc_" + date + ".log";
         log.debug("abc log file：" + fileName);
         File file = new File(fileName);
         if(!file.exists()){
@@ -52,10 +54,12 @@ public class BankLogWriter {
      */
     public void writeLog(String msg){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss ");//设置日期格式
+        SimpleDateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
         String time =  df.format(new Date());
+        String day2 = df2.format(new Date());
         msg = time + msg;
         try {
-            if(out == null)
+            if(out == null || !day2.equals(date))
                 initOut();
             out.append(msg);
             out.append(System.getProperty("line.separator"));
