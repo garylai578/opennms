@@ -33,7 +33,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
 
     public void init(){
         flag = true;
-        SimpleDateFormat df = new SimpleDateFormat("hh");//设置日期格式
+        SimpleDateFormat df = new SimpleDateFormat("HH");//设置日期格式,24小时制
         hour1 = df.format(new Date());
         SimpleDateFormat df2 = new SimpleDateFormat("dd");
         day1 = df2.format(new Date());
@@ -59,7 +59,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
         try {
             SwitcherStats[] sws = operator.selectAll();
             for(SwitcherStats sw : sws){
-                SimpleDateFormat df = new SimpleDateFormat("hh");//设置日期格式
+                SimpleDateFormat df = new SimpleDateFormat("HH");//设置日期格式
                 String hour2 = df.format(new Date());
                 SimpleDateFormat df2 = new SimpleDateFormat("dd");
                 String day2 = df2.format(new Date());
