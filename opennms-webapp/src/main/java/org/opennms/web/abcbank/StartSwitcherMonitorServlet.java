@@ -47,7 +47,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
         };
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         // 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间
-        service.scheduleAtFixedRate(runnable, 0, 600, TimeUnit.SECONDS);
+        service.scheduleAtFixedRate(runnable, 0, 300, TimeUnit.SECONDS);
     }
 
     private void startSwitcherMonitor(){
@@ -61,13 +61,16 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
             for(SwitcherStats sw : sws){
                 SimpleDateFormat df = new SimpleDateFormat("HH");//设置日期格式
                 String hour2 = df.format(new Date());
+                BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2);
                 SimpleDateFormat df2 = new SimpleDateFormat("dd");
                 String day2 = df2.format(new Date());
+                BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2 + "; day1:" + day1 + ", day2: " + day2);
 
                 Flow inFlow = new Flow(sw.getIp(), inFlowOidGroup);
                 long inFlowValue = inFlow.getFlowValue();
                 Flow outFlow = new Flow(sw.getIp(), outFlowOidGroup);
                 long outFlowValue = outFlow.getFlowValue();
+                BankLogWriter.getSingle().writeLog("inflow：" + inFlowValue + ", outFlow:" + outFlowValue);
 
                 //如果是新的一天则先重置
                 if(!day1.equals(day2)){
