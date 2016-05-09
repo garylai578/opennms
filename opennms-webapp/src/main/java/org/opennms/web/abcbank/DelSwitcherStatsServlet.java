@@ -15,6 +15,8 @@ import java.sql.SQLException;
  * Created by laiguanhui on 2016/5/6.
  */
 public class DelSwitcherStatsServlet extends HttpServlet {
+    private static final long serialVersionUID = 6535987553893077958L;
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getRemoteUser();
         String ip = request.getParameter("ip");

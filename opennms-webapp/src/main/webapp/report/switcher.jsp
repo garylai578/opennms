@@ -6,17 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="org.opennms.core.bank.SwitcherStats" %>
-<%@ page import="org.opennms.core.resource.Vault" %>
-
-<%@ page import="org.opennms.core.utils.DBUtils" %>
-<%@ page import="org.opennms.web.element.Interface" %>
-<%@ page import="org.opennms.web.element.NetworkElementFactory" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.ResultSet" %>
-<%@ page import="java.sql.Statement" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Collections" %>
-<%@ page import="java.util.List" %>
 <%@ page import="org.opennms.core.bank.SwitcherStatsOperator" %>
 
 <%@page language="java"
@@ -40,7 +29,12 @@
 
     function deleteSwitcher(id){
         document.switcher.ip.value = id;
-        document.switcher.action="/abcbank/delSwitcherStats";
+        document.switcher.action="abcbank/delSwitcherStats";
+        document.switcher.submit();
+    }
+
+    function startMonitor(){
+        document.switcher.action="abcbank/startSwitcherMonitor";
         document.switcher.submit();
     }
 </script>
@@ -83,38 +77,61 @@
             </td>
 
             <td>
-                <b>输出</b>
+                <b>输入</b>
             </td>
 
             <%
-                String[] flowString = flow.split("\t");
-
-                for(String f : flowString ){
+                String[] flowString = flow.split("/t");
+                for(int i = 0; i < 24; ++i){
             %>
             <td width="3%">
                 <div>
-                   <%=f%>
+                    <%
+                        if(flowString.length ==2) {
+                            String[] inFlows = flowString[0].split(",");
+                            out.print(inFlows[i]);
+                        }else {
+                            out.print("--");
+                        }
+                    %>
                 </div>
             </td>
-
             <%
                 }
             %>
-
         </tr>
 
-        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
+        <tr>
             <td>
                 <b>输出</b>
             </td>
-        </tr>
+
         <%
+            for(int i = 0; i < 24; ++i){
+        %>
+        <td width="3%">
+            <div>
+                <%
+                    if(flowString.length ==2) {
+                        String[] inFlows = flowString[1].split(",");
+                        out.print(inFlows[i]);
+                    }else {
+                        out.print("--");
+                    }
+                %>
+            </div>
+        </td>
+        <%
+
+                }
                 row++;
             }
         %>
     </table>
 
     <input id="add" type="button" value="增加交换机"  onclick="location.href='/opennms/report/configSwitchers.jsp'"/>
+    <input id="add" type="button" value="启动流量监控" onclick="javascript:startMonitor();"/>
+
 </form>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />

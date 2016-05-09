@@ -915,6 +915,11 @@
     <servlet-name>DelSwitcherStatsServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.DelSwitcherStatsServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>StartSwitcherMonitorServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.StartSwitcherMonitorServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1362,6 +1367,10 @@
   <servlet-mapping>
     <servlet-name>DelSwitcherStatsServlet</servlet-name>
     <url-pattern>/abcbank/delSwitcherStats</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>StartSwitcherMonitorServlet</servlet-name>
+    <url-pattern>/abcbank/startSwitcherMonitor</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  

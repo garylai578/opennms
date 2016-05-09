@@ -29,7 +29,7 @@ public class SwitcherStatsOperator {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String insert = "insert into switcherStats(ip, name, groups, flow, comment) values (" + data.toInsertValue() + ")";
+            String insert = "insert into switcherStats(ip, name, groups, comment, flow) values (" + data.toInsertValue() + ")";
             log.debug("insert sql = " + insert);
             int rc = stmt.executeUpdate(insert);
             log.debug( "and the rc = " + rc);
@@ -121,6 +121,34 @@ public class SwitcherStatsOperator {
             d.cleanUp();
         }
         return rc;
+    }
+
+    /**
+     * 获取某一列的值
+     * @param ip 交换机的ip
+     * @param colName 列名
+     * @return 指定列的值
+     * @throws SQLException
+     */
+    public String getColunm(String ip, String colName) throws SQLException{
+        String result="";
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            String sql;
+            sql = "select " + colName + " from switcherStats where ip ='" + ip + "'";
+            log.debug("select from switcherStats, SQL = " + sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                result = rs.getString("flow");
+            }
+        }finally {
+            d.cleanUp();
+        }
+        return result;
+
     }
 
 }

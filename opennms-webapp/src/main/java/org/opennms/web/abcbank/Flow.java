@@ -1,5 +1,6 @@
 package org.opennms.web.abcbank;
 
+import org.apache.log4j.Logger;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
@@ -19,6 +20,8 @@ import java.util.Vector;
  */
 public class Flow {
 
+    final static Logger log =  Logger.getLogger(Flow.class);
+
     private String octer = "public"; // 共同体
     final String TIME_OID = ".1.3.6.1.2.1.1.3.0"; // System Uptime OID，所有设备一样
     String IpAddress; // 设备IP地址
@@ -27,31 +30,45 @@ public class Flow {
     private long FlowValue; // 端口流量的值
     public boolean isSuccess = true;
 
-    // 构造器：IP地址和流量OID组(因为可能需要多个端口的流量加在一起)
+    /**
+     * 构造器：IP地址和流量OID组(因为可能需要多个端口的流量加在一起)
+     * @param IpAddress ip地址
+     * @param FlowOidGroup 流量OID组
+     */
     public Flow(String IpAddress, ArrayList<String> FlowOidGroup) {
         this.IpAddress = IpAddress;
         this.FlowOidGroup = FlowOidGroup;
         this.calc();
     }
 
+    /**
+     * 获取共同体
+     * @return 共同体
+     */
     public String getOcter() {
         return octer;
     }
 
     /**
      * 设置共同体
-     * @param octer
+     * @param octer 共同体
      */
     public void setOcter(String octer){
         this.octer = octer;
     }
 
-    // 取当前时间
+    /**
+     * 获取端口流量的采集时间
+     * @return 端口流量的采集时间，格式：yyyy-MM-dd HH:mm
+     */
     public String getNowTime() {
         return NowTime;
     }
 
-    // 取端口流量
+    /**
+     * 获取端口流量
+     * @return 端口流量
+      */
     public long getFlowValue() {
         return FlowValue;
     }
@@ -131,7 +148,7 @@ public class Flow {
                 FlowValue = (long) (AllSubValue / 1024.0 / 1024 * 8 / (time[1] - time[0]));
                 isSuccess = true;
             } else {
-                System.out.println("地址：" + IpAddress + "数据采集失败！");
+                log.warn("地址：" + IpAddress + "的交换机流量数据采集失败！");
                 isSuccess = false;
             }
         } catch (IOException e ) {
@@ -140,6 +157,5 @@ public class Flow {
             e.printStackTrace();
         }
     }
-
 
 }

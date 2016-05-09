@@ -109,7 +109,7 @@ public class SwitcherStats {
 
     public String toInsertValue() {
         String value = "";
-        String[] colsString = {ip, name, group, flow, comment};
+        String[] colsString = {ip, name, group, comment};
 
         for (String col: colsString) {
             if(col == null)
@@ -117,6 +117,8 @@ public class SwitcherStats {
             else
                 value += "'" + col + "', ";
         }
-        return value.substring(0, value.length()-2);
+        if(flow == null)
+            value += "-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-/t-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-";
+        return value.substring(0, value.length());
     }
 }
