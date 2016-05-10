@@ -116,8 +116,9 @@ public class Flow {
                     }
                     // 取端口流量
                     for (int i = 0; i < FlowOidGroup.size(); i++) {
+                        BankLogWriter.getSingle().writeLog("获取交换机端口流量：" + FlowOidGroup.get(i));
                         flow[count][i] = Long.parseLong(revBindings.elementAt(i + 1).getVariable().toString());
-                        BankLogWriter.getSingle().writeLog("获取交换机端口流量：" + flow[count][i]);
+                        BankLogWriter.getSingle().writeLog("" + flow[count][i]);
                     }
                     isSuccess = true;
                 } else {
@@ -157,6 +158,9 @@ public class Flow {
             e.printStackTrace();
         } catch (InterruptedException e){
             BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集中断异常：" + e.getMessage());
+            e.printStackTrace();
+        } catch(NumberFormatException e){
+            BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集解析异常：" + e.getMessage());
             e.printStackTrace();
         }
     }
