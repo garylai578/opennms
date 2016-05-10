@@ -108,7 +108,7 @@ public class Flow {
                     }
                     // 取端口流量
                     for (int i = 0; i < FlowOidGroup.size(); i++) {
-                        BankLogWriter.getSingle().writeLog("获取交换机端口流量：" + revBindings.elementAt(i + 1).getVariable().toString());
+                        BankLogWriter.getSingle().writeLog("获取交换机端口流量,oid[" + FlowOidGroup.get(i) + "], 结果[" + revBindings.elementAt(i + 1).getVariable().toString() + "]");
                         flow[count][i] = Long.parseLong(revBindings.elementAt(i + 1).getVariable().toString());
                         BankLogWriter.getSingle().writeLog("" + flow[count][i]);
                     }

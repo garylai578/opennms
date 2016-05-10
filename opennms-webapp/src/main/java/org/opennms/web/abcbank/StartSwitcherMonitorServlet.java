@@ -54,8 +54,10 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
         SwitcherStatsOperator operator = new SwitcherStatsOperator();
         ArrayList<String> inFlowOidGroup = new ArrayList<String>();
         ArrayList<String> outFlowOidGroup = new ArrayList<String>();
-        inFlowOidGroup.add(".1.3.6.1.2.1.2.2.1.10");
-        outFlowOidGroup.add(".1.3.6.1.2.1.2.2.1.16");
+        for(int i = 1; i <=52; ++i) {
+            inFlowOidGroup.add(".1.3.6.1.2.1.2.2.1.10." + i);
+            outFlowOidGroup.add(".1.3.6.1.2.1.2.2.1.16." + i);
+        }
         try {
             SwitcherStats[] sws = operator.selectAll();
             for(SwitcherStats sw : sws){
