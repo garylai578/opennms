@@ -95,7 +95,7 @@ public class Flow {
                 if (respEvt != null && respEvt.getResponse() != null) { // 从目的设备取值，得到Vector
                     Vector<VariableBinding> revBindings = (Vector<VariableBinding>)respEvt.getResponse().getVariableBindings();
                     String TimeTicks = revBindings.elementAt(0).getVariable().toString().trim();
-                    BankLogWriter.getSingle().writeLog("获取交换机更新时间：" + TimeTicks);
+//                    BankLogWriter.getSingle().writeLog("获取交换机更新时间：" + TimeTicks);
                     String[] TimeString = TimeTicks.split(" ");// 得到时间字符串数组
                     // 取时间 186 days, 21:26:15.24，也有可能没有day，就是不到一天
                     if (TimeTicks.contains("day")) {
@@ -110,7 +110,7 @@ public class Flow {
                     for (int i = 0; i < FlowOidGroup.size(); i++) {
                         BankLogWriter.getSingle().writeLog("获取交换机端口流量,oid[" + FlowOidGroup.get(i) + "], 结果[" + revBindings.elementAt(i + 1).getVariable().toString() + "]");
                         flow[count][i] = Long.parseLong(revBindings.elementAt(i + 1).getVariable().toString());
-                        BankLogWriter.getSingle().writeLog("" + flow[count][i]);
+//                        BankLogWriter.getSingle().writeLog("" + flow[count][i]);
                     }
                     isSuccess = true;
                 } else {
@@ -138,8 +138,11 @@ public class Flow {
                 }
                 AllSubValue += sub;
             }
+            BankLogWriter.getSingle().writeLog("AllSubValue=" +AllSubValue);
+            BankLogWriter.getSingle().writeLog("time0=" + time[0] + ", time2="+time[1]);
             if (time[1] - time[0] != 0) { // 字节换算成兆比特才是最终流量
                 result = (long) (AllSubValue / 1024.0 / 1024 * 8 / (time[1] - time[0]));
+                BankLogWriter.getSingle().writeLog("result=" + result);
                 isSuccess = true;
             } else {
                 BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集失败！");
