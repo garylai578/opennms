@@ -65,7 +65,7 @@ public class ConfigSwitcherStatsServlet extends HttpServlet {
     private void insertSwitcherStats(String[] ips){
         SwitcherStatsOperator op = new SwitcherStatsOperator();
         for(String ip : ips){
-            if(!oldIPs.contains(ip)) {
+            if(!oldIPs.contains(ip) && isIP(ip)) {
                 SwitcherStats ss = new SwitcherStats(ip);
                 try {
                     newIPs.add(ip);
@@ -75,5 +75,22 @@ public class ConfigSwitcherStatsServlet extends HttpServlet {
                 }
             }
         }
+    }
+
+    private boolean isIP(String ip){
+        String[] parts = ip.split(".");
+        if(parts.length != 4)
+            return false;
+        for(String part : parts){
+            try{
+                int num = Integer.parseInt(part);
+                if(num > 255 || num < 0)
+                    return false;
+            }catch(Exception e){
+                return false;
+            }
+        }
+
+        return true;
     }
 }
