@@ -82,7 +82,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     t = 1;
                 }
 
-                if(hour2.equals(hour1) && t < 2){   //同一个小时内的流量进行累计
+                if(hour2.equals(hour1)){   //同一个小时内的流量进行累计
                     t++;
                     hourInFlow += inFlowValue;
                     hourOutFlow += outFlowValue;
