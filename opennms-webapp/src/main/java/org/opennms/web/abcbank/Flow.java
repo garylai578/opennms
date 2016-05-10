@@ -1,6 +1,6 @@
 package org.opennms.web.abcbank;
 
-import org.apache.log4j.Logger;
+import org.opennms.core.bank.BankLogWriter;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
@@ -19,8 +19,6 @@ import java.util.Vector;
  * Created by laiguanhui on 2016/5/5.
  */
 public class Flow {
-
-    final static Logger log =  Logger.getLogger(Flow.class);
 
     private String octer = "public"; // 共同体
     final String TIME_OID = ".1.3.6.1.2.1.1.3.0"; // System Uptime OID，所有设备一样
@@ -77,7 +75,7 @@ public class Flow {
     @SuppressWarnings("unchecked")
     private void calc() {
         try {
-            log.debug("获取并计算交换机流量：" + IpAddress);
+            BankLogWriter.getSingle().writeLog("获取并计算交换机流量：" + IpAddress);
             Address targetAddress = GenericAddress.parse("udp:" + IpAddress + "/161");
             TransportMapping transport = new DefaultUdpTransportMapping();
             Snmp snmp = new Snmp(transport);
@@ -105,7 +103,7 @@ public class Flow {
                 if (respEvt != null && respEvt.getResponse() != null) { // 从目的设备取值，得到Vector
                     Vector<VariableBinding> revBindings = (Vector<VariableBinding>)respEvt.getResponse().getVariableBindings();
                     String TimeTicks = revBindings.elementAt(0).getVariable().toString().trim();
-                    log.debug("获取交换机更新时间：" + TimeTicks);
+                    BankLogWriter.getSingle().writeLog("获取交换机更新时间：" + TimeTicks);
                     String[] TimeString = TimeTicks.split(" ");// 得到时间字符串数组
                     // 取时间 186 days, 21:26:15.24，也有可能没有day，就是不到一天
                     if (TimeTicks.contains("day")) {
@@ -119,7 +117,7 @@ public class Flow {
                     // 取端口流量
                     for (int i = 0; i < FlowOidGroup.size(); i++) {
                         flow[count][i] = Long.parseLong(revBindings.elementAt(i + 1).getVariable().toString());
-                        log.debug("获取交换机端口流量：" + flow[count][i]);
+                        BankLogWriter.getSingle().writeLog("获取交换机端口流量：" + flow[count][i]);
                     }
                     isSuccess = true;
                 } else {
@@ -151,12 +149,14 @@ public class Flow {
                 FlowValue = (long) (AllSubValue / 1024.0 / 1024 * 8 / (time[1] - time[0]));
                 isSuccess = true;
             } else {
-                log.warn("地址：" + IpAddress + "的交换机流量数据采集失败！");
+                BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集失败！");
                 isSuccess = false;
             }
         } catch (IOException e ) {
+            BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集IO异常：" + e.getMessage());
             e.printStackTrace();
         } catch (InterruptedException e){
+            BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集中断异常：" + e.getMessage());
             e.printStackTrace();
         }
     }
