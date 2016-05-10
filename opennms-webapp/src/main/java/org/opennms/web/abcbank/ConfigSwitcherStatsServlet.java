@@ -79,6 +79,8 @@ public class ConfigSwitcherStatsServlet extends HttpServlet {
 
     private boolean isIP(String ip){
         String[] parts = ip.split(".");
+
+/*
         if(parts.length != 4)
             return false;
         for(String part : parts){
@@ -90,6 +92,7 @@ public class ConfigSwitcherStatsServlet extends HttpServlet {
                 return false;
             }
         }
+*/
 
         return true;
     }

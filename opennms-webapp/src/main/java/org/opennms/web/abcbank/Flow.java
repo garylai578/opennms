@@ -25,18 +25,14 @@ public class Flow {
     String IpAddress; // 设备IP地址
     ArrayList<String> FlowOidGroup; // 流量OID，可能有多个ifOutOctets OID: .1.3.6.1.2.1.2.2.1.16 , ifInOctets OID: .1.3.6.1.2.1.2.2.1.10
     private String NowTime; // 端口流量的采集时间
-    private long FlowValue; // 端口流量的值
-    public boolean isSuccess = true;
+    public boolean isSuccess = false;
 
     /**
-     * 构造器：IP地址和流量OID组(因为可能需要多个端口的流量加在一起)
+     * 构造器：IP地址
      * @param IpAddress ip地址
-     * @param FlowOidGroup 流量OID组
      */
-    public Flow(String IpAddress, ArrayList<String> FlowOidGroup) {
+    public Flow(String IpAddress) {
         this.IpAddress = IpAddress;
-        this.FlowOidGroup = FlowOidGroup;
-        this.calc();
     }
 
     /**
@@ -64,16 +60,12 @@ public class Flow {
     }
 
     /**
-     * 获取端口流量
-     * @return 端口流量
-      */
-    public long getFlowValue() {
-        return FlowValue;
-    }
-
-    // 计算端口流量,思路是：采集两次设备数据，用流量值的差值，除以时间的差值，即是当前的流量值，时间间隔我用的是5秒
+     * 计算交换机的端口流量，思路是：采集两次设备数据，用流量值的差值，除以时间的差值，即是当前的流量值，时间间隔我用的是5秒
+     * @param FlowOidGroup 流量OID，可以有多个
+     */
     @SuppressWarnings("unchecked")
-    private void calc() {
+    public long calcFlowValue(ArrayList<String> FlowOidGroup) {
+        long result = 0;
         try {
             BankLogWriter.getSingle().writeLog("获取并计算交换机流量：" + IpAddress);
             Address targetAddress = GenericAddress.parse("udp:" + IpAddress + "/161");
@@ -147,7 +139,7 @@ public class Flow {
                 AllSubValue += sub;
             }
             if (time[1] - time[0] != 0) { // 字节换算成兆比特才是最终流量
-                FlowValue = (long) (AllSubValue / 1024.0 / 1024 * 8 / (time[1] - time[0]));
+                result = (long) (AllSubValue / 1024.0 / 1024 * 8 / (time[1] - time[0]));
                 isSuccess = true;
             } else {
                 BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集失败！");
@@ -156,13 +148,17 @@ public class Flow {
         } catch (IOException e ) {
             BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集IO异常：" + e.getMessage());
             e.printStackTrace();
+            isSuccess  = false;
         } catch (InterruptedException e){
             BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集中断异常：" + e.getMessage());
             e.printStackTrace();
+            isSuccess  = false;
         } catch(NumberFormatException e){
             BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集解析异常：" + e.getMessage());
             e.printStackTrace();
+            isSuccess  = false;
         }
+        return result;
     }
 
 }

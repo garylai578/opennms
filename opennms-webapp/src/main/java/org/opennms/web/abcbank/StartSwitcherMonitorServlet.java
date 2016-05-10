@@ -66,10 +66,10 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                 String day2 = df2.format(new Date());
                 BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2 + "; day1:" + day1 + ", day2: " + day2);
 
-                Flow inFlow = new Flow(sw.getIp(), inFlowOidGroup);
-                long inFlowValue = inFlow.getFlowValue();
-                Flow outFlow = new Flow(sw.getIp(), outFlowOidGroup);
-                long outFlowValue = outFlow.getFlowValue();
+                Flow flow = new Flow(sw.getIp());
+                flow.setOcter("abc123");
+                long inFlowValue = flow.calcFlowValue(inFlowOidGroup);
+                long outFlowValue = flow.calcFlowValue(outFlowOidGroup);
                 BankLogWriter.getSingle().writeLog("inflow：" + inFlowValue + ", outFlow:" + outFlowValue);
 
                 //如果是新的一天则先重置
