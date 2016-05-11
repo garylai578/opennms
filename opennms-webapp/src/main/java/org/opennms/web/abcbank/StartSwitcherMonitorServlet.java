@@ -111,8 +111,8 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
 
                     // byte换算成KB
-                    long hourInFlow = (long) (inFlow / 1024 * 8.0 / t);
-                    long hourOutFlow = (long) (outFlow / 1024 * 8.0 / t);
+                    long hourInFlow = (long) (inFlow / (1024 * 8.0) / t);
+                    long hourOutFlow = (long) (outFlow / (1024 * 8.0) / t);
                     String oldValue = operator.getColunm(sw.getIp(), "flow");
                     String[] oldSplit = oldValue.split(",|/t");
 
