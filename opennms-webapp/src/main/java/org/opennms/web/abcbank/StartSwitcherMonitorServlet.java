@@ -33,7 +33,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
 
     public void init(){
         flag = true;
-        SimpleDateFormat df = new SimpleDateFormat("HH");//设置日期格式,24小时制
+        SimpleDateFormat df = new SimpleDateFormat("H");//设置日期格式,24小时制
         hour1 = df.format(new Date());
         SimpleDateFormat df2 = new SimpleDateFormat("dd");
         day1 = df2.format(new Date());
@@ -41,13 +41,13 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
         //设置定时器，每10分钟对所有交换机进行一次流量的获取并插入数据库
         Runnable runnable = new Runnable() {
             public void run() {
-                BankLogWriter.getSingle().writeLog("执行定时交换机流量监控");
+                BankLogWriter.getSingle().writeLog("-----------------执行定时交换机流量监控--------------------");
                 startSwitcherMonitor();
             }
         };
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         // 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间
-        service.scheduleAtFixedRate(runnable, 0, 300, TimeUnit.SECONDS);
+        service.scheduleAtFixedRate(runnable, 0, 600, TimeUnit.SECONDS);
     }
 
     private void startSwitcherMonitor(){
@@ -62,7 +62,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
             SwitcherStats[] sws = operator.selectAll();
             for(SwitcherStats sw : sws){
                 BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
-                SimpleDateFormat df = new SimpleDateFormat("HH");//设置日期格式
+                SimpleDateFormat df = new SimpleDateFormat("H");//设置日期格式
                 String hour2 = df.format(new Date());;
                 SimpleDateFormat df2 = new SimpleDateFormat("dd");
                 String day2 = df2.format(new Date());
@@ -87,18 +87,22 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     hourInFlow += inFlowValue;
                     hourOutFlow += outFlowValue;
                 }else{      //对一个小时内的流量进行计算，并替换原值
-                    hourInFlow = hourInFlow / t;
-                    hourOutFlow = hourOutFlow / t;
+                    // 字节换算成兆比特
+                    BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + hourInFlow + "bit, 流出：" + hourOutFlow + "bit");
+                    hourInFlow = (long) (hourInFlow / 1024 * 8.0 / t);
+                    hourOutFlow = (long) (hourOutFlow / 1024 * 8.0 / t);
                     String oldValue = operator.getColunm(sw.getIp(), "flow");
-                    String[] oldSplit = oldValue.split(",");
+                    String[] oldSplit = oldValue.split(",|/t");
 
-                    BankLogWriter.getSingle().writeLog("时间：" + hour1);
                     oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
                     oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
 
                     String newString ="";
                     for(int j=0; j < oldSplit.length; ++j){
-                        newString += oldSplit[j] + ",";
+                        if(j == 23)
+                            newString += oldSplit[j] + "/t";
+                        else
+                            newString += oldSplit[j] + ",";
                     }
                     newString = newString.substring(0, newString.length() -1);
                     operator.update(sw.getIp(), "flow", "'" + newString + "'" );

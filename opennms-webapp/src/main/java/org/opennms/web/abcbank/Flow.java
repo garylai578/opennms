@@ -26,6 +26,7 @@ public class Flow {
     ArrayList<String> FlowOidGroup; // 流量OID，可能有多个ifOutOctets OID: .1.3.6.1.2.1.2.2.1.16 , ifInOctets OID: .1.3.6.1.2.1.2.2.1.10
     private String NowTime; // 端口流量的采集时间
     public boolean isSuccess = false;
+    public long flowValue;
 
     /**
      * 构造器：IP地址
@@ -62,16 +63,17 @@ public class Flow {
     /**
      * 计算交换机的端口流量，思路是：采集两次设备数据，用流量值的差值，除以时间的差值，即是当前的流量值，时间间隔我用的是5秒
      * @param FlowOidGroup 流量OID，可以有多个
+     * @return 流量，单位是bit
      */
     @SuppressWarnings("unchecked")
     public long calcFlowValue(ArrayList<String> FlowOidGroup) {
-        long result = 0;
+        flowValue = 0;
         try {
-            BankLogWriter.getSingle().writeLog("获取并计算交换机流量：" + IpAddress);
+//            BankLogWriter.getSingle().writeLog("获取并计算交换机流量：" + IpAddress);
             Address targetAddress = GenericAddress.parse("udp:" + IpAddress + "/161");
             TransportMapping transport = new DefaultUdpTransportMapping();
             Snmp snmp = new Snmp(transport);
-            transport.listen();// 监听 
+            transport.listen();// 监听
             CommunityTarget target = new CommunityTarget();
 
             // 目标对象相关设置
@@ -108,8 +110,15 @@ public class Flow {
                     }
                     // 取端口流量
                     for (int i = 0; i < FlowOidGroup.size(); i++) {
-                        BankLogWriter.getSingle().writeLog("获取交换机端口流量,oid[" + FlowOidGroup.get(i) + "], 结果[" + revBindings.elementAt(i + 1).getVariable().toString() + "]");
-                        flow[count][i] = Long.parseLong(revBindings.elementAt(i + 1).getVariable().toString());
+//                        BankLogWriter.getSingle().writeLog("获取交换机端口流量,oid[" + FlowOidGroup.get(i) + "], 结果[" + revBindings.elementAt(i + 1).getVariable().toString() + "]");
+                        try{
+                            flow[count][i] = Long.parseLong(revBindings.elementAt(i + 1).getVariable().toString());
+                        }catch(NumberFormatException e){
+                            flow[count][i] = 0;
+                            BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集解析异常：" + e.getMessage());
+                            e.printStackTrace();
+                            isSuccess  = false;
+                        }
 //                        BankLogWriter.getSingle().writeLog("" + flow[count][i]);
                     }
                     isSuccess = true;
@@ -138,11 +147,11 @@ public class Flow {
                 }
                 AllSubValue += sub;
             }
-            BankLogWriter.getSingle().writeLog("AllSubValue=" +AllSubValue);
-            BankLogWriter.getSingle().writeLog("time0=" + time[0] + ", time2="+time[1]);
-            if (time[1] - time[0] != 0) { // 字节换算成兆比特才是最终流量
-                result = (long) (AllSubValue / 1024.0 / 1024 * 8 / (time[1] - time[0]));
-                BankLogWriter.getSingle().writeLog("result=" + result);
+//            BankLogWriter.getSingle().writeLog("AllSubValue=" +AllSubValue);
+//            BankLogWriter.getSingle().writeLog("time0=" + time[0] + ", time2="+time[1]);
+            if (time[1] - time[0] != 0) {
+                flowValue = (long) (AllSubValue / (time[1] - time[0]));
+//                BankLogWriter.getSingle().writeLog("result=" + flowValue);
                 isSuccess = true;
             } else {
                 BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集失败！");
@@ -161,7 +170,7 @@ public class Flow {
             e.printStackTrace();
             isSuccess  = false;
         }
-        return result;
+        return flowValue;
     }
 
 }
