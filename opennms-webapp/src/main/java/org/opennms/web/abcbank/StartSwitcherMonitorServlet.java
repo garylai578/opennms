@@ -110,13 +110,21 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     long outFlow = Long.parseLong(values[1]);
                     BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
 
-                    long hourInFlow = inFlow / t;
-                    long hourOutFlow = outFlow / t;
+                    // byte换算成KB
+                    long hourInFlow = (long) (inFlow / (1024 * 8.0) / t);
+                    long hourOutFlow = (long) (outFlow / (1024 * 8.0) / t);
                     String oldValue = operator.getColunm(sw.getIp(), "flow");
                     String[] oldSplit = oldValue.split(",|/t");
 
-                    oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
-                    oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
+                    if(hourInFlow == 0)
+                        oldSplit[Integer.parseInt(hour1) - 1] = inFlow + "b";
+                    else
+                        oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
+
+                    if(hourOutFlow == 0)
+                        oldSplit[Integer.parseInt(hour1) + 24 - 1] = outFlow + "b";
+                    else
+                        oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
 
                     String newString ="";
                     for(int j=0; j < oldSplit.length; ++j){

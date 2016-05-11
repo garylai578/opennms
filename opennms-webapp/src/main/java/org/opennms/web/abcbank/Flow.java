@@ -63,7 +63,7 @@ public class Flow {
     /**
      * 计算交换机的端口流量，思路是：采集两次设备数据，用流量值的差值，除以时间的差值，即是当前的流量值，时间间隔我用的是5秒
      * @param FlowOidGroup 流量OID，可以有多个
-     * @return 流量，单位是KB
+     * @return 流量，单位是bit
      */
     @SuppressWarnings("unchecked")
     public long calcFlowValue(ArrayList<String> FlowOidGroup) {
@@ -114,8 +114,8 @@ public class Flow {
                         try{
                             flow[count][i] = Long.parseLong(revBindings.elementAt(i + 1).getVariable().toString());
                         }catch(NumberFormatException e){
-                            flow[count][i] = 0L;
-//                            BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集解析异常：" + e.getMessage());
+                            flow[count][i] = 0;
+                            BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集解析异常：" + e.getMessage());
                             e.printStackTrace();
                             isSuccess  = false;
                         }
@@ -134,7 +134,7 @@ public class Flow {
             Calendar c = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             NowTime = sdf.format(c.getTime());// 当前时间
-            long AllSubValue = 0L;
+            long AllSubValue = 0;
             for (int i = 0; i < FlowOidGroup.size(); i++) {
                 long sub = flow[1][i] - flow[0][i];
                 /*
@@ -150,7 +150,7 @@ public class Flow {
 //            BankLogWriter.getSingle().writeLog("AllSubValue=" +AllSubValue);
 //            BankLogWriter.getSingle().writeLog("time0=" + time[0] + ", time2="+time[1]);
             if (time[1] - time[0] != 0) {
-                flowValue = (AllSubValue / (time[1] - time[0]));
+                flowValue = (long) (AllSubValue / (time[1] - time[0]));
 //                BankLogWriter.getSingle().writeLog("result=" + flowValue);
                 isSuccess = true;
             } else {
@@ -170,7 +170,7 @@ public class Flow {
             e.printStackTrace();
             isSuccess  = false;
         }
-        return flowValue/(1024 * 8);// byte换算成KB
+        return flowValue;
     }
 
 }
