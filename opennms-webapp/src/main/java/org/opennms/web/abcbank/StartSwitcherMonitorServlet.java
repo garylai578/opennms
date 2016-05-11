@@ -85,30 +85,31 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                 long outFlowValue = flow.calcFlowValue(outFlowOidGroup);
                 BankLogWriter.getSingle().writeLog("inflow：" + inFlowValue + ", outFlow:" + outFlowValue);
 
+                //如果是新添加的交换机，则先加入到Map中
+                if(!resultMap.containsKey(sw.getIp())){
+                    String resultValue = inFlowValue + "\t" + outFlowValue;
+                    resultMap.put(sw.getIp(), resultValue);
+                }
+
                 //如果是新的一天则先重置
                 if(!day1.equals(day2)){
                     operator.update(sw.getIp(), "flow", "'-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-/t-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-'" );
                 }
 
                 if(hour2.equals(hour1)){   //同一个小时内的流量进行累计
-                    if(!resultMap.containsKey(sw.getIp())){
-                        String resultValue = inFlowValue + "\t" + outFlowValue;
-                        resultMap.put(sw.getIp(), resultValue);
-                    }else {
-                        String resultValue = (String)resultMap.get(sw.getIp());
-                        String[] values = resultValue.split("\t");
-                        long inFlow = Long.parseLong(values[0]) + inFlowValue;
-                        long outFlow = Long.parseLong(values[1]) + outFlowValue;
-                        resultMap.put(sw.getIp(), inFlow + "\t" + outFlow);
-                    }
+                    String resultValue = (String)resultMap.get(sw.getIp());
+                    String[] values = resultValue.split("\t");
+                    long inFlow = Long.parseLong(values[0]) + inFlowValue;
+                    long outFlow = Long.parseLong(values[1]) + outFlowValue;
+                    resultMap.put(sw.getIp(), inFlow + "\t" + outFlow);
                 }else{      //对一个小时内的流量进行计算，并替换原值
-                    // 字节换算成兆比特
                     String resultValue = (String)resultMap.get(sw.getIp());
                     String[] values = resultValue.split("\t");
                     long inFlow = Long.parseLong(values[0]) + inFlowValue;
                     long outFlow = Long.parseLong(values[1]) + outFlowValue;
                     BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
 
+                    // byte换算成KB
                     long hourInFlow = (long) (inFlow / 1024 * 8.0 / t);
                     long hourOutFlow = (long) (outFlow / 1024 * 8.0 / t);
                     String oldValue = operator.getColunm(sw.getIp(), "flow");
