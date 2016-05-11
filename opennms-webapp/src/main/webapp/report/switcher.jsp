@@ -42,7 +42,7 @@
 <form method="post" name="switcher">
     <input type="hidden" name="ip"/>
 
-    <h3>交换机流量统计(请先配置需要统计流量的交换机)</h3>
+    <h3>交换机流量统计(请先配置需要统计流量的交换机)，流量单位KB</h3>
 
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
         <tr bgcolor="#999999">
