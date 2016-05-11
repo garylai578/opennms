@@ -104,9 +104,10 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     resultMap.put(sw.getIp(), inFlow + "\t" + outFlow);
                 }else{      //对一个小时内的流量进行计算，并替换原值
                     String resultValue = (String)resultMap.get(sw.getIp());
+                    resultMap.put(sw.getIp(), inFlowValue + "\t" + outFlowValue);
                     String[] values = resultValue.split("\t");
-                    long inFlow = Long.parseLong(values[0]) + inFlowValue;
-                    long outFlow = Long.parseLong(values[1]) + outFlowValue;
+                    long inFlow = Long.parseLong(values[0]);
+                    long outFlow = Long.parseLong(values[1]);
                     BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
 
                     // byte换算成KB
@@ -127,6 +128,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     }
                     newString = newString.substring(0, newString.length() -1);
                     operator.update(sw.getIp(), "flow", "'" + newString + "'" );
+
                 }
 
             }
