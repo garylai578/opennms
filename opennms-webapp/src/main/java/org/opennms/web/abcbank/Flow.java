@@ -115,7 +115,7 @@ public class Flow {
                             flow[count][i] = Long.parseLong(revBindings.elementAt(i + 1).getVariable().toString());
                         }catch(NumberFormatException e){
                             flow[count][i] = 0;
-                            BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集解析异常：" + e.getMessage());
+//                            BankLogWriter.getSingle().writeLog("地址：" + IpAddress + "的交换机流量数据采集解析异常：" + e.getMessage());
                             e.printStackTrace();
                             isSuccess  = false;
                         }
