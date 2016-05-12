@@ -76,7 +76,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
             SwitcherStats[] sws = operator.selectAll();
             for(int i = 0; i < sws.length; ++i){
                 SwitcherStats sw = sws[i];
-//                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
+                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
 //                BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2 + "; day1:" + day1 + ", day2: " + day2);
 
                 Flow flow = new Flow(sw.getIp());
@@ -108,7 +108,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     String[] values = resultValue.split("\t");
                     long inFlow = Long.parseLong(values[0]);
                     long outFlow = Long.parseLong(values[1]);
-//                    BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
+                    BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
 
                     // byte换算成KB
                     long hourInFlow = (long) (inFlow / (1024 * 8.0) / t);
