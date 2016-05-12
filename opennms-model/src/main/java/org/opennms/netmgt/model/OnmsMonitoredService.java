@@ -112,14 +112,14 @@ Comparable<OnmsMonitoredService> {
 	
 	static {
         STATUS_MAP = new HashMap<String, String>();
-        STATUS_MAP.put("A", "Managed");
-        STATUS_MAP.put("U", "Unmanaged");
-        STATUS_MAP.put("D", "Deleted");
-        STATUS_MAP.put("F", "Forced Unmanaged");
-        STATUS_MAP.put("N", "Not Monitored");
-        STATUS_MAP.put("R", "Rescan to Resume");
-        STATUS_MAP.put("S", "Rescan to Suspend");
-        STATUS_MAP.put("X", "Remotely Monitored");
+        STATUS_MAP.put("A", "已管理");
+        STATUS_MAP.put("U", "未管理");
+        STATUS_MAP.put("D", "已删除");
+        STATUS_MAP.put("F", "已强制取消管理");
+        STATUS_MAP.put("N", "未监控");
+        STATUS_MAP.put("R", "重新扫描后恢复");
+        STATUS_MAP.put("S", "重新扫描后暂停");
+        STATUS_MAP.put("X", "已远程监控");
 	}
 
     /**

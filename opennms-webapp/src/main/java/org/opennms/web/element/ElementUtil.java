@@ -77,30 +77,30 @@ public abstract class ElementUtil {
 
     static {
         m_nodeStatusMap = new HashMap<Character, String>();
-        m_nodeStatusMap.put('A', "Active");
-        m_nodeStatusMap.put(' ', "Unknown");
-        m_nodeStatusMap.put('D', "Deleted");
+        m_nodeStatusMap.put('A', "正常");
+        m_nodeStatusMap.put(' ', "未知");
+        m_nodeStatusMap.put('D', "已删除");
         
         m_interfaceStatusMap = new HashMap<Character, String>();
-        m_interfaceStatusMap.put('M', "Managed");
-        m_interfaceStatusMap.put('U', "Unmanaged");
-        m_interfaceStatusMap.put('D', "Deleted");
-        m_interfaceStatusMap.put('F', "Forced Unmanaged");
-        m_interfaceStatusMap.put('N', "Not Monitored");
+        m_interfaceStatusMap.put('M', "已管理");
+        m_interfaceStatusMap.put('U', "未管理");
+        m_interfaceStatusMap.put('D', "已删除");
+        m_interfaceStatusMap.put('F', "已强制取消管理");
+        m_interfaceStatusMap.put('N', "未监控");
         
         m_interfaceSnmpStatusMap = new HashMap<Character, String>();
-        m_interfaceSnmpStatusMap.put('P', "Polled");
-        m_interfaceSnmpStatusMap.put('N', "Not Monitored");
+        m_interfaceSnmpStatusMap.put('P', "已Poll");
+        m_interfaceSnmpStatusMap.put('N', "未监控");
         
         m_serviceStatusMap = new HashMap<Character, String>();
-        m_serviceStatusMap.put('A', "Managed");
-        m_serviceStatusMap.put('U', "Unmanaged");
-        m_serviceStatusMap.put('D', "Deleted");
-        m_serviceStatusMap.put('F', "Forced Unmanaged");
-        m_serviceStatusMap.put('N', "Not Monitored");
-        m_serviceStatusMap.put('R', "Rescan to Resume");
-        m_serviceStatusMap.put('S', "Rescan to Suspend");
-        m_serviceStatusMap.put('X', "Remotely Monitored");
+        m_serviceStatusMap.put('A', "已管理");
+        m_serviceStatusMap.put('U', "未管理");
+        m_serviceStatusMap.put('D', "已删除");
+        m_serviceStatusMap.put('F', "已强制取消管理");
+        m_serviceStatusMap.put('N', "未监控");
+        m_serviceStatusMap.put('R', "重新扫描后恢复");
+        m_serviceStatusMap.put('S', "重新扫描后暂停");
+        m_serviceStatusMap.put('X', "已远程监控");
         
         
     }
