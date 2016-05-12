@@ -107,11 +107,11 @@
 		</td>
 		<td class="<%= (opennmsDisconnect ? "Indeterminate" : category.getOutageClass()) %>"
 	        align="right"
-		    title="更新时间:<%= category.getLastUpdated() %>"><%= category.getOutageText() %>
+		    title="更新时间:<%= category.getLastUpdated().toLocaleString() %>"><%= category.getOutageText() %>
 		</td>
 		<td class="<%= (opennmsDisconnect ? "Indeterminate" : category.getAvailClass()) %>"
 		    align="right" 
-		    title="更新时间:<%= category.getLastUpdated() %>"><%= category.getAvailText() %>
+		    title="更新时间:<%= category.getLastUpdated().toLocaleString() %>"><%= category.getAvailText() %>
 		</td>
 	</tr>
 	

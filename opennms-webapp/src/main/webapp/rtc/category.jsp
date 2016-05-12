@@ -134,7 +134,7 @@
 </jsp:include>
 
 <h3>
-  <span title="最后更新 <c:out value="<%=category.getLastUpdated().toString()%>"/>">
+  <span title="最后更新 <c:out value="<%=category.getLastUpdated().toLocaleString()%>"/>">
     <c:out value="<%=category.getTitle()%>"/>
   </span>
 </h3>
@@ -169,7 +169,7 @@
       <% if( AclUtils.shouldFilter(SecurityContextHolder.getContext().getAuthentication().getAuthorities()) ) { %>
         <p style="color: red"> 这个列表已过滤，根据你的用户组访问节点的权限。 </p>
       <% } %>
-      <c:out escapeXml="false" value="<!-- Last updated "/><c:out value="<%=category.getLastUpdated().toString()%>"/><c:out escapeXml="false" value=" -->"/>
+      <c:out escapeXml="false" value="<!-- Last updated "/><c:out value="<%=category.getLastUpdated().toLocaleString()%>"/><c:out escapeXml="false" value=" -->"/>
 
       <table>
         <tr>
