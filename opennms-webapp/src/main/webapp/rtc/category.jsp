@@ -128,14 +128,14 @@
   <jsp:param name="title" value="分类服务级别监控" />
   <jsp:param name="headTitle" value="<%=category.getName()%>" />
   <jsp:param name="headTitle" value="分类" />
-  <jsp:param name="headTitle" value="SLM" />
-  <jsp:param name="breadcrumb" value="<a href='rtc/index.jsp'>SLM</a>" />
+  <jsp:param name="headTitle" value="服务监控" />
+  <jsp:param name="breadcrumb" value="<a href='rtc/index.jsp'>服务监控</a>" />
   <jsp:param name="breadcrumb" value="分类"/>
 </jsp:include>
 
 <h3>
-  <span title="最后更新 <c:out value="<%=category.getLastUpdated().toString()%>"/>">
-    <c:out value="<%=category.getName()%>"/>
+  <span title="最后更新 <c:out value="<%=category.getLastUpdated().toLocaleString()%>"/>">
+    <c:out value="<%=category.getTitle()%>"/>
   </span>
 </h3>
 
@@ -169,7 +169,7 @@
       <% if( AclUtils.shouldFilter(SecurityContextHolder.getContext().getAuthentication().getAuthorities()) ) { %>
         <p style="color: red"> 这个列表已过滤，根据你的用户组访问节点的权限。 </p>
       <% } %>
-      <c:out escapeXml="false" value="<!-- Last updated "/><c:out value="<%=category.getLastUpdated().toString()%>"/><c:out escapeXml="false" value=" -->"/>
+      <c:out escapeXml="false" value="<!-- Last updated "/><c:out value="<%=category.getLastUpdated().toLocaleString()%>"/><c:out escapeXml="false" value=" -->"/>
 
       <table>
         <tr>
@@ -204,7 +204,7 @@
         %>
                     <tr class="CellStatus">
                       <td><a href="element/node.jsp?node=<%=node.getNodeid()%>"><c:out value="<%=nodeLabel%>"/></a></td>
-                      <td class="<%=outageClass%>" align="right"><%=serviceDownCount%> of <%=serviceCount%></td>
+                      <td class="<%=outageClass%>" align="right"><%=serviceDownCount%> / <%=serviceCount%></td>
                       <td class="<%=availClass%>" align="right" width="30%"><b><%=CategoryUtil.formatValue(value)%>%</b></td>
                     </tr>
             	    <%  }

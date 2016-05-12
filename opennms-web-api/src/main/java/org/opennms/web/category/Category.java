@@ -339,7 +339,7 @@ public class Category {
         if (m_lastUpdated == null) {
             return "正在计算...";
         } else {
-            return getServiceDownCount() + " of " + getServiceCount();
+            return getServiceDownCount() + " / " + getServiceCount();
         }
     }
 

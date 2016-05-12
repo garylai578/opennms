@@ -117,12 +117,12 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     String[] oldSplit = oldValue.split(",|/t");
 
                     if(hourInFlow == 0)
-                        oldSplit[Integer.parseInt(hour1) - 1] = inFlow + "b";
+                        oldSplit[Integer.parseInt(hour1) - 1] = inFlow + "bps";
                     else
                         oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
 
                     if(hourOutFlow == 0)
-                        oldSplit[Integer.parseInt(hour1) + 24 - 1] = outFlow + "b";
+                        oldSplit[Integer.parseInt(hour1) + 24 - 1] = outFlow + "bps";
                     else
                         oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
 

@@ -87,8 +87,8 @@
                             <option>ifDescr</option>
                         </select>
                         <select name="snmpParmMatchType" size="1">
-                            <option>contains</option> 
-                            <option>equals</option>
+                            <option>包含</option>
+                            <option>等于</option>
                         </select>:        
 						<input type="hidden" name="listInterfaces" value="false"/>
 						<input type="text" name="snmpParmValue" />

@@ -42,7 +42,7 @@
 <form method="post" name="switcher">
     <input type="hidden" name="ip"/>
 
-    <h3>交换机流量统计(请先配置需要统计流量的交换机)，流量单位KB</h3>
+    <h3>交换机流量统计(请先配置需要统计流量的交换机)，流量单位KB/秒</h3>
 
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
         <tr bgcolor="#999999">
@@ -129,8 +129,8 @@
         %>
     </table>
 
-    <input id="add" type="button" value="增加交换机"  onclick="location.href='/opennms/report/configSwitchers.jsp'"/>
-    <input id="add" type="button" value="启动流量监控" onclick="javascript:startMonitor();"/>
+    <input id="addSwitcher" type="button" value="增加交换机"  onclick="location.href='/opennms/report/configSwitchers.jsp'"/>
+    <input id="startMonitor" type="button" value="启动流量监控" onclick="javascript:startMonitor();"/>
 
 </form>
 

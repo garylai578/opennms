@@ -37,7 +37,7 @@
 <jsp:include page="/includes/header.jsp" flush="false" >
   <jsp:param name="title" value="服务级别监控" />
   <jsp:param name="headTitle" value="服务级别监控" />
-  <jsp:param name="breadcrumb" value="SLM" />
+  <jsp:param name="breadcrumb" value="服务监控" />
 </jsp:include>
 
 <jsp:include page="/includes/categories-box.jsp" flush="false" />

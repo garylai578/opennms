@@ -99,19 +99,19 @@
           <% if (category.getLastUpdated() != null) { %>
 		    <a href="<%= response.encodeURL("rtc/category.jsp?category=" + Util.encode(categoryName)) %>"
 		       title="<%= category.getTitle() %>">
-              <%= categoryName %>
+              <%= category.getTitle() %>
             </a>
           <% } else { %>
-            <%= categoryName %>
+            <%= category.getTitle() %>
           <% } %>
 		</td>
 		<td class="<%= (opennmsDisconnect ? "Indeterminate" : category.getOutageClass()) %>"
 	        align="right"
-		    title="更新时间:<%= category.getLastUpdated() %>"><%= category.getOutageText() %>
+		    title="更新时间:<%= category.getLastUpdated().toLocaleString() %>"><%= category.getOutageText() %>
 		</td>
 		<td class="<%= (opennmsDisconnect ? "Indeterminate" : category.getAvailClass()) %>"
 		    align="right" 
-		    title="更新时间:<%= category.getLastUpdated() %>"><%= category.getAvailText() %>
+		    title="更新时间:<%= category.getLastUpdated().toLocaleString() %>"><%= category.getAvailText() %>
 		</td>
 	</tr>
 	
