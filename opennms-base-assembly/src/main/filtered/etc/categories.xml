@@ -13,14 +13,14 @@
         <categories>
             <category>
                 <label><![CDATA[Overall Service Availability]]></label>
-                <comment>This category reflects availability of all services currently being monitored by OpenNMS.</comment>
+                <comment>网络服务全局可用性</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <rule><![CDATA[IPADDR != '0.0.0.0']]></rule>
             </category>
             <category>
                 <label><![CDATA[Network Interfaces]]></label>
-                <comment>This category reflects the ability to 'ping' managed devices and SNMP agents.  'Ping', using the ICMP protocol, tests a devices network connectivity/availability.</comment>
+                <comment>网络接口</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>ICMP</service>
@@ -29,7 +29,7 @@
             </category>
             <category>
                 <label><![CDATA[Email Servers]]></label>
-                <comment>This category includes all managed interfaces which are running an Email service, including SMTP, POP3, or IMAP.  This will include MS Exchange servers running these protocols.</comment>
+                <comment>邮件服务器</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>SMTP</service>
@@ -39,7 +39,7 @@
             </category>
             <category>
                 <label><![CDATA[Web Servers]]></label>
-                <comment>This category includes all managed interfaces which are running an HTTP (Web) server on port 80 or other common ports.</comment>
+                <comment>Web服务器</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>HTTP</service>
@@ -50,7 +50,7 @@
             </category>
             <category>
                 <label><![CDATA[JMX Servers]]></label>
-                <comment>This category includes all managed interfaces which are running JMX servers.</comment>
+                <comment>JMX服务器</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>JBoss4</service>
@@ -60,7 +60,7 @@
             </category>
             <category>
                 <label><![CDATA[DNS and DHCP Servers]]></label>
-                <comment>This category includes all managed interfaces which are running either DNS (name resolution) servers or DHCP servers.</comment>
+                <comment>DNS/DHCP服务器</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>DNS</service>
@@ -69,7 +69,7 @@
             </category>
             <category>
                 <label><![CDATA[Database Servers]]></label>
-                <comment>This category includes all managed interfaces which are currently running PostgreSQL, MySQL, SQLServer, or Oracle database servers.</comment>
+                <comment>数据库服务器</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>MySQL</service>
@@ -80,7 +80,7 @@
             </category>
             <category>
                 <label><![CDATA[Other Servers]]></label>
-                <comment>This category includes all managed interfaces which are running FTP (file transfer protocol) servers or SSH (secure shell) servers.</comment>
+                <comment>其他类型服务器</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>FTP</service>
@@ -89,7 +89,7 @@
             </category>
             <category>
                 <label><![CDATA[Internet Connectivity]]></label>
-                <comment>This category reflects the ability to 'ping' the router at the ISP-end of your Internet connection.</comment>
+                <comment>Internet连通性</comment>
                 <normal>99.99</normal>
                 <warning>97</warning>
                 <service>ICMP</service>

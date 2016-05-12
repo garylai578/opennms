@@ -99,10 +99,10 @@
           <% if (category.getLastUpdated() != null) { %>
 		    <a href="<%= response.encodeURL("rtc/category.jsp?category=" + Util.encode(categoryName)) %>"
 		       title="<%= category.getTitle() %>">
-              <%= categoryName %>
+              <%= category.getTitle() %>
             </a>
           <% } else { %>
-            <%= categoryName %>
+            <%= category.getTitle() %>
           <% } %>
 		</td>
 		<td class="<%= (opennmsDisconnect ? "Indeterminate" : category.getOutageClass()) %>"
