@@ -34,7 +34,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
 
     public void init(){
         flag = true;
-        final SimpleDateFormat df = new SimpleDateFormat("H");//设置日期格式,24小时制
+        final SimpleDateFormat df = new SimpleDateFormat("k");//设置日期格式,1-24小
         hour1 = df.format(new Date());
         final SimpleDateFormat df2 = new SimpleDateFormat("dd");
         day1 = df2.format(new Date());
@@ -116,30 +116,15 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     String oldValue = operator.getColunm(sw.getIp(), "flow");
                     String[] oldSplit = oldValue.split(",|/t");
 
-                    int index = Integer.parseInt(hour1);
-                    if(hourInFlow == 0) {
-                        if(index == 0)
-                            oldSplit[23] = inFlow + "b";
-                        else
-                            oldSplit[index - 1] = inFlow + "b";
-                    }else {
-                        if(index == 0)
-                            oldSplit[23] = hourInFlow + "";
-                        else
-                            oldSplit[index - 1] = inFlow + "";
-                    }
+                    if(hourInFlow == 0)
+                        oldSplit[Integer.parseInt(hour1) - 1] = inFlow + "b";
+                    else
+                        oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
 
-                    if(hourOutFlow == 0) {
-                        if(index == 0)
-                            oldSplit[46] = outFlow + "b";
-                        else
-                            oldSplit[Integer.parseInt(hour1) + 24 - 1] = outFlow + "b";
-                    }else {
-                        if(index == 0)
-                            oldSplit[46] = outFlow + "";
-                        else
-                            oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
-                    }
+                    if(hourOutFlow == 0)
+                        oldSplit[Integer.parseInt(hour1) + 24 - 1] = outFlow + "b";
+                    else
+                        oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
 
                     String newString ="";
                     for(int j=0; j < oldSplit.length; ++j){
