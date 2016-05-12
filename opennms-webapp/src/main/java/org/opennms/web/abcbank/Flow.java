@@ -63,7 +63,7 @@ public class Flow {
     /**
      * 计算交换机的端口流量，思路是：采集两次设备数据，用流量值的差值，除以时间的差值，即是当前的流量值，时间间隔我用的是5秒
      * @param FlowOidGroup 流量OID，可以有多个
-     * @return 流量，单位是bit
+     * @return 流量，单位是bit/秒
      */
     @SuppressWarnings("unchecked")
     public long calcFlowValue(ArrayList<String> FlowOidGroup) {
