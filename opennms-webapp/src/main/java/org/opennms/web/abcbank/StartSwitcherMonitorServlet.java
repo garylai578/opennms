@@ -38,11 +38,11 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
         hour1 = df.format(new Date());
         final SimpleDateFormat df2 = new SimpleDateFormat("dd");
         day1 = df2.format(new Date());
-        BankLogWriter.getSingle().writeLog("自启动StartSwitcherMonitorServlet！");
+        BankLogWriter.getSingle().writeLog("自启动交换机流量监控进程：StartSwitcherMonitorServlet！");
         //设置定时器，每10分钟对所有交换机进行一次流量的获取并插入数据库
         Runnable runnable = new Runnable() {
             public void run() {
-                BankLogWriter.getSingle().writeLog("-----------------执行定时交换机流量监控--------------------");
+//                BankLogWriter.getSingle().writeLog("-----------------执行定时交换机流量监控--------------------");
                 hour2 = df.format(new Date());
                 day2 = df2.format(new Date());
                 startSwitcherMonitor();
@@ -76,14 +76,14 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
             SwitcherStats[] sws = operator.selectAll();
             for(int i = 0; i < sws.length; ++i){
                 SwitcherStats sw = sws[i];
-                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
-                BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2 + "; day1:" + day1 + ", day2: " + day2);
+//                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
+//                BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2 + "; day1:" + day1 + ", day2: " + day2);
 
                 Flow flow = new Flow(sw.getIp());
                 flow.setOcter("abc123");
                 long inFlowValue = flow.calcFlowValue(inFlowOidGroup);
                 long outFlowValue = flow.calcFlowValue(outFlowOidGroup);
-                BankLogWriter.getSingle().writeLog("inflow：" + inFlowValue + ", outFlow:" + outFlowValue);
+//                BankLogWriter.getSingle().writeLog("inflow：" + inFlowValue + ", outFlow:" + outFlowValue);
 
                 //如果是新添加的交换机，则先加入到Map中
                 if(!resultMap.containsKey(sw.getIp())){
@@ -92,7 +92,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                 }
 
                 //如果是新的一天则先重置
-                if(!day1.equals(day2)){
+                if(!hour2.equals("2")){
                     operator.update(sw.getIp(), "flow", "'-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-/t-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-'" );
                 }
 
@@ -108,7 +108,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     String[] values = resultValue.split("\t");
                     long inFlow = Long.parseLong(values[0]);
                     long outFlow = Long.parseLong(values[1]);
-                    BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
+//                    BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
 
                     // byte换算成KB
                     long hourInFlow = (long) (inFlow / (1024 * 8.0) / t);
@@ -147,7 +147,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if(!flag) {
-            BankLogWriter.getSingle().writeLog("手工启动StartSwitcherMonitorServlet！");
+            BankLogWriter.getSingle().writeLog("手工启动交换机流量监控进程：StartSwitcherMonitorServlet！");
             init();
         }
         else {
