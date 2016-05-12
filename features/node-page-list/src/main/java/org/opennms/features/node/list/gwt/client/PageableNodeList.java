@@ -219,15 +219,15 @@ public class PageableNodeList extends Composite implements ProvidesResize, Physi
     }
 
     private void initializeListBoxes() {
-        m_ipSearchList.addItem("IP Address", "ipAddress");
-        m_ipSearchList.addItem("IP Host Name", "ipHostName");
+        m_ipSearchList.addItem("IP地址", "ipAddress");
+        m_ipSearchList.addItem("IP主机名", "ipHostName");
         
         m_physSearchList.addItem("index", "ifIndex");
         m_physSearchList.addItem("SNMP ifDescr", "ifDescr");
         m_physSearchList.addItem("SNMP ifName","ifName");
         m_physSearchList.addItem("SNMP ifAlias","ifAlias");
         m_physSearchList.addItem("SNMP ifSpeed","ifSpeed");
-        m_physSearchList.addItem("IP Address","ipAddress");
+        m_physSearchList.addItem("IP地址","ipAddress");
         m_physSearchList.addItem("SNMP ifPhysAddr","physAddr");
     }
 

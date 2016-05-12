@@ -1791,7 +1791,7 @@
       Typically the result of a request of an import request or a scheduled/user forced rescan.
     </descr>
     <logmsg dest='logndisplay' >
-      &lt;p&gt;节点ID:%nodeid%; ForeignSource: %parm[foreignSource]%; ForeignId:%parm[foreignId]% has completed.&lt;/p&gt;
+      &lt;p&gt;节点ID:%nodeid%; 外部资源:%parm[foreignSource]%; 外部ID:%parm[foreignId]% 已完成扫描。&lt;/p&gt;
      </logmsg>
      <severity>Normal</severity>
   </event>
