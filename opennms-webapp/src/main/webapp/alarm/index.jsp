@@ -59,7 +59,7 @@
           <li><a href="alarm/list.htm" title="查看基本的活动告警">所有告警 (主要信息)</a></li>
           <li><a href="alarm/list.htm?display=long" title="查看详细的活动告警">所有告警 (详细信息)</a></li>
           <li><a href="alarm/advsearch.jsp" title="更多高级查询和排序选项">高级查询</a></li>
-          <%=getAlarmPageNavItems() %>
+          <%--<%=getAlarmPageNavItems() %>--%>
         </ul>  
       </div>
   </div>
