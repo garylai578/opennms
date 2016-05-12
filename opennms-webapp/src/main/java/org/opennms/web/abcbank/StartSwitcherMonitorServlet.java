@@ -92,7 +92,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                 }
 
                 //如果是新的一天则先重置
-                if(!hour2.equals("2")){
+                if(hour2.equals("2")){
                     operator.update(sw.getIp(), "flow", "'-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-/t-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-'" );
                 }
 
