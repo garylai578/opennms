@@ -43,6 +43,7 @@
         import="org.opennms.web.outage.*" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <!-- outage/servicesdown-box.htm -->
 <c:url var="headingLink" value="outage/list.htm"/>
@@ -61,13 +62,13 @@
           <c:url var="nodeLink" value="element/node.jsp">
             <c:param name="node" value="${summary.nodeId}"/>
           </c:url>
-          <li><a href="${nodeLink}">${summary.nodeLabel}</a> (${summary.fuzzyTimeDown.replace("hours", "小时").replace("hour", "小时").replace("days", "天").replace("day", "天")})</li>
+          <li><a href="${nodeLink}">${summary.nodeLabel}</a> (${fn:replace(fn:replace(fn:replace(fn:replace(summary.fuzzyTimeDown, "hours", "小时"), "hour", "小时"), "days", "天"), "day", "天")})</li>
         </c:forEach>
       </ul>
     
       <c:if test="${moreCount > 0}">
         <p class="noBottomMargin" align="right">
-          <c:url var="moreLink" value="outage/list.htm"/>
+          <c:url var="moreLink" value="outage/list.htm"/>,
           <a href="${moreLink}">${moreCount}更多节点故障...</a>
         </p>
       </c:if>
