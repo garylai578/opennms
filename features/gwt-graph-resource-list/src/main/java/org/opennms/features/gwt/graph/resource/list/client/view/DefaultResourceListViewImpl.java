@@ -112,7 +112,7 @@ public class DefaultResourceListViewImpl extends Composite implements DefaultRes
 
     @Override
     public void showWarning() {
-        Window.alert("Please Choose A Resource");
+        Window.alert("请选择资源对象");
     }
 
     @Override

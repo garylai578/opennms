@@ -162,7 +162,7 @@ public class ReportSelectListViewImpl extends Composite implements ReportSelectL
 
     @Override
     public void showWarning() {
-        Window.alert("Please Select a Report to Graph");
+        Window.alert("请选择需要图示的资源对象");
     }
 
     @Override
