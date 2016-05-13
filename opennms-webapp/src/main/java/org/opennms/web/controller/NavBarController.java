@@ -146,7 +146,7 @@ public class NavBarController extends AbstractController implements Initializing
                     strBuilder.append("<li><a href=\"" + entry.getUrl() +  "\" >" + entry.getName() + "</a></li>");
                     break;
                 case DISPLAY_NO_LINK:
-                    strBuilder.append("<li>" + entry.getName() + "</li>");
+                    strBuilder.append("<li><a href=\"" + entry.getUrl() +  "\" >" + entry.getName() + "</a></li>");
                     break;
                 default:
                     break;
