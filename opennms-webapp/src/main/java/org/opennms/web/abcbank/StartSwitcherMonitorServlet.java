@@ -92,7 +92,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                 }
 
                 //如果是新的一天则先重置
-                if(hour2.equals("2")){
+                if(hour2.equals("1")){
                     operator.update(sw.getIp(), "flow", "'-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-/t-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-,-'" );
                 }
 
@@ -116,15 +116,8 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     String oldValue = operator.getColunm(sw.getIp(), "flow");
                     String[] oldSplit = oldValue.split(",|/t");
 
-                    if(hourInFlow == 0)
-                        oldSplit[Integer.parseInt(hour1) - 1] = inFlow + "bps";
-                    else
-                        oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
-
-                    if(hourOutFlow == 0)
-                        oldSplit[Integer.parseInt(hour1) + 24 - 1] = outFlow + "bps";
-                    else
-                        oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
+                    oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
+                    oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
 
                     String newString ="";
                     for(int j=0; j < oldSplit.length; ++j){
