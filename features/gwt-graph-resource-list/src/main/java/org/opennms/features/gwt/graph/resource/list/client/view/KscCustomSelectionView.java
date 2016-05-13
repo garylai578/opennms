@@ -54,12 +54,12 @@ public class KscCustomSelectionView implements SelectionDisplay {
     public KscCustomSelectionView() {
         m_vertPanel = new VerticalPanel();
         m_vertPanel.setStyleName("onms-table-no-borders-margin");
-        m_submitButton = new Button("Submit");
-        m_viewRB = new RadioButton("group1", "View");
-        m_customizeRB = new RadioButton("group1","Customize");
-        m_createNewRB = new RadioButton("group1","Create New");
-        m_createNewExistingRB = new RadioButton("group1","Create New from Existing");
-        m_deleteRB = new RadioButton("group1","Delete");
+        m_submitButton = new Button("提交");
+        m_viewRB = new RadioButton("group1", "查看");
+        m_customizeRB = new RadioButton("group1","定制");
+        m_createNewRB = new RadioButton("group1","新建");
+        m_createNewExistingRB = new RadioButton("group1","从当前已有报表新建");
+        m_deleteRB = new RadioButton("group1","删除");
         
         m_vertPanel.add(m_viewRB);
         m_vertPanel.add(m_customizeRB);

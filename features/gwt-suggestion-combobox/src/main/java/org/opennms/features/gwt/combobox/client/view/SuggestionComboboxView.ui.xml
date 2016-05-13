@@ -11,7 +11,7 @@
             <g:TextBox ui:field="m_textBox" width="100%"></g:TextBox>
         </g:layer>
         <g:layer top="0" bottom="0" right="0px" width="53px">
-            <g:Button ui:field="m_goButton" width="53px" height="25px">查询</g:Button>
+            <g:Button ui:field="m_goButton" width="53px" height="25px">搜索</g:Button>
         </g:layer>
 	</g:LayoutPanel>
 </ui:UiBinder> 

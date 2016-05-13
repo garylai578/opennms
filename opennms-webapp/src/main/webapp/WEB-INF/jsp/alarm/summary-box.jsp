@@ -61,7 +61,7 @@
             <c:param name="node" value="${summary.nodeId}"/>
           </c:url>
           <tr class="${summary.maxSeverity.label}"><td class="bright"><a href="${nodeLink}">${summary.nodeLabel}</a>有
-              <a href="alarm/list.htm?sortby=id&acktype=unack&limit=20&display=short&filter=node%3D${summary.nodeId}">${summary.alarmCount} 告警</a> (${summary.fuzzyTimeDown})</td></tr>
+              <a href="alarm/list.htm?sortby=id&acktype=unack&limit=20&display=short&filter=node%3D${summary.nodeId}">${summary.alarmCount} 告警</a> (${summary.fuzzyTimeDown.replace("hours", "小时").replace("hour", "小时").replace("days", "天").replace("day", "天")})</td></tr>
         </c:forEach>
       </table>
       <c:if test="${moreCount > 0}">

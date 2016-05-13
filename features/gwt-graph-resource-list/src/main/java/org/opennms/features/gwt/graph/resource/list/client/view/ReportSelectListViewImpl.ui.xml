@@ -18,11 +18,11 @@
 	   </g:layer> 
 	   <g:layer height="40px" left="0" right="0" bottom="0" minWidth="500px">
 	       <g:HorizontalPanel ui:field="m_buttonDiv" styleName="onms-table-no-borders-margin" horizontalAlignment="center" >
-	           <g:Button ui:field="m_removeButton" width="150px" >Clear Selection</g:Button>
-	           <g:Button ui:field="m_selectAllButton" width="150px" >Select All</g:Button>
-	           <g:Button ui:field="m_graphButton" width="150px">Graph Selection</g:Button>
-	           <g:Button ui:field="m_searchButton" width="150px">Search</g:Button>
-	           <g:Button ui:field="m_graphAllButton" width="150px">Graph All</g:Button>
+	           <g:Button ui:field="m_removeButton" width="150px" >清除已选</g:Button>
+	           <g:Button ui:field="m_selectAllButton" width="150px" >全选</g:Button>
+	           <g:Button ui:field="m_graphButton" width="150px">图示已选</g:Button>
+	           <g:Button ui:field="m_searchButton" width="150px">搜索</g:Button>
+	           <g:Button ui:field="m_graphAllButton" width="150px">全部图示</g:Button>
 	       </g:HorizontalPanel>
 	   </g:layer>
 	</g:LayoutPanel>

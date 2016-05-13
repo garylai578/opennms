@@ -124,10 +124,10 @@
       <b>自定义报表</b>
       <c:choose>
         <c:when test="${kscReadOnly == false }">
-          allow users to create, view, and edit customized reports containing
+          : 可以创建、查看、编辑自定义报表的内容
         </c:when>
         <c:otherwise>
-          allow users to view customized reports containing any number of
+          ：可查看自定义报表的内容
         </c:otherwise>
       </c:choose>
     </p>
@@ -136,10 +136,10 @@
       <b>节点和域接口报表</b>
       <c:choose>
         <c:when test="${kscReadOnly == false }">
-          allow users to view automatically generated reports for interfaces on
+          : 可查看网络接口对应的自动化生成报表
         </c:when>
         <c:otherwise>
-          allow users to view automatically generated reports for interfaces on
+          : 可查看网络接口对应的自动化生成报表
         </c:otherwise>
       </c:choose>
 
