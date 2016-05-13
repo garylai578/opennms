@@ -57,7 +57,7 @@ public class ResourceTable extends CellTable<ResourceListItem> {
         m_selectionModel = new SingleSelectionModel<ResourceListItem>(); 
         setSelectionModel(m_selectionModel);
         
-        addColumn(resourceColumn, "Resources");
+        addColumn(resourceColumn, "资源");
         
     }
     
