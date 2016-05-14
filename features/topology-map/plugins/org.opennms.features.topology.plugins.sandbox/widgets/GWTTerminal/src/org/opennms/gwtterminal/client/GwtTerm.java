@@ -142,7 +142,7 @@ public class GwtTerm extends Composite implements HasAllKeyHandlers, ClickHandle
 	public void onClick(ClickEvent event) {
     	// Use the button label as the color name to set
     	Button clickedButton = (Button) event.getSource();
-    	Window.alert("BUTTON PRESSED");
+    	Window.alert("按钮已按下");
     	setColor(clickedButton.getText());
 	}
 

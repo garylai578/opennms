@@ -75,7 +75,7 @@ public class Main implements EntryPoint {
         } else if (getMapType().equals("OpenLayers")) {
             mapPanel = new OpenLayersMapPanel(getEventBus());
         } else {
-            Window.alert("unknown map implementation: " + getMapType());
+            Window.alert("未知的地图类型：" + getMapType());
             throw new RuntimeException("unknown map implementation: " + getMapType());
         }
         return mapPanel;

@@ -15,7 +15,7 @@
 	</ui:style>
 	<g:LayoutPanel ui:field="m_layoutPanel" styleName="{style.outlineBorder}">
 		<g:layer top="0" left="0" right="0" height="25px">
-			<g:Label text="Add to KSC Report" width="100%" styleName="${style.padBoxes}" />
+			<g:Label text="添加到KSC报表" width="100%" styleName="${style.padBoxes}" />
 		</g:layer>
 		<g:layer top="25px" left="0" right="0" height="25px">
 			<g:Label text="Title:" width="100%" styleName="${style.padBoxes}" ui:field="m_titleLabel" />

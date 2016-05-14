@@ -222,7 +222,7 @@ public class DefaultLocationManager implements LocationManager, RemotePollerPres
         getRemoteService().start(new AsyncCallback<Void>() {
             public void onFailure(Throwable throwable) {
                 // Log.debug("unable to start location even service backend", throwable);
-                Window.alert("unable to start location event service backend: " + throwable.getMessage());
+                Window.alert("无法启动定位事件服务：" + throwable.getMessage());
                 throw new InitializationException("remote service start failed", throwable);
             }
         

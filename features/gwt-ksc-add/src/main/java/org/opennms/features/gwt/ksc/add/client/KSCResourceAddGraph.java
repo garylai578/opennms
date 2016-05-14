@@ -70,7 +70,7 @@ public class KSCResourceAddGraph implements EntryPoint {
                         if (DEBUG) {
                             responseText = m_debugResponse;
                         } else {
-                            Window.alert("Error occurred retrieving list of KSC reports (response was " + response.getStatusCode() + ".");
+                            Window.alert("获取KSC报告列表失败 (返回信息为 " + response.getStatusCode() + ".");
                             responseText = null;
                         }
                     }
@@ -85,7 +85,7 @@ public class KSCResourceAddGraph implements EntryPoint {
                     if (DEBUG) {
                         handleResponseText(nodes, m_debugResponse);
                     } else {
-                        Window.alert("Error occurred retrieving list of KSC reports: " + exception.getLocalizedMessage());
+                        Window.alert("获取KSC报告列表失败：" + exception.getLocalizedMessage());
                     }
                 }
                 

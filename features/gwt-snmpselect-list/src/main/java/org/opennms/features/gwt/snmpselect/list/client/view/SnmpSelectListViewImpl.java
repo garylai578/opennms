@@ -115,7 +115,7 @@ public class SnmpSelectListViewImpl extends Composite implements SnmpSelectListV
 
     @Override
     public void showError(String message) {
-        Window.alert("Error: " + message);
+        Window.alert("出错: " + message);
     }
     
     

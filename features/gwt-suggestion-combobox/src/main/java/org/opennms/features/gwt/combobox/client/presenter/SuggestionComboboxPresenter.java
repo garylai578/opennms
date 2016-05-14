@@ -79,13 +79,13 @@ public class SuggestionComboboxPresenter implements Presenter, SuggestionCombobo
                     m_view.setData(NodeRestResponseMapper.mapNodeJSONtoNodeDetail(response.getText()));
                 }else {
                     //m_view.setData(NodeRestResponseMapper.mapNodeJSONtoNodeDetail(DefaultNodeService.TEST_RESPONSE));
-                    Window.alert("Error Occurred Retreiving Nodes");
+                    Window.alert("获取节点信息失败");
                 }
             }
             
             @Override
             public void onError(Request request, Throwable exception) {
-                Window.alert("error in retrieving the Rest call");
+                Window.alert("获取请求信息失败");
             }
         });
     }
@@ -98,7 +98,7 @@ public class SuggestionComboboxPresenter implements Presenter, SuggestionCombobo
             public void onResponseReceived(Request request, Response response) {
                 if(response.getStatusCode() == 200) {
                     m_view.setData(NodeRestResponseMapper.mapNodeJSONtoNodeDetail(response.getText()));
-                    Window.alert("Error Occurred Retreiving Nodes");
+                    Window.alert("获取节点信息失败");
                 }else {
                     // m_view.setData(NodeRestResponseMapper.mapNodeJSONtoNodeDetail(DefaultNodeService.TEST_RESPONSE));
                 }
@@ -106,7 +106,7 @@ public class SuggestionComboboxPresenter implements Presenter, SuggestionCombobo
 
             @Override
             public void onError(Request request, Throwable exception) {
-                Window.alert("error in retrieving the Rest call");
+                Window.alert("获取请求信息失败");
                 
             }
         });

@@ -168,13 +168,13 @@ public class Navigation extends Composite implements HasHandlers {
                     if(response.getStatusCode() == 200) {
                         Window.open("/opennms/index.jsp", "_target", null);
                     }else {
-                        Window.alert("Failed to login");
+                        Window.alert("登录失败");
                     }
                 }
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    Window.alert("Problem Logging in");
+                    Window.alert("登录出错");
                 }
             });
         } catch (RequestException e) {

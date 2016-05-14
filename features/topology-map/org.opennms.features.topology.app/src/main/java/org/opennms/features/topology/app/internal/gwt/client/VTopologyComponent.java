@@ -596,7 +596,7 @@ public class VTopologyComponent extends Composite implements Paintable, SVGTopol
 
             @Override
             public void call(GWTVertex vert, int index) {
-                Window.alert("Vertex: " + vert.getLabel() + " was double clicked" );
+                Window.alert("节点: " + vert.getLabel() + " 被双击" );
                 
             }
         };

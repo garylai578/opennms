@@ -61,7 +61,7 @@ public class Application implements EntryPoint, LocationUpdateEventHandler, Host
 
         @Override
         public void onError(Request request, Throwable exception) {
-            Window.alert("Error Occured updating graph, try refreshing");
+            Window.alert("升级图表出差，请刷新再次尝试");
         }
 
     }
@@ -117,7 +117,7 @@ public class Application implements EntryPoint, LocationUpdateEventHandler, Host
 
                 @Override
                 public void onError(Request request, Throwable exception) {
-                    Window.alert("Error Initializing Chart");
+                    Window.alert("初始化图表出错");
                     
                 }});
             
@@ -142,7 +142,7 @@ public class Application implements EntryPoint, LocationUpdateEventHandler, Host
 
         @Override
         public void onError(Request request, Throwable exception) {
-            Window.alert("An error occured loading the locations");
+            Window.alert("加载位置信息失败");
         }
         
     });
@@ -158,7 +158,7 @@ public class Application implements EntryPoint, LocationUpdateEventHandler, Host
 
         @Override
         public void onError(Request request, Throwable exception) {
-            Window.alert("An error occured loading participants");
+            Window.alert("加载失败");
         }});
     
   }

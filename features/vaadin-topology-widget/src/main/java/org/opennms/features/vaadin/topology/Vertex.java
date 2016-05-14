@@ -90,7 +90,7 @@ public class Vertex implements Paintable {
     }
 
     public void updateFromUIDL(UIDL uidl, ApplicationConnection client) {
-        Window.alert("getting Update from Server");
+        Window.alert("正从服务器获取升级信息");
     }
 
 	public void setSelected(boolean selected) {
