@@ -28,9 +28,8 @@
 
 package org.opennms.web.navigate;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public class MenuDropdownNavBarEntry implements NavBarEntry {
     private String m_name = null;
@@ -108,7 +107,7 @@ public class MenuDropdownNavBarEntry implements NavBarEntry {
                         display = true;
                         break;
                     case DISPLAY_NO_LINK:
-                        sb.append("<li>" + entry.getName() + "</li>");
+                        sb.append("<li><a href=\"" + entry.getUrl() + "\">" + entry.getName() + "</a></li>");
                         display = true;
                         break;
                     default:
