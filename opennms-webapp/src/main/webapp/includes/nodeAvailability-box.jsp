@@ -129,10 +129,10 @@
               <%
                 if (svcs.length < 1) {
                     availClass = "Indeterminate";
-                    availValue = "Not Monitored";
+                    availValue = "没被监测";
                 } else if (!ElementUtil.hasLocallyMonitoredServices(svcs)) {
                     availClass = "Indeterminate";
-                    availValue = "Remotely Monitored";
+                    availValue = "远程监控";
                 } else {
                   availClass = CategoryUtil.getCategoryClass(m_normalThreshold, m_warningThreshold, intfValue);
                   availValue = CategoryUtil.formatValue(intfValue) + "%";
