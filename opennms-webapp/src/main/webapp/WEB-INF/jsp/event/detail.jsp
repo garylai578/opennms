@@ -104,7 +104,23 @@
       <table>
         <tr class="<%= event.getSeverity().getLabel() %>">
           <th class="divider" width="100em">级别</th>
-          <td class="divider" width="28%"><%= event.getSeverity().getLabel() %></td>
+          <td class="divider" width="28%"><%
+          if("Normal".equals(event.getSeverity().getLabel())){
+                  out.print("正常");
+                  }else if("Warning".equals(event.getSeverity().getLabel())){
+                  out.print("警告");
+                  }else if("Major".equals(event.getSeverity().getLabel())){
+                  out.print("主要");
+                  }else if("Minor".equals(event.getSeverity().getLabel())){
+                  out.print("次要");
+                  }else if("Critical".equals(event.getSeverity().getLabel())){
+                  out.print("严重");
+                  }else if("Indeterminate".equals(event.getSeverity().getLabel())){
+                  out.println("不确定");
+                  }else if("Cleared".equals(event.getSeverity().getLabel())){
+                  out.print("已清除");
+                  }
+          %></td>
           <th class="divider" width="100em">节点</th>
           <td class="divider" width="28%">
             <% if( event.getNodeId() > 0 ) { %>
