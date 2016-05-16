@@ -313,7 +313,23 @@
           <td valign="top" rowspan="3" class="divider"><a href="event/detail.jsp?id=<%=events[i].getId()%>"><%=events[i].getId()%></a></td>
           
           <td valign="top" rowspan="3" class="divider bright"> 
-            <strong><%= events[i].getSeverity().getLabel() %></strong>
+            <strong><%
+                if("Normal".equals(events[i].getSeverity().getLabel())){
+                    out.print("正常");
+                }else if("Warning".equals(events[i].getSeverity().getLabel())){
+                    out.print("警告");
+                }else if("Major".equals(events[i].getSeverity().getLabel())){
+                    out.print("主要");
+                }else if("Minor".equals(events[i].getSeverity().getLabel())){
+                    out.print("次要");
+                }else if("Critical".equals(events[i].getSeverity().getLabel())){
+                    out.print("严重");
+                }else if("Indeterminate".equals(events[i].getSeverity().getLabel())){
+                    out.println("不确定");
+                }else if("Cleared".equals(events[i].getSeverity().getLabel())){
+                    out.print("已清除");
+                }
+            %></strong>
             <% Filter severityFilter = new SeverityFilter(events[i].getSeverity()); %>      
             <% if( !parms.filters.contains( severityFilter )) { %>
               <nobr>
