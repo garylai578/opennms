@@ -76,18 +76,18 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
             SwitcherStats[] sws = operator.selectAll();
             for(int i = 0; i < sws.length; ++i){
                 SwitcherStats sw = sws[i];
-//                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
+                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
 //                BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2 + "; day1:" + day1 + ", day2: " + day2);
 
                 Flow flow = new Flow(sw.getIp());
                 flow.setOcter("abc123");
                 long inFlowValue = flow.calcFlowValue(inFlowOidGroup);
                 long outFlowValue = flow.calcFlowValue(outFlowOidGroup);
-//                BankLogWriter.getSingle().writeLog("inflow：" + inFlowValue + ", outFlow:" + outFlowValue);
+                BankLogWriter.getSingle().writeLog("inflow：" + inFlowValue + ", outFlow:" + outFlowValue);
 
                 //如果是新添加的交换机，则先加入到Map中
                 if(!resultMap.containsKey(sw.getIp())){
-                    String resultValue = inFlowValue + "\t" + outFlowValue;
+                    String resultValue = 0 + "\t" + 0;
                     resultMap.put(sw.getIp(), resultValue);
                 }
 
@@ -120,7 +120,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
         String[] values = resultValue.split("\t");
         long inFlow = Long.parseLong(values[0]);
         long outFlow = Long.parseLong(values[1]);
-//      BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
+        BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
 
         // byte换算成KB
         long hourInFlow = (long) (inFlow / (1024 * 8.0) / t);
