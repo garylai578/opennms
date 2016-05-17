@@ -76,14 +76,14 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
             SwitcherStats[] sws = operator.selectAll();
             for(int i = 0; i < sws.length; ++i){
                 SwitcherStats sw = sws[i];
-                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
+//                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
 //                BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2 + "; day1:" + day1 + ", day2: " + day2);
 
                 Flow flow = new Flow(sw.getIp());
                 flow.setOcter("abc123");
                 long inFlowValue = flow.calcFlowValue(inFlowOidGroup);
                 long outFlowValue = flow.calcFlowValue(outFlowOidGroup);
-                BankLogWriter.getSingle().writeLog("inflow：" + inFlowValue + ", outFlow:" + outFlowValue);
+//                BankLogWriter.getSingle().writeLog("inflow：" + inFlowValue + ", outFlow:" + outFlowValue);
 
                 //如果是新添加的交换机，则先加入到Map中
                 if(!resultMap.containsKey(sw.getIp())){
@@ -102,40 +102,44 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     long inFlow = Long.parseLong(values[0]) + inFlowValue;
                     long outFlow = Long.parseLong(values[1]) + outFlowValue;
                     resultMap.put(sw.getIp(), inFlow + "\t" + outFlow);
-                }else{      //对一个小时内的流量进行计算，并替换原值
-                    String resultValue = (String)resultMap.get(sw.getIp());
+                    insertDB(sw.getIp());   //进行实时结果的显示
+                }else{      //对一个小时内的流量进行计算后插入数据库，并替换原值
+                    insertDB(sw.getIp());
                     resultMap.put(sw.getIp(), inFlowValue + "\t" + outFlowValue);
-                    String[] values = resultValue.split("\t");
-                    long inFlow = Long.parseLong(values[0]);
-                    long outFlow = Long.parseLong(values[1]);
-                    BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
-
-                    // byte换算成KB
-                    long hourInFlow = (long) (inFlow / (1024 * 8.0) / t);
-                    long hourOutFlow = (long) (outFlow / (1024 * 8.0) / t);
-                    String oldValue = operator.getColunm(sw.getIp(), "flow");
-                    String[] oldSplit = oldValue.split(",|/t");
-
-                    oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
-                    oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
-
-                    String newString ="";
-                    for(int j=0; j < oldSplit.length; ++j){
-                        if(j == 23)
-                            newString += oldSplit[j] + "/t";
-                        else
-                            newString += oldSplit[j] + ",";
-                    }
-                    newString = newString.substring(0, newString.length() -1);
-                    operator.update(sw.getIp(), "flow", "'" + newString + "'" );
-
                 }
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void insertDB(String ip) throws SQLException {
+        SwitcherStatsOperator operator = new SwitcherStatsOperator();
+        String resultValue = (String)resultMap.get(ip);
+        String[] values = resultValue.split("\t");
+        long inFlow = Long.parseLong(values[0]);
+        long outFlow = Long.parseLong(values[1]);
+//      BankLogWriter.getSingle().writeLog(hour1 + "点的流入：" + inFlow + "bit, 流出：" + outFlow + "bit");
+
+        // byte换算成KB
+        long hourInFlow = (long) (inFlow / (1024 * 8.0) / t);
+        long hourOutFlow = (long) (outFlow / (1024 * 8.0) / t);
+        String oldValue = operator.getColunm(ip, "flow");
+        String[] oldSplit = oldValue.split(",|/t");
+
+        oldSplit[Integer.parseInt(hour1) - 1] = hourInFlow + "";
+        oldSplit[Integer.parseInt(hour1) + 24 - 1] = hourOutFlow + "";
+
+        String newString ="";
+        for(int j=0; j < oldSplit.length; ++j){
+            if(j == 23)
+                newString += oldSplit[j] + "/t";
+            else
+                newString += oldSplit[j] + ",";
+        }
+        newString = newString.substring(0, newString.length() -1);
+        operator.update(ip, "flow", "'" + newString + "'" );
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
