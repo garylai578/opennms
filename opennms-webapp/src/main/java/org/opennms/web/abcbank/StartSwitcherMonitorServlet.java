@@ -49,11 +49,13 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     day1 = day2;
                     hour1 = hour2;
                 }
+                if(!hour1.equals(hour2))
+                    hour1 = hour2;
             }
         };
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        // 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间，考虑到交换机流量最大记录4Gbits，因此每分钟获取一次流量值
-        service.scheduleAtFixedRate(runnable, 0, 60, TimeUnit.SECONDS);
+        // 第二个参数为首次执行的延时时间，第三个参数为定时执行的间隔时间，考虑到交换机流量最大记录4Gbits，因此两分钟获取一次流量值
+        service.scheduleAtFixedRate(runnable, 0, 120, TimeUnit.SECONDS);
     }
 
     private void startSwitcherMonitor(){
@@ -78,7 +80,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
 
                 //如果是新添加的交换机，则先加入到Map中
                 if(!resultMap.containsKey(sw.getIp())){
-                    String resultValue = 0 + "\t" + 0 + "\t" + 0 + "\t" + 0;
+                    String resultValue = newInFlow + "\t" + newOutFlow + "\t" + 0 + "\t" + 0;
                     resultMap.put(sw.getIp(), resultValue);
                 }
 
@@ -101,11 +103,11 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                      * 必然出现一次归0的情况，由于单个端口的流量不可能超过每5秒1*2^32字节
                      */
                     if(subInFlow < 0 ){
-                        // 因为端口流量为无符号32位，所以最大值是有符号32位的两倍
-                        subInFlow += 2L * Integer.MAX_VALUE;
+                        // 因为端口流量为无符号32位，所以最大值是有符号32位的两倍（需要先转换为KB）
+                        subInFlow += 2L * Integer.MAX_VALUE / (1000*8.0);
                     }
                     if(subOutFlow < 0 )
-                        subOutFlow += 2L * Integer.MAX_VALUE;
+                        subOutFlow += 2L * Integer.MAX_VALUE / (1000*8.0);
                     //累计流量
                     inFlow += subInFlow;
                     outFlow += subOutFlow;
@@ -117,8 +119,9 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     String oldValue = operator.getColunm(sw.getIp(), "flow");
                     String[] oldSplit = oldValue.split(",|/t");
 
-                    oldSplit[Integer.parseInt(hour1) - 1] = inFlow + "";
-                    oldSplit[Integer.parseInt(hour1) + 24 - 1] = outFlow + "";
+                    //转换为MB
+                    oldSplit[Integer.parseInt(hour1) - 1] = (inFlow / 1000) + "";
+                    oldSplit[Integer.parseInt(hour1) + 24 - 1] = (outFlow / 1000) + "";
 
                     String newString ="";
                     for(int j=0; j < oldSplit.length; ++j){
@@ -132,7 +135,6 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
 
                 }else{
                     resultMap.put(sw.getIp(), newInFlow + "\t" + newOutFlow + "\t" + 0 + "\t" + 0);
-                    hour1 = hour2;
                 }
             }
         } catch (SQLException e) {
