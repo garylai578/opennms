@@ -62,7 +62,7 @@
           <c:url var="nodeLink" value="element/node.jsp">
             <c:param name="node" value="${summary.nodeId}"/>
           </c:url>
-          <li><a href="${nodeLink}">${summary.nodeLabel}</a> (${fn:replace(fn:replace(fn:replace(fn:replace(summary.fuzzyTimeDown, "hours", "小时"), "hour", "小时"), "days", "天"), "day", "天")})</li>
+          <li><a href="${nodeLink}">${summary.nodeLabel}</a> (${fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(fn:replace(summary.fuzzyTimeDown, "hours", "小时"), "hour", "小时"), "days", "天"), "day", "天"), "week", "星期"), "weeks", "星期"), "minutes", "分钟")})</li>
         </c:forEach>
       </ul>
     
