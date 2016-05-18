@@ -78,11 +78,11 @@ public class SwitcherFlowMonitor {
                 Vector<VariableBinding> revBindings = (Vector<VariableBinding>)respEvt.getResponse().getVariableBindings();
                 // 取端口流量
                 for (int i = 0; i < flowOIDGroup.size(); i++) {
-                    BankLogWriter.getSingle().writeLog("获取交换机端口流量,oid[" + flowOIDGroup.get(i) + "], 结果[" + revBindings.elementAt(i).getVariable().toString() + "]");
+//                    BankLogWriter.getSingle().writeLog("获取交换机端口流量,oid[" + flowOIDGroup.get(i) + "], 结果[" + revBindings.elementAt(i).getVariable().toString() + "]");
                     try{
-                        flowValue += Long.parseLong(revBindings.elementAt(i).getVariable().toString()) / (1000*8.0); //将bit转换为KB然后累加
+                        flowValue += Long.parseLong(revBindings.elementAt(i).getVariable().toString()) / (1000*8.0); //将bit转换为KB然后累加，否则有可能会超出long的最大值
                     }catch(NumberFormatException e){
-                        BankLogWriter.getSingle().writeLog("交换机[" + IpAddress + "]流量数据采集解析异常：" + e.getMessage());
+//                        BankLogWriter.getSingle().writeLog("交换机[" + IpAddress + "]流量数据采集解析异常：" + e.getMessage());
                         e.printStackTrace();
                         isSuccess  = false;
                     }
