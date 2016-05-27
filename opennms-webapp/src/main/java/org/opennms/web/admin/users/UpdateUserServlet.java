@@ -28,19 +28,7 @@
 
 package org.opennms.web.admin.users;
 
-import java.io.IOException;
-import java.text.ChoiceFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.utils.WebSecurityUtils;
 import org.opennms.netmgt.config.UserFactory;
 import org.opennms.netmgt.config.UserManager.ContactType;
@@ -48,6 +36,18 @@ import org.opennms.netmgt.config.users.Contact;
 import org.opennms.netmgt.config.users.DutySchedule;
 import org.opennms.netmgt.config.users.Password;
 import org.opennms.netmgt.config.users.User;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.text.ChoiceFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * A servlet that handles saving a user
@@ -82,11 +82,14 @@ public class UpdateUserServlet extends HttpServlet {
             }
 
             String password = request.getParameter("password");
+            BankLogWriter.getSingle().writeLog("password:" + password);
             if (password != null && !password.trim().equals("")) {
+                BankLogWriter.getSingle().writeLog("saving password");
                 final Password pass = new Password();
                 pass.setContent(UserFactory.getInstance().encryptedPassword(password, true));
                 pass.setSalt(true);
                 newUser.setPassword(pass);
+                BankLogWriter.getSingle().writeLog("saved");
             }
             
             String tuiPin = request.getParameter("tuiPin");
