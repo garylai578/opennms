@@ -70,7 +70,7 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
             SwitcherStats[] sws = operator.selectAll();
             for(int i = 0; i < sws.length; ++i){
                 SwitcherStats sw = sws[i];
-                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
+//                BankLogWriter.getSingle().writeLog("监控交换机的流量：" + sw.getIp());
 //                BankLogWriter.getSingle().writeLog("时间hour1：" + hour1 + ", hour2:" + hour2 + "; day1:" + day1 + ", day2: " + day2);
 
                 SwitcherFlowMonitor flow = new SwitcherFlowMonitor(sw.getIp());

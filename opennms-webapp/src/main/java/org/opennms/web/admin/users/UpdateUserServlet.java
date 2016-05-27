@@ -82,14 +82,12 @@ public class UpdateUserServlet extends HttpServlet {
             }
 
             String password = request.getParameter("password");
-            BankLogWriter.getSingle().writeLog("password:" + password);
             if (password != null && !password.trim().equals("")) {
-                BankLogWriter.getSingle().writeLog("saving password");
                 final Password pass = new Password();
                 pass.setContent(UserFactory.getInstance().encryptedPassword(password, true));
                 pass.setSalt(true);
                 newUser.setPassword(pass);
-                BankLogWriter.getSingle().writeLog("saved");
+                BankLogWriter.getSingle().writeLog("重置用户[" + newUser.getUserId() + "]的密码成功");
             }
             
             String tuiPin = request.getParameter("tuiPin");
