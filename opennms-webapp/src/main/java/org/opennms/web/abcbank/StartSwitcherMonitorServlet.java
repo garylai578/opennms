@@ -112,8 +112,8 @@ public class StartSwitcherMonitorServlet extends HttpServlet {
                     inFlow += subInFlow;
                     outFlow += subOutFlow;
                     resultMap.put(sw.getIp(), newInFlow + "\t" + newOutFlow + "\t" + inFlow + "\t" + outFlow);
-                    BankLogWriter.getSingle().writeLog("newInFlow：" + newInFlow + ", oldInFlow:" + oldInFlow + ", newOutFlow:" + newOutFlow + ", oldOutFlow:" + oldOutFlow);
-                    BankLogWriter.getSingle().writeLog("subInFlow：" + subInFlow + ", subOutFlow:" + subOutFlow + ", inFlow:" + inFlow + ", outFlow:" + outFlow);
+//                    BankLogWriter.getSingle().writeLog("newInFlow：" + newInFlow + ", oldInFlow:" + oldInFlow + ", newOutFlow:" + newOutFlow + ", oldOutFlow:" + oldOutFlow);
+//                    BankLogWriter.getSingle().writeLog("subInFlow：" + subInFlow + ", subOutFlow:" + subOutFlow + ", inFlow:" + inFlow + ", outFlow:" + outFlow);
 
                     //插入数据库
                     String oldValue = operator.getColunm(sw.getIp(), "flow");
