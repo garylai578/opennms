@@ -83,7 +83,7 @@ public class SwitcherFlowMonitor {
                         flowValue += Long.parseLong(revBindings.elementAt(i).getVariable().toString()) / (1000*8.0); //将bit转换为KB然后累加，否则有可能会超出long的最大值
                     }catch(NumberFormatException e){
 //                        BankLogWriter.getSingle().writeLog("交换机[" + IpAddress + "]流量数据采集解析异常：" + e.getMessage());
-                        e.printStackTrace();
+//                        e.printStackTrace();
                         isSuccess  = false;
                     }
                 }
