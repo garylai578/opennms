@@ -57,10 +57,14 @@ DiscoveryConfiguration currConfig  = (DiscoveryConfiguration) sess.getAttribute(
 <body>
 <script type="text/javascript">
 function addSpecific(){
-	if(!isValidIPAddress(document.getElementById("ipaddress").value)){
-		alert("IP地址无效。");
-		document.getElementById("ipaddress").focus();
-		return;
+	var ips = document.getElementById("ipaddress").value;
+	var ipaddresses = ips.split("\n");
+	for(var i=0;i<ipaddresses.length;i++) {
+		if (!isValidIPAddress(ipaddresses[i])) {
+			alert("IP地址无效:" + ipaddresses[i]);
+			document.getElementById("ipaddress").focus();
+			return;
+		}
 	}
 	if(isNaN(document.getElementById("timeout").value)){
 		alert("超时无效。");
@@ -72,14 +76,13 @@ function addSpecific(){
 		alert("重试字段无效。");
 		document.getElementById("retries").focus();
 		return;		
-	}	
+	}
 
 
-		
-	opener.document.getElementById("specificipaddress").value=document.getElementById("ipaddress").value;
-	opener.document.getElementById("specifictimeout").value=document.getElementById("timeout").value;
-	opener.document.getElementById("specificretries").value=document.getElementById("retries").value;
-	opener.document.getElementById("modifyDiscoveryConfig").action=opener.document.getElementById("modifyDiscoveryConfig").action+"?action=<%=ActionDiscoveryServlet.addSpecificAction%>";
+	opener.document.getElementById("specificipaddress").value = ipaddresses;
+	opener.document.getElementById("specifictimeout").value = document.getElementById("timeout").value;
+	opener.document.getElementById("specificretries").value = document.getElementById("retries").value;
+	opener.document.getElementById("modifyDiscoveryConfig").action = opener.document.getElementById("modifyDiscoveryConfig").action + "?action=<%=ActionDiscoveryServlet.addSpecificAction%>";
 	opener.document.getElementById("modifyDiscoveryConfig").submit();
 	window.close();
 	opener.document.focus();
@@ -91,12 +94,12 @@ function addSpecific(){
 
 <!-- Body -->
 
-    <h3>添加自动发现单一IP地址</h3>
+    <h3>添加自动发现单一IP地址（每行一个IP）</h3>
 										   
 
 <table class="standard">
  <tr>
-	  <td class="standard" align="center" width="17%">IP地址:<input type="text" id="ipaddress" name="ipaddress" size="10"/></td>
+	  <td class="standard" align="center" width="17%">IP地址:<textarea id="ipaddress" name="ipaddress" size="10"></textarea></td>
 	  <td class="standard" align="center" width="17%">超时 (毫秒):<input type="text" id="timeout" name="timeout" size="4" value="<%=currConfig.getTimeout()%>"/></td>
 	  <td class="standard" align="center" width="17%">重试:<input type="text" id="retries" name="retries" size="2" value="<%=currConfig.getRetries()%>"/></td>
  </tr>
