@@ -28,6 +28,7 @@
 
 package org.opennms.web.admin.discovery;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.core.utils.ThreadCategory;
 import org.opennms.core.utils.WebSecurityUtils;
 import org.opennms.netmgt.EventConstants;
@@ -113,7 +114,10 @@ public class ActionDiscoveryServlet extends HttpServlet {
         	String timeout = request.getParameter("specifictimeout");
         	String retries = request.getParameter("specificretries");
 			String[] ipAddres = ip.split("\r\n");
+			BankLogWriter ll = BankLogWriter.getSingle();
+			ll.writeLog("ipaddress:" + ip);
 			for(String ipAddr : ipAddres){
+				ll.writeLog("specific ip:" + ipAddr);
 				Specific newSpecific = new Specific();
 				newSpecific.setContent(ipAddr);
 				if (timeout != null && !timeout.trim().equals("") && !timeout.equals(config.getTimeout())) {
@@ -123,6 +127,7 @@ public class ActionDiscoveryServlet extends HttpServlet {
 				if (retries != null && !retries.trim().equals("") && !retries.equals(config.getRetries())) {
 					newSpecific.setRetries(WebSecurityUtils.safeParseInt(retries));
 				}
+				ll.writeLog("specific content:" + newSpecific.getContent());
 				config.addSpecific(newSpecific);
 			}
         }
