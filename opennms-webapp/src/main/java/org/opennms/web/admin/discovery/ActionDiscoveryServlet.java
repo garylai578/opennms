@@ -112,9 +112,9 @@ public class ActionDiscoveryServlet extends HttpServlet {
         	String ip = request.getParameter("specificipaddress");
         	String timeout = request.getParameter("specifictimeout");
         	String retries = request.getParameter("specificretries");
-        	Specific newSpecific = new Specific();
 			String[] ipAddres = ip.split("\r\n");
 			for(String ipAddr : ipAddres){
+				Specific newSpecific = new Specific();
 				newSpecific.setContent(ipAddr);
 				if (timeout != null && !timeout.trim().equals("") && !timeout.equals(config.getTimeout())) {
 					newSpecific.setTimeout(WebSecurityUtils.safeParseLong(timeout));
