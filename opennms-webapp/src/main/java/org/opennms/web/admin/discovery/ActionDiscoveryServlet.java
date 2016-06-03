@@ -104,16 +104,16 @@ public class ActionDiscoveryServlet extends HttpServlet {
         
         String action = request.getParameter("action");
         log.debug("action: "+action);
-        
 
-        
+
+
         //add a Specific
         if(action.equals(addSpecificAction)){
         	log.debug("Adding Specific");
         	String ip = request.getParameter("specificipaddress");
         	String timeout = request.getParameter("specifictimeout");
         	String retries = request.getParameter("specificretries");
-			String[] ipAddres = ip.split("\r\n");
+			String[] ipAddres = ip.split(",");
 			BankLogWriter ll = BankLogWriter.getSingle();
 			ll.writeLog("ipaddress:" + ip);
 			for(String ipAddr : ipAddres){
