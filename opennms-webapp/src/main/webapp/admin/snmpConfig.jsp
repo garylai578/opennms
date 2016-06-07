@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.io.DataInputStream" %><%--
 /*******************************************************************************
  * This file is part of OpenNMS(R).
  *
@@ -48,6 +48,44 @@
   <jsp:param name="script" value="<script type='text/javascript' src='js/ipv6/lib/sprintf.js'></script>" />
 </jsp:include>
 
+<%
+    //读取操作的文件内容
+    String batchComm = "";
+    int MAX_SIZE = 102400 * 102400;
+    String contentType = request.getContentType();
+    int formDataLength = 0;
+    DataInputStream in = null;
+    if (contentType != null && contentType.indexOf("multipart/form-data") >= 0) {
+        //读入上传的数据
+        in = new DataInputStream(request.getInputStream());
+        formDataLength = request.getContentLength();
+        if (formDataLength > MAX_SIZE) {
+            out.print("<script language='javascript'>alert('上传的文件字节数不可以超过：" +  MAX_SIZE + "');window.location=('index.jsp')</script>");
+            return;
+        }
+        byte dataBytes[] = new byte[formDataLength];
+        int byteRead = 0;
+        int totalBytesRead = 0;
+        //上传的数据保存在byte数组
+        while(totalBytesRead < formDataLength){
+            byteRead = in.read(dataBytes,totalBytesRead,formDataLength);
+            totalBytesRead += byteRead;
+        }
+        //根据byte数组创建字符串
+        String file = new String(dataBytes);
+        String startFlag = "#start";
+        String endFlag = "#end";
+        if(file.indexOf(startFlag) < 0 || file.indexOf(endFlag) < 0 ) {
+            out.print("<script language='javascript'>alert('上传文件格式不对，缺少#start或#end');window.location=('index.jsp')</script>");
+            return;
+        }
+        int startPos = file.indexOf(startFlag) + startFlag.length();
+        int endPos = file.indexOf(endFlag);
+
+        batchComm = file.substring(startPos, endPos);
+    }
+%>
+
 <script type="text/javascript">
         function verifySnmpConfig()
         {
@@ -90,10 +128,21 @@
                 document.snmpConfigForm.action="admin/index.jsp";
                 document.snmpConfigForm.submit();
         }
+
+    function batchOperator(){
+        var op = document.snmpConfigForm.batchComm.value;
+        if(op == null || op == ""){
+            alert("请首先点击“上传”按钮");
+            return;
+        }
+
+        document.snmpConfigForm.action="admin/batchSnmpConfig";
+        document.snmpConfigForm.submit();
+    }
 </script>
 
 <form method="post" name="snmpConfigForm" onsubmit="return verifySnmpConfig();">
-
+    <input type="hidden" name="batchComm" value="<%=((batchComm==null)?"":batchComm)%>"/>
   <div class="TwoColLAdmin">
 
       <h3>请在下面输入IP或IP范围和读团体名</h3>
@@ -174,6 +223,15 @@
              <td>
                 <input type="button" value="取消" onclick="cancel()">
              </td>
+          </tr>
+
+          <tr>
+              <td>批量修改：
+              </td>
+              <td>
+                  <input type="button" onclick="window.location='/opennms/admin/importFile.jsp'" value="上传">
+                  <input type="button" onclick="javascript:batchOperator()" value="确定">
+              </td>
           </tr>
        </table>
   </div>
