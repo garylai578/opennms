@@ -87,7 +87,7 @@ public class SnmpBatchConfigServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
-        pw.print("<script language='javascript'>alert('批量操作结果：" + msg + "' );window.location=('/opennms/admin/snmpConfigured.jsp');</script>");
+        pw.print("<script language='javascript'>alert('批量操作结果：" + msg + "' );window.location=('/opennms/admin/snmpConfig.jsp');</script>");
         pw.close();
     }
 
