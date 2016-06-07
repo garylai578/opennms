@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="true"%>
 
+<script language="javascript" type="text/javascript" src="/opennms/js/My97DatePicker/WdatePicker.js"></script>
+
 <jsp:include page="/includes/header.jsp" flush="false">
     <jsp:param name="title" value="新增专线" />
     <jsp:param name="headTitle" value="新增专线" />
@@ -14,6 +16,7 @@
     <jsp:param name="breadcrumb" value="<a href='abcbank/webline.jsp'>线路台帐</a>" />
     <jsp:param name="breadcrumb" value="新增专线" />
 </jsp:include>
+
 
 <%@include file="/abcbank/getVars.jsp"%>
 
@@ -57,7 +60,6 @@
             return false;
         }else{
             document.newWebLine.action = "abcbank/newWebLine";
-            document.newWebLine.submit();
             return true;
         }
     }
@@ -152,7 +154,7 @@
         <tr>
             <td>开通日期：</td>
             <td>
-                <input id="start_date" name="start_date" type="date" size="100"/>
+                <input id="start_date" name="start_date" class="Wdate" type="text" onClick="WdatePicker()" size="100"/>
             </td>
         </tr>
 
