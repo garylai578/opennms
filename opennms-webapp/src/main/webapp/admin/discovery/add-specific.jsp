@@ -58,7 +58,8 @@ DiscoveryConfiguration currConfig  = (DiscoveryConfiguration) sess.getAttribute(
 <script type="text/javascript">
 function addSpecific(){
 	var ips = document.getElementById("ipaddress").value;
-	var ipaddresses = ips.split("\n");
+	var ipaddresses = ips.split("\r\n");
+	var ipaddresses = ipaddresses.split("\n");
 	for(var i=0;i<ipaddresses.length;i++) {
 		if (!isValidIPAddress(ipaddresses[i])) {
 			alert("IP地址无效:" + ipaddresses[i]);
