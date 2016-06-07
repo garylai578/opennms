@@ -45,6 +45,7 @@ public class AddIPAddressServlet extends HttpServlet  {
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         String userId = request.getRemoteUser();
+        String msg = "成功添加IP[" + ipAddr + "]！";
 
         try {
             //首先检查是否有停用超过7天的ip，有则更新，没有则新建
@@ -78,33 +79,45 @@ public class AddIPAddressServlet extends HttpServlet  {
 
             //如果在已有停用的ip段里面找不到合适的，则新建一个。
             if (flag == 0) {
-                BankIPAddress ip = new BankIPAddress();
-                ip.setIp(ipAddr);
-                ip.setNetwork_type(network_type);
-                ip.setMask(mask);
-                ip.setGateway(gateway);
-                ip.setMac(mac);
-                ip.setApply_date(apply_date);
-                ip.setStart_date(start_date);
-                ip.setUsers(users);
-                ip.setBank(bank);
-                ip.setDept(dept);
-                ip.setEquip_type(equip_type);
-                ip.setEquip_brand(equip_brand);
-                ip.setModel(model);
-                ip.setApplication(application);
-                ip.setState(state);
-                ip.setComment(comment);
-                op.insert(ip);
+                //不允许插入相同的ip
+                int sameIP = 0;
+                BankIPAddress[] allIPs = op.selectAll("");
+                for(BankIPAddress ip : allIPs){
+                    if(ip.getIp().equals(ipAddr)){
+                        msg = "IP[" + ipAddr + "]已经存在，请勿重复添加";
+                        sameIP = 1;
+                        break;
+                    }
+                }
+                if(sameIP == 0) {
+                    BankIPAddress ip = new BankIPAddress();
+                    ip.setIp(ipAddr);
+                    ip.setNetwork_type(network_type);
+                    ip.setMask(mask);
+                    ip.setGateway(gateway);
+                    ip.setMac(mac);
+                    ip.setApply_date(apply_date);
+                    ip.setStart_date(start_date);
+                    ip.setUsers(users);
+                    ip.setBank(bank);
+                    ip.setDept(dept);
+                    ip.setEquip_type(equip_type);
+                    ip.setEquip_brand(equip_brand);
+                    ip.setModel(model);
+                    ip.setApplication(application);
+                    ip.setState(state);
+                    ip.setComment(comment);
+                    op.insert(ip);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        BankLogWriter.getSingle().writeLog("用户[" + userId + "]新增IP[" + ipAddr + "]");
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]新增IP：" + msg);
 
         response.setContentType("text/html;charset=gb2312");
-        pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
+        pw.print("<script language='javascript'>alert('" + msg + "' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
         pw.close();
 
     }
