@@ -57,7 +57,6 @@
             return false;
         }else{
             document.newWebLine.action = "abcbank/newWebLine";
-            document.newWebLine.submit();
             return true;
         }
     }
@@ -88,7 +87,7 @@
     }
 
 </script>
-
+<script language="javascript" type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 <h3>请填写以下资料</h3>
 
 <form id="newIPs" method="post" name="newWebLine" onsubmit="return validateFormInput();">
@@ -152,7 +151,7 @@
         <tr>
             <td>开通日期：</td>
             <td>
-                <input id="start_date" name="start_date" type="date" size="100"/>
+                <input id="start_date" name="start_date" class="Wdate" type="text" onClick="WdatePicker()" size="100"/>
             </td>
         </tr>
 

@@ -18,6 +18,8 @@
 <%@include file="/abcbank/getVars.jsp"%>
 
 <script type="text/javascript" src="js/abcbank.js"></script>
+<script language="javascript" type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+
 <script type="text/javascript">
     var isCommitted = false;
     function validateFormInput()
@@ -123,14 +125,14 @@
         <tr>
             <td>申请时间：</td>
             <td>
-                <input id="apply_date" name="apply_date" type="date" size="50"/>
+                <input id="apply_date" name="apply_date" class="Wdate" type="text" onClick="WdatePicker()">
             </td>
         </tr>
 
         <tr>
             <td>启用时间：</td>
             <td>
-                <input id="start_date" name="start_date" type="date" size="50"/>
+                <input id="start_date" name="start_date" class="Wdate" type="text" onClick="WdatePicker()">
             </td>
         </tr>
 
