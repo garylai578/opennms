@@ -32,7 +32,7 @@ public class SnmpBatchConfigServlet extends HttpServlet {
         for(String line : batchCommands){
             log.writeLog("line:" + line);
             String[] items = line.split(","); //第一个IP地址,最后一个IP地址,团体名,超时,版本,重试,端口
-            if(items.length != 6) {
+            if(items.length != 7) {
                 msg = "导入的文件格式有误！";
                 break;
             }
@@ -72,6 +72,8 @@ public class SnmpBatchConfigServlet extends HttpServlet {
             }
             if ( version.length() > 0 ) {
                 bldr.addParam(EventConstants.PARM_VERSION, version);
+            }else{
+                bldr.addParam(EventConstants.PARM_VERSION, "v2c");
             }
             try {
                 EventProxy eventProxy = Util.createEventProxy();
