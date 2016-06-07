@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="true"%>
 
+<script language="javascript" type="text/javascript" src="/opennms/js/My97DatePicker/WdatePicker.js"></script>
+
 <jsp:include page="/includes/header.jsp" flush="false">
     <jsp:param name="title" value="新增专线" />
     <jsp:param name="headTitle" value="新增专线" />
@@ -14,6 +16,7 @@
     <jsp:param name="breadcrumb" value="<a href='abcbank/webline.jsp'>线路台帐</a>" />
     <jsp:param name="breadcrumb" value="新增专线" />
 </jsp:include>
+
 
 <%@include file="/abcbank/getVars.jsp"%>
 
@@ -87,7 +90,7 @@
     }
 
 </script>
-<script language="javascript" type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
+
 <h3>请填写以下资料</h3>
 
 <form id="newIPs" method="post" name="newWebLine" onsubmit="return validateFormInput();">

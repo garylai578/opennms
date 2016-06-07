@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="true"%>
+<script language="javascript" type="text/javascript" src="/opennms/js/My97DatePicker/WdatePicker.js"></script>
 
 <jsp:include page="/includes/header.jsp" flush="false">
     <jsp:param name="title" value="新增IP地址" />
@@ -18,7 +19,6 @@
 <%@include file="/abcbank/getVars.jsp"%>
 
 <script type="text/javascript" src="js/abcbank.js"></script>
-<script language="javascript" type="text/javascript" src="js/My97DatePicker/WdatePicker.js"></script>
 
 <script type="text/javascript">
     var isCommitted = false;
