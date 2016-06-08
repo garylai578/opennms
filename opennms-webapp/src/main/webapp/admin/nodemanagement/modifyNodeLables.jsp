@@ -65,22 +65,22 @@
    }
 
    function doModify(nodeids, nodeLables){
-       document.nodeLables.nodeids.value = nodeids;
-       document.nodeLables.nodeLables.value = nodeLables;
-       document.nodeLables.action="admin/nodeLabelsChange";
-       document.nodeLables.submit();
+       document.nodes.nodeids.value = nodeids;
+       document.nodes.nodeLables.value = nodeLables;
+       document.nodes.action="admin/nodeLabelsChange";
+       document.nodes.submit();
    }
 
     function cancel()
     {
-        document.nodeLables.action="admin/index.jsp";
-        document.nodeLables.submit();
+        document.nodes.action="admin/index.jsp";
+        document.nodes.submit();
     }
 </script>
 
-<form method="post" name="nodeLables">
+<form method="post" name="nodes">
     <input type="hidden" name="nodeids"/>
-    <input type="hidden" names="nodeLables"/>
+    <input type="hidden" name="nodeLables"/>
 
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
