@@ -101,6 +101,7 @@
                 for(Interface inter : availIntfs) {
                     ip += inter.getIpAddress() + ", ";
                 }
+                ip = ip.substring(0, ip.length()-2);
         %>
         <tr>
             <td width="10%">
