@@ -58,7 +58,7 @@ DiscoveryConfiguration currConfig  = (DiscoveryConfiguration) sess.getAttribute(
 <script type="text/javascript">
 function addSpecific(){
 	var ips = document.getElementById("ipaddress").value;
-	var ips = ips.replace("\r\n", "\n");
+	var ips = ips.replace(/\r\n/g, "\n");
 	var ipaddresses = ips.split("\n");
 	for(var i=0;i<ipaddresses.length;i++) {
 		if (!isValidIPAddress(ipaddresses[i])) {
