@@ -48,7 +48,7 @@
   <jsp:param name="script" value="<script type='text/javascript' src='js/ipv6/lib/sprintf.js'></script>" />
 </jsp:include>
 
-<%
+<%--<%
     //读取操作的文件内容
     String batchComm = "";
     int MAX_SIZE = 102400 * 102400;
@@ -84,7 +84,7 @@
 
         batchComm = file.substring(startPos, endPos);
     }
-%>
+%>--%>
 
 <script type="text/javascript">
         function verifySnmpConfig()
@@ -129,7 +129,7 @@
                 document.snmpConfigForm.submit();
         }
 
-    function batchOperator(){
+/*    function batchOperator(){
         var op = document.snmpConfigForm.batchComm.value;
         if(op == null || op == ""){
             alert("请首先点击“上传”按钮");
@@ -138,11 +138,11 @@
 
         document.snmpConfigForm.action="admin/batchSnmpConfig";
         document.snmpConfigForm.submit();
-    }
+    }*/
 </script>
 
 <form method="post" name="snmpConfigForm" onsubmit="return verifySnmpConfig();">
-    <input type="hidden" name="batchComm" value="<%=((batchComm==null)?"":batchComm)%>"/>
+<%--    <input type="hidden" name="batchComm" value="<%=((batchComm==null)?"":batchComm)%>"/>--%>
   <div class="TwoColLAdmin">
 
       <h3>请在下面输入IP或IP范围和读团体名</h3>
@@ -225,14 +225,14 @@
              </td>
           </tr>
 
-          <tr>
+<%--          <tr>
               <td>批量修改：
               </td>
               <td>
                   <input type="button" onclick="window.location='/opennms/admin/importFile.jsp'" value="上传">
                   <input type="button" onclick="javascript:batchOperator()" value="确定">
               </td>
-          </tr>
+          </tr>--%>
        </table>
   </div>
 

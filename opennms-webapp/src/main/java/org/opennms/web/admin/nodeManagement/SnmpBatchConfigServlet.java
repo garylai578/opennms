@@ -1,17 +1,16 @@
 package org.opennms.web.admin.nodeManagement;
 
-import org.opennms.core.bank.BankLogWriter;
 import org.opennms.netmgt.EventConstants;
 import org.opennms.netmgt.model.events.EventBuilder;
 import org.opennms.netmgt.model.events.EventProxy;
 import org.opennms.web.api.Util;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +26,7 @@ public class SnmpBatchConfigServlet extends HttpServlet {
         String batchComm = request.getParameter("batchComm");
         String[] batchCommands = batchComm.split("\n");
         String msg = "已完成";
-        BankLogWriter log = BankLogWriter.getSingle();
+//        BankLogWriter log = BankLogWriter.getSingle();
 //        log.writeLog("batch:" + batchComm);
         for(int i = 0; i < batchCommands.length; ++i){
             String line = batchCommands[i];
@@ -89,9 +88,10 @@ public class SnmpBatchConfigServlet extends HttpServlet {
             }
         }
 
-        // forward the request for proper display
-        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/admin/snmpConfigured.jsp");
-        dispatcher.forward(request, response);
+        response.setContentType("text/html;charset=gb2312");
+        PrintWriter pw=response.getWriter();
+        pw.print("<script language='javascript'>alert('批量操作结果：" + msg + "' );window.location=('/opennms/admin/snmpConfig.jsp');</script>");
+        pw.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
