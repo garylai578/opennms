@@ -6,12 +6,12 @@ import org.opennms.netmgt.model.events.EventBuilder;
 import org.opennms.netmgt.model.events.EventProxy;
 import org.opennms.web.api.Util;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,7 +54,7 @@ public class SnmpBatchConfigServlet extends HttpServlet {
             String version = items[4];
             String retryCount = items[5];
             String port = items[6];
-            log.writeLog("firstip:"+ firstIPAddress +", lastip:" + lastIPAddress + ", community:" + communityString + ", timeout:" + timeout + ", version:" + version + ", retry:" + retryCount +", port:" + port);
+//            log.writeLog("firstip:"+ firstIPAddress +", lastip:" + lastIPAddress + ", community:" + communityString + ", timeout:" + timeout + ", version:" + version + ", retry:" + retryCount +", port:" + port);
             EventBuilder bldr = new EventBuilder(EventConstants.CONFIGURE_SNMP_EVENT_UEI, "web ui");
             bldr.setInterface(addr(firstIPAddress));
             bldr.setService("SNMP");
@@ -89,12 +89,9 @@ public class SnmpBatchConfigServlet extends HttpServlet {
             }
         }
 
-        if("".equals(msg))
-            msg = "成功导入";
-        response.setContentType("text/html;charset=gb2312");
-        PrintWriter pw=response.getWriter();
-        pw.print("<script language='javascript'>alert('批量操作结果：" + msg + "' );window.location=('/opennms/admin/snmpConfig.jsp');</script>");
-        pw.close();
+        // forward the request for proper display
+        RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/admin/snmpConfigured.jsp");
+        dispatcher.forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
