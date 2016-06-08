@@ -180,6 +180,7 @@
         <li><a href="admin/asset/index.jsp">导入和导出资产信息</a></li>
         <li><a href="admin/categories.htm">管理监视分类</a></li>
         <li><a href="javascript:deletePost()">删除节点</a></li>
+        <li><a href="admin/nodemanagement/modifyNodeLables.jsp">修改节点名称</a></li>
       </ul>
     </div>
 
