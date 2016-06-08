@@ -1,6 +1,5 @@
 package org.opennms.web.admin.nodeManagement;
 
-import org.opennms.core.bank.BankLogWriter;
 import org.opennms.netmgt.EventConstants;
 import org.opennms.netmgt.model.events.EventBuilder;
 import org.opennms.netmgt.model.events.EventProxy;
@@ -27,11 +26,11 @@ public class SnmpBatchConfigServlet extends HttpServlet {
         String batchComm = request.getParameter("batchComm");
         String[] batchCommands = batchComm.split("\n");
         String msg = "已完成";
-        BankLogWriter log = BankLogWriter.getSingle();
-        log.writeLog("batch:" + batchComm);
+//        BankLogWriter log = BankLogWriter.getSingle();
+//        log.writeLog("batch:" + batchComm);
         for(int i = 0; i < batchCommands.length; ++i){
             String line = batchCommands[i];
-            log.writeLog("line:" + line);
+//            log.writeLog("line:" + line);
             String[] items = line.split(","); //第一个IP地址,最后一个IP地址,团体名,超时,版本,重试,端口
             if(items.length != 7) {
                 msg += "；第" + (i+1) + "行格式有误";
