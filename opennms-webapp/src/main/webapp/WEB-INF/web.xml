@@ -924,6 +924,10 @@
     <servlet-name>SnmpBatchConfigServlet</servlet-name>
     <servlet-class>org.opennms.web.admin.nodeManagement.SnmpBatchConfigServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>NodeLablesChangeServlet</servlet-name>
+    <servlet-class>org.opennms.web.nodelabel.NodeLablesChangeServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1380,6 +1384,11 @@
   <servlet-mapping>
     <servlet-name>SnmpBatchConfigServlet</servlet-name>
     <url-pattern>/admin/batchSnmpConfig</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>NodeLablesChangeServlet</servlet-name>
+    <url-pattern>/admin/nodeLabelsChange</url-pattern>
   </servlet-mapping>
   
   <!-- WARMERGE: insert servlet -->  
