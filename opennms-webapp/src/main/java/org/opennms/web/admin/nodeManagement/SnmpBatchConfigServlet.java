@@ -26,14 +26,15 @@ public class SnmpBatchConfigServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String batchComm = request.getParameter("batchComm");
         String[] batchCommands = batchComm.split("\n");
-        String msg = "";
+        String msg = "已完成";
         BankLogWriter log = BankLogWriter.getSingle();
         log.writeLog("batch:" + batchComm);
-        for(String line : batchCommands){
+        for(int i = 0; i < batchCommands.length; ++i){
+            String line = batchCommands[i];
             log.writeLog("line:" + line);
             String[] items = line.split(","); //第一个IP地址,最后一个IP地址,团体名,超时,版本,重试,端口
             if(items.length != 7) {
-                msg += "；行格式有误：" + line;
+                msg += "；第" + (i+1) + "行格式有误";
                 continue;
             }
 
