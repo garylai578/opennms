@@ -79,7 +79,7 @@
             out.print("<script language='javascript'>alert('上传文件格式不对，缺少#start或#end');window.location=('index.jsp')</script>");
             return;
         }
-        int startPos = file.indexOf(startFlag) + startFlag.length();
+        int startPos = file.indexOf(startFlag) + startFlag.length() + 2;
         int endPos = file.indexOf(endFlag);
 
         batchComm = file.substring(startPos, endPos);
