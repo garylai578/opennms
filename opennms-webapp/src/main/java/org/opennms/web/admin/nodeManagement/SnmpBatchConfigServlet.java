@@ -1,5 +1,6 @@
 package org.opennms.web.admin.nodeManagement;
 
+import org.opennms.core.bank.BankLogWriter;
 import org.opennms.netmgt.EventConstants;
 import org.opennms.netmgt.model.events.EventBuilder;
 import org.opennms.netmgt.model.events.EventProxy;
@@ -26,7 +27,7 @@ public class SnmpBatchConfigServlet extends HttpServlet {
         String batchComm = request.getParameter("batchComm");
         String[] batchCommands = batchComm.split("\n");
         String msg = "已完成";
-//        BankLogWriter log = BankLogWriter.getSingle();
+        BankLogWriter log = BankLogWriter.getSingle();
 //        log.writeLog("batch:" + batchComm);
         for(int i = 0; i < batchCommands.length; ++i){
             String line = batchCommands[i];
@@ -53,6 +54,7 @@ public class SnmpBatchConfigServlet extends HttpServlet {
             String version = items[4];
             String retryCount = items[5];
             String port = items[6];
+            log.writeLog("firstip:"+ firstIPAddress +", lastip:" + lastIPAddress + ", community:" + communityString + ", timeout:" + timeout + ", version:" + version + ", retry:" + retryCount +", port:" + port);
             EventBuilder bldr = new EventBuilder(EventConstants.CONFIGURE_SNMP_EVENT_UEI, "web ui");
             bldr.setInterface(addr(firstIPAddress));
             bldr.setService("SNMP");
