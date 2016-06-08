@@ -26,15 +26,15 @@ public class SnmpBatchConfigServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String batchComm = request.getParameter("batchComm");
         String[] batchCommands = batchComm.split("\n");
-        String msg = "成功导入.";
+        String msg = "";
         BankLogWriter log = BankLogWriter.getSingle();
         log.writeLog("batch:" + batchComm);
         for(String line : batchCommands){
             log.writeLog("line:" + line);
             String[] items = line.split(","); //第一个IP地址,最后一个IP地址,团体名,超时,版本,重试,端口
             if(items.length != 7) {
-                msg = "导入的文件格式有误！";
-                break;
+                msg += "；行格式有误：" + line;
+                continue;
             }
 
             String firstIPAddress = items[0];
@@ -87,6 +87,8 @@ public class SnmpBatchConfigServlet extends HttpServlet {
             }
         }
 
+        if("".equals(msg))
+            msg = "成功导入";
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
         pw.print("<script language='javascript'>alert('批量操作结果：" + msg + "' );window.location=('/opennms/admin/snmpConfig.jsp');</script>");
