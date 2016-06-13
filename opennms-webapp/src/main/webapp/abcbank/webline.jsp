@@ -88,7 +88,14 @@
         </td>
 
         <td align="left">
-            <input id="search" name="search" size="18%" placeholder="请输入要搜索的关键字" value="">
+            <select id="searchType" name="searchType">
+                <option value="">请选择查询的字段</option>
+                <option value="type">专线类型</option>
+                <option value="applicant">申请人</option>
+                <option value="approver">审批人</option>
+                <option value="dept">使用机构</option>
+            </select>
+            <input id="search" name="search" size="18%" placeholder="请输入要搜索的内容" value="">
             <a id="doSearch" href="javascript:searchWebLine()"><img src="images/search.png" alt="搜索" border="0"></a>
             <a id="" href="javascript:searchWebLine()">搜索</a>
         </td>

@@ -18,13 +18,18 @@ public class SearchWebLineServlet extends HttpServlet {
     private static final long serialVersionUID = 3191671785887252427L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String type = request.getParameter("searchType");
         String key = request.getParameter("searchKey");
         WebLineOperator op = new WebLineOperator();
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
 
         try {
-            String[] cols = {"applicant", "dept", "type", "start_date"};
+            String[] cols = {"applicant", "dept", "type", "approver"};
+            if(type.equals("type") || type.equals("applicant") || type.equals("approver") || type.equals("dept")){
+                cols = new String[1];
+                cols[0] = type;
+            }
             WebLine[] rs = op.search(cols, key);
 
             if(rs != null && rs.length > 0){
