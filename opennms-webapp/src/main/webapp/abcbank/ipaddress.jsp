@@ -122,8 +122,17 @@
             window.location.href="abcbank/ipaddress.jsp";
             return;
         }
+
+        var searchAreas="";
+        for(var i = 0; i < 4; ++i){
+            var choose = document.getElementById("searchArea-"+i);
+            if (choose.checked == true){
+                searchAreas += document.getElementById("searchArea-"+i).value + "\t";
+            }
+        }
+        document.allIPSegments.searchAreas.value = searchAreas;
+
         document.allIPSegments.action="abcbank/searchIPAddress";
-        document.allIPSegments.searchIP.value=ip;
         document.allIPSegments.submit();
     }
 
@@ -138,8 +147,8 @@
 <form method="post" name="allIPSegments">
     <input type="hidden" name="ipAddrID"/>
     <input type="hidden" name="rowID"/>
-    <input type="hidden" name="searchIP"/>
     <input type="hidden" name="rows"/>
+    <input type="hidden" name="searchAreas" />
 
     <h3>IP地址台帐管理</h3>
     <table>
@@ -149,8 +158,13 @@
         <a href="javascript:addIPAddress()">新增IP地址</a>
     </td>
 
-    <td align="left">
-        <input id="search" name="search" size="18%" placeholder="请输入要搜索的IP" value="">
+    <td align="left">搜索范围：
+        <input id="searchArea-0" type="checkbox" value="network_type" checked>网络类型
+        <input id="searchArea-1" type="checkbox" value="users" checked>设备使用人
+        <input id="searchArea-2" type="checkbox" value="bank" checked>所属支行（分行）
+        <input id="searchArea-3" type="checkbox" value="dept" checked>所属网点（部门）&nbsp;
+        搜索关键字：
+        <input id="search" name="search" size="18%" placeholder="" value="">
         <a id="doSearch" href="javascript:searchIPAddress()"><img src="images/search.png" alt="搜索" border="0"></a>
         <a id="" href="javascript:searchIPAddress()">搜索</a>
     </td>

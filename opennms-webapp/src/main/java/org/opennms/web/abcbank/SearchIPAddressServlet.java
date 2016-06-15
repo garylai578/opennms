@@ -20,13 +20,19 @@ public class SearchIPAddressServlet extends HttpServlet {
     final static Logger log =  Logger.getLogger(SearchIPAddressServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ip = request.getParameter("searchIP");
+        String searchContent = request.getParameter("search");
+        String searchAreas = request.getParameter("searchAreas");
         BankIPAddressOp op = new BankIPAddressOp();
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
 
+        String[] cols = {"network_type", "users", "bank", "dept"};
+        if(searchAreas != null && !"".equals(searchAreas)){
+            cols = searchAreas.split("\t");
+        }
+
         try {
-            BankIPAddress[] rs = op.search("ip", ip);
+            BankIPAddress[] rs = op.search(cols, searchContent);
             if(rs != null && rs.length > 0){
                 request.setAttribute("ip_addresses", rs);
                 request.getRequestDispatcher("ipaddress.jsp").forward(request, response);

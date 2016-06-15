@@ -190,20 +190,27 @@ public class BankIPAddressOp {
     }
 
     /**
-     * search the col with key
-     * @param col column name
+     * search the cols with key
+     * @param cols columns name
      * @param key key value
      * @return the searching result
      * @throws SQLException
      */
-    public BankIPAddress[] search(String col, String key) throws SQLException {
+    public BankIPAddress[] search(String[] cols, String key) throws SQLException {
         BankIPAddress[] result = null;
         try {
             Connection conn = Vault.getDbConnection();
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String sql = "SELECT * FROM ipaddress WHERE " + col + " LIKE '%"+ key + "%'";
+            String sql = "";
+            for(String col : cols){
+                if(col.equals("start_date") || col.equals("stop_date") || col.equals("apply_date"))
+                    sql += "SELECT * FROM ipaddress WHERE " + col + " = '" + key + "' union all ";
+                else
+                    sql += "SELECT * FROM ipaddress WHERE " + col + " LIKE '%"+ key + "%' union all ";
+            }
+            sql = sql.substring(0, sql.length()-10);
             log.debug("search sql: " + sql);
             ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
