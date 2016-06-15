@@ -121,6 +121,7 @@
             alert("请输入批量操作命令");
             return;
         }
+        document.allSwitchers.batchComm.value = op.replace(/\r\n/g, "\n")
 
         var sw="";
         for (var i = 0; i < rows; ++i) {
