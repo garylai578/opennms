@@ -13,7 +13,18 @@
 
 <%@page import="org.opennms.core.bank.Switcher" %>
 <%@ page import="org.opennms.core.bank.SwitcherOperator" %>
-<%@ page import="java.io.*" %>
+<%@ page import="org.opennms.core.resource.Vault" %>
+<%@ page import="org.opennms.core.utils.DBUtils" %>
+<%@ page import="org.opennms.web.element.Interface" %>
+<%@ page import="org.opennms.web.element.NetworkElementFactory" %>
+<%@ page import="java.io.DataInputStream" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.HashMap" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
 
 <jsp:include page="/includes/header.jsp" flush="false">
     <jsp:param name="title" value="交换机配置管理" />
@@ -59,6 +70,29 @@
         int endPos = file.indexOf(endFlag);
 
         batchComm = file.substring(startPos, endPos);
+    }
+
+    final DBUtils d = new DBUtils(getClass());
+    List<Integer> nodeIds = new ArrayList<Integer>();
+    Map<String, Integer> ipNodeidMap = new HashMap<String, Integer>();
+    try {
+        Connection conn = Vault.getDbConnection();
+        d.watch(conn);
+        Statement stmt = conn.createStatement();
+        d.watch(stmt);
+        ResultSet rs = stmt.executeQuery("SELECT nodeid FROM assets");
+        d.watch(rs);
+        while(rs.next())
+            nodeIds.add(rs.getInt("nodeid"));
+    } finally {
+        d.cleanUp();
+    }
+    for(Integer id : nodeIds) {
+        Interface[] allInterfaces= NetworkElementFactory.getInstance(this.getServletConfig().getServletContext()).getActiveInterfacesOnNode(id);
+        for (int i = 0; i < allInterfaces.length; i++) {
+            Interface intf = allInterfaces[i];
+            ipNodeidMap.put(intf.getIpAddress(), id);
+        }
     }
 %>
 
@@ -321,7 +355,14 @@
 
             <td width="3%" align="center">
                 <div id="host-<%=row%>">
-                    <%= ((host == null || host.equals("")) ? "&nbsp;" : host) %>
+                    <%
+                        if(ipNodeidMap.containsKey(host)){
+                          out.print("<a href=\"/opennms/element/node.jsp?node="+ ipNodeidMap.get(host) +"\">" + host + "</a>");
+                        }
+                        else {
+                            out.print((host == null || host.equals("")) ? "&nbsp;" : host);
+                        }
+                    %>
                     <input type="hidden" name="host-<%=row%>" value="<%= ((host == null || host.equals("")) ? "&nbsp;" : host) %>"/>
                 </div>
             </td>

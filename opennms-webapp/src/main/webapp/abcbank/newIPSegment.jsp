@@ -21,6 +21,7 @@
     IPSegmentOperater operater = new IPSegmentOperater();
     String[] ipsegs = operater.getIPSegments();
 %>
+<script type='text/javascript' src='js/ipv6/ipv6.js'></script>
 
 <script>
     var Select = {
@@ -49,16 +50,30 @@
         if(isCommitted == true)
             return false;
         isCommitted = true;
-        var seg = new String(document.newIPs.ipSeg.value);
+        var seg = new String(document.newIPs.selectIpSeg.value);
+        var inputSeg = new String(document.newIPs.inputIpSeg.value);
         var num = new String(document.newIPs.ipNum.value);
         var name = new String(document.newIPs.bankName.value);
         var type = new String(document.newIPs.bankType.value);
         if(seg==null || seg==0){
-            alert("请选择或输入所属的IP段");
-            isCommitted = false;
-            return false;
+            if(inputSeg == null || inputSeg == 0) {
+                alert("请选择或输入所属的IP段");
+                isCommitted = false;
+                return false;
+            }else{
+                if(!isValidIPAddress(inputSeg)){
+                    alert("输入的IP段格式不正确");
+                    isCommitted = false;
+                    return false;
+                }else{
+                    document.newIPs.ipSeg.value = inputSeg;
+                }
+            }
+        }else{
+            document.newIPs.ipSeg.value = seg;
         }
-        else if(num==0) {
+
+        if(num==0) {
             alert("请选择所需的IP数量！");
             isCommitted = false;
             return false;
@@ -88,12 +103,13 @@
 <h3>请填写以下资料</h3>
 
 <form id="newIPs" method="post" name="newIPs" onsubmit="return validateFormInput();">
+    <input name="ipSeg" type="hidden"/>
     <table>
         <tr>
             <td>*所属IP段：</td>
             <td>
-                <select id="ipSeg" name="ipSeg" onkeydown="Select.del(this,event)" onkeypress="Select.write(this,event)">
-                    <option value=""></option>
+                <select id="selectIpSeg" name="selectIpSeg">
+                    <option value="">请选择</option>
                     <%
                         for(String seg : ipsegs){
                     %>
@@ -101,7 +117,8 @@
                     <%
                         }
                     %>
-                </select>（请选择或直接输入）
+                </select>&nbsp;或直接输入：
+                <input id="inputIpSeg" name="inputIpSeg" type="text" size="15"/>(若同时选择和输入，以前着为准。)
             </td>
         </tr>
 
