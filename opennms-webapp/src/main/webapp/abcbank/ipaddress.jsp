@@ -177,7 +177,7 @@
 
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
-        <tr bgcolor="#999999">
+        <tr id="header1">
             <td width="7%"><b>操作</b></td>
             <td width="5%"><b>ip地址</b></td>
             <td width="5%"><b>网络类型</b></td>
@@ -232,7 +232,7 @@
                     }
                 }
         %>
-        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
+        <tr <%if (state.equals("停用")) out.print("id=\"lineUnused\"");%>>
             <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
                 <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>', '<%=row%>')" onclick="return confirm('确定要停用该IP？')">停用</a>
                 &nbsp;&nbsp;
@@ -365,7 +365,7 @@
             </td>
         </tr>
 
-        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
+        <tr  <%if (state.equals("停用")) out.print("id=\"lineUnused\"");%>>
             <td colspan="15">
                 <div>
                     <input id="comment-<%=row%>" name="comment-<%=row%>" type="text" size="100%" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>

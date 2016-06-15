@@ -230,6 +230,14 @@
         margin-top: 0;
         margin-bottom: 10px;
     }
+
+	#header1 td{
+		background: #cacaca;
+	}
+
+	#lineUnused td{
+		background: greenyellow;
+	}
     
     table.o-box{ margin-bottom:0px; }
     
@@ -305,7 +313,7 @@
 	    padding: 4px 5px;
 	    background-color: #FFF;
 	}
-	
+
 	td td, td p {
 	    font-size: 100%;
 	    margin: 0;
