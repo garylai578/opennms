@@ -175,25 +175,27 @@
         </td>
     </table>
 
-    <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
+    <div style="overflow: auto; width: 100%;">
+    <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black" class="tab_css_1">
 
-        <tr id="header1">
-            <td width="7%"><b>操作</b></td>
-            <td width="5%"><b>ip地址</b></td>
-            <td width="5%"><b>网络类型</b></td>
-            <td width="5%"><b>掩码</b></td>
-            <td width="5%"><b>网关</b></td>
-            <td width="5%"><b>mac地址</b></td>
-            <td width="5%"><b>申请时间</b></td>
-            <td width="5%"><b>启用日期</b></td>
-            <td width="5%"><b>设备使用人</b></td>
-            <td width="5%"><b>所属支行（分行）</b></td>
-            <td width="5%"><b>所属网点（部门）</b></td>
-            <td width="5%"><b>设备类型</b></td>
-            <td width="5%"><b>设备品牌</b></td>
-            <td width="5%"><b>设备型号</b></td>
-            <td width="5%"><b>用途</b></td>
-            <td width="3%"><b>使用情况</b></td>
+        <tr class="header1">
+            <td style="width: 100px"><b>操作</b></td>
+            <td><b>ip地址</b></td>
+            <td><b>网络类型</b></td>
+            <td><b>掩码</b></td>
+            <td><b>网关</b></td>
+            <td><b>mac地址</b></td>
+            <td><b>申请时间</b></td>
+            <td><b>启用日期</b></td>
+            <td><b>设备使用人</b></td>
+            <td><b>所属支行（分行）</b></td>
+            <td><b>所属网点（部门）</b></td>
+            <td><b>设备类型</b></td>
+            <td><b>设备品牌</b></td>
+            <td><b>设备型号</b></td>
+            <td><b>用途</b></td>
+            <td><b>使用情况</b></td>
+            <td><b>备注</b></td>
         </tr>
         <%
             int row = 0;
@@ -232,8 +234,8 @@
                     }
                 }
         %>
-        <tr <%if (state.equals("停用")) out.print("id=\"lineUnused\"");%>>
-            <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
+        <tr <%if (state.equals("停用")) out.print("class=\"lineUnused\"");%>>
+            <td align="center" style="vertical-align:middle;">
                 <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>', '<%=row%>')" onclick="return confirm('确定要停用该IP？')">停用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPAddress('<%=ipId%>', '<%=row%>')">启用</a>
@@ -243,14 +245,14 @@
 
             <input type="hidden" name="id-<%=row%>" value="<%=ipId %>"/>
 
-            <td width="5%">
+            <td>
                 <div id="ipaddr-<%=row%>">
                     <%= ((ipaddr == null || ipaddr.equals("")) ? "&nbsp;" : ipaddr) %>
                     <input type="hidden" name="ipaddr-<%=row%>" value="<%= ((ipaddr == null || ipaddr.equals("")) ? "&nbsp;" : ipaddr) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div>
                     <select id="network_type-<%=row%>" name="network_type-<%=row%>">
                         <%
@@ -268,48 +270,48 @@
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="mask-<%=row%>">
                     <%= ((mask == null || mask.equals("")) ? "&nbsp;" : mask) %>
                     <input type="hidden" name="mask-<%=row%>" value="<%= ((mask == null || mask.equals("")) ? "&nbsp;" : mask) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="gateway-<%=row%>">
                     <%= ((gateway == null || gateway.equals("")) ? "&nbsp;" : gateway) %>
                     <input type="hidden" name="gateway-<%=row%>" value="<%= ((gateway == null || gateway.equals("")) ? "&nbsp;" : gateway) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="mac-<%=row%>">
                     <%= ((mac == null || mac.equals("")) ? "&nbsp;" : mac) %>
                     <input type="hidden" name="mac-<%=row%>" value="<%= ((mac == null || mac.equals("")) ? "&nbsp;" : mac) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="apply_date-<%=row%>">
                     <%= ((apply_date == null || apply_date.equals("")) ? "&nbsp;" : apply_date) %>
                     <input type="hidden" name="apply_date-<%=row%>" value="<%= ((apply_date == null || apply_date.equals("")) ? "&nbsp;" : apply_date) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="start_date-<%=row%>">
                     <%= ((start_date == null || start_date.equals("")) ? "&nbsp;" : start_date) %>
                     <input type="hidden" name="start_date-<%=row%>" value="<%= ((start_date == null || start_date.equals("")) ? "&nbsp;" : start_date) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div>
                     <input  id="users-<%=row%>" size="5" name="users-<%=row%>" value="<%= ((usres == null || usres.equals("")) ? "&nbsp;" : usres) %>" >
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div>
                     <select id="bank-<%=row%>" name="bank-<%=row%>">
                         <%
@@ -327,48 +329,46 @@
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div>
                     <input id="dept-<%=row%>" name="dept-<%=row%>" size="6" value="<%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>">
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="model-<%=row%>">
                     <input id="model-<%=row%>" name="model-<%=row%>" size="6" value="<%= ((model == null || model.equals("")) ? "&nbsp;" : model) %>">
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div>
                     <input id="equip_brand-<%=row%>" name="equip_brand-<%=row%>" size="5" value="<%= ((equip_brand == null || equip_brand.equals("")) ? "&nbsp;" : equip_brand) %>">
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div>
                     <input id="equip_type-<%=row%>" name="equip_type-<%=row%>" size="6" value="<%= ((equip_type == null || equip_type.equals("")) ? "&nbsp;" : equip_type) %>">
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div>
                     <input id="app-<%=row%>" name="app-<%=row%>" size="6" value="<%= ((app == null || app.equals("")) ? "&nbsp;" : app) %>">
                 </div>
             </td>
 
-            <td width="3%">
+            <td>
                 <div id="state-<%=row%>">
                     <%= ((state == null || state.equals("")) ? "&nbsp;" : state) %>
                     <input type="hidden" name="state-<%=row%>" value="<%= ((state == null || state.equals("")) ? "&nbsp;" : state) %>"/>
                 </div>
             </td>
-        </tr>
 
-        <tr  <%if (state.equals("停用")) out.print("id=\"lineUnused\"");%>>
-            <td colspan="15">
+            <td>
                 <div>
-                    <input id="comment-<%=row%>" name="comment-<%=row%>" type="text" size="100%" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
+                    <input id="comment-<%=row%>" name="comment-<%=row%>" size="8" type="text" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
                 </div>
             </td>
         </tr>
@@ -377,7 +377,7 @@
             }
         %>
     </table>
-
+</div>
 </form>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />
