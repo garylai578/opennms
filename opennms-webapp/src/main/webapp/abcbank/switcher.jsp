@@ -194,6 +194,11 @@
         }
     }
 
+    function modifySwitcher(id, row){
+        document.allSwitchers.action="abcbank/modifySwitcher.jsp?id="+id+"&row="+row;
+        document.allSwitchers.submit();
+    }
+
     function searchSwitcher()
     {
         document.allSwitchers.action="abcbank/searchSwitcher";
@@ -238,7 +243,7 @@
 
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
-        <tr bgcolor="#999999">
+        <tr id="head1">
             <td width="3%" align="center"><b>选择</b></td>
             <td width="3%" align="center"><b>名称</b></td>
             <td width="3%" align="center"><b>分组</b></td>
@@ -289,7 +294,7 @@
                 session.setAttribute("user-"+id, user);
                 session.setAttribute("password-"+id, password);
         %>
-        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
+        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%> >
             <td width="3%" rowspan="2" align="center">
                 <div>
                     <input id="choose-<%=row%>" type="checkbox" value="" />
@@ -299,21 +304,21 @@
             <td width="3%" rowspan="2"  align="center">
                 <div>
                     <%= ((name == null || name.equals("")) ? "&nbsp;" : name) %>
-                    <input type="hidden" name="name-<%=row%>" id="name-<%=row%>" value=""/>
+                    <input type="hidden" name="name-<%=row%>" id="name-<%=row%>" value="<%=name%>"/>
                 </div>
             </td>
 
             <td width="3%" align="center">
                 <div>
                     <%= ((group == null || group.equals("")) ? "&nbsp;" : group) %>
-                    <input type="hidden"  name="group-<%=row%>" id="group-<%=row%>" value=""/>
+                    <input type="hidden"  name="group-<%=row%>" id="group-<%=row%>" value="<%=group%>"/>
                 </div>
             </td>
 
             <td width="3%" align="center">
                 <div id="brand-<%=row%>">
                     <%= ((brand == null || brand.equals("")) ? "&nbsp;" : brand) %>
-                    <input type="hidden" name="brand-<%=row%>" value="<%= ((brand == null || brand.equals("")) ? "&nbsp;" : brand) %>"/>
+                    <input type="hidden" name="brand-<%=row%>" value="<%= brand %>"/>
                 </div>
             </td>
 
@@ -327,85 +332,96 @@
                             out.print((host == null || host.equals("")) ? "&nbsp;" : host);
                         }
                     %>
-                    <input type="hidden" name="host-<%=row%>" value="<%= ((host == null || host.equals("")) ? "&nbsp;" : host) %>"/>
+                    <input type="hidden" name="host-<%=row%>" value="<%=host%>"/>
                 </div>
             </td>
 
             <td width="3%" align="center">
                 <div id="user-<%=row%>">
                     <%= ((user == null || user.equals("")) ? "&nbsp;" : user) %>
-                    <input type="hidden" name="user-<%=row%>" value="<%= ((user == null || user.equals("")) ? "&nbsp;" : user) %>"/>
+                    <input type="hidden" name="user-<%=row%>" value="<%=user%>"/>
                 </div>
             </td>
 
             <td width="5%" align="center">
                 <div id="backup-<%=row%>">
                     <%= ((backup == null || backup.equals("")) ? "&nbsp;" : backup) %>
-                    <input type="hidden" name="backup-<%=row%>" value="<%= ((backup == null || backup.equals("")) ? "&nbsp;" : backup) %>"/>
+                    <input type="hidden" name="backup-<%=row%>" value="<%=backup%>"/>
                 </div>
             </td>
 
             <td width="5%" align="center">
                 <div>
                     <%= ((recovery == null || recovery.equals("")) ? "&nbsp;" : recovery) %>
-                    <input type="hidden" name="recovery-<%=row%>" id="recovery-<%=row%>" value="<%= ((recovery == null || recovery.equals("")) ? "" : recovery) %>"/>
+                    <input type="hidden" name="recovery-<%=row%>" id="recovery-<%=row%>" value="<%=recovery%>"/>
                 </div>
             </td>
 
             <td width="3%" align="center">
                 <div id="wan_ip-<%=row%>">
                     <%= ((wan_ip == null || wan_ip.equals("")) ? "&nbsp;" : wan_ip) %>
+                    <input type="hidden" name="wan_ip-<%=row%>" value="<%=wan_ip%>"/>
                 </div>
             </td>
             <td width="3%" align="center">
                 <div id="lookback-<%=row%>">
                     <%= ((lookback == null || lookback.equals("")) ? "&nbsp;" : lookback) %>
+                    <input type="hidden" name="lookback-<%=row%>" value="<%=lookback%>"/>
                 </div>
             </td>
             <td width="3%" align="center">
                 <div id="vlan150_ip1-<%=row%>">
                     <%= ((vlan150_ip1 == null || vlan150_ip1.equals("")) ? "&nbsp;" : vlan150_ip1) %>
+                    <input type="hidden" name="vlan150_ip1-<%=row%>" value="<%=vlan150_ip1%>"/>
                 </div>
             </td>
             <td width="3%" align="center">
                 <div id="vlan150_ip2-<%=row%>">
                     <%= ((vlan150_ip2 == null || vlan150_ip2.equals("")) ? "&nbsp;" : vlan150_ip2) %>
+                    <input type="hidden" name="vlan150_ip2-<%=row%>" value="<%=vlan150_ip2%>"/>
                 </div>
             </td>
             <td width="3%" align="center">
                 <div id="vlan160_ip1-<%=row%>">
                     <%= ((vlan160_ip1 == null || vlan160_ip1.equals("")) ? "&nbsp;" : vlan160_ip1) %>
+                    <input type="hidden" name="vlan160_ip1-<%=row%>" value="<%=vlan160_ip1%>"/>
                 </div>
             </td>
             <td width="3%" align="center">
                 <div id="-<%=row%>">
                     <%= ((vlan160_ip2 == null || vlan160_ip2.equals("")) ? "&nbsp;" : vlan160_ip2) %>
+                    <input type="hidden" name="vlan160_ip2-<%=row%>" value="<%=vlan160_ip2%>"/>
                 </div>
             </td>
             <td width="3%" align="center">
                 <div id="vlan170_ip1-<%=row%>">
                     <%= ((vlan170_ip1 == null || vlan170_ip1.equals("")) ? "&nbsp;" : vlan170_ip1) %>
+                    <input type="hidden" name="vlan170_ip1-<%=row%>" value="<%=vlan170_ip1%>"/>
                 </div>
             </td>
             <td width="3%" align="center">
                 <div id="vlan170_ip2-<%=row%>">
                     <%= ((vlan170_ip2 == null || vlan170_ip2.equals("")) ? "&nbsp;" : vlan170_ip2) %>
+                    <input type="hidden" name="vlan170_ip2-<%=row%>" value="<%=vlan170_ip2%>"/>
                 </div>
             </td>
             <td width="3%" align="center">
                 <div id="ospf-<%=row%>">
                     <%= ((ospf == null || ospf.equals("")) ? "&nbsp;" : ospf) %>
+                    <input type="hidden" name="ospf-<%=row%>" value="<%=ospf%>"/>
                 </div>
             </td>
             <td width="3%" align="center">
                 <div id="area-<%=row%>">
                     <%= ((area == null || area.equals("")) ? "&nbsp;" : area) %>
+                    <input type="hidden" name="area-<%=row%>" value="<%=area%>"/>
                 </div>
             </td>
 
             <td width="3%" align="center">
                 <div id="comment-<%=row%>">
                     <%= ((comment == null || comment.equals("")) ? "&nbsp;" : comment) %>
+                    <input type="hidden" name="comment-<%=row%>" value="<%=comment%>"/>
                 </div>
             </td>
 
@@ -416,6 +432,8 @@
         <tr bgcolor="#cccccc">
             <td width="15%" colspan="17"> &nbsp;&nbsp;<b>操作：</b>
                 <a id="<%= "ss("+id+").doDelete" %>" href="javascript:deleteSwitcher('<%=id%>', '<%=host%>')" onclick="return confirm('你确定要删除： <%=host%> ?')">删除</a>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <a id="<%= "ss("+id+").doDelete" %>" href="javascript:modifySwitcher('<%=id%>', '<%=row%>')">修改</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a id="<%= "ss("+id+").ports" %>" href="javascript:managePorts('<%=row%>')">端口操作</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
