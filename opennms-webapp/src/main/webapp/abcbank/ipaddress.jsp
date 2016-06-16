@@ -117,21 +117,6 @@
 
     function searchIPAddress()
     {
-        var ip = document.getElementById("search").value;
-        if(ip==null || ip==0) {
-            window.location.href="abcbank/ipaddress.jsp";
-            return;
-        }
-
-        var searchAreas="";
-        for(var i = 0; i < 4; ++i){
-            var choose = document.getElementById("searchArea-"+i);
-            if (choose.checked == true){
-                searchAreas += document.getElementById("searchArea-"+i).value + "\t";
-            }
-        }
-        document.allIPSegments.searchAreas.value = searchAreas;
-
         document.allIPSegments.action="abcbank/searchIPAddress";
         document.allIPSegments.submit();
     }
