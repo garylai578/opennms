@@ -928,6 +928,10 @@
     <servlet-name>NodeLablesChangeServlet</servlet-name>
     <servlet-class>org.opennms.web.nodelabel.NodeLablesChangeServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>UpdateSwitcherServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.UpdateSwitcherServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1375,6 +1379,10 @@
   <servlet-mapping>
     <servlet-name>DelSwitcherStatsServlet</servlet-name>
     <url-pattern>/abcbank/delSwitcherStats</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UpdateSwitcherServlet</servlet-name>
+    <url-pattern>/abcbank/updateSwitcher</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>StartSwitcherMonitorServlet</servlet-name>

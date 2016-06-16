@@ -37,6 +37,32 @@ public class SwitcherOperator {
     }
 
     /**
+     * update the col value with newValue.
+     * @param id the id of the record
+     * @param sw
+     * @throws SQLException
+     */
+    public void updateByID(int id, Switcher sw) throws SQLException {
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            String sql;
+            sql = "update switcher set name = '" + sw.getName() + "', groups='"+ sw.getGroup() +"', brand='"+ sw.getBrand() +"', host='"+ sw.getHost() +"', username='" +
+                    sw.getUser() +"', password='" + sw.getPassword() + "', backup='"+ sw.getBackup() + "', recovery='" + sw.getRecovery() + "', wan_ip='" +
+                    sw.getWan_ip() +"', lookback_ip='" + sw.getLookback_ip() + "', vlan150_ip1='"+ sw.getVlan150_ip1() + "', vlan150_ip2='" + sw.getVlan150_ip2() + "', vlan160_ip1='" +
+                    sw.getVlan160_ip1()  + "', vlan160_ip2='" + sw.getVlan160_ip2() + "', vlan170_ip1='" + sw.getVlan170_ip1() + "', vlan170_ip2='" + sw.getVlan170_ip2() + "', ospf='" +
+                    sw.getOspf() + "', area='" + sw.getArea() + "', comment='" + sw.getComment() + "'" +" where id =" + id;
+            log.debug("update by id, SQL = " + sql);
+            int rc = stmt.executeUpdate(sql);
+            log.debug(", and the rc= " + rc);
+        } finally {
+            d.cleanUp();
+        }
+    }
+
+    /**
      * 根据给定的content搜索指定的列column，如果col为空
      * @param column 待搜索的列
      * @param key 搜索的内容
