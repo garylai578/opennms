@@ -237,17 +237,21 @@ public class BankIPAddressOp {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String sql = "";
+            String sql = "SELECT * FROM ipaddress WHERE ";
             Set<String> cols = colsAndValues.keySet();
             for(String col : cols){
                 String value = colsAndValues.get(col);
                 if(col.equals("start_date") || col.equals("stop_date") || col.equals("apply_date"))
-                    sql += "SELECT * FROM ipaddress WHERE " + col + " = '" + value + "' union all ";
+                    sql += col + " = '" + value + "' and ";
                 else
-                    sql += "SELECT * FROM ipaddress WHERE " + col + " LIKE '%"+ value + "%' union all ";
+                    sql += col + " LIKE '%"+ value + "%' and ";
             }
 
-            sql = sql.substring(0, sql.length()-10);
+            if(cols.size() == 0)
+                sql = "SELECT * FROM ipaddress";
+            else
+                sql = sql.substring(0, sql.length()-4);
+
             log.debug("search sql: " + sql);
             ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);

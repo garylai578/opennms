@@ -31,7 +31,7 @@ public class SearchIPAddressServlet extends HttpServlet {
         if(networkType != null && !"".equals(networkType))
             colAndValue.put("network_type", networkType);
         if(users != null && !"".equals(users))
-            colAndValue.put("users", networkType);
+            colAndValue.put("users", users);
         if(dept != null && !"".equals(dept))
             colAndValue.put("dept", dept);
         if(bank != null && !"".equals(bank))
