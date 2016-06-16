@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by laiguanhui on 2016/3/17.
@@ -20,19 +22,27 @@ public class SearchIPAddressServlet extends HttpServlet {
     final static Logger log =  Logger.getLogger(SearchIPAddressServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String searchContent = request.getParameter("search");
-        String searchAreas = request.getParameter("searchAreas");
+        String networkType = request.getParameter("network_type");
+        String users = request.getParameter("users");
+        String dept = request.getParameter("dept");
+        String bank = request.getParameter("bank");
+        Map<String, String> colAndValue = new HashMap<String, String>();
+
+        if(networkType != null && !"".equals(networkType))
+            colAndValue.put("network_type", networkType);
+        if(users != null && !"".equals(users))
+            colAndValue.put("users", networkType);
+        if(dept != null && !"".equals(dept))
+            colAndValue.put("dept", dept);
+        if(bank != null && !"".equals(bank))
+            colAndValue.put("bank", bank);
+
         BankIPAddressOp op = new BankIPAddressOp();
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
 
-        String[] cols = {"network_type", "users", "bank", "dept"};
-        if(searchAreas != null && !"".equals(searchAreas)){
-            cols = searchAreas.split("\t");
-        }
-
         try {
-            BankIPAddress[] rs = op.search(cols, searchContent);
+            BankIPAddress[] rs = op.unionSearch(colAndValue);
             if(rs != null && rs.length > 0){
                 request.setAttribute("ip_addresses", rs);
                 request.getRequestDispatcher("ipaddress.jsp").forward(request, response);

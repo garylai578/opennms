@@ -158,13 +158,33 @@
         <a href="javascript:addIPAddress()">新增IP地址</a>
     </td>
 
-    <td align="left">搜索范围：
-        <input id="searchArea-0" type="checkbox" value="network_type" checked>网络类型
+    <td align="left">&nbsp;&nbsp;
+        <strong>网络类型：</strong><select id="network_type" name="network_type">
+                    <option value="" selected="">请选择</option>
+                    <%
+                        for(int i = 0; i < networkTypes.length; ++i){
+                    %>
+                    <option value="<%=networkTypes[i]%>"> <%=networkTypes[i]%></option>
+                    <%
+                        }
+                    %>
+                 </select>&nbsp;&nbsp;
+        <strong>设备使用人:</strong><input id="users" name="users" size="12" value="">&nbsp;&nbsp;
+        <strong>所属支行（分行）：</strong><select id="bank" name="bank">
+                            <option value="" selected="">请选择</option>
+                            <%
+                                for(int i = 0; i < bankNames.length; ++i){
+                            %>
+                            <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+                            <%
+                                }
+                            %>
+                        </select>&nbsp;&nbsp;
+        <strong>所属网点（部门）：</strong><input id="dept" name="dept" size="12" value="">&nbsp;&nbsp;
+<%--        <input id="searchArea-0" type="checkbox" value="network_type" checked>网络类型
         <input id="searchArea-1" type="checkbox" value="users" checked>设备使用人
         <input id="searchArea-2" type="checkbox" value="bank" checked>所属支行（分行）
-        <input id="searchArea-3" type="checkbox" value="dept" checked>所属网点（部门）&nbsp;
-        搜索关键字：
-        <input id="search" name="search" size="18%" placeholder="" value="">
+        <input id="searchArea-3" type="checkbox" value="dept" checked>所属网点（部门）&nbsp;--%>
         <a id="doSearch" href="javascript:searchIPAddress()"><img src="images/search.png" alt="搜索" border="0"></a>
         <a id="" href="javascript:searchIPAddress()">搜索</a>
     </td>
@@ -182,7 +202,7 @@
             <td style="width: 100px"><b>操作</b></td>
             <td><b>ip地址</b></td>
             <td><b>网络类型</b></td>
-            <td><b>掩码</b></td>
+            <td style="width: 100px"><b>掩码</b></td>
             <td><b>网关</b></td>
             <td><b>mac地址</b></td>
             <td><b>申请时间</b></td>
