@@ -106,9 +106,10 @@
         </td>
     </table>
 
-    <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
+    <div style="overflow: auto; width: 100%;">
+    <table border="1" cellspacing="0" cellpadding="2" bordercolor="black" class="tab_css_2">
 
-        <tr bgcolor="#999999">
+        <tr class="header1">
             <td width="5%"><b>操作</b></td>
             <td width="5%"><b>专线类型</b></td>
             <td width="5%"><b>申请人</b></td>
@@ -121,6 +122,7 @@
             <td width="5%"><b>VLAN编号</b></td>
             <td width="5%"><b>物理端口号</b></td>
             <td width="5%"><b>运营商接口号</b></td>
+            <td width="10%"><b>备注</b></td>
         </tr>
         <%
             for(WebLine line : lines){
@@ -138,103 +140,103 @@
                 String inter = line.getInter();
                 String comment = line.getComment();
         %>
-        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
-            <td width="5%" rowspan="2" align="center" style="vertical-align:middle;">
+        <tr>
+            <td align="center" style="vertical-align:middle;">
                 <a id="<%= "ips("+lineId+").doStop" %>" href="javascript:deleteWebLine('<%=lineId%>')" onclick="return confirm('确定要删除该专线？')">删除</a>
             </td>
 
             <input type="hidden" name="id-<%=row%>" value="<%=lineId %>"/>
 
-            <td width="5%">
+            <td>
                 <div id="type-<%=row%>" >
                     <%= ((type == null || type.equals("")) ? "&nbsp;" : type) %>
                     <input type="hidden" name="type-<%=row%>" value="<%= ((type == null || type.equals("")) ? "&nbsp;" : type) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="applicant-<%=row%>">
                     <%= ((applicant == null || applicant.equals("")) ? "&nbsp;" : applicant) %>
                     <input type="hidden"  name="applicant-<%=row%>" value="<%= ((applicant == null || applicant.equals("")) ? "&nbsp;" : applicant) %>"/>
                 </div>
             </td>
 
-            <td width="10%">
+            <td>
                 <div id="contact-<%=row%>">
                     <%= ((contact == null || contact.equals("")) ? "&nbsp;" : contact) %>
                     <input type="hidden"  name="contact-<%=row%>" value="<%= ((contact == null || contact.equals("")) ? "&nbsp;" : contact) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="approver-<%=row%>" >
                     <%= ((approver == null || approver.equals("")) ? "&nbsp;" : approver) %>
                     <input type="hidden"  name="approver-<%=row%>" value="<%= ((approver == null || approver.equals("")) ? "&nbsp;" : approver) %>"/>
                 </div>
             </td>
 
-            <td width="8%">
+            <td>
                 <div id="dept-<%=row%>">
                     <%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>
                     <input type="hidden"  name="dept-<%=row%>" value="<%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>"/>
                 </div>
             </td>
 
-            <td width="15%">
+            <td>
                 <div id="address-<%=row%>">
                     <%= ((address == null || address.equals("")) ? "&nbsp;" : address) %>
                     <input type="hidden"  name="address-<%=row%>" value="<%= ((address == null || address.equals("")) ? "&nbsp;" : address) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="start_date-<%=row%>">
                     <%= ((start_date == null || start_date.equals("")) ? "&nbsp;" : start_date) %>
                     <input type="hidden"  name="start_date-<%=row%>" value="<%= ((start_date == null || start_date.equals("")) ? "&nbsp;" : start_date) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="rent-<%=row%>">
                     <%= ((rent == null || rent.equals("")) ? "&nbsp;" : rent) %>
                     <input type="hidden"  name="rent-<%=row%>" value="<%= ((rent == null || rent.equals("")) ? "&nbsp;" : rent) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="vlan_num-<%=row%>">
                     <%= ((vlan_num == null || vlan_num.equals("")) ? "&nbsp;" : vlan_num) %>
                     <input type="hidden"  name="vlan_num-<%=row%>" value="<%= ((vlan_num == null || vlan_num.equals("")) ? "&nbsp;" : vlan_num) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="port-<%=row%>">
                     <%= ((port == null || port.equals("")) ? "&nbsp;" : port) %>
                     <input type="hidden"  name="port-<%=row%>" value="<%= ((port == null || port.equals("")) ? "&nbsp;" : port) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id="inter-<%=row%>">
                     <%= ((inter == null || inter.equals("")) ? "&nbsp;" : inter) %>
                     <input type="hidden"  name="inter-<%=row%>" value="<%= ((inter == null || inter.equals("")) ? "&nbsp;" : inter) %>"/>
                 </div>
             </td>
-        </tr>
 
-        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%>>
-            <td colspan="15">
+            <td>
                 <div>
-                    <input id="comment-<%=row%>" name="comment-<%=row%>" type="text" size="100%" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
+                    <input id="comment-<%=row%>" name="comment-<%=row%>" type="text" size="8" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
                 </div>
             </td>
         </tr>
+
         <%
                 row++;
             }
         %>
     </table>
+        </div>
 
 </form>
 

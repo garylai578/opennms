@@ -170,10 +170,11 @@
     </td>
     </table>
 
+    <div style="overflow: auto; width: 100%;">
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
         <tr id="header1">
-            <td width="8%"><b>操作</b></td>
+            <td width="10%"><b>操作</b></td>
             <td width="10"><b>IP段</b></td>
             <td width="10%"><b>网关</b></td>
             <td width="10%"><b>掩码</b></td>
@@ -182,6 +183,7 @@
             <td width="5%"><b>网点类型</b></td>
             <td width="10%"><b>启用日期</b></td>
             <td width="5%"><b>使用情况</b></td>
+            <td width="8"><b>备注</b></td>
         </tr>
         <%
             int row = 0;
@@ -214,8 +216,8 @@
                     }
                 }
         %>
-        <tr  <%if (state.equals("停用")) out.print("id=\"lineUnused\"");%>>
-            <td width="8%" rowspan="2" align="center" style="vertical-align:middle;">
+        <tr  <%if (state.equals("停用")) out.print("class=\"lineUnused\"");%>>
+            <td align="center" style="text-align:center;vertical-align:middle;">
                 <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>', '<%=row%>')" onclick="return confirm('确定要停用该IP段？')">停用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPSegment('<%=ipId%>', '<%=row%>')">启用</a>
@@ -225,28 +227,28 @@
 
             <input type="hidden" name="id-<%=row%>" value="<%=ipId %>"/>
 
-            <td width="10%">
+            <td>
                 <div id="ipSeg-<%=row%>">
                     <%= ((ipSeg == null || ipSeg.equals("")) ? "&nbsp;" : ipSeg) %>
                     <input type="hidden" name="ipSeg-<%=row%>" value="<%= ((ipSeg == null || ipSeg.equals("")) ? "&nbsp;" : ipSeg) %>"/>
                 </div>
             </td>
 
-            <td width="10%">
+            <td>
                 <div id="gateway-<%=row%>">
                     <%= ((gateway == null || gateway.equals("")) ? "&nbsp;" : gateway) %>
                     <input type="hidden" name="gateway-<%=row%>" value="<%= ((gateway == null || gateway.equals("")) ? "&nbsp;" : gateway) %>"/>
                 </div>
             </td>
 
-            <td width="10%">
+            <td>
                 <div id="mask-<%=row%>">
                     <%= ((mask == null || mask.equals("")) ? "&nbsp;" : mask) %>
                     <input type="hidden" name="mask-<%=row%>" value="<%= ((mask == null || mask.equals("")) ? "&nbsp;" : mask) %>"/>
                 </div>
             </td>
 
-            <td width="20%">
+            <td>
                 <div id="ipsegment-<%=row%>">
                     <%= ((startIP == null || startIP.equals("") || endIP == null || endIP.equals("")) ? "&nbsp;" : startIP + "-" + endIP) %>
                     <input type="hidden" name="startIP-<%=row%>" value="<%= ((startIP == null || startIP.equals("")) ? "&nbsp;" : startIP) %>"/>
@@ -254,7 +256,7 @@
                 </div>
             </td>
 
-            <td width="10%">
+            <td>
                 <div>
                     <select id="bankname-<%=row%>" name="bankname-<%=row%>">
                         <%
@@ -272,7 +274,7 @@
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div>
                     <select id="banktype-<%=row%>" name="banktype-<%=row%>">
                         <%
@@ -291,33 +293,33 @@
                 </div>
             </td>
 
-            <td width="10%">
+            <td>
                 <div id="createdate-<%=row%>">
                     <%= ((time == null || time.equals("")) ? "&nbsp;" : time) %>
                     <input type="hidden" name="createdate-<%=row%>" value="<%= ((time == null || time.equals("")) ? "&nbsp;" : time) %>"/>
                 </div>
             </td>
 
-            <td width="5%">
+            <td>
                 <div id=state-"<%=row%>">
                     <%= ((state == null || state.equals("")) ? "&nbsp;" : state) %>
                     <input type="hidden" name="state-<%=row%>" value="<%= ((state == null || state.equals("")) ? "&nbsp;" : state) %>"/>
                 </div>
             </td>
-        </tr>
 
-        <tr  <%if (state.equals("停用")) out.print("id=\"lineUnused\"");%>>
-            <td colspan="8">
+            <td>
                 <div>
-                    <input id="comment-<%=row%>" type="text" size="100" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
+                    <input id="comment-<%=row%>" type="text" size="8" value="<%= ((comment == null || comment.equals("")) ? "无备注；" : comment) %>"/>
                 </div>
             </td>
         </tr>
+
         <%
                 row++;
             }
         %>
     </table>
+        </div>
 
 </form>
 

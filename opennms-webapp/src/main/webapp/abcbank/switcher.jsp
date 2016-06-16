@@ -241,28 +241,29 @@
         </td>
     </table>
 
-    <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
+    <div style="overflow: auto; width: 100%;">
+    <table border="1" cellspacing="0" cellpadding="2" bordercolor="black" class="tab_css_1">
 
-        <tr id="head1">
-            <td width="3%" align="center"><b>选择</b></td>
-            <td width="3%" align="center"><b>名称</b></td>
-            <td width="3%" align="center"><b>分组</b></td>
-            <td width="3%" align="center"><b>品牌</b></td>
-            <td width="3%" align="center"><b>IP</b></td>
-            <td width="3%" align="center"><b>用户名</b></td>
-            <td width="5%" align="center"><b>备份命令</b></td>
-            <td width="5%" align="center"><b>恢复命令</b></td>
-            <td width="3%" align="center"><b>广域网地址/掩码</b></td>
-            <td width="3%" align="center"><b>Lookback地址/掩码</b></td>
-            <td width="3%" align="center"><b>Vlan 150地址1/掩码</b></td>
-            <td width="3%" align="center"><b>Vlan 150地址2/掩码</b></td>
-            <td width="3%" align="center"><b>Vlan 160地址1/掩码</b></td>
-            <td width="3%" align="center"><b>Vlan 160地址2/掩码</b></td>
-            <td width="3%" align="center"><b>Vlan 170地址1/掩码</b></td>
-            <td width="3%" align="center"><b>Vlan 170地址2/掩码</b></td>
-            <td width="3%" align="center"><b>ospf进程名</b></td>
-            <td width="3%" align="center"><b>area号</b></td>
-            <td width="3%" align="center"><b>备注</b></td>
+        <tr class="header1">
+            <td style="width: 30px"><b>选择</b></td>
+            <td><b>名称</b></td>
+            <td><b>分组</b></td>
+            <td><b>品牌</b></td>
+            <td style="width: 100px"><b>IP</b></td>
+            <td><b>用户名</b></td>
+            <td style="width: 150px"><b>备份命令</b></td>
+            <td style="width: 150px"><b>恢复命令</b></td>
+            <td class="iptd"><b>广域网地址/掩码</b></td>
+            <td class="iptd"><b>Lookback地址/掩码</b></td>
+            <td class="iptd"><b>Vlan 150地址1/掩码</b></td>
+            <td class="iptd"><b>Vlan 150地址2/掩码</b></td>
+            <td class="iptd"><b>Vlan 160地址1/掩码</b></td>
+            <td class="iptd"><b>Vlan 160地址2/掩码</b></td>
+            <td class="iptd"><b>Vlan 170地址1/掩码</b></td>
+            <td class="iptd"><b>Vlan 170地址2/掩码</b></td>
+            <td><b>ospf进程名</b></td>
+            <td><b>area号</b></td>
+            <td class="iptd"><b>备注</b></td>
         </tr>
         <%
             Switcher[] ss = (Switcher[])request.getAttribute("switchers");
@@ -294,35 +295,35 @@
                 session.setAttribute("user-"+id, user);
                 session.setAttribute("password-"+id, password);
         %>
-        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%> >
-            <td width="3%" rowspan="2" align="center">
+        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%> class="tr_css">
+            <td rowspan="2">
                 <div>
                     <input id="choose-<%=row%>" type="checkbox" value="" />
                 </div>
             </td>
 
-            <td width="3%" rowspan="2"  align="center">
+            <td rowspan="2">
                 <div>
                     <%= ((name == null || name.equals("")) ? "&nbsp;" : name) %>
                     <input type="hidden" name="name-<%=row%>" id="name-<%=row%>" value="<%=name%>"/>
                 </div>
             </td>
 
-            <td width="3%" align="center">
+            <td>
                 <div>
                     <%= ((group == null || group.equals("")) ? "&nbsp;" : group) %>
                     <input type="hidden"  name="group-<%=row%>" id="group-<%=row%>" value="<%=group%>"/>
                 </div>
             </td>
 
-            <td width="3%" align="center">
+            <td>
                 <div id="brand-<%=row%>">
                     <%= ((brand == null || brand.equals("")) ? "&nbsp;" : brand) %>
                     <input type="hidden" name="brand-<%=row%>" value="<%= brand %>"/>
                 </div>
             </td>
 
-            <td width="3%" align="center">
+            <td>
                 <div id="host-<%=row%>">
                     <%
                         if(ipNodeidMap.containsKey(host)){
@@ -336,89 +337,89 @@
                 </div>
             </td>
 
-            <td width="3%" align="center">
+            <td>
                 <div id="user-<%=row%>">
                     <%= ((user == null || user.equals("")) ? "&nbsp;" : user) %>
                     <input type="hidden" name="user-<%=row%>" value="<%=user%>"/>
                 </div>
             </td>
 
-            <td width="5%" align="center">
+            <td>
                 <div id="backup-<%=row%>">
                     <%= ((backup == null || backup.equals("")) ? "&nbsp;" : backup) %>
                     <input type="hidden" name="backup-<%=row%>" value="<%=backup%>"/>
                 </div>
             </td>
 
-            <td width="5%" align="center">
+            <td>
                 <div>
                     <%= ((recovery == null || recovery.equals("")) ? "&nbsp;" : recovery) %>
                     <input type="hidden" name="recovery-<%=row%>" id="recovery-<%=row%>" value="<%=recovery%>"/>
                 </div>
             </td>
 
-            <td width="3%" align="center">
+            <td>
                 <div id="wan_ip-<%=row%>">
                     <%= ((wan_ip == null || wan_ip.equals("")) ? "&nbsp;" : wan_ip) %>
                     <input type="hidden" name="wan_ip-<%=row%>" value="<%=wan_ip%>"/>
                 </div>
             </td>
-            <td width="3%" align="center">
+            <td>
                 <div id="lookback-<%=row%>">
                     <%= ((lookback == null || lookback.equals("")) ? "&nbsp;" : lookback) %>
                     <input type="hidden" name="lookback-<%=row%>" value="<%=lookback%>"/>
                 </div>
             </td>
-            <td width="3%" align="center">
+            <td>
                 <div id="vlan150_ip1-<%=row%>">
                     <%= ((vlan150_ip1 == null || vlan150_ip1.equals("")) ? "&nbsp;" : vlan150_ip1) %>
                     <input type="hidden" name="vlan150_ip1-<%=row%>" value="<%=vlan150_ip1%>"/>
                 </div>
             </td>
-            <td width="3%" align="center">
+            <td>
                 <div id="vlan150_ip2-<%=row%>">
                     <%= ((vlan150_ip2 == null || vlan150_ip2.equals("")) ? "&nbsp;" : vlan150_ip2) %>
                     <input type="hidden" name="vlan150_ip2-<%=row%>" value="<%=vlan150_ip2%>"/>
                 </div>
             </td>
-            <td width="3%" align="center">
+            <td>
                 <div id="vlan160_ip1-<%=row%>">
                     <%= ((vlan160_ip1 == null || vlan160_ip1.equals("")) ? "&nbsp;" : vlan160_ip1) %>
                     <input type="hidden" name="vlan160_ip1-<%=row%>" value="<%=vlan160_ip1%>"/>
                 </div>
             </td>
-            <td width="3%" align="center">
+            <td>
                 <div id="-<%=row%>">
                     <%= ((vlan160_ip2 == null || vlan160_ip2.equals("")) ? "&nbsp;" : vlan160_ip2) %>
                     <input type="hidden" name="vlan160_ip2-<%=row%>" value="<%=vlan160_ip2%>"/>
                 </div>
             </td>
-            <td width="3%" align="center">
+            <td>
                 <div id="vlan170_ip1-<%=row%>">
                     <%= ((vlan170_ip1 == null || vlan170_ip1.equals("")) ? "&nbsp;" : vlan170_ip1) %>
                     <input type="hidden" name="vlan170_ip1-<%=row%>" value="<%=vlan170_ip1%>"/>
                 </div>
             </td>
-            <td width="3%" align="center">
+            <td>
                 <div id="vlan170_ip2-<%=row%>">
                     <%= ((vlan170_ip2 == null || vlan170_ip2.equals("")) ? "&nbsp;" : vlan170_ip2) %>
                     <input type="hidden" name="vlan170_ip2-<%=row%>" value="<%=vlan170_ip2%>"/>
                 </div>
             </td>
-            <td width="3%" align="center">
+            <td>
                 <div id="ospf-<%=row%>">
                     <%= ((ospf == null || ospf.equals("")) ? "&nbsp;" : ospf) %>
                     <input type="hidden" name="ospf-<%=row%>" value="<%=ospf%>"/>
                 </div>
             </td>
-            <td width="3%" align="center">
+            <td>
                 <div id="area-<%=row%>">
                     <%= ((area == null || area.equals("")) ? "&nbsp;" : area) %>
                     <input type="hidden" name="area-<%=row%>" value="<%=area%>"/>
                 </div>
             </td>
 
-            <td width="3%" align="center">
+            <td>
                 <div id="comment-<%=row%>">
                     <%= ((comment == null || comment.equals("")) ? "&nbsp;" : comment) %>
                     <input type="hidden" name="comment-<%=row%>" value="<%=comment%>"/>
@@ -430,7 +431,7 @@
         </tr>
 
         <tr bgcolor="#cccccc">
-            <td width="15%" colspan="17"> &nbsp;&nbsp;<b>操作：</b>
+            <td colspan="17" style="text-align:left"> &nbsp;&nbsp;<b>操作：</b>
                 <a id="<%= "ss("+id+").doDelete" %>" href="javascript:deleteSwitcher('<%=id%>', '<%=host%>')" onclick="return confirm('你确定要删除： <%=host%> ?')">删除</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <a id="<%= "ss("+id+").doDelete" %>" href="javascript:modifySwitcher('<%=id%>', '<%=row%>')">修改</a>
@@ -465,9 +466,9 @@
             }
         %>
     </table>
+    </div>
     &nbsp;&nbsp;
-    批量操作：请先选中需要批量操作的交换机，然后在下面输入批量操作命令（每行一条），最后点击下面的“执行”按钮
-    <br>
+    <div style="font-size:14px;">批量操作：请先选中需要批量操作的交换机，然后在下面输入批量操作命令（每行一条），最后点击下面的“执行”按钮</div>
     <textarea id="batchComm" name="batchComm" rows="20" style="width:900px; overflow: auto;"></textarea>
     <br>&nbsp;&nbsp;
     <input type="button" onclick="javascript:batchOperator('<%=row%>')" value="执行">

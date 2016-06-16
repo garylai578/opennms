@@ -231,13 +231,6 @@
         margin-bottom: 10px;
     }
 
-	#header1 td{
-		background: #cacaca;
-	}
-
-	#lineUnused td{
-		background: greenyellow;
-	}
     
     table.o-box{ margin-bottom:0px; }
     
@@ -351,7 +344,52 @@
 	    border: none;
 	    background-color: transparent;
 	}
-	/*end stupid styles */
+
+/*end stupid styles */
+
+/*自定义表格的样式 start*/
+table.tab_css_1{
+	border:1px solid #cad9ea;
+	width: 2000px;
+	table-layout:fixed ;	/*固定列宽*/
+}
+
+table.tab_css_1 td,table.tab_css_1 th{
+	word-wrap:break-word;	/* 自动换行*/
+	border:1px solid #cad9ea;
+	padding:0 1em 0;
+	text-align:center;	/* 左右居中*/
+	vertical-align:middle;	/*上下居中*/
+}
+
+table.tab_css_1 tr.tr_css{
+	background-color:#cacaca;
+	width: 20px;
+	height:30px;
+}
+
+.header1 td{
+	background: #cacaca;
+	width: 70px;
+}
+
+td.iptd {
+	width: 110px
+}
+
+tr.lineUnused td, tr.lineUnused input, tr.lineUnused select{
+	background: greenyellow;
+}
+
+table.tab_css_2 td{
+	word-wrap:break-word;	/* 自动换行*/
+	border:1px solid #cad9ea;
+	padding:0 1em 0;
+	text-align:center;	/* 左右居中*/
+	vertical-align:middle;	/*上下居中*/
+	height: 30px;
+}
+/*自定义表格的样式 end*/
 	
 /*  --------------------------------------------------
    :: Treeview from UL/LI -- currently only in the scheduled outage page
