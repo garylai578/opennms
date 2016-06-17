@@ -48,7 +48,7 @@ public class AddIPSegmentServlet extends HttpServlet {
             String type = request.getParameter("bankType");
             String comment = request.getParameter("comments");
             String dept = request.getParameter("dept");
-            name = name + "\t" + dept;
+            name = name + "/" + dept;
 
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();

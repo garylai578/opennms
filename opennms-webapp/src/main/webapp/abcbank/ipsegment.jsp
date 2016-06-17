@@ -170,7 +170,7 @@
                 String state = ip.getState();
                 String comment = ip.getComment();
 
-                String[] bankAndDept = name.split("\t");
+                String[] bankAndDept = name.split("/");
                 name = bankAndDept[0];
                 String dept = "";
                 if(bankAndDept.length == 2)

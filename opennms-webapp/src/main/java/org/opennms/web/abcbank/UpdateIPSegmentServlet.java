@@ -33,7 +33,7 @@ public class UpdateIPSegmentServlet extends HttpServlet {
 
         IPSegmentOperater op = new IPSegmentOperater();
         try{
-            op.updateByID(id, "name", bankname + "\t" + dept);
+            op.updateByID(id, "name", bankname + "/" + dept);
             op.updateByID(id, "type", banktype);
             op.updateByID(id, "comment", comment);
 
