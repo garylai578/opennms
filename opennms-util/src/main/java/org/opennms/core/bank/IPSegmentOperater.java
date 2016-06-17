@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /** Apply the operates(including CRUD) of the ipSegment table.
  *
@@ -253,5 +255,44 @@ public class IPSegmentOperater {
         }
 
         return list.toArray(new String[list.size()]);
+    }
+
+    /**
+     * search the cols with key
+     * @param colsAndValues columns and the searching values
+     * @return the searching result
+     * @throws SQLException
+     */
+    public IPSegment[] andSelect(Map<String, String> colsAndValues) throws SQLException {
+        IPSegment[] result = null;
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            String sql = "SELECT * FROM ipsegment WHERE ";
+            Set<String> cols = colsAndValues.keySet();
+            for(String col : cols){
+                String value = colsAndValues.get(col);
+                if(col.equals("createTime") || col.equals("stoptime"))
+                    sql += col + " = '" + value + "' and ";
+                else
+                    sql += col + " LIKE '%"+ value + "%' and ";
+            }
+
+            if(cols.size() == 0)
+                sql = "SELECT * FROM ipsegment";
+            else
+                sql = sql.substring(0, sql.length()-4);
+
+            log.debug("search sql: " + sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            d.watch(rs);
+            result = rs2IPSegment(rs);
+        } finally {
+            d.cleanUp();
+        }
+
+        return result;
     }
 }

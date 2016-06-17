@@ -109,19 +109,27 @@
         <a href="javascript:addIPSegment()">新增IP段</a>
     </td>
 
-    <td align="left">
-        <select id="search" name="search">
-            <option value="">请选择需要筛选的IP段</option>
+    <td align="left">&nbsp;&nbsp;
+        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
+            <option value="" selected="">请选择</option>
             <%
-                for(String seg : ipSegs){
+                for(int i = 0; i < bankNames.length; ++i){
             %>
-            <option value="<%=seg%>"><%=seg%></option>
+            <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
             <%
                 }
             %>
-        </select>
-        <a id="doSearch" href="javascript:searchIPSegment()"><img src="images/search.png" alt="筛选" border="0"></a>
-        <a id="" href="javascript:searchIPSegment()">筛选</a>
+        </select>&nbsp;&nbsp;
+        <strong>所属网点（部门）：</strong><select id="dept" name="dept">
+                <option value="" selected>请选择</option>
+                </select>  &nbsp;&nbsp;
+        <strong>使用情况：</strong><select id="state" name="state">
+            <option value="" selected="">请选择</option>
+            <option value="在用">在用</option>
+            <option value="停用">停用</option>
+        </select>&nbsp;&nbsp;
+        <a id="doSearch" href="javascript:searchIPAddress()"><img src="images/search.png" alt="搜索" border="0"></a>
+        <a id="" href="javascript:searchIPAddress()">搜索</a>
     </td>
 
     <td align="left">
@@ -162,7 +170,7 @@
                 String state = ip.getState();
                 String comment = ip.getComment();
 
-                String[] bankAndDept = name.split("\t");
+                String[] bankAndDept = name.split("/");
                 name = bankAndDept[0];
                 String dept = "";
                 if(bankAndDept.length == 2)

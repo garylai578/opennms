@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by laiguanhui on 2016/4/28.
@@ -19,13 +21,25 @@ public class SearchIPSegmentServlet extends HttpServlet {
     private static final long serialVersionUID = -687949691527127672L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String ipSeg = request.getParameter("search");
+        String bank = request.getParameter("bank");
+        String dept = request.getParameter("dept");
+        String state = request.getParameter("state");
+
         IPSegmentOperater op = new IPSegmentOperater();
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
 
+        Map<String, String> colAndValue = new HashMap<String, String>();
+
+        if(bank != null && !"".equals(bank)) {
+            bank = bank + "/" + dept;
+            colAndValue.put("name", bank);
+        }
+        if(state != null && !"".equals(state))
+            colAndValue.put("state", state);
+
         try {
-            IPSegment[] rs = op.selectAll(ipSeg);
+            IPSegment[] rs = op.andSelect(colAndValue);
             if(rs != null && rs.length > 0){
                 request.setAttribute("ipSeg", rs);
                 request.getRequestDispatcher("ipsegment.jsp").forward(request, response);
