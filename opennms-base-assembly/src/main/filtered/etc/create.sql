@@ -298,6 +298,7 @@ create table ipaddress (
 --#  applicant   : the applicant of this web line
 --#  approver    : the approver of this web line
 --#  contact     : the contact of applicant
+--#  bank        : the bank of this web line
 --#  dept        : the dept that using this web line
 --#  address     : the address of this web line
 --#  start_date  : the date when starting to use this web line
@@ -314,6 +315,7 @@ create table webline (
     applicant text not null,
     approver text,
     contact text not null,
+    bank text not null,
     dept text not null,
     address text,
     start_date date,
