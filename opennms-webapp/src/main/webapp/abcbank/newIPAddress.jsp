@@ -146,7 +146,7 @@
         <tr>
             <td>*所属支行（分行）：</td>
             <td>
-                <select id="bank" name="bank" onChange="selectDepts(this.value)">
+                <select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
                     <option value="0" selected="">请选择</option>
                     <%
                         for(int i = 0; i < bankNames.length; ++i){

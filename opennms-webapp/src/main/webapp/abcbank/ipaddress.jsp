@@ -114,7 +114,7 @@
                     %>
                  </select>&nbsp;&nbsp;
         <strong>设备使用人:</strong><input id="users" name="users" size="12" value="">&nbsp;&nbsp;
-        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value)">
+        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
                             <option value="" selected="">请选择</option>
                             <%
                                 for(int i = 0; i < bankNames.length; ++i){
@@ -279,7 +279,7 @@
 
             <td>
                 <div>
-                    <select id="bank-<%=row%>" name="bank-<%=row%>">
+                    <select id="bank-<%=row%>" name="bank-<%=row%>" onChange="selectDepts(this.value, 'dept-<%=row%>')">
                         <%
                             if(bank == null || bank.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
@@ -297,7 +297,20 @@
 
             <td>
                 <div>
-                    <input id="dept-<%=row%>" name="dept-<%=row%>" size="6" value="<%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>">
+                    <select id="dept-<%=row%>" name="dept-<%=row%>">
+                        <%
+                            if(dept == null || dept.equals(""))
+                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                        %>
+                        <%
+                            String[] depts = bankAndDepts.get(bank);
+                            for(int i = 0; i < depts.length; ++i){
+                        %>
+                        <option value="<%=depts[i]%>"<%if(dept.equals(depts[i])) out.print("selected=\"\"");%>><%=depts[i]%></option>
+                        <%
+                            }
+                        %>
+                    </select>
                 </div>
             </td>
 

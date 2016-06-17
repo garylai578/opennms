@@ -75,13 +75,13 @@
         for(String dept : depts){
             deptsString += "'" + dept + "',";
         }
-        out.println("depts[" + index + " ]=[" + deptsString.substring(0, deptsString.length()-1) + "];");
+        out.println("depts[" + index + "]=[" + deptsString.substring(0, deptsString.length()-1) + "];");
         ++index;
     }
     %>
 
-    function selectDepts(bank){
-        var deptElemt = document.getElementById("dept");
+    function selectDepts(bank, dept){
+        var deptElemt = document.getElementById(dept);
         while(deptElemt.hasChildNodes()){
             deptElemt.removeChild(deptElemt.firstChild);
         }
