@@ -3,8 +3,10 @@
 <%@ page import="org.opennms.netmgt.config.users.Contact" %>
 <%@ page import="org.opennms.netmgt.config.users.User" %>
 <%@ page import="java.io.*" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="java.util.Properties" %><%--
+<%@ page import="java.util.Properties" %>
+<%@ page import="java.util.Set" %><%--
   Created by IntelliJ IDEA.
   User: laiguanhui
   Date: 2016/4/29
@@ -51,4 +53,45 @@
     String[] weblineTypes = pro.getProperty("abc-weblinetype").split("/");
     String[] switcherBrands = pro.getProperty("abc-switcherbrand").split("/");
     String[] switcherGroups = pro.getProperty("abc-switcherGroup").split("/");
+    Map<String, String[]> bankAndDepts = new HashMap<String, String[]>();
+
+    for(int i = 0; i < bankNames.length; ++i){
+        String[] depts = pro.getProperty("abc-bankdept-"+(i+1)).split("/");
+        bankAndDepts.put(bankNames[i], depts);
+    }
 %>
+
+<script type="text/javascript">
+    //分行（支行）与下属网点的二级联动
+    banks=[];
+    depts=[];
+    <%
+    Set<String> banks = bankAndDepts.keySet();
+    int index = 0;
+    for(String bank : banks){
+        out.println("banks[" + index + "] = '" + bank + "'");
+        String[] depts = bankAndDepts.get(bank);
+        String deptsString = "";
+        for(String dept : depts){
+            deptsString += "'" + dept + "',";
+        }
+        out.println("depts[" + index + " ]=[" + deptsString.substring(0, deptsString.length()-1) + "];");
+        ++index;
+    }
+    %>
+
+    function selectDepts(bank){
+        var deptElemt = document.getElementById("dept");
+        while(deptElemt.hasChildNodes()){
+            deptElemt.removeChild(deptElemt.firstChild);
+        }
+        deptElemt.appendChild(new Option("请选择", ""));
+
+        for(var i = 0; i < banks.length; ++i){
+            if(banks[i] == bank){
+                for(var j = 0; j < depts[i].length; ++j)
+                    deptElemt.appendChild(new Option(depts[i][j],depts[i][j]));
+            }
+        }
+    }
+</script>
