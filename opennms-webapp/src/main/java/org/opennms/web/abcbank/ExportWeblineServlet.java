@@ -32,6 +32,7 @@ public class ExportWeblineServlet extends HttpServlet {
             line.setApplicant(request.getParameter("applicant-"+i));
             line.setContact(request.getParameter("contact-"+i));
             line.setApprover(request.getParameter("approver-"+i));
+            line.setBank(request.getParameter("bank-"+i));
             line.setDept(request.getParameter("dept-"+i));
             line.setAddress(request.getParameter("address-"+i));
             line.setStart_date(request.getParameter("start_date-"+i));

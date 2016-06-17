@@ -30,7 +30,7 @@
         var type = new String(document.newWebLine.type.value);
         var applicant = new String(document.newWebLine.applicant.value);
         var contact = new String(document.newWebLine.contact.value);
-        var dept = new String(document.newWebLine.dept.value);
+        var bank = new String(document.newWebLine.bank.value);
         var address = new String(document.newWebLine.address.value);
         var approver = new String(document.newWebLine.approver.value);
 
@@ -50,8 +50,8 @@
             alert("请填写审批人！");
             isCommitted = false;
             return false;
-        }else if(dept == 0 || dept ==""){
-            alert("请填写使用机构！");
+        }else if(bank == 0 || bank ==""){
+            alert("请选择所属分行（支行）！");
             isCommitted = false;
             return false;
         }else if(address == 0 || address ==""){
@@ -138,9 +138,27 @@
         </tr>
 
         <tr>
-            <td>*使用机构：</td>
+            <td>*所属支行（分行）：</td>
             <td>
-                <input id="dept" name="dept" type="text" size="100"/>
+                <select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
+                    <option value="0" selected="">请选择</option>
+                    <%
+                        for(int i = 0; i < bankNames.length; ++i){
+                    %>
+                    <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+                    <%
+                        }
+                    %>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>所属网点（部门）：</td>
+            <td>
+                <select id="dept" name="dept">
+                    <option value="" selected>请选择</option>
+                </select>
             </td>
         </tr>
 
