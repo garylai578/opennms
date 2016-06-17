@@ -55,13 +55,8 @@
 
     function searchWebLine()
     {
-        var key = document.getElementById("search").value;
-        if(key==null || key==0) {
-            window.location.href="abcbank/webline.jsp";
-            return;
-        }
+
         document.allWebLines.action="abcbank/searchWebLine";
-        document.allWebLines.searchKey.value=key;
         document.allWebLines.submit();
     }
 
@@ -87,17 +82,34 @@
             <a href="javascript:addWebLine()">新增线路</a>
         </td>
 
-        <td align="left">
-            <select id="searchType" name="searchType">
-                <option value="">请选择查询的字段</option>
-                <option value="type">专线类型</option>
-                <option value="applicant">申请人</option>
-                <option value="approver">审批人</option>
-                <option value="dept">使用机构</option>
-            </select>
-            <input id="search" name="search" size="18%" placeholder="请输入要搜索的内容" value="">
+        <td align="left">&nbsp;&nbsp;
+            <strong>专线类型：</strong><select id="type" name="type">
+                <option value="" selected="">请选择</option>
+                <%
+                    for(int i = 0; i < weblineTypes.length; ++i){
+                %>
+                <option value="<%=weblineTypes[i]%>"> <%=weblineTypes[i]%></option>
+                <%
+                    }
+                %>
+            </select>&nbsp;&nbsp;
+            <strong>申请人:</strong><input id="applicant" name="applicant" size="8" value="">&nbsp;&nbsp;
+            <strong>审批人:</strong><input id="approver" name="approver" size="8" value="">&nbsp;&nbsp;
+            <strong>所属支行（分行）：</strong><select id="" name="bank" onChange="selectDepts(this.value, 'dept')">
+                <option value="" selected="">请选择</option>
+                <%
+                    for(int i = 0; i < bankNames.length; ++i){
+                %>
+                <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+                <%
+                    }
+                %>
+            </select>&nbsp;&nbsp;
+            <strong>所属网点（部门）：</strong><select id="dept" name="dept">
+                <option value="" selected>请选择</option>
+            </select>&nbsp;&nbsp;
             <a id="doSearch" href="javascript:searchWebLine()"><img src="images/search.png" alt="搜索" border="0"></a>
-            <a id="" href="javascript:searchWebLine()">搜索</a>
+            <a id="search" href="javascript:searchWebLine()">搜索</a>
         </td>
 
         <td align="left">

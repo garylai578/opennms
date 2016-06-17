@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by laiguanhui on 2016/3/18.
@@ -135,6 +137,44 @@ public class WebLineOperator {
             d.watch(rs);
             result = rs2WebLines(rs);
 
+        } finally {
+            d.cleanUp();
+        }
+
+        return result;
+    }
+
+    /**
+     * search the cols with key
+     * @param colsAndValues columns name
+     * @return the searching result
+     * @throws SQLException
+     */
+    public WebLine[] andSearch(Map<String, String> colsAndValues) throws SQLException  {
+        WebLine[] result = null;
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            String sql = "SELECT * FROM webline WHERE ";
+            Set<String> cols = colsAndValues.keySet();
+            for(String col : cols){
+                String value = colsAndValues.get(col);
+                if(col.equals("start_date") || col.equals("rent"))
+                    sql += col + " = '" + value + "' and ";
+                else
+                    sql += col + " LIKE '%"+ value + "%' and ";
+            }
+
+            if(cols.size() == 0)
+                sql = "SELECT * FROM webline";
+            else
+                sql = sql.substring(0, sql.length()-4);
+            log.debug("search sql: " + sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            d.watch(rs);
+            result = rs2WebLines(rs);
         } finally {
             d.cleanUp();
         }
