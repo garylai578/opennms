@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.Set" %><%--
   Created by IntelliJ IDEA.
   User: laiguanhui
   Date: 2016/3/16
@@ -146,7 +146,7 @@
         <tr>
             <td>*所属支行（分行）：</td>
             <td>
-                <select id="bank" name="bank">
+                <select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
                     <option value="0" selected="">请选择</option>
                     <%
                         for(int i = 0; i < bankNames.length; ++i){
@@ -162,7 +162,9 @@
         <tr>
             <td>所属网点（部门）：</td>
             <td>
-                <input id="dept" name="dept" type="text" size="50"/>
+                <select id="dept" name="dept">
+                    <option value="" selected>请选择</option>
+                </select>
             </td>
         </tr>
 

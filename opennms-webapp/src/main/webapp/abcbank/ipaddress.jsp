@@ -18,51 +18,10 @@
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-<%@ page import="org.opennms.netmgt.config.UserFactory" %>
-<%@ page import="org.opennms.netmgt.config.UserManager" %>
-<%@ page import="org.opennms.netmgt.config.users.Contact" %>
-<%@ page import="org.opennms.netmgt.config.users.User" %>
-<%@ page import="java.io.*" %>
-<%@ page import="java.util.Map" %>
-<%@ page import="java.util.Properties" %>
+
+<%@include file="/abcbank/getVars.jsp"%>
 
 <%
-    final HttpSession userSession = request.getSession(false);
-    User user;
-    String userID = request.getRemoteUser();
-    UserManager userFactory;
-    String group="";
-    if (userSession != null) {
-        UserFactory.init();
-        userFactory = UserFactory.getInstance();
-        Map users = userFactory.getUsers();
-        user = (User) users.get(userID);
-        Contact[] con = user.getContact();
-        for(Contact c : con) {
-            if (c.getType() != null && c.getType().equals("textPage")) {
-                group = c.getServiceProvider(); // 获取该用户所属分行
-                break;
-            }
-        }
-    }
-
-    Properties pro = new Properties();
-    String path = application.getRealPath("/");
-    try{
-        //读取配置文件
-        InputStream in = new FileInputStream(path + "/abcbank/abc-configuration.properties");
-        BufferedReader bf = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        pro.load(bf);
-    } catch(FileNotFoundException e){
-        out.println(e);
-    } catch(IOException e){
-        out.println(e);
-    }
-
-    //通过key获取配置文件
-    String[] bankNames = pro.getProperty("abc-bankname").split("/");
-    String[] networkTypes = pro.getProperty("abc-networktype").split("/");
-
     BankIPAddressOp op = new BankIPAddressOp();
 
     BankIPAddress[] ips = (BankIPAddress[])request.getAttribute("ip_addresses");
@@ -155,7 +114,7 @@
                     %>
                  </select>&nbsp;&nbsp;
         <strong>设备使用人:</strong><input id="users" name="users" size="12" value="">&nbsp;&nbsp;
-        <strong>所属支行（分行）：</strong><select id="bank" name="bank">
+        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
                             <option value="" selected="">请选择</option>
                             <%
                                 for(int i = 0; i < bankNames.length; ++i){
@@ -165,7 +124,9 @@
                                 }
                             %>
                         </select>&nbsp;&nbsp;
-        <strong>所属网点（部门）：</strong><input id="dept" name="dept" size="12" value="">&nbsp;&nbsp;
+        <strong>所属网点（部门）：</strong><select id="dept" name="dept">
+                                            <option value="" selected>请选择</option>
+                                          </select>&nbsp;&nbsp;
 <%--        <input id="searchArea-0" type="checkbox" value="network_type" checked>网络类型
         <input id="searchArea-1" type="checkbox" value="users" checked>设备使用人
         <input id="searchArea-2" type="checkbox" value="bank" checked>所属支行（分行）
@@ -318,7 +279,7 @@
 
             <td>
                 <div>
-                    <select id="bank-<%=row%>" name="bank-<%=row%>">
+                    <select id="bank-<%=row%>" name="bank-<%=row%>" onChange="selectDepts(this.value, 'dept-<%=row%>')">
                         <%
                             if(bank == null || bank.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
@@ -336,7 +297,20 @@
 
             <td>
                 <div>
-                    <input id="dept-<%=row%>" name="dept-<%=row%>" size="6" value="<%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>">
+                    <select id="dept-<%=row%>" name="dept-<%=row%>">
+                        <%
+                            if(dept == null || dept.equals(""))
+                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                        %>
+                        <%
+                            String[] depts = bankAndDepts.get(bank);
+                            for(int i = 0; i < depts.length; ++i){
+                        %>
+                        <option value="<%=depts[i]%>"<%if(dept.equals(depts[i])) out.print("selected=\"\"");%>><%=depts[i]%></option>
+                        <%
+                            }
+                        %>
+                    </select>
                 </div>
             </td>
 

@@ -139,9 +139,9 @@
         </tr>
 
         <tr>
-            <td>*网点名称：</td>
+            <td>*所属支行（分行）：</td>
             <td>
-                <select id="bankName" name="bankName">
+                <select id="bank" name="bankName" onChange="selectDepts(this.value, 'dept')">
                     <option value="0" selected="">请选择</option>
                     <%
                         for(int i = 0; i < bankNames.length; ++i){
@@ -150,6 +150,15 @@
                     <%
                         }
                     %>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>所属网点（部门）：</td>
+            <td>
+                <select id="dept" name="dept">
+                    <option value="" selected>请选择</option>
                 </select>
             </td>
         </tr>

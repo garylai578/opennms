@@ -23,6 +23,7 @@ public class UpdateIPSegmentServlet extends HttpServlet {
         int id = Integer.parseInt(tmp);
         String row = request.getParameter("rowID");
         String bankname = request.getParameter("bankName");
+        String dept = request.getParameter("dept-"+row);
         String banktype = request.getParameter("bankType");
         String comment =request.getParameter("comments");
 
@@ -32,7 +33,7 @@ public class UpdateIPSegmentServlet extends HttpServlet {
 
         IPSegmentOperater op = new IPSegmentOperater();
         try{
-            op.updateByID(id, "name", bankname);
+            op.updateByID(id, "name", bankname + "\t" + dept);
             op.updateByID(id, "type", banktype);
             op.updateByID(id, "comment", comment);
 
