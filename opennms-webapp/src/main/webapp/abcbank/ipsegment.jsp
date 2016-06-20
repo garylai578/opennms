@@ -138,10 +138,10 @@
 
         <tr id="header1">
             <td width="10%"><b>操作</b></td>
-            <td width="10"><b>IP段</b></td>
+            <td width="10"><b>所属IP段</b></td>
             <td width="10%"><b>网关</b></td>
             <td width="10%"><b>掩码</b></td>
-            <td width="20%"><b>IP段</b></td>
+            <td width="20%"><b>开始IP-结束IP</b></td>
             <td width="8%"><b>所属分行（支行）</b></td>
             <td width="8%"><b>所属网点（部门）</b></td>
             <td width="5%"><b>网点类型</b></td>
