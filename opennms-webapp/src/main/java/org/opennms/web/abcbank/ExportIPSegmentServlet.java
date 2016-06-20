@@ -39,7 +39,7 @@ public class ExportIPSegmentServlet extends HttpServlet {
             response.setContentType("octets/stream");
             response.addHeader("Content-Disposition", "attachment;filename=result.xls");
             ExportExcel<IPSegment> ex = new ExportExcel<IPSegment>();
-            String[] headers = { "id", "所属IP段", "网关", "掩码", "开始IP", "结束IP", "网点名称", "网点类型", "启用日期", "使用情况", "备注"};
+            String[] headers = { "id", "所属IP段", "网关", "掩码", "开始IP", "结束IP", "网点名称", "网点类型", "启用日期", "使用情况", "备注", "停用时间"};
             OutputStream out = response.getOutputStream();
 
             for(IPSegment line : ipSegmentList){
@@ -51,6 +51,7 @@ public class ExportIPSegmentServlet extends HttpServlet {
                     ex.exportExcel(ipSeg, headers, dataset, out);
                     ipSeg = line.getSegment();
                     dataset.clear();
+                    dataset.add(line);
                 }
             }
             out.close();
