@@ -16,7 +16,10 @@
 <%@page import="org.opennms.core.bank.IPSegmentOperater" %>
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Collections" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.List" %>
 
 
 <%@include file="/abcbank/getVars.jsp"%>
@@ -28,7 +31,10 @@
     if(ips == null)
         ips = op.selectAll("");
     int nums = ips.length;
-    String[] ipSegs = op.getIPSegments();
+    List<IPSegment> ipSegmentList = new ArrayList<IPSegment>();
+    for(IPSegment ip : ips)
+        ipSegmentList.add(ip);
+    Collections.sort(ipSegmentList, IPSegment.IPComparator);
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -151,7 +157,7 @@
         </tr>
         <%
             int row = 0;
-            for(IPSegment ip : ips){
+            for(IPSegment ip : ipSegmentList){
                 String ipId = ip.getId();
                 String ipSeg = ip.getSegment();
                 String gateway = ip.getGateway();
