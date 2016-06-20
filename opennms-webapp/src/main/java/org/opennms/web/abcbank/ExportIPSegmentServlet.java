@@ -45,7 +45,7 @@ public class ExportIPSegmentServlet extends HttpServlet {
             for(IPSegment line : ipSegmentList){
                 if("".equals(ipSeg))
                     ipSeg = line.getSegment();
-                if(ipSeg == line.getSegment())
+                if(ipSeg.equals(line.getSegment()))
                     dataset.add(line);
                 else{
                     ex.exportExcel(ipSeg, headers, dataset, out);
