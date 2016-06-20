@@ -368,6 +368,10 @@ table.tab_css_1 tr.tr_css{
 	height:30px;
 }
 
+tr.selected td, tr.selected select{
+	background: #cac79e;
+}
+
 .header1 td{
 	background: #cacaca;
 	width: 70px;

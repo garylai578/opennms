@@ -58,6 +58,8 @@
             ipNodeidMap.put(intf.getIpAddress(), id);
         }
     }
+
+    String swip = request.getParameter("switcherIP");
 %>
 
 <script type="text/javascript" >
@@ -295,7 +297,7 @@
                 session.setAttribute("user-"+id, user);
                 session.setAttribute("password-"+id, password);
         %>
-        <tr bgcolor=<%=row%2==0 ? "#ffffff" : "#cccccc"%> class="tr_css">
+        <tr <%if(swip != null && host.equals(swip)) out.print("class=\"selected\"");%>>
             <td rowspan="2">
                 <div>
                     <input id="choose-<%=row%>" type="checkbox" value="" />
@@ -430,7 +432,7 @@
 
         </tr>
 
-        <tr bgcolor="#cccccc">
+        <tr <%if(swip != null && host.equals(swip)) out.print("class=\"selected\"");%>>
             <td colspan="17" style="text-align:left"> &nbsp;&nbsp;<b>操作：</b>
                 <a id="<%= "ss("+id+").doDelete" %>" href="javascript:deleteSwitcher('<%=id%>', '<%=host%>')" onclick="return confirm('你确定要删除： <%=host%> ?')">删除</a>
                 &nbsp;&nbsp;&nbsp;&nbsp;
