@@ -1,5 +1,7 @@
 package org.opennms.core.bank;
 
+import java.util.Comparator;
+
 /** 用于表示用户的1个IP地址段的所用信息
  *
  * Created by laiguanhui on 2016/2/16.
@@ -127,4 +129,14 @@ public class IPSegment {
         return  "'" + segment + "', '" + gateway + "', '" + mask + "', '" + startIP + "', '" + endIP + "', '"  + bankname + "', '"  + createTime + "', '"   + banktype + "', '"  + state + "', '"  + comment +"'";
 
     }
+
+    public static Comparator IPComparator=new Comparator(){
+        @Override
+        public int compare(Object arg0, Object arg1) {
+            IPSegment ip1=(IPSegment)arg0;
+            IPSegment ip2=(IPSegment)arg1;
+            return SwitcherStats.compartTo(ip1.startIP, ip2.startIP);
+        }
+    };
+
 }

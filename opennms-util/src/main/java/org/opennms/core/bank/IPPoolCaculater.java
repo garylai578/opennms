@@ -99,9 +99,12 @@ public class IPPoolCaculater {
             int start = (int) Math.pow(2, Math.floor(Math.log(initIpSegs[3]) / Math.log(2))+1);
 
             if(start >= 256) {
-                /*int tmp2 = Integer.parseInt(temp1[2])+1;
-                startIP = temp1[0] + "." +  temp1[1] + "." + tmp2 + ".0";*/
-                return 0;
+                if(initIpSegs[2] + 1 <= stopIpSegs[2]) {
+                    startIP = initIpSegs[0] + "." + initIpSegs[1] + "." + (initIpSegs[2] + 1) + ".0";
+                    return 1;
+                }
+                else
+                    return 0;
             }else {
                 if(start < num)
                     start = num;

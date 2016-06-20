@@ -16,7 +16,10 @@
 <%@page import="org.opennms.core.bank.IPSegmentOperater" %>
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Collections" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.List" %>
 
 
 <%@include file="/abcbank/getVars.jsp"%>
@@ -28,7 +31,10 @@
     if(ips == null)
         ips = op.selectAll("");
     int nums = ips.length;
-    String[] ipSegs = op.getIPSegments();
+    List<IPSegment> ipSegmentList = new ArrayList<IPSegment>();
+    for(IPSegment ip : ips)
+        ipSegmentList.add(ip);
+    Collections.sort(ipSegmentList, IPSegment.IPComparator);
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -138,10 +144,10 @@
 
         <tr id="header1">
             <td width="10%"><b>操作</b></td>
-            <td width="10"><b>IP段</b></td>
+            <td width="10"><b>所属IP段</b></td>
             <td width="10%"><b>网关</b></td>
             <td width="10%"><b>掩码</b></td>
-            <td width="20%"><b>IP段</b></td>
+            <td width="20%"><b>开始IP-结束IP</b></td>
             <td width="8%"><b>所属分行（支行）</b></td>
             <td width="8%"><b>所属网点（部门）</b></td>
             <td width="5%"><b>网点类型</b></td>
@@ -151,7 +157,7 @@
         </tr>
         <%
             int row = 0;
-            for(IPSegment ip : ips){
+            for(IPSegment ip : ipSegmentList){
                 String ipId = ip.getId();
                 String ipSeg = ip.getSegment();
                 String gateway = ip.getGateway();
