@@ -94,13 +94,14 @@ public class AddIPSegmentServlet extends HttpServlet {
 
             //如果在已有停用的ip段里面找不到合适的，则新建一个。
             if(flag == 0) {
-                String lastIP = op.selectLastIP(ipSeg);
-
-                if (lastIP == null) {
-                    lastIP = ipSeg;
+                String[] ipSegs = ipSeg.split("-");
+                String stopIP = ipSegs[1];
+                String initIP = op.selectLastIP(ipSeg);
+                if (initIP == null) {
+                    initIP = ipSegs[0];
                 }
 
-                IPPoolCaculater cal = new IPPoolCaculater(lastIP, num);
+                IPPoolCaculater cal = new IPPoolCaculater(initIP, stopIP, num);
                 int result = cal.caculate();
                 if(result == 0){
                     pw.print("<script language='javascript'>alert('所选ip段不够分配，请选择其他ip段！' );window.location=('/opennms/abcbank/newIPSegment.jsp');</script>");

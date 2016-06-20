@@ -82,11 +82,6 @@
 
     function searchIPSegment()
     {
-        var ipSeg = document.getElementById("search").value;
-        if(ipSeg==null || ipSeg==0) {
-            window.location.href="abcbank/ipsegment.jsp";
-            return;
-        }
         document.allIPSegments.action="abcbank/searchIPSegment";
         document.allIPSegments.submit();
     }
@@ -128,8 +123,8 @@
             <option value="在用">在用</option>
             <option value="停用">停用</option>
         </select>&nbsp;&nbsp;
-        <a id="doSearch" href="javascript:searchIPAddress()"><img src="images/search.png" alt="搜索" border="0"></a>
-        <a id="" href="javascript:searchIPAddress()">搜索</a>
+        <a id="doSearch" href="javascript:searchIPSegment()"><img src="images/search.png" alt="搜索" border="0"></a>
+        <a id="search" href="javascript:searchIPSegment()">搜索</a>
     </td>
 
     <td align="left">

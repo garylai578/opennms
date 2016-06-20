@@ -33,21 +33,21 @@
 	contentType="text/html"
 	session="true"
 	import="
-        org.opennms.web.element.*,
-        org.opennms.netmgt.model.OnmsNode,
-		java.util.*,
-		java.net.*,
-        java.sql.SQLException,
-        org.opennms.core.soa.ServiceRegistry,
+        org.opennms.core.bank.Switcher,
+        org.opennms.core.bank.SwitcherOperator,
+		org.opennms.core.resource.Vault,
+		org.opennms.core.soa.ServiceRegistry,
         org.opennms.core.utils.InetAddressUtils,
-        org.opennms.web.pathOutage.*,
-        org.opennms.web.springframework.security.Authentication,
-        org.opennms.web.svclayer.ResourceService,
+        org.opennms.netmgt.model.OnmsNode,
         org.opennms.web.asset.Asset,
         org.opennms.web.asset.AssetModel,
-        org.opennms.web.navigate.*,
-        org.springframework.web.context.WebApplicationContext,
-        org.springframework.web.context.support.WebApplicationContextUtils"
+        org.opennms.web.element.ElementUtil,
+        org.opennms.web.element.Interface,
+        org.opennms.web.element.NetworkElementFactory,
+        org.opennms.web.element.Service,
+        org.opennms.web.navigate.ConditionalPageNavEntry,
+        org.opennms.web.navigate.DisplayStatus,
+        org.opennms.web.pathOutage.PathOutageFactory"
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -219,9 +219,30 @@
 	}
 	
 	pageContext.setAttribute("navEntries", renderedLinks);
+
+    SwitcherOperator op = new SwitcherOperator();
+    Switcher[] ss = op.selectAll();
+    String switcherIP = null;
+    Interface[] avIntfs = NetworkElementFactory.getInstance(getServletContext()).getActiveInterfacesOnNode(nodeId);
+    for( int i=0; i < avIntfs.length; i++ ) {
+        Interface intf = avIntfs[i];
+        String ipAddr = intf.getIpAddress();
+        for(Switcher s : ss){
+            if(s.getHost().equals(ipAddr))
+                switcherIP = ipAddr;
+        }
+    }
+    pageContext.setAttribute("switcherIP", switcherIP);
 %>
 
-<%@page import="org.opennms.core.resource.Vault"%>
+<%@page import="org.opennms.web.springframework.security.Authentication"%>
+<%@ page import="org.opennms.web.svclayer.ResourceService" %>
+<%@ page import="org.springframework.web.context.WebApplicationContext" %>
+<%@ page import="org.springframework.web.context.support.WebApplicationContextUtils" %>
+<%@ page import="java.net.InetAddress" %>
+<%@ page import="java.net.UnknownHostException" %>
+<%@ page import="java.sql.SQLException" %>
+<%@ page import="java.util.*" %>
 <jsp:include page="/includes/header.jsp" flush="false" >
   <jsp:param name="title" value="节点" />
   <jsp:param name="headTitle" value="${model.label}" />
@@ -331,6 +352,15 @@ function confirmAssetEdit() {
       <li class="o-menuitem">
         <a href="<c:out value="${adminLink}"/>">管理</a>
       </li>
+
+        <c:if test="${! empty switcherIP}">
+        <c:url var="adminLink" value="abcbank/switcher.jsp">
+            <c:param name="switcherIP" value="${switcherIP}"/>
+        </c:url>
+        <li class="o-menuitem">
+            <a href="<c:out value="${adminLink}"/>">节点交换机</a>
+        </li>
+        </c:if>
 
       <c:if test="${! empty model.snmpPrimaryIntf}">
         <c:url var="updateSnmpLink" value="admin/updateSnmp.jsp">

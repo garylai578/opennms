@@ -132,7 +132,7 @@
         <input id="searchArea-2" type="checkbox" value="bank" checked>所属支行（分行）
         <input id="searchArea-3" type="checkbox" value="dept" checked>所属网点（部门）&nbsp;--%>
         <a id="doSearch" href="javascript:searchIPAddress()"><img src="images/search.png" alt="搜索" border="0"></a>
-        <a id="" href="javascript:searchIPAddress()">搜索</a>
+        <a id="search" href="javascript:searchIPAddress()">搜索</a>
     </td>
 
         <td align="left">
