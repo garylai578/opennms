@@ -83,6 +83,10 @@ public class ExportExcel<T> {
         // 把字体应用到当前的样式
         style2.setFont(font2);
 
+        HSSFCellStyle style3 = workbook.createCellStyle();
+        style3 = style2;
+        style3.setFillBackgroundColor(HSSFColor.GREY_50_PERCENT.index);
+
         // 产生表格标题行
         HSSFRow row = sheet.createRow(0);
         for (short i = 0; i < headers.length; i++) {
@@ -104,7 +108,6 @@ public class ExportExcel<T> {
             Field[] fields = t.getClass().getDeclaredFields();
             for (short i = 0; i < fields.length; i++) {
                 HSSFCell cell = row.createCell(i);
-                cell.setCellStyle(style2);
                 Field field = fields[i];
                 String fieldName = field.getName();
                 String getMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
@@ -115,6 +118,10 @@ public class ExportExcel<T> {
                     // 判断值的类型后可以强制类型转换（此处省略）
                     if(value != null){
                         String textValue =  value.toString();
+                        if(textValue.equals("停用"))
+                            cell.setCellStyle(style3);
+                        else
+                            cell.setCellStyle(style2);
                         //为3.0的新特性
 //                        HSSFRichTextString richString = new HSSFRichTextString(textValue);
 //                        HSSFFont font3 = workbook.createFont();
