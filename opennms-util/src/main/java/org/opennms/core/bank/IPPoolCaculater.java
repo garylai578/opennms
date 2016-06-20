@@ -8,7 +8,7 @@ package org.opennms.core.bank;
  */
 public class IPPoolCaculater {
 
-    private String initIP;
+    private String initIP, stopIP;
     private String startIP = "0.0.0.0";
     private String endIP = "0.0.0.0";
     private String mask;
@@ -17,11 +17,25 @@ public class IPPoolCaculater {
 
     /**
      *
-     * @param initIP: caculate from the initIP
+     * @param initIP: caculate from the initIP to stopIP
+     * @param num: the numbers that needed
+     */
+    public IPPoolCaculater(String initIP, String stopIP, int num){
+        this.initIP = initIP;
+        this.stopIP = stopIP;
+        this.num = num;
+        ipPool = new IPPool();
+    }
+
+    /**
+     *
+     * @param initIP: caculate from the initIP to the end the seg
      * @param num: the numbers that needed
      */
     public IPPoolCaculater(String initIP, int num){
         this.initIP = initIP;
+        int[] iniIpSegs = getIpSegs(initIP);
+        this.stopIP = iniIpSegs[0] + "." + iniIpSegs[1] + "." + iniIpSegs[2] + ".255";
         this.num = num;
         ipPool = new IPPool();
     }
@@ -49,18 +63,26 @@ public class IPPoolCaculater {
      * @return 1:计算成功；0：该地址段剩余ip数量不够分配；-1：分配失败
      */
     private int caculateStartIP() {
-        String[] temp1 = initIP.trim().split("\\.");
-        int tmp3 = Integer.parseInt(temp1[3]);
-        if(tmp3 + num > 255) {
-/*            int tmp1 = Integer.parseInt(temp1[1]);
-            int tmp2 = Integer.parseInt(temp1[2]) + 1;
-            if(tmp2 > 255)
-                tmp1++;
-            startIP = temp1[0] + "." +  tmp1 + "." + tmp2 + ".0";*/
-            return 0;
+        int[] initIpSegs = getIpSegs(initIP);
+        int[] stopIpSegs = getIpSegs(stopIP);
+
+        // 先判断本IP段内所剩IP数量是否足够分配,如果不够分配则判断是否有下一段
+        if((initIpSegs[2] != stopIpSegs[2] && initIpSegs[3] + num > 255)
+                || (initIpSegs[2] == stopIpSegs[2] && initIpSegs[3] + num > stopIpSegs[3])) {
+            if(initIpSegs[2] >= stopIpSegs[2]) {
+                if(initIpSegs[1] >= stopIpSegs[1])
+                    return 0;
+                else if( initIpSegs[2] + 1 <= 255)
+                    startIP = initIpSegs[0] + "." + initIpSegs[1] + "." + (initIpSegs[2] + 1) + ".0";
+                else
+                    startIP = initIpSegs[0] + "." + (initIpSegs[1] + 1) + ".0.0";
+            }else{
+                startIP = initIpSegs[0] + "." + initIpSegs[1] + "." + (initIpSegs[2] + 1) + ".0";
+            }
+            return 1;
         }
 
-        String binary = Integer.toBinaryString(tmp3);
+        String binary = Integer.toBinaryString(initIpSegs[3]);
         int len = binary.length();
         int n = (int)Math.ceil( Math.log(num) / Math.log(2)); // 2的n次方大于等于num
         int flag = 0;
@@ -74,7 +96,7 @@ public class IPPoolCaculater {
 
         if(flag == 1){
             //这里分配ip的时候，只是对单个位置进行考虑（例如第3位是1），没有考虑多个位置（例如第7和第6位同时为1）的情况，所以中间会存在很多空洞
-            int start = (int) Math.pow(2, Math.floor(Math.log(tmp3) / Math.log(2))+1);
+            int start = (int) Math.pow(2, Math.floor(Math.log(initIpSegs[3]) / Math.log(2))+1);
 
             if(start >= 256) {
                 /*int tmp2 = Integer.parseInt(temp1[2])+1;
@@ -83,7 +105,7 @@ public class IPPoolCaculater {
             }else {
                 if(start < num)
                     start = num;
-                startIP = temp1[0] + "." +  temp1[1] + "." + temp1[2] + "." + start;
+                startIP = initIpSegs[0] + "." +  initIpSegs[1] + "." + initIpSegs[2] + "." + start;
             }
         } else {
             startIP = initIP;
@@ -141,6 +163,21 @@ public class IPPoolCaculater {
         }
         else
             return "0.0.0.0";
+    }
+
+    /**
+     * 根据给定的ip返回各个点分十进制的int值
+     * @param ip
+     * @return
+     */
+    private int[] getIpSegs(String ip){
+        String[] ipSegs = ip.trim().split("\\.");
+        int[] result = new int[4];
+        result[0] = Integer.parseInt(ipSegs[0]);
+        result[1] = Integer.parseInt(ipSegs[1]);
+        result[2] = Integer.parseInt(ipSegs[2]);
+        result[3] = Integer.parseInt(ipSegs[3]);
+        return result;
     }
 
     public IPPool getIPPool() {

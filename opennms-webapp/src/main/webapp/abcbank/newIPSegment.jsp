@@ -51,22 +51,23 @@
             return false;
         isCommitted = true;
         var seg = new String(document.newIPs.selectIpSeg.value);
-        var inputSeg = new String(document.newIPs.inputIpSeg.value);
+        var startIP = new String(document.newIPs.startIP.value);
+        var endIP = new String(document.newIPs.endIP.value);
         var num = new String(document.newIPs.ipNum.value);
         var name = new String(document.newIPs.bankName.value);
         var type = new String(document.newIPs.bankType.value);
         if(seg==null || seg==0){
-            if(inputSeg == null || inputSeg == 0) {
+            if(startIP == null || startIP == 0 || endIP == null || endIP == 0) {
                 alert("请选择或输入所属的IP段");
                 isCommitted = false;
                 return false;
             }else{
-                if(!isValidIPAddress(inputSeg)){
+                if(!isValidIPAddress(startIP) || !isValidIPAddress(endIP)){
                     alert("输入的IP段格式不正确");
                     isCommitted = false;
                     return false;
                 }else{
-                    document.newIPs.ipSeg.value = inputSeg;
+                    document.newIPs.ipSeg.value = startIP + "-" + endIP;
                 }
             }
         }else{
@@ -118,7 +119,9 @@
                         }
                     %>
                 </select>&nbsp;或直接输入：
-                <input id="inputIpSeg" name="inputIpSeg" type="text" size="15"/>(若同时选择和输入，以前着为准。)
+                <input id="startIP" name="startIP" type="text" size="15" placeholder="开始IP" />-
+                <input id="endIP" name="endIP" type="text" size="15" placeholder="结束IP"/>-
+                (若同时选择和输入，以前者为准。)
             </td>
         </tr>
 
