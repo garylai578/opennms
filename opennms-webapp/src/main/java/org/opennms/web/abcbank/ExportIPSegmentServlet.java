@@ -51,6 +51,7 @@ public class ExportIPSegmentServlet extends HttpServlet {
                     ex.exportExcel(ipSeg, headers, dataset, out);
                     ipSeg = line.getSegment();
                     dataset.clear();
+                    dataset.add(line);
                 }
             }
             out.close();
