@@ -85,7 +85,7 @@ public class ExportExcel<T> {
 
         HSSFCellStyle style3 = workbook.createCellStyle();
         style3 = style2;
-        style3.setFillBackgroundColor(HSSFColor.GREY_50_PERCENT.index);
+        style3.setFillBackgroundColor(HSSFColor.LIGHT_GREEN.index);
 
         // 产生表格标题行
         HSSFRow row = sheet.createRow(0);
