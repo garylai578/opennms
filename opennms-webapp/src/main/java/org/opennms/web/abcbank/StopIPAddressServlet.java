@@ -22,25 +22,26 @@ public class StopIPAddressServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getRemoteUser();
-        String rowID = request.getParameter("rowID");
-        String ip = request.getParameter("ipaddr-"+rowID);
-        String tmp = request.getParameter("ipAddrID");
-        int id = Integer.parseInt(tmp);
+        String[] ips = request.getParameter("ipAddr").split("\t");
+        String[] ids = request.getParameter("ipAddrID").split("\t");
         BankIPAddressOp op = new BankIPAddressOp();
-        try {
-            op.updateByID(id, "state", "'停用'");
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date();
-            op.updateByID(id, "stop_date", "'"+ sf.format(date) + "'");
 
-            BankLogWriter.getSingle().writeLog("用户[" + userId + "]停用IP[" + ip + "]");
-            response.setContentType("text/html;charset=gb2312");
-            PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
-            pw.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for(int i = 0; i < ips.length; ++i) {
+            int id = Integer.parseInt(ids[i]);
+            try {
+                op.updateByID(id, "state", "'停用'");
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = new Date();
+                op.updateByID(id, "stop_date", "'" + sf.format(date) + "'");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]停用IP[" + request.getParameter("ipAddr") + "]");
+        response.setContentType("text/html;charset=gb2312");
+        PrintWriter pw = response.getWriter();
+        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
+        pw.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
