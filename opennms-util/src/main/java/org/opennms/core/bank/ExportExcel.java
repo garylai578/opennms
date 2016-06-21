@@ -58,6 +58,18 @@ public class ExportExcel<T> {
 
     }
 
+    /**
+     * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出到指定IO设备上
+     *
+     * @param headers
+     *            表格属性列名数组
+     * @param titlesAndDataset
+     *            需要显示的表格名称和数据集合的Map,Map中的key是表格名称，value是该表格需要存放的数据集合；集合中一定要放置符合javabean风格的类的对象。此方法支持的
+     *            javabean属性的数据类型有基本数据类型及String,Date,byte[](图片数据)
+     * @param out
+     *            与输出设备关联的流对象，可以将EXCEL文档导出到本地文件或者网络中
+     *
+     */
     public void exportExcels(String[] headers, Map<String, Collection<T>> titlesAndDataset, OutputStream out) {
 
         // 声明一个工作薄
@@ -164,8 +176,9 @@ public class ExportExcel<T> {
             T t = (T) it.next();
             // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
             Field[] fields = t.getClass().getDeclaredFields();
+            String[] values = new String[fields.length];
+            HSSFCellStyle hs = null;
             for (short i = 0; i < fields.length; i++) {
-                HSSFCell cell = row.createCell(i);
                 Field field = fields[i];
                 String fieldName = field.getName();
                 String getMethodName = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
@@ -174,20 +187,12 @@ public class ExportExcel<T> {
                     Method getMethod = tCls.getMethod(getMethodName, new Class[]{});
                     Object value = getMethod.invoke(t, new Object[]{});
                     // 判断值的类型后可以强制类型转换（此处省略）
-                    if(value != null){
-                        String textValue =  value.toString();
-                        if(textValue.equals("停用"))
-                            cell.setCellStyle(style3);
-                        else
-                            cell.setCellStyle(style2);
-                        //为3.0的新特性
-//                        HSSFRichTextString richString = new HSSFRichTextString(textValue);
-//                        HSSFFont font3 = workbook.createFont();
-//                        font3.setColor(HSSFColor.BLUE.index);
-//                        richString.applyFont(font3);
-                        cell.setEncoding(HSSFCell.ENCODING_UTF_16);
-                        cell.setCellValue(textValue);
-                    }
+                    String textValue = value.toString();
+                    if (textValue.contains("停用"))
+                        hs = style3;
+                    else
+                        hs = style2;
+                    values[i] = textValue;
                 } catch (SecurityException e) {
                     e.printStackTrace();
                 } catch (NoSuchMethodException e) {
@@ -202,7 +207,15 @@ public class ExportExcel<T> {
                     // 清理资源
                 }
             }
-        }
 
+            for (short i = 0; i < values.length; ++i) {
+                HSSFCell cell = row.createCell(i);
+                cell.setCellStyle(hs);
+                if (values[i] != null) {
+                    cell.setEncoding(HSSFCell.ENCODING_UTF_16);
+                    cell.setCellValue(values[i]);
+                }
+            }
+        }
     }
 }
