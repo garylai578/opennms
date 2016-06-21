@@ -24,6 +24,11 @@
 
 <%@include file="/abcbank/getVars.jsp"%>
 
+<%!
+    int pageCount;
+    int curPage = 1;
+%>
+
 <%
     IPSegmentOperater op = new IPSegmentOperater();
 
@@ -156,8 +161,20 @@
             <td width="8"><b>备注</b></td>
         </tr>
         <%
+            int size = ipSegmentList.size();
+            pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
+            String tmp = request.getParameter("curPage");
+            if(tmp==null){
+                tmp="1";
+            }
+            curPage = Integer.parseInt(tmp);
+            if(curPage >= pageCount)
+                curPage = pageCount;
+            int ipAtList = (curPage - 1) * PAGESIZE + 1;
+
             int row = 0;
-            for(IPSegment ip : ipSegmentList){
+            for(int j = ipAtList; j < ipAtList + PAGESIZE && j < ipSegmentList.size(); j++){
+                IPSegment ip  =  ipSegmentList.get(j);
                 String ipId = ip.getId();
                 String ipSeg = ip.getSegment();
                 String gateway = ip.getGateway();
@@ -314,6 +331,21 @@
             }
         %>
     </table>
+        <a href = "abcbank/ipsegment.jsp?curPage=1" >首页</a>
+        <%
+            if(curPage - 1 > 0)
+                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage - 1) + "' >上一页</a>");
+            else
+                out.print("上一页");
+        %>
+        <%
+            if(curPage + 1 <= pageCount)
+                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage + 1) + "' >下一页</a>");
+            else
+                out.print("下一页");
+        %>
+        <a href = "abcbank/ipsegment.jsp?curPage=<%=pageCount%>" >尾页</a>
+        第<%=curPage%>页/共<%=pageCount%>页
         </div>
 
 </form>

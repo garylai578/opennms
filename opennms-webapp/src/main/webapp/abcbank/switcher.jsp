@@ -33,6 +33,8 @@
     <jsp:param name="breadcrumb" value="交换机配置管理" />
 </jsp:include>
 
+<%@include file="/abcbank/getVars.jsp"%>
+
 <%
     SwitcherOperator op = new SwitcherOperator();
 
@@ -224,18 +226,32 @@
             <a href="javascript:addSwitcher()">新增交换机</a>
         </td>
 
-        <td align="left">
-            <select id="searchType" name="searchType">
-                <option value="">请选择筛选的字段</option>
-                <option value="name">名称</option>
-                <option value="groups">分组</option>
-                <option value="brand">品牌</option>
-                <option value="host">IP</option>
-                <option value="comment">备注</option>
-            </select>
-            <input id="searchCont" name="searchCont" size="18%" placeholder="请输入要搜索的内容" value="">
-            <a id="doSearch" href="javascript:searchSwitcher()"><img src="images/search.png" alt="筛选" border="0"></a>
-            <a id="" href="javascript:searchSwitcher()">筛选</a>
+        <td align="left">&nbsp;&nbsp;
+            <strong>名称:</strong><input id="name" name="name" size="12" value="">&nbsp;&nbsp;
+            <strong>分组：</strong><select id="group" name="grpup">
+                <option value="" selected="">请选择</option>
+                <%
+                    for(int i = 0; i < switcherGroups.length; ++i){
+                %>
+                <option value="<%=switcherGroups[i]%>"><%=switcherGroups[i]%></option>
+                <%
+                    }
+                %>
+            </select>&nbsp;&nbsp;
+            <strong>品牌：</strong><select id="brand" name="brand">
+                <option value="" selected="">请选择</option>
+                <%
+                    for(int i = 0; i < switcherBrands.length; ++i){
+                %>
+                <option value="<%=switcherBrands[i]%>"><%=switcherBrands[i]%></option>
+                <%
+                    }
+                %>
+            </select>&nbsp;&nbsp;
+            <strong>IP:</strong><input id="ip" name="ip" size="12" value="">&nbsp;&nbsp;
+            <strong>备注:</strong><input id="comment" name="comment" size="12" value="">&nbsp;&nbsp;
+            <a id="doSearch" href="javascript:searchSwitcher()"><img src="images/search.png" alt="搜索" border="0"></a>
+            <a id="search" href="javascript:searchSwitcher()">搜索</a>
         </td>
 
         <td>
@@ -275,9 +291,9 @@
             for(Switcher sw : ss){
                 String id = sw.getId();
                 String name = sw.getName();
-                String group = sw.getGroup();
+                String sgroup = sw.getGroup();
                 String host = sw.getHost();
-                String user = sw.getUser();
+                String suser = sw.getUser();
                 String password = sw.getPassword();
                 String brand = sw.getBrand();
                 String backup = sw.getBackup();
@@ -294,7 +310,7 @@
                 String ospf = sw.getOspf();
                 String area = sw.getArea();
                 session.setAttribute("host-"+id, host);
-                session.setAttribute("user-"+id, user);
+                session.setAttribute("user-"+id, suser);
                 session.setAttribute("password-"+id, password);
         %>
         <tr <%if(swip != null && host.equals(swip)) out.print("class=\"selected\"");%>>
@@ -313,8 +329,8 @@
 
             <td>
                 <div>
-                    <%= ((group == null || group.equals("")) ? "&nbsp;" : group) %>
-                    <input type="hidden"  name="group-<%=row%>" id="group-<%=row%>" value="<%=group%>"/>
+                    <%= ((sgroup == null || sgroup.equals("")) ? "&nbsp;" : sgroup) %>
+                    <input type="hidden"  name="group-<%=row%>" id="group-<%=row%>" value="<%=sgroup%>"/>
                 </div>
             </td>
 
@@ -341,8 +357,8 @@
 
             <td>
                 <div id="user-<%=row%>">
-                    <%= ((user == null || user.equals("")) ? "&nbsp;" : user) %>
-                    <input type="hidden" name="user-<%=row%>" value="<%=user%>"/>
+                    <%= ((suser == null || suser.equals("")) ? "&nbsp;" : suser) %>
+                    <input type="hidden" name="user-<%=row%>" value="<%=suser%>"/>
                 </div>
             </td>
 
