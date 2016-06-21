@@ -52,6 +52,17 @@
         document.allWebLines.submit();
     }
 
+    function delectSelected(numbers){
+        var selectedId = "";
+        for (var i = 0; i < numbers; ++i) {
+            var item = document.getElementById("choose-"+i);
+            if (item.checked == true) {
+                selectedId += document.getElementById("id-" + i).value + "\t";
+            }
+        }
+        deleteWebLine(selectedId);
+    }
+
     function deleteWebLine(id)
     {
         document.allWebLines.action="abcbank/deleteWebLine";
@@ -72,6 +83,19 @@
         document.allWebLines.submit();
     }
 
+    function selectAll(numbers) {
+        for (var i = 0; i <= numbers; ++i) {
+            var choose = document.getElementById("choose-"+i);
+            choose.checked = true;
+        }
+    }
+
+    function unselectAll(numbers) {
+        for (var i = 0; i <= numbers; ++i) {
+            var choose = document.getElementById("choose-"+i);
+            choose.checked = false;
+        }
+    }
 </script>
 
 <form method="post" name="allWebLines">
@@ -128,6 +152,7 @@
     <table border="1" cellspacing="0" cellpadding="2" bordercolor="black" class="tab_css_2">
 
         <tr class="header1">
+            <td style="width: 30px"><b>选择</b></td>
             <td width="5%"><b>操作</b></td>
             <td width="5%"><b>专线类型</b></td>
             <td width="5%"><b>申请人</b></td>
@@ -173,11 +198,17 @@
                 String comment = line.getComment();
         %>
         <tr>
+            <td>
+                <div>
+                    <input id="choose-<%=row%>" type="checkbox" value="" />
+                </div>
+            </td>
+
             <td align="center" style="vertical-align:middle;">
                 <a id="<%= "ips("+lineId+").doStop" %>" href="javascript:deleteWebLine('<%=lineId%>')" onclick="return confirm('确定要删除该专线？')">删除</a>
             </td>
 
-            <input type="hidden" name="id-<%=row%>" value="<%=lineId %>"/>
+            <input type="hidden" id="id-<%=row%>" name="id-<%=row%>" value="<%=lineId %>"/>
 
             <td>
                 <div id="type-<%=row%>" >
@@ -275,6 +306,14 @@
             }
         %>
     </table>
+        <div>&nbsp;
+            <input type="button" onclick="javascript:selectAll(<%=row%>)" value="全选"/>&nbsp;
+            <input type="button" onclick="javascript:unselectAll(<%=row%>)" value="全不选"/>&nbsp;
+            <input type="button" onclick="javascript:deleteSelected(<%=row%>)" value="删除选中"/>&nbsp;
+        </div>
+
+        <br>
+        <div>&nbsp;
         <a href = "abcbank/webline.jsp?curPage=1" >首页</a>
         <%
             if(curPage - 1 > 0)
@@ -290,6 +329,7 @@
         %>
         <a href = "abcbank/webline.jsp?curPage=<%=pageCount%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
+        </div>
         </div>
 
 </form>
