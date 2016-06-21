@@ -21,6 +21,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by laiguanhui on 2016/3/21.
@@ -45,9 +47,58 @@ public class ExportExcel<T> {
 
         // 声明一个工作薄
         HSSFWorkbook workbook = new HSSFWorkbook();
+
+        exportExcel(title, headers, dataset, 0, workbook, out);
+
+        try {
+            workbook.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void exportExcels(String[] headers, Map<String, Collection<T>> titlesAndDataset, OutputStream out) {
+
+        // 声明一个工作薄
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        Set<String> titles = titlesAndDataset.keySet();
+        int titleIndex = 0;
+        for(String title : titles) {
+            Collection<T> dataset = titlesAndDataset.get(title);
+            exportExcel(title, headers, dataset, titleIndex++, workbook, out);
+        }
+
+        try {
+            workbook.write(out);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 这是一个通用的方法，利用了JAVA的反射机制，可以将放置在JAVA集合中并且符号一定条件的数据以EXCEL 的形式输出到指定IO设备上
+     *
+     * @param title
+     *            表格标题名
+     * @param headers
+     *            表格属性列名数组
+     * @param dataset
+     *            需要显示的数据集合,集合中一定要放置符合javabean风格的类的对象。此方法支持的
+     *            javabean属性的数据类型有基本数据类型及String,Date,byte[](图片数据)
+     * @param sheetIndex
+     *            表格的位置
+     * @param workbook
+     *            工作薄实例
+     * @param out
+     *            与输出设备关联的流对象，可以将EXCEL文档导出到本地文件或者网络中
+     *
+     */
+    public void exportExcel(String title, String[] headers, Collection<T> dataset, int sheetIndex, HSSFWorkbook workbook, OutputStream out) {
+
         // 生成一个表格
         HSSFSheet sheet = workbook.createSheet(title);
-        workbook.setSheetName(0, title, HSSFWorkbook.ENCODING_UTF_16);// 设置sheet中文编码；
+        workbook.setSheetName(sheetIndex, title, HSSFWorkbook.ENCODING_UTF_16);// 设置sheet中文编码；
         // 设置表格默认列宽度为15个字节
         sheet.setDefaultColumnWidth((short) 15);
         // 生成一个样式
@@ -84,8 +135,15 @@ public class ExportExcel<T> {
         style2.setFont(font2);
 
         HSSFCellStyle style3 = workbook.createCellStyle();
-        style3 = style2;
-        style3.setFillBackgroundColor(HSSFColor.LIGHT_GREEN.index);
+        style3.setFillForegroundColor(HSSFColor.LIGHT_GREEN.index);
+        style3.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+        style3.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+        style3.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+        style3.setBorderRight(HSSFCellStyle.BORDER_THIN);
+        style3.setBorderTop(HSSFCellStyle.BORDER_THIN);
+        style3.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+        style3.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+        style3.setFont(font2);
 
         // 产生表格标题行
         HSSFRow row = sheet.createRow(0);
@@ -144,12 +202,6 @@ public class ExportExcel<T> {
                     // 清理资源
                 }
             }
-        }
-
-        try {
-            workbook.write(out);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }

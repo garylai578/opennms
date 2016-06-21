@@ -13,9 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by laiguanhui on 2016/3/22.
@@ -41,19 +39,23 @@ public class ExportIPSegmentServlet extends HttpServlet {
             ExportExcel<IPSegment> ex = new ExportExcel<IPSegment>();
             String[] headers = { "id", "所属IP段", "网关", "掩码", "开始IP", "结束IP", "网点名称", "网点类型", "启用日期", "使用情况", "备注", "停用时间"};
             OutputStream out = response.getOutputStream();
+            Map titleAndData = new LinkedHashMap<String, IPSegment>();
 
             for(IPSegment line : ipSegmentList){
                 if("".equals(ipSeg))
                     ipSeg = line.getSegment();
-                if(ipSeg.equals(line.getSegment()))
+                if(ipSeg.equals(line.getSegment())) {
                     dataset.add(line);
+                }
                 else{
-                    ex.exportExcel(ipSeg, headers, dataset, out);
+                    titleAndData.put(ipSeg, dataset);
                     ipSeg = line.getSegment();
-                    dataset.clear();
+                    dataset = new ArrayList<IPSegment>();
                     dataset.add(line);
                 }
             }
+            titleAndData.put(ipSeg, dataset);
+            ex.exportExcels(headers, titleAndData, out);
             out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
