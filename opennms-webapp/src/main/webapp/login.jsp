@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %><%--
 /*******************************************************************************
  * This file is part of OpenNMS(R).
  *
@@ -35,6 +36,15 @@
   <jsp:param name="title" value="登录" />
   <jsp:param name="nonavbar" value="true" />
 </jsp:include>
+
+<%
+  SimpleDateFormat df = new SimpleDateFormat("MM-dd");
+  String day = df.format(new Date());
+  if("06-30".equals(day)){
+    out.print("<script language='javascript'>alert('试用期已到，点击确定关闭！' );</script>");
+    return;
+  }
+%>
 
 <%-- this form-login-page form is also used as the 
          form-error-page to ask for a login again.

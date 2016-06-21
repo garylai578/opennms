@@ -291,8 +291,8 @@
             <td>
                 <div id="ipsegment-<%=row%>">
                     <%= ((startIP == null || startIP.equals("") || endIP == null || endIP.equals("")) ? "&nbsp;" : startIP + "-" + endIP) %>
-                    <input type="hidden" name="startIP-<%=row%>" value="<%= ((startIP == null || startIP.equals("")) ? "&nbsp;" : startIP) %>"/>
-                    <input type="hidden" name="endIP-<%=row%>" value="<%= ((endIP == null || endIP.equals("")) ? "&nbsp;" : endIP) %>"/>
+                    <input type="hidden" id="startIP-<%=row%>" name="startIP-<%=row%>" value="<%= ((startIP == null || startIP.equals("")) ? "&nbsp;" : startIP) %>"/>
+                    <input type="hidden" id="endIP-<%=row%>" name="endIP-<%=row%>" value="<%= ((endIP == null || endIP.equals("")) ? "&nbsp;" : endIP) %>"/>
                 </div>
             </td>
 
