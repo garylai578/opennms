@@ -57,20 +57,45 @@
         document.allIPSegments.submit();
     }
 
-    function stopIPSegment(id, rowID)
+    function stopSelected(numbers){
+        var selectedId = "";
+        var ipsegs = "";
+        for (var i = 0; i < numbers; ++i) {
+            var item = document.getElementById("choose-"+i);
+            if (item.checked == true) {
+                selectedId += document.getElementById("id-" + i).value + "\t";
+                ipsegs += document.getElementById("startIP-"+i).value + "-" + document.getElementById("endIP-"+i).value + "\t";
+            }
+        }
+        stopIPSegment(selectedId, ipsegs);
+    }
+
+    function stopIPSegment(id, ipsegs)
     {
         document.allIPSegments.action="abcbank/stopIPSegment";
         document.allIPSegments.ipSegID.value=id;
-        document.allIPSegments.rowID.value = rowID;
-        this.method="post";
+        document.allIPSegments.ipSegs.value = ipsegs;
         document.allIPSegments.submit();
     }
 
-    function startIPSegment(id, rowID)
+    function startSelected(numbers){
+        var selectedId = "";
+        var ipsegs = "";
+        for (var i = 0; i < numbers; ++i) {
+            var item = document.getElementById("choose-"+i);
+            if (item.checked == true) {
+                selectedId += document.getElementById("id-" + i).value + "\t";
+                ipsegs += document.getElementById("startIP-"+i).value + "-" + document.getElementById("endIP-"+i).value + "\t";
+            }
+        }
+        startIPSegment(selectedId, ipsegs);
+    }
+
+    function startIPSegment(id, ipsegs)
     {
         document.allIPSegments.action="abcbank/startIPSegment";
         document.allIPSegments.ipSegID.value=id;
-        document.allIPSegments.rowID.value = rowID;
+        document.allIPSegments.ipSegs.value = ipsegs;
         document.allIPSegments.submit();
     }
 
@@ -97,6 +122,20 @@
         document.allIPSegments.submit();
     }
 
+    function selectAll(numbers) {
+        for (var i = 0; i <= numbers; ++i) {
+            var choose = document.getElementById("choose-"+i);
+            choose.checked = true;
+        }
+    }
+
+    function unselectAll(numbers) {
+        for (var i = 0; i <= numbers; ++i) {
+            var choose = document.getElementById("choose-"+i);
+            choose.checked = false;
+        }
+    }
+
 </script>
 
 <form method="post" name="allIPSegments">
@@ -106,6 +145,7 @@
     <input type="hidden" name="bankType"/>
     <input type="hidden" name="comments"/>
     <input type="hidden" name="rows"/>
+    <input type="hidden" name="ipSegs"/>
 
     <h3>IP地址段分配</h3>
 
@@ -148,6 +188,7 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
         <tr id="header1">
+            <td style="width: 30px"><b>选择</b></td>
             <td width="10%"><b>操作</b></td>
             <td width="10"><b>所属IP段</b></td>
             <td width="10%"><b>网关</b></td>
@@ -210,6 +251,12 @@
                 }
         %>
         <tr  <%if (state.equals("停用")) out.print("class=\"lineUnused\"");%>>
+            <td>
+                <div>
+                    <input id="choose-<%=row%>" type="checkbox" value="" />
+                </div>
+            </td>
+
             <td align="center" style="text-align:center;vertical-align:middle;">
                 <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPSegment('<%=ipId%>', '<%=row%>')" onclick="return confirm('确定要停用该IP段？')">停用</a>
                 &nbsp;&nbsp;
@@ -218,7 +265,7 @@
                 <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPSegment('<%=ipId%>', '<%=row%>')">修改</a>
             </td>
 
-            <input type="hidden" name="id-<%=row%>" value="<%=ipId %>"/>
+            <input type="hidden" id="id-<%=row%>" name="id-<%=row%>" value="<%=ipId %>"/>
 
             <td>
                 <div id="ipSeg-<%=row%>">
@@ -331,6 +378,15 @@
             }
         %>
     </table>
+        <div>&nbsp;
+            <input type="button" onclick="javascript:selectAll(<%=row%>)" value="全选"/>&nbsp;
+            <input type="button" onclick="javascript:unselectAll(<%=row%>)" value="全不选"/>&nbsp;
+            <input type="button" onclick="javascript:stopSelected(<%=row%>)" value="停用选中"/>&nbsp;
+            <input type="button" onclick="javascript:startSelected(<%=row%>)" value="启用选中"/>&nbsp;
+        </div>
+
+        <br>
+        <div>&nbsp;
         <a href = "abcbank/ipsegment.jsp?curPage=1" >首页</a>
         <%
             if(curPage - 1 > 0)
@@ -347,6 +403,7 @@
         <a href = "abcbank/ipsegment.jsp?curPage=<%=pageCount%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
         </div>
+    </div>
 
 </form>
 
