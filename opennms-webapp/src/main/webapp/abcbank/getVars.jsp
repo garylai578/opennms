@@ -53,6 +53,7 @@
     String[] weblineTypes = pro.getProperty("abc-weblinetype").split("/");
     String[] switcherBrands = pro.getProperty("abc-switcherbrand").split("/");
     String[] switcherGroups = pro.getProperty("abc-switcherGroup").split("/");
+    final int PAGESIZE = Integer.parseInt(pro.getProperty("PAGESIZE"));
     Map<String, String[]> bankAndDepts = new HashMap<String, String[]>();
 
     for(int i = 0; i < bankNames.length; ++i){

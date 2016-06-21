@@ -21,6 +21,11 @@
 
 <%@include file="/abcbank/getVars.jsp"%>
 
+<%!
+    int pageCount;
+    int curPage = 1;
+%>
+
 <%
     BankIPAddressOp op = new BankIPAddressOp();
 
@@ -146,7 +151,7 @@
 
         <tr class="header1">
             <td style="width: 100px"><b>操作</b></td>
-            <td><b>ip地址</b></td>
+            <td style="width: 100px"><b>ip地址</b></td>
             <td><b>网络类型</b></td>
             <td style="width: 100px"><b>掩码</b></td>
             <td><b>网关</b></td>
@@ -164,8 +169,19 @@
             <td><b>备注</b></td>
         </tr>
         <%
+            int size = ips.length;
+            pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
+            String tmp = request.getParameter("curPage");
+            if(tmp==null){
+                tmp="1";
+            }
+            curPage = Integer.parseInt(tmp);
+            if(curPage >= pageCount)
+                curPage = pageCount;
+            int ipAtArray = (curPage - 1) * PAGESIZE + 1;
             int row = 0;
-            for(BankIPAddress ip : ips){
+            for(int j = ipAtArray; j < ipAtArray + PAGESIZE && j < ips.length; j ++){
+                BankIPAddress ip = ips[j];
                 String ipId = ip.getId();
                 String ipaddr = ip.getIp();
                 String gateway = ip.getGateway();
@@ -356,6 +372,21 @@
             }
         %>
     </table>
+        <a href = "abcbank/ipaddress.jsp?curPage=1" >首页</a>
+        <%
+            if(curPage - 1 > 0)
+                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage - 1) + "' >上一页</a>");
+            else
+                out.print("上一页");
+        %>
+        <%
+            if(curPage + 1 <= pageCount)
+                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage + 1) + "' >下一页</a>");
+            else
+                out.print("下一页");
+        %>
+        <a href = "abcbank/ipaddress.jsp?curPage=<%=pageCount%>" >尾页</a>
+        第<%=curPage%>页/共<%=pageCount%>页
 </div>
 </form>
 

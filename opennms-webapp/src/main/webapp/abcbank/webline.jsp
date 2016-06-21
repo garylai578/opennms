@@ -17,7 +17,13 @@
 
 <%@include file="/abcbank/getVars.jsp"%>
 
+<%!
+    int pageCount;
+    int curPage = 1;
+%>
+
 <%
+
     WebLineOperator op = new WebLineOperator();
     WebLine[] lines = (WebLine[])request.getAttribute("webLines");
     if(lines == null){
@@ -138,7 +144,19 @@
             <td width="10%"><b>备注</b></td>
         </tr>
         <%
-            for(WebLine line : lines){
+            int size = lines.length;
+            pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
+            String tmp = request.getParameter("curPage");
+            if(tmp==null){
+                tmp="1";
+            }
+            curPage = Integer.parseInt(tmp);
+            if(curPage >= pageCount)
+                curPage = pageCount;
+            int lineAtArray = (curPage - 1) * PAGESIZE + 1;
+
+            for(int j = lineAtArray; j < lineAtArray + PAGESIZE && j < lines.length; ++j){
+                WebLine line = lines[j];
                 String lineId = line.getId();
                 String type = line.getType();
                 String applicant = line.getApplicant();
@@ -257,6 +275,21 @@
             }
         %>
     </table>
+        <a href = "abcbank/webline.jsp?curPage=1" >首页</a>
+        <%
+            if(curPage - 1 > 0)
+                out.print("<a href = 'abcbank/webline.jsp?curPage=" + (curPage - 1) + "' >上一页</a>");
+            else
+                out.print("上一页");
+        %>
+        <%
+            if(curPage + 1 <= pageCount)
+                out.print("<a href = 'abcbank/webline.jsp?curPage=" + (curPage + 1) + "' >下一页</a>");
+            else
+                out.print("下一页");
+        %>
+        <a href = "abcbank/webline.jsp?curPage=<%=pageCount%>" >尾页</a>
+        第<%=curPage%>页/共<%=pageCount%>页
         </div>
 
 </form>
