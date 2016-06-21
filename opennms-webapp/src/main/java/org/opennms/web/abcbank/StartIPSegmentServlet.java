@@ -22,30 +22,29 @@ public class StartIPSegmentServlet extends HttpServlet {
 
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getRemoteUser();
-        String rowID = request.getParameter("rowID");
-        String startIP = request.getParameter("startIP-"+rowID);
-        String endIP = request.getParameter("endIP-"+rowID);
-        String tmp = request.getParameter("ipSegID");
-        int id = Integer.parseInt(tmp);
+        String[] ids = request.getParameter("ipSegID").split("\t");
+        String ipSegs = request.getParameter("ipSegs");
         IPSegmentOperater op = new IPSegmentOperater();
-        try {
-            op.updateByID(id, "state", "在用");
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date();
-            op.updateByID(id, "createtime", sf.format(date));
-            op.updateByID(id, "stoptime", "null");
+        for(String idString : ids) {
+            int id = Integer.parseInt(idString);
+            try {
+                op.updateByID(id, "state", "在用");
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = new Date();
+                op.updateByID(id, "createtime", sf.format(date));
+                op.updateByID(id, "stoptime", "null");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
-            BankLogWriter.getSingle().writeLog("用户[" + userId + "]启用IP段[" + startIP + "-" + endIP + "]");
-
-            response.setContentType("text/html;charset=gb2312");
-            PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('成功启用' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
-            pw.close();
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]启用IP段[" + ipSegs + "]");
+        response.setContentType("text/html;charset=gb2312");
+        PrintWriter pw = response.getWriter();
+        pw.print("<script language='javascript'>alert('成功启用' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
+        pw.close();
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
 //            dispatcher.forward(request, response);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
     }
 }
