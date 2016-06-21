@@ -19,28 +19,32 @@ import java.util.Date;
 public class StartIPAddressServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getRemoteUser();
-        String rowID = request.getParameter("rowID");
-        String ip = request.getParameter("ipaddr-"+rowID);
-        String tmp = request.getParameter("ipAddrID");
-        int id = Integer.parseInt(tmp);
-        BankIPAddressOp op = new BankIPAddressOp();
-        try {
-            op.updateByID(id, "state", "'在用'");
-            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date date = new Date();
-            op.updateByID(id, "start_date", "'" + sf.format(date) + "'");
-            op.updateByID(id, "stop_date", "null");
+        String[] ips = request.getParameter("ipAddr").split("\t");
+        String[] ids = request.getParameter("ipAddrID").split("\t");
 
-            BankLogWriter.getSingle().writeLog("用户[" + userId + "]启用IP[" + ip + "]");
-            response.setContentType("text/html;charset=gb2312");
-            PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('成功启用' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
-            pw.close();
+        BankIPAddressOp op = new BankIPAddressOp();
+
+        for(int i = 0; i < ips.length; ++i) {
+            int id = Integer.parseInt(ids[i]);
+            try {
+                op.updateByID(id, "state", "'在用'");
+                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date date = new Date();
+                op.updateByID(id, "start_date", "'" + sf.format(date) + "'");
+                op.updateByID(id, "stop_date", "null");
+
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
 //            dispatcher.forward(request, response);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
+        BankLogWriter.getSingle().writeLog("用户[" + userId + "]启用IP[" + request.getParameter("ipAddr") + "]");
+        response.setContentType("text/html;charset=gb2312");
+        PrintWriter pw = response.getWriter();
+        pw.print("<script language='javascript'>alert('成功启用' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
+        pw.close();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

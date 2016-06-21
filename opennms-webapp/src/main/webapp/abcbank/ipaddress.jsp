@@ -54,20 +54,45 @@
         document.allIPSegments.submit();
     }
 
-    function stopIPAddress(id, row)
+    function stopSelectedIPAddress(numbers){
+        var selectedId = "";
+        var selectedIP = "";
+        for (var i = 0; i < numbers; ++i) {
+            var item = document.getElementById("choose-"+i);
+            if (item.checked == true) {
+                selectedId += document.getElementById("id-" + i).value + "\t";
+                selectedIP += document.getElementById("ipaddr-" + i).value + "\t";
+            }
+        }
+        stopIPAddress(selectedId, selectedIP);
+    }
+
+    function stopIPAddress(id, ip)
     {
         document.allIPSegments.action="abcbank/stopIPAddress";
         document.allIPSegments.ipAddrID.value=id;
-        document.allIPSegments.rowID.value=row;
-        this.method="post";
+        document.allIPSegments.ipAddr.value=ip;
         document.allIPSegments.submit();
     }
 
-    function startIPAddress(id, row)
+    function startSelectedIPAddress(numbers){
+        var selectedId = "";
+        var selectedIP = "";
+        for (var i = 0; i < numbers; ++i) {
+            var item = document.getElementById("choose-"+i);
+            if (item.checked == true) {
+                selectedId += document.getElementById("id-" + i).value + "\t";
+                selectedIP += document.getElementById("ipaddr-" + i).value + "\t";
+            }
+        }
+        startIPAddress(selectedId, selectedIP);
+    }
+
+    function startIPAddress(id, ip)
     {
         document.allIPSegments.action="abcbank/startIPAddress";
         document.allIPSegments.ipAddrID.value=id;
-        document.allIPSegments.rowID.value=row;
+        document.allIPSegments.ipAddr.value=ip;
         document.allIPSegments.submit();
     }
 
@@ -91,10 +116,25 @@
         document.allIPSegments.submit();
     }
 
+    function selectAll(numbers) {
+        for (var i = 0; i <= numbers; ++i) {
+            var choose = document.getElementById("choose-" + i);
+            choose.checked = true;
+        }
+    }
+
+    function unselectAll(numbers) {
+        for (var i = 0; i <= numbers; ++i) {
+            var choose = document.getElementById("choose-" + i);
+            choose.checked = false;
+        }
+    }
+
 </script>
 
 <form method="post" name="allIPSegments">
     <input type="hidden" name="ipAddrID"/>
+    <input type="hidden" name="ipAddr"/>
     <input type="hidden" name="rowID"/>
     <input type="hidden" name="rows"/>
     <input type="hidden" name="searchAreas" />
@@ -150,12 +190,13 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black" class="tab_css_1">
 
         <tr class="header1">
-            <td style="width: 100px"><b>操作</b></td>
+            <td style="width: 30px"><b>选择</b></td>
+            <td style="width: 120px"><b>操作</b></td>
             <td style="width: 100px"><b>ip地址</b></td>
             <td><b>网络类型</b></td>
             <td style="width: 100px"><b>掩码</b></td>
-            <td><b>网关</b></td>
-            <td><b>mac地址</b></td>
+            <td style="width: 90px"><b>网关</b></td>
+            <td style="width: 100px"><b>mac地址</b></td>
             <td><b>申请时间</b></td>
             <td><b>启用日期</b></td>
             <td><b>设备使用人</b></td>
@@ -165,7 +206,7 @@
             <td><b>设备品牌</b></td>
             <td><b>设备型号</b></td>
             <td><b>用途</b></td>
-            <td><b>使用情况</b></td>
+            <td style="width: 50px"><b>使用情况</b></td>
             <td><b>备注</b></td>
         </tr>
         <%
@@ -217,10 +258,15 @@
                 }
         %>
         <tr <%if (state.equals("停用")) out.print("class=\"lineUnused\"");%>>
+            <td>
+                <div>
+                    <input id="choose-<%=row%>" type="checkbox" value="" />
+                </div>
+            </td>
             <td align="center" style="vertical-align:middle;">
-                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>', '<%=row%>')" onclick="return confirm('确定要停用该IP？')">停用</a>
+                <a id="<%= "ips("+ipId+").doStop" %>" href="javascript:stopIPAddress('<%=ipId%>', '<%=ipaddr%>')" onclick="return confirm('确定要停用该IP？')">停用</a>
                 &nbsp;&nbsp;
-                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPAddress('<%=ipId%>', '<%=row%>')">启用</a>
+                <a id="<%= "ips("+ipId+").doStart" %>" href="javascript:startIPAddress('<%=ipId%>', '<%=ipaddr%>')">启用</a>
                 &nbsp;&nbsp;
                 <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPAddress('<%=ipId%>', '<%=row%>')">变更</a>
             </td>
@@ -372,6 +418,14 @@
             }
         %>
     </table>
+        <div>&nbsp;
+        <a href="javascript:selectAll(<%=row%>)">全选</a>&nbsp;
+            <a href="javascript:unselectAll(<%=row%>)">全不选</a>&nbsp;
+            <a href="javascript:stopSelectedIPAddress(<%=row%>)">停用选中</a>&nbsp;
+            <a href="javascript:startSelectedIPAddress(<%=row%>)">启用选中</a>&nbsp;
+        </div>
+    </div>
+    <div>&nbsp;
         <a href = "abcbank/ipaddress.jsp?curPage=1" >首页</a>
         <%
             if(curPage - 1 > 0)
@@ -387,7 +441,7 @@
         %>
         <a href = "abcbank/ipaddress.jsp?curPage=<%=pageCount%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
-</div>
+    </div>
 </form>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />
