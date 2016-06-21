@@ -118,14 +118,14 @@
 
     function selectAll(numbers) {
         for (var i = 0; i <= numbers; ++i) {
-            var choose = document.getElementById("choose-" + i);
+            var choose = document.getElementById("choose-"+i);
             choose.checked = true;
         }
     }
 
     function unselectAll(numbers) {
         for (var i = 0; i <= numbers; ++i) {
-            var choose = document.getElementById("choose-" + i);
+            var choose = document.getElementById("choose-"+i);
             choose.checked = false;
         }
     }
@@ -271,12 +271,12 @@
                 <a id="<%= "ips("+ipId+").doModify" %>" href="javascript:modifyIPAddress('<%=ipId%>', '<%=row%>')">变更</a>
             </td>
 
-            <input type="hidden" name="id-<%=row%>" value="<%=ipId %>"/>
+            <input type="hidden" id="id-<%=row%>" name="id-<%=row%>" value="<%=ipId %>"/>
 
             <td>
-                <div id="ipaddr-<%=row%>">
+                <div>
                     <%= ((ipaddr == null || ipaddr.equals("")) ? "&nbsp;" : ipaddr) %>
-                    <input type="hidden" name="ipaddr-<%=row%>" value="<%= ((ipaddr == null || ipaddr.equals("")) ? "&nbsp;" : ipaddr) %>"/>
+                    <input type="hidden" id="ipaddr-<%=row%>" name="ipaddr-<%=row%>" value="<%= ((ipaddr == null || ipaddr.equals("")) ? "&nbsp;" : ipaddr) %>"/>
                 </div>
             </td>
 
@@ -419,10 +419,10 @@
         %>
     </table>
         <div>&nbsp;
-        <a href="javascript:selectAll(<%=row%>)">全选</a>&nbsp;
-            <a href="javascript:unselectAll(<%=row%>)">全不选</a>&nbsp;
-            <a href="javascript:stopSelectedIPAddress(<%=row%>)">停用选中</a>&nbsp;
-            <a href="javascript:startSelectedIPAddress(<%=row%>)">启用选中</a>&nbsp;
+        <input type="button" onclick="javascript:selectAll(<%=row%>)" value="全选"/>&nbsp;
+            <input type="button" onclick="javascript:unselectAll(<%=row%>)" value="全不选"/>&nbsp;
+            <input type="button" onclick="javascript:stopSelectedIPAddress(<%=row%>)" value="停用选中"/>&nbsp;
+            <input type="button" onclick="javascript:startSelectedIPAddress(<%=row%>)" value="启用选中"/>&nbsp;
         </div>
     </div>
     <div>&nbsp;
