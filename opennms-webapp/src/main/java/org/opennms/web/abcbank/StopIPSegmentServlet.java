@@ -45,6 +45,7 @@ public class StopIPSegmentServlet extends HttpServlet {
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw = response.getWriter();
         String curPage = request.getParameter("curPage");
+        request.setAttribute("update", "true");
         if(curPage == null)
             curPage = "1";
         pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipsegment.jsp?curPage="
