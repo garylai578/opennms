@@ -115,9 +115,10 @@ public class AddIPAddressServlet extends HttpServlet  {
         }
 
         BankLogWriter.getSingle().writeLog("用户[" + userId + "]新增IP：" + msg);
-
-        response.setContentType("text/html;charset=gb2312");
-        pw.print("<script language='javascript'>alert('" + msg + "' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
+        request.setAttribute("update", "true");
+        response.setContentType("text/html;charset=UTF-8");
+        pw.print("<script language='javascript'>alert('" + msg + "' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage=" + request.getParameter("curPage")
+                + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
         pw.close();
 
     }

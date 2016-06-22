@@ -17,9 +17,7 @@
 <%@ page import="org.opennms.web.springframework.security.Authentication" %>
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
 
 <%@include file="/abcbank/getVars.jsp"%>
 
@@ -30,12 +28,51 @@
 %>
 
 <%
+    String bankReturn, deptReturn, typeReturn, usersReturn, update;
+
+    if(request.getAttribute("bank") != null )
+        bankReturn = (String)request.getAttribute("bank");
+    else {
+        bankReturn = request.getParameter("bank");
+        if(bankReturn == null)
+            bankReturn = "";
+    }
+
+    if(request.getAttribute("dept") != null)
+        deptReturn = (String)request.getAttribute("dept");
+    else {
+        deptReturn = request.getParameter("dept");
+        if(deptReturn == null)
+            deptReturn = "";
+    }
+
+    if(request.getAttribute("network_type") != null)
+        typeReturn = (String)request.getAttribute("network_type");
+    else {
+        typeReturn = request.getParameter("network_type");
+        if(typeReturn == null)
+            typeReturn = "";
+    }
+
+    if(request.getAttribute("users") != null)
+        usersReturn = (String)request.getAttribute("users");
+    else {
+        usersReturn = request.getParameter("users");
+        if(usersReturn == null)
+            usersReturn = "";
+    }
+
+    if(request.getAttribute("update") != null)
+        update = (String)request.getAttribute("update");
+    else
+        update = request.getParameter("update");
+
     BankIPAddressOp op = new BankIPAddressOp();
     BankIPAddress[] ipsReturn = (BankIPAddress[])request.getAttribute("ip_addresses");
     if(ipsReturn != null)
         ips = ipsReturn;
-    List<BankIPAddress> ipsList = new ArrayList<BankIPAddress>();
-    if(ips == null){
+    List<BankIPAddress> ipsList = new LinkedList<BankIPAddress>();
+    if(ips == null || (update != null && update.equals("true"))){
         if(request.isUserInRole(Authentication.ROLE_ADMIN))
             ips = op.selectAll("");
         else
@@ -181,25 +218,39 @@
                     <%
                         for(int i = 0; i < networkTypes.length; ++i){
                     %>
-                    <option value="<%=networkTypes[i]%>"> <%=networkTypes[i]%></option>
+                    <option value="<%=networkTypes[i]%>" <%=((typeReturn != null && networkTypes[i].equals(typeReturn)) ? "selected" : "")%>> <%=networkTypes[i]%></option>
                     <%
                         }
                     %>
                  </select>&nbsp;&nbsp;
-        <strong>设备使用人:</strong><input id="users" name="users" size="12" value="">&nbsp;&nbsp;
+        <strong>设备使用人:</strong><input id="users" name="users" size="12" value="<%=(usersReturn==null?"":usersReturn)%>">&nbsp;&nbsp;
         <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
                             <option value="" selected="">请选择</option>
                             <%
                                 for(int i = 0; i < bankNames.length; ++i){
                             %>
-                            <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+                            <option value="<%=bankNames[i]%>" <%=((bankReturn != null && bankNames[i].equals(bankReturn)) ? "selected" : "")%>><%=bankNames[i]%></option>
                             <%
                                 }
                             %>
                         </select>&nbsp;&nbsp;
         <strong>所属网点（部门）：</strong><select id="dept" name="dept">
-                                            <option value="" selected>请选择</option>
-                                          </select>&nbsp;&nbsp;
+            <option value="" selected>请选择</option>
+            <%
+                if(!"".equals(bankReturn)){
+                    String[] depts = bankAndDepts.get(bankReturn);
+                    if(depts != null)
+                        for(String dep : depts){
+                            String selected = "";
+                            if(dep.equals(deptReturn))
+                                selected = "selected";
+            %>
+            <option value="<%=dep%>" <%=selected%>><%=dep%></option>
+            <%
+                        }
+                }
+            %>
+        </select>  &nbsp;&nbsp;
 <%--        <input id="searchArea-0" type="checkbox" value="network_type" checked>网络类型
         <input id="searchArea-1" type="checkbox" value="users" checked>设备使用人
         <input id="searchArea-2" type="checkbox" value="bank" checked>所属支行（分行）
@@ -439,22 +490,23 @@
         </div>
     </div>
     <div>&nbsp;
-        <a href = "abcbank/ipaddress.jsp?curPage=1" >首页</a>
+        <a href = "abcbank/ipaddress.jsp?curPage=1&bank=<%=bankReturn%>&dept=<%=deptReturn%>&network_type=<%=typeReturn%>&users=<%=usersReturn%>" >首页</a>
         <%
             if(curPage - 1 > 0)
-                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage - 1) + "' >上一页</a>");
+                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage - 1) + "&bank=" + bankReturn + "&dept=" + deptReturn + "&network_type=" + typeReturn + "&users=" + usersReturn + "' >上一页</a>");
             else
                 out.print("上一页");
         %>
         <%
             if(curPage + 1 <= pageCount)
-                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage + 1) + "' >下一页</a>");
+                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage + 1) + "&bank=" + bankReturn + "&dept=" + deptReturn + "&network_type=" + typeReturn + "&users=" + usersReturn + "' >下一页</a>");
             else
                 out.print("下一页");
         %>
-        <a href = "abcbank/ipaddress.jsp?curPage=<%=pageCount%>" >尾页</a>
+        <a href = "abcbank/ipaddress.jsp?curPage=<%=pageCount%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>&network_type=<%=typeReturn%>&users=<%=usersReturn%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
     </div>
+    <input type="hidden" name="curPage" value="<%=curPage%>"/>
 </form>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />
