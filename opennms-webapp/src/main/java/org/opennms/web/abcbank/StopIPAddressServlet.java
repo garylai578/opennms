@@ -40,7 +40,10 @@ public class StopIPAddressServlet extends HttpServlet {
         BankLogWriter.getSingle().writeLog("用户[" + userId + "]停用IP[" + request.getParameter("ipAddr") + "]");
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw = response.getWriter();
-        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
+        String curPage = request.getParameter("curPage");
+        if(curPage == null)
+            curPage = "1";
+        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp&curPage=" + curPage + "');</script>");
         pw.close();
     }
 

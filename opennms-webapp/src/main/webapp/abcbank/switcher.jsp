@@ -35,6 +35,11 @@
 
 <%@include file="/abcbank/getVars.jsp"%>
 
+<%!
+    int pageCount;
+    int curPage = 1;
+%>
+
 <%
     SwitcherOperator op = new SwitcherOperator();
 
@@ -287,8 +292,20 @@
             Switcher[] ss = (Switcher[])request.getAttribute("switchers");
             if(ss == null)
                 ss = op.selectAll();
+            int size = ss.length;
+            pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
+            String tmp = request.getParameter("curPage");
+            if(tmp==null){
+                tmp="1";
+            }
+            curPage = Integer.parseInt(tmp);
+            if(curPage >= pageCount)
+                curPage = pageCount;
+            int swAtArray = (curPage - 1) * PAGESIZE;
+
             int row = 0;
-            for(Switcher sw : ss){
+            for(int j = swAtArray; j < ss.length && j < swAtArray + PAGESIZE; ++j){
+                Switcher sw = ss[j];
                 String id = sw.getId();
                 String name = sw.getName();
                 String sgroup = sw.getGroup();
@@ -485,12 +502,30 @@
         %>
     </table>
     </div>
-    &nbsp;&nbsp;
-    <div style="font-size:14px;">批量操作：请先选中需要批量操作的交换机，然后在下面输入批量操作命令（每行一条），最后点击下面的“执行”按钮</div>
-    <textarea id="batchComm" name="batchComm" rows="20" style="width:900px; overflow: auto;"></textarea>
-    <br>&nbsp;&nbsp;
-    <input type="button" onclick="javascript:batchOperator('<%=row%>')" value="执行">
+    <a href = "abcbank/switcher.jsp?curPage=1" >首页</a>
+    <%
+        if(curPage - 1 > 0)
+            out.print("<a href = 'abcbank/switcher.jsp?curPage=" + (curPage - 1) + "' >上一页</a>");
+        else
+            out.print("上一页");
+    %>
+    <%
+        if(curPage + 1 <= pageCount)
+            out.print("<a href = 'abcbank/switcher.jsp?curPage=" + (curPage + 1) + "' >下一页</a>");
+        else
+            out.print("下一页");
+    %>
+    <a href = "abcbank/switcher.jsp?curPage=<%=pageCount%>" >尾页</a>
+    第<%=curPage%>页/共<%=pageCount%>页
 
+    <br>
+    <div>
+        &nbsp;&nbsp;
+        <div style="font-size:14px;">批量操作：请先选中需要批量操作的交换机，然后在下面输入批量操作命令（每行一条），最后点击下面的“执行”按钮</div>
+        <textarea id="batchComm" name="batchComm" rows="20" style="width:900px; overflow: auto;"></textarea>
+        <br>&nbsp;&nbsp;
+        <input type="button" onclick="javascript:batchOperator('<%=row%>')" value="执行">
+    </div>
 </form>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />

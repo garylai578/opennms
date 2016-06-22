@@ -188,7 +188,7 @@ public class ExportExcel<T> {
                     Object value = getMethod.invoke(t, new Object[]{});
                     // 判断值的类型后可以强制类型转换（此处省略）
                     String textValue = value.toString();
-                    if (textValue.contains("停用"))
+                    if (textValue != null && textValue.contains("停用"))
                         hs = style3;
                     else
                         hs = style2;

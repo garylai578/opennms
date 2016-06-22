@@ -17,7 +17,9 @@
 <%@ page import="org.opennms.web.springframework.security.Authentication" %>
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.List" %>
 
 <%@include file="/abcbank/getVars.jsp"%>
 
@@ -30,12 +32,36 @@
     BankIPAddressOp op = new BankIPAddressOp();
 
     BankIPAddress[] ips = (BankIPAddress[])request.getAttribute("ip_addresses");
+    List<BankIPAddress> ipsList = new ArrayList<BankIPAddress>();
     if(ips == null){
         if(request.isUserInRole(Authentication.ROLE_ADMIN))
             ips = op.selectAll("");
         else
             ips = op.selectAll(group);
     }
+
+    for(BankIPAddress ip : ips) {
+        //如果停用的时间超过7天，则不显示
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String stop_date = ip.getStop_date();
+        String state = ip.getState();
+        if (stop_date != null && state.contains("停用")) {
+            try {
+                long today = sf.parse(sf.format(date)).getTime();
+                long stop = sf.parse(stop_date).getTime();
+                long inten = (today - stop) / (1000 * 60 * 60 * 24);
+                if (inten >= 7)
+                    continue;
+                else
+                    ipsList.add(ip);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }else
+            ipsList.add(ip);
+    }
+    ips = ipsList.toArray(new BankIPAddress[ipsList.size()]);
     int nums = ips.length;
 %>
 
@@ -219,9 +245,9 @@
             curPage = Integer.parseInt(tmp);
             if(curPage >= pageCount)
                 curPage = pageCount;
-            int ipAtArray = (curPage - 1) * PAGESIZE + 1;
+            int ipAtArray = (curPage - 1) * PAGESIZE;
             int row = 0;
-            for(int j = ipAtArray; j < ipAtArray + PAGESIZE && j < ips.length; j ++){
+            for(int j = ipAtArray; j < ipAtArray + PAGESIZE && j < ips.length; j++){
                 BankIPAddress ip = ips[j];
                 String ipId = ip.getId();
                 String ipaddr = ip.getIp();
@@ -241,21 +267,6 @@
                 String app = ip.getApplication();
                 String state = ip.getState();
                 String comment = ip.getComment();
-
-                //如果停用的时间超过7天，则不显示
-                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = new Date();
-                if(stop_date != null && state.contains("停用")){
-                    try {
-                        long today = sf.parse(sf.format(date)).getTime();
-                        long stop = sf.parse(stop_date).getTime();
-                        long inten = (today - stop) / (1000 * 60 * 60 * 24);
-                        if(inten > 7)
-                            continue;
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
         %>
         <tr <%if (state.equals("停用")) out.print("class=\"lineUnused\"");%>>
             <td>

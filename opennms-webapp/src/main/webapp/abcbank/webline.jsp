@@ -178,7 +178,7 @@
             curPage = Integer.parseInt(tmp);
             if(curPage >= pageCount)
                 curPage = pageCount;
-            int lineAtArray = (curPage - 1) * PAGESIZE + 1;
+            int lineAtArray = (curPage - 1) * PAGESIZE;
 
             for(int j = lineAtArray; j < lineAtArray + PAGESIZE && j < lines.length; ++j){
                 WebLine line = lines[j];
