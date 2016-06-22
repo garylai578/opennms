@@ -32,13 +32,12 @@ public class DeleteWebLineServlet extends HttpServlet {
         }
 
         BankLogWriter.getSingle().writeLog("用户[" + userId + "]删除专线id[" + request.getParameter("webLineID") + "]");
-        response.setContentType("text/html;charset=gb2312");
+        response.setContentType("text/html;charset=UTF-8");
+        request.setAttribute("update", "true");
         PrintWriter pw = response.getWriter();
-
-        String curPage = request.getParameter("curPage");
-        if(curPage == null)
-            curPage = "1";
-        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/webline.jsp&curPage=" + curPage + "');</script>");
+        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/webline.jsp?curPage=" + request.getParameter("curPage")
+                + "&type=" + request.getParameter("type") + "&applicant=" + request.getParameter("applicant") + "&approver=" + request.getParameter("approver")
+                + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "');</script>");
         pw.close();
     }
 
