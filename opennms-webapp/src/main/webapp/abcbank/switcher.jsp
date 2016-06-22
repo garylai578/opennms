@@ -17,7 +17,6 @@
 <%@ page import="org.opennms.core.utils.DBUtils" %>
 <%@ page import="org.opennms.web.element.Interface" %>
 <%@ page import="org.opennms.web.element.NetworkElementFactory" %>
-<%@ page import="java.io.DataInputStream" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.Statement" %>
@@ -38,6 +37,7 @@
 <%!
     int pageCount;
     int curPage = 1;
+    Switcher[] ss;
 %>
 
 <%
@@ -67,6 +67,12 @@
     }
 
     String swip = request.getParameter("switcherIP");
+
+    Switcher[] ssReturn = (Switcher[])request.getAttribute("switchers");
+    if(ssReturn != null)
+        ss = ssReturn;
+    if(ss == null)
+        ss = op.selectAll();
 %>
 
 <script type="text/javascript" >
@@ -289,9 +295,6 @@
             <td class="iptd"><b>备注</b></td>
         </tr>
         <%
-            Switcher[] ss = (Switcher[])request.getAttribute("switchers");
-            if(ss == null)
-                ss = op.selectAll();
             int size = ss.length;
             pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
             String tmp = request.getParameter("curPage");

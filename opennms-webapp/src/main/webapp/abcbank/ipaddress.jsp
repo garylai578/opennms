@@ -26,12 +26,14 @@
 <%!
     int pageCount;
     int curPage = 1;
+    BankIPAddress[] ips;
 %>
 
 <%
     BankIPAddressOp op = new BankIPAddressOp();
-
-    BankIPAddress[] ips = (BankIPAddress[])request.getAttribute("ip_addresses");
+    BankIPAddress[] ipsReturn = (BankIPAddress[])request.getAttribute("ip_addresses");
+    if(ipsReturn != null)
+        ips = ipsReturn;
     List<BankIPAddress> ipsList = new ArrayList<BankIPAddress>();
     if(ips == null){
         if(request.isUserInRole(Authentication.ROLE_ADMIN))

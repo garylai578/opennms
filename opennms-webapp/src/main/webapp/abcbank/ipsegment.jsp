@@ -27,12 +27,18 @@
 <%!
     int pageCount;
     int curPage = 1;
+    IPSegment[] ips;
 %>
 
 <%
     IPSegmentOperater op = new IPSegmentOperater();
 
-    IPSegment[] ips = (IPSegment[])request.getAttribute("ipSeg");
+    String bankReturn = (String)request.getAttribute("bank");
+    String deptReturn = (String)request.getAttribute("dept");
+    String stateReturn = (String)request.getAttribute("state");
+    IPSegment[] ipsReturn = (IPSegment[])request.getAttribute("ipSeg");
+    if(ipsReturn != null)
+        ips = ipsReturn;
     if(ips == null)
         ips = op.selectAll("");
     int nums = ips.length;
@@ -175,12 +181,12 @@
     </td>
 
     <td align="left">&nbsp;&nbsp;
-        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
+        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts2(this.value, 'dept', <%=deptReturn%>)">
             <option value="" selected="">请选择</option>
             <%
                 for(int i = 0; i < bankNames.length; ++i){
             %>
-            <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+            <option value="<%=bankNames[i]%>" <%=((bankReturn == null || bankReturn.equals("")) ? "" : "selected")%>><%=bankNames[i]%></option>
             <%
                 }
             %>
@@ -190,8 +196,8 @@
                 </select>  &nbsp;&nbsp;
         <strong>使用情况：</strong><select id="state" name="state">
             <option value="" selected="">请选择</option>
-            <option value="在用">在用</option>
-            <option value="停用">停用</option>
+            <option value="在用" <%=((stateReturn != null && stateReturn.equals("在用")) ? "selected" : "")%>>在用</option>
+            <option value="停用" <%=((stateReturn != null && stateReturn.equals("停用")) ? "selected" : "")%>>停用</option>
         </select>&nbsp;&nbsp;
         <a id="doSearch" href="javascript:searchIPSegment()"><img src="images/search.png" alt="搜索" border="0"></a>
         <a id="search" href="javascript:searchIPSegment()">搜索</a>

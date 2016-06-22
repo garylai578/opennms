@@ -42,6 +42,9 @@ public class SearchIPSegmentServlet extends HttpServlet {
             IPSegment[] rs = op.andSelect(colAndValue);
             if(rs != null && rs.length > 0){
                 request.setAttribute("ipSeg", rs);
+                request.setAttribute("bank", request.getParameter("bank"));
+                request.setAttribute("dept", request.getParameter("dept"));
+                request.setAttribute("state", request.getParameter("state"));
                 request.getRequestDispatcher("ipsegment.jsp").forward(request, response);
             } else {
                 pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");

@@ -177,7 +177,7 @@ public class ExportExcel<T> {
             // 利用反射，根据javabean属性的先后顺序，动态调用getXxx()方法得到属性值
             Field[] fields = t.getClass().getDeclaredFields();
             String[] values = new String[fields.length];
-            HSSFCellStyle hs = null;
+            HSSFCellStyle hs = style2;
             for (short i = 0; i < fields.length; i++) {
                 Field field = fields[i];
                 String fieldName = field.getName();
@@ -189,10 +189,8 @@ public class ExportExcel<T> {
                     // 判断值的类型后可以强制类型转换（此处省略）
                     if(value != null) {
                         String textValue = value.toString();
-                        if (textValue != null && textValue.contains("停用"))
+                        if (textValue.contains("停用"))
                             hs = style3;
-                        else
-                            hs = style2;
                         values[i] = textValue;
                     }
                 } catch (SecurityException e) {
