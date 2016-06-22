@@ -39,7 +39,7 @@ public class UpdateIPSegmentServlet extends HttpServlet {
 
             BankLogWriter.getSingle().writeLog("用户[" + userId + "]修改IP段[" + startIP + "-" + endIP + "]，网点名称修改为：" + bankname + "；网点类型修改为：" + banktype + "；备注修改为：" + comment);
             request.setAttribute("update", "true");
-            response.setContentType("text/html;charset=gb2312");
+            response.setContentType("text/html;charset=UTF-8");
             PrintWriter pw=response.getWriter();
             pw.print("<script language='javascript'>alert('修改成功！');window.location=('/opennms/abcbank/ipsegment.jsp?curPage="
                     + request.getParameter("curPage") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");

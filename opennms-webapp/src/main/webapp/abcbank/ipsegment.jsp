@@ -16,9 +16,7 @@
 <%@page import="org.opennms.core.bank.IPSegmentOperater" %>
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Date" %>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.*" %>
 
 
 <%@include file="/abcbank/getVars.jsp"%>
@@ -26,12 +24,11 @@
 <%!
     int pageCount;
     int curPage = 1;
-    IPSegment[] ips;
 %>
 
 <%
     IPSegmentOperater op = new IPSegmentOperater();
-    String bankReturn, deptReturn, stateReturn, update;
+    String bankReturn,deptReturn, stateReturn, update;
 
     if(request.getAttribute("bank") != null )
         bankReturn = (String)request.getAttribute("bank");
@@ -59,12 +56,13 @@
 
     update = (String)request.getAttribute("update");
 
+    IPSegment[] ips = null;
     if(request.getAttribute("ipSeg") != null)
         ips = (IPSegment[])request.getAttribute("ipSeg");
     if(ips == null || (update != null && update.equals("true")))
         ips = op.selectAll("");
     int nums = ips.length;
-    List<IPSegment> ipSegmentList = new ArrayList<IPSegment>();
+    List<IPSegment> ipSegmentList = new LinkedList<IPSegment>();
     for(IPSegment ip : ips) {
         //如果停用的时间超过7天，则不显示
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
@@ -217,15 +215,16 @@
             <%
                 if(!"".equals(bankReturn)){
                     String[] depts = bankAndDepts.get(bankReturn);
-                    for(int i = 0; i < depts.length; ++i){
-                        String selected = "";
-                        if(depts[i].equals(deptReturn))
+                    if(depts != null)
+                        for(String dep : depts){
+                            String selected = "";
+                            if(dep.equals(deptReturn))
                             selected = "selected";
             %>
-                    <option value="<%=depts[i]%>" <%=selected%>><%=depts[i]%></option>
+                    <option value="<%=dep%>" <%=selected%>><%=dep%></option>
             <%
+                        }
                     }
-                }
             %>
                 </select>  &nbsp;&nbsp;
         <strong>使用情况：</strong><select id="state" name="state">
