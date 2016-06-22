@@ -104,7 +104,7 @@ public class AddIPSegmentServlet extends HttpServlet {
                 IPPoolCaculater cal = new IPPoolCaculater(initIP, stopIP, num);
                 int result = cal.caculate();
                 if(result == 0){
-                    pw.print("<script language='javascript'>alert('所选ip段不够分配，请选择其他ip段！' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage="
+                    pw.print("<script language='javascript'>alert('所选ip段不够分配，请选择其他ip段！' );window.location=('/opennms/abcbank/ipsegment.jsp?curPage="
                             + request.getParameter("curPage") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
                     pw.close();
                     return;
@@ -120,6 +120,7 @@ public class AddIPSegmentServlet extends HttpServlet {
                     op.insert(seg);
                     startIP = seg.getStartIP();
                     endIP = seg.getEndIP();
+                    request.setAttribute("update", "true");
                 }else{
                     backMsg = "分配ip段失败！";
                 }

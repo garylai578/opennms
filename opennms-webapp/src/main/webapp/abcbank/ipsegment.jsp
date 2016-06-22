@@ -17,7 +17,6 @@
 <%@ page import="java.text.ParseException" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.Collections" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.List" %>
 
@@ -32,7 +31,7 @@
 
 <%
     IPSegmentOperater op = new IPSegmentOperater();
-    String bankReturn, deptReturn, stateReturn;
+    String bankReturn, deptReturn, stateReturn, update;
 
     if(request.getAttribute("bank") != null )
         bankReturn = (String)request.getAttribute("bank");
@@ -58,9 +57,11 @@
             stateReturn = "";
     }
 
+    update = (String)request.getAttribute("update");
+
     if(request.getAttribute("ipSeg") != null)
         ips = (IPSegment[])request.getAttribute("ipSeg");
-    if(ips == null)
+    if(ips == null || (update != null && update.equals("true")))
         ips = op.selectAll("");
     int nums = ips.length;
     List<IPSegment> ipSegmentList = new ArrayList<IPSegment>();
@@ -191,7 +192,6 @@
     <input type="hidden" name="comments"/>
     <input type="hidden" name="rows"/>
     <input type="hidden" name="ipSegs"/>
-    <input type="hidden" name="curPage" value="<%=curPage%>"/>
 
     <h3>IP地址段分配</h3>
 
@@ -448,7 +448,7 @@
         第<%=curPage%>页/共<%=pageCount%>页
         </div>
     </div>
-
+    <input type="hidden" name="curPage" value="<%=curPage%>"/>
 </form>
 
 <jsp:include page="/includes/footer.jsp" flush="false" />
