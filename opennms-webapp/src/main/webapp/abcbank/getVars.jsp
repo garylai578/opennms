@@ -95,4 +95,23 @@
             }
         }
     }
+
+    function selectDepts2(bank, dept, selectDept){
+        var deptElemt = document.getElementById(dept);
+        while(deptElemt.hasChildNodes()){
+            deptElemt.removeChild(deptElemt.firstChild);
+        }
+        deptElemt.appendChild(new Option("请选择", ""));
+
+        for(var i = 0; i < banks.length; ++i){
+            if(banks[i] == bank){
+                for(var j = 0; j < depts[i].length; ++j) {
+                    var opt = new Option(depts[i][j], depts[i][j]);
+                    if(depts[i][j] == selectDept)
+                            opt.selected = true;
+                    deptElemt.appendChild(opt);
+                }
+            }
+        }
+    }
 </script>

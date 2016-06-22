@@ -20,12 +20,15 @@
 <%!
     int pageCount;
     int curPage = 1;
+    WebLine[] lines;
 %>
 
 <%
 
     WebLineOperator op = new WebLineOperator();
-    WebLine[] lines = (WebLine[])request.getAttribute("webLines");
+    WebLine[] linesReturn = (WebLine[])request.getAttribute("webLines");
+    if(linesReturn != null)
+        lines = linesReturn;
     if(lines == null){
         if(request.isUserInRole(Authentication.ROLE_ADMIN))
             lines = op.selectAll("");

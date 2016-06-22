@@ -45,6 +45,10 @@ public class SearchIPAddressServlet extends HttpServlet {
             BankIPAddress[] rs = op.unionSearch(colAndValue);
             if(rs != null && rs.length > 0){
                 request.setAttribute("ip_addresses", rs);
+                request.setAttribute("network_type", request.getParameter("network_type"));
+                request.setAttribute("users", request.getParameter("users"));
+                request.setAttribute("dept", request.getParameter("dept"));
+                request.setAttribute("bank", request.getParameter("bank"));
                 request.getRequestDispatcher("ipaddress.jsp").forward(request, response);
             } else {
                 pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
