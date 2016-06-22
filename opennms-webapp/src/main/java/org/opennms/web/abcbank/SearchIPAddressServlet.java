@@ -38,7 +38,7 @@ public class SearchIPAddressServlet extends HttpServlet {
             colAndValue.put("bank", bank);
 
         BankIPAddressOp op = new BankIPAddressOp();
-        response.setContentType("text/html;charset=gb2312");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter pw=response.getWriter();
 
         try {
@@ -54,7 +54,7 @@ public class SearchIPAddressServlet extends HttpServlet {
                 String curPage = request.getParameter("curPage");
                 if(curPage == null)
                     curPage = "1";
-                pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' )window.location=('/opennms/abcbank/ipaddress.jsp?curPage=" + curPage
+                pw.print("<script language='javascript'>alert('查询无结果！' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage=" + curPage
                         + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
                 pw.close();
             }

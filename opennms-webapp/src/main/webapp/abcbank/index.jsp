@@ -18,12 +18,12 @@
                 if(request.isUserInRole(Authentication.ROLE_ADMIN))
                 {
             %>
-            <li><a href="abcbank/ipsegment.jsp">IP地址段分配</a></li>
+            <li><a href="abcbank/ipsegment.jsp?update=true">IP地址段分配</a></li>
             <%
                 }
             %>
-            <li><a href="abcbank/ipaddress.jsp">IP地址台帐</a></li>
-            <li><a href="abcbank/webline.jsp">线路台帐</a></li>
+            <li><a href="abcbank/ipaddress.jsp?update=true">IP地址台帐</a></li>
+            <li><a href="abcbank/webline.jsp?update=true">线路台帐</a></li>
         </ul>
     </div>
 

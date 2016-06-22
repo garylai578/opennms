@@ -24,12 +24,58 @@
 %>
 
 <%
+    String bankReturn, deptReturn, typeReturn, applicantReturn, approverReturn, update;
+
+    if(request.getAttribute("bank") != null )
+        bankReturn = (String)request.getAttribute("bank");
+    else {
+        bankReturn = request.getParameter("bank");
+        if(bankReturn == null)
+            bankReturn = "";
+    }
+
+    if(request.getAttribute("dept") != null)
+        deptReturn = (String)request.getAttribute("dept");
+    else {
+        deptReturn = request.getParameter("dept");
+        if(deptReturn == null)
+            deptReturn = "";
+    }
+
+    if(request.getAttribute("type") != null)
+        typeReturn = (String)request.getAttribute("type");
+    else {
+        typeReturn = request.getParameter("type");
+        if(typeReturn == null)
+            typeReturn = "";
+    }
+
+    if(request.getAttribute("applicant") != null)
+        applicantReturn = (String)request.getAttribute("applicant");
+    else {
+        applicantReturn = request.getParameter("applicant");
+        if(applicantReturn == null)
+            applicantReturn = "";
+    }
+
+    if(request.getAttribute("approver") != null)
+        approverReturn = (String)request.getAttribute("approver");
+    else {
+        approverReturn = request.getParameter("approver");
+        if(approverReturn == null)
+            approverReturn = "";
+    }
+
+    if(request.getAttribute("update") != null)
+        update = (String)request.getAttribute("update");
+    else
+        update = request.getParameter("update");
 
     WebLineOperator op = new WebLineOperator();
     WebLine[] linesReturn = (WebLine[])request.getAttribute("webLines");
     if(linesReturn != null)
         lines = linesReturn;
-    if(lines == null){
+    if(lines == null || (update != null && update.equals("true"))){
         if(request.isUserInRole(Authentication.ROLE_ADMIN))
             lines = op.selectAll("");
         else
@@ -121,26 +167,40 @@
                 <%
                     for(int i = 0; i < weblineTypes.length; ++i){
                 %>
-                <option value="<%=weblineTypes[i]%>"> <%=weblineTypes[i]%></option>
+                <option value="<%=weblineTypes[i]%>" <%=((typeReturn != null && typeReturn.equals(weblineTypes[i])) ? "selected" : "")%>> <%=weblineTypes[i]%></option>
                 <%
                     }
                 %>
             </select>&nbsp;&nbsp;
-            <strong>申请人:</strong><input id="applicant" name="applicant" size="8" value="">&nbsp;&nbsp;
-            <strong>审批人:</strong><input id="approver" name="approver" size="8" value="">&nbsp;&nbsp;
-            <strong>所属支行（分行）：</strong><select id="" name="bank" onChange="selectDepts(this.value, 'dept')">
+            <strong>申请人:</strong><input id="applicant" name="applicant" size="8" value="<%=(applicantReturn==null) ? "" : applicantReturn%>">&nbsp;&nbsp;
+            <strong>审批人:</strong><input id="approver" name="approver" size="8" value="<%=(approverReturn==null) ? "" : approverReturn%>">&nbsp;&nbsp;
+            <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
                 <option value="" selected="">请选择</option>
                 <%
                     for(int i = 0; i < bankNames.length; ++i){
                 %>
-                <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
+                <option value="<%=bankNames[i]%>" <%=((bankReturn != null && bankNames[i].equals(bankReturn)) ? "selected" : "")%>><%=bankNames[i]%></option>
                 <%
                     }
                 %>
             </select>&nbsp;&nbsp;
             <strong>所属网点（部门）：</strong><select id="dept" name="dept">
                 <option value="" selected>请选择</option>
-            </select>&nbsp;&nbsp;
+                <%
+                    if(!"".equals(bankReturn)){
+                        String[] depts = bankAndDepts.get(bankReturn);
+                        if(depts != null)
+                            for(String dep : depts){
+                                String selected = "";
+                                if(dep.equals(deptReturn))
+                                    selected = "selected";
+                %>
+                <option value="<%=dep%>" <%=selected%>><%=dep%></option>
+                <%
+                            }
+                    }
+                %>
+            </select>  &nbsp;&nbsp;
             <a id="doSearch" href="javascript:searchWebLine()"><img src="images/search.png" alt="搜索" border="0"></a>
             <a id="search" href="javascript:searchWebLine()">搜索</a>
         </td>
@@ -317,23 +377,26 @@
 
         <br>
         <div>&nbsp;
-        <a href = "abcbank/webline.jsp?curPage=1" >首页</a>
+        <a href = "abcbank/webline.jsp?curPage=1&type=<%=typeReturn%>&applicant=<%=applicantReturn%>&approver=<%=approverReturn%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>" >首页</a>
         <%
             if(curPage - 1 > 0)
-                out.print("<a href = 'abcbank/webline.jsp?curPage=" + (curPage - 1) + "' >上一页</a>");
+                out.print("<a href = 'abcbank/webline.jsp?curPage=" + (curPage - 1) + "&type=" + typeReturn + "&applicant=" + applicantReturn
+                        + "&approver=" + approverReturn + "&bank=" + bankReturn + "&dept=" + deptReturn + "' >上一页</a>");
             else
                 out.print("上一页");
         %>
         <%
             if(curPage + 1 <= pageCount)
-                out.print("<a href = 'abcbank/webline.jsp?curPage=" + (curPage + 1) + "' >下一页</a>");
+                out.print("<a href = 'abcbank/webline.jsp?curPage=" + (curPage + 1) + "&type=" + typeReturn + "&applicant=" + applicantReturn
+                        + "&approver=" + approverReturn + "&bank=" + bankReturn + "&dept=" + deptReturn + "' >下一页</a>");
             else
                 out.print("下一页");
         %>
-        <a href = "abcbank/webline.jsp?curPage=<%=pageCount%>" >尾页</a>
+        <a href = "abcbank/webline.jsp?curPage=<%=pageCount%>&type=<%=typeReturn%>&applicant=<%=applicantReturn%>&approver=<%=approverReturn%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
         </div>
         </div>
+    <input type="hidden" name="curPage" value="<%=curPage%>"/>
 
 </form>
 

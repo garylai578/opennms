@@ -40,7 +40,7 @@ public class SearchWebLineServlet extends HttpServlet {
             colAndValue.put("bank", bank);
 
         WebLineOperator op = new WebLineOperator();
-        response.setContentType("text/html;charset=gb2312");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter pw=response.getWriter();
 
         try {
@@ -55,7 +55,9 @@ public class SearchWebLineServlet extends HttpServlet {
                 request.setAttribute("dept", request.getParameter("dept"));
                 request.getRequestDispatcher("webline.jsp").forward(request, response);
             } else {
-                pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/webline.jsp');</script>");
+                pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/webline.jsp?curPage=" + request.getParameter("curPage")
+                        + "&type=" + request.getParameter("type") + "&applicant=" + request.getParameter("applicant") + "&approver=" + request.getParameter("approver")
+                        + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "');</script>");
                 pw.close();
             }
         } catch (SQLException e) {
