@@ -37,8 +37,27 @@
         ips = op.selectAll("");
     int nums = ips.length;
     List<IPSegment> ipSegmentList = new ArrayList<IPSegment>();
-    for(IPSegment ip : ips)
-        ipSegmentList.add(ip);
+    for(IPSegment ip : ips) {
+        //如果停用的时间超过7天，则不显示
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String stop_date = ip.getStopTime();
+        String state = ip.getState();
+        if (stop_date != null && state.contains("停用")) {
+            try {
+                long today = sf.parse(sf.format(date)).getTime();
+                long stop = sf.parse(stop_date).getTime();
+                long inten = (today - stop) / (1000 * 60 * 60 * 24);
+                if (inten >= 7)
+                    continue;
+                else
+                    ipSegmentList.add(ip);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }else
+            ipSegmentList.add(ip);
+    }
     Collections.sort(ipSegmentList, IPSegment.IPComparator);
 %>
 
@@ -188,18 +207,18 @@
     <table width="100%" border="1" cellspacing="0" cellpadding="2" bordercolor="black">
 
         <tr id="header1">
-            <td style="width: 30px"><b>选择</b></td>
-            <td width="10%"><b>操作</b></td>
-            <td width="10"><b>所属IP段</b></td>
-            <td width="10%"><b>网关</b></td>
-            <td width="10%"><b>掩码</b></td>
-            <td width="20%"><b>开始IP-结束IP</b></td>
-            <td width="8%"><b>所属分行（支行）</b></td>
-            <td width="8%"><b>所属网点（部门）</b></td>
-            <td width="5%"><b>网点类型</b></td>
-            <td width="8%"><b>启用日期</b></td>
-            <td width="5%"><b>使用情况</b></td>
-            <td width="8"><b>备注</b></td>
+            <td><b>选择</b></td>
+            <td><b>操作</b></td>
+            <td><b>所属IP段</b></td>
+            <td><b>网关</b></td>
+            <td><b>掩码</b></td>
+            <td><b>开始IP-结束IP</b></td>
+            <td><b>所属分行（支行）</b></td>
+            <td><b>所属网点（部门）</b></td>
+            <td><b>网点类型</b></td>
+            <td><b>启用日期</b></td>
+            <td><b>使用情况</b></td>
+            <td><b>备注</b></td>
         </tr>
         <%
             int size = ipSegmentList.size();
@@ -211,7 +230,7 @@
             curPage = Integer.parseInt(tmp);
             if(curPage >= pageCount)
                 curPage = pageCount;
-            int ipAtList = (curPage - 1) * PAGESIZE + 1;
+            int ipAtList = (curPage - 1) * PAGESIZE;
 
             int row = 0;
             for(int j = ipAtList; j < ipAtList + PAGESIZE && j < ipSegmentList.size(); j++){
@@ -234,21 +253,6 @@
                 String dept = "";
                 if(bankAndDept.length == 2)
                     dept = bankAndDept[1];
-
-                //如果停用的时间超过7天，则不显示
-                SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = new Date();
-                if(stopTime != null && state.equals("停用")){
-                    try {
-                        long today = sf.parse(sf.format(date)).getTime();
-                        long stop = sf.parse(stopTime).getTime();
-                        long inten = (today - stop) / (1000 * 60 * 60 * 24);
-                        if(inten > 7)
-                            continue;
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                }
         %>
         <tr  <%if (state.equals("停用")) out.print("class=\"lineUnused\"");%>>
             <td>
