@@ -187,12 +187,14 @@ public class ExportExcel<T> {
                     Method getMethod = tCls.getMethod(getMethodName, new Class[]{});
                     Object value = getMethod.invoke(t, new Object[]{});
                     // 判断值的类型后可以强制类型转换（此处省略）
-                    String textValue = value.toString();
-                    if (textValue != null && textValue.contains("停用"))
-                        hs = style3;
-                    else
-                        hs = style2;
-                    values[i] = textValue;
+                    if(value != null) {
+                        String textValue = value.toString();
+                        if (textValue != null && textValue.contains("停用"))
+                            hs = style3;
+                        else
+                            hs = style2;
+                        values[i] = textValue;
+                    }
                 } catch (SecurityException e) {
                     e.printStackTrace();
                 } catch (NoSuchMethodException e) {
