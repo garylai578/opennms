@@ -50,7 +50,7 @@ public class ExportWeblineServlet extends HttpServlet {
         String[] headers = { "id", "专线类型", "申请人", "联系方式", "审批人", "所属分行（支行）", "所属网点（部门）", "地址","开通日期", "月租", "VLAN编号", "物理端口号", " 运营商接口号", "备注"};
         try {
             OutputStream out = response.getOutputStream();
-            ex.exportExcel("retulst", headers, dataset, out);
+            ex.exportExcel("result", headers, dataset, out);
             out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
