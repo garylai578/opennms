@@ -104,7 +104,8 @@ public class AddIPSegmentServlet extends HttpServlet {
                 IPPoolCaculater cal = new IPPoolCaculater(initIP, stopIP, num);
                 int result = cal.caculate();
                 if(result == 0){
-                    pw.print("<script language='javascript'>alert('所选ip段不够分配，请选择其他ip段！' );window.location=('/opennms/abcbank/newIPSegment.jsp');</script>");
+                    pw.print("<script language='javascript'>alert('所选ip段不够分配，请选择其他ip段！' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage="
+                            + request.getParameter("curPage") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
                     pw.close();
                     return;
                 }else if(result == 1) {
@@ -125,7 +126,8 @@ public class AddIPSegmentServlet extends HttpServlet {
             }
 
             BankLogWriter.getSingle().writeLog("用户[" + userId +"]新增IP段[" + startIP + "-" + endIP + "]：" + backMsg);
-            pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
+            pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage="
+                    + request.getParameter("curPage") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
             pw.close();
 
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
