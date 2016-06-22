@@ -32,13 +32,34 @@
 
 <%
     IPSegmentOperater op = new IPSegmentOperater();
+    String bankReturn, deptReturn, stateReturn;
 
-    String bankReturn = (String)request.getAttribute("bank");
-    String deptReturn = (String)request.getAttribute("dept");
-    String stateReturn = (String)request.getAttribute("state");
-    IPSegment[] ipsReturn = (IPSegment[])request.getAttribute("ipSeg");
-    if(ipsReturn != null)
-        ips = ipsReturn;
+    if(request.getAttribute("bank") != null )
+        bankReturn = (String)request.getAttribute("bank");
+    else {
+        bankReturn = request.getParameter("bank");
+        if(bankReturn == null)
+            bankReturn = "";
+    }
+
+    if(request.getAttribute("dept") != null)
+        deptReturn = (String)request.getAttribute("dept");
+    else {
+        deptReturn = request.getParameter("dept");
+        if(deptReturn == null)
+            deptReturn = "";
+    }
+
+    if(request.getAttribute("state") != null)
+        stateReturn = (String)request.getAttribute("state");
+    else {
+        stateReturn = request.getParameter("state");
+        if(stateReturn == null)
+            stateReturn = "";
+    }
+
+    if(request.getAttribute("ipSeg") != null)
+        ips = (IPSegment[])request.getAttribute("ipSeg");
     if(ips == null)
         ips = op.selectAll("");
     int nums = ips.length;
@@ -64,7 +85,6 @@
         }else
             ipSegmentList.add(ip);
     }
-    Collections.sort(ipSegmentList, IPSegment.IPComparator);
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -171,6 +191,7 @@
     <input type="hidden" name="comments"/>
     <input type="hidden" name="rows"/>
     <input type="hidden" name="ipSegs"/>
+    <input type="hidden" name="curPage" value="<%=curPage%>"/>
 
     <h3>IP地址段分配</h3>
 
@@ -181,18 +202,31 @@
     </td>
 
     <td align="left">&nbsp;&nbsp;
-        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts2(this.value, 'dept', <%=deptReturn%>)">
+        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
             <option value="" selected="">请选择</option>
             <%
                 for(int i = 0; i < bankNames.length; ++i){
             %>
-            <option value="<%=bankNames[i]%>" <%=((bankReturn == null || bankReturn.equals("")) ? "" : "selected")%>><%=bankNames[i]%></option>
+            <option value="<%=bankNames[i]%>" <%=((bankReturn != null && bankNames[i].equals(bankReturn)) ? "selected" : "")%>><%=bankNames[i]%></option>
             <%
                 }
             %>
         </select>&nbsp;&nbsp;
         <strong>所属网点（部门）：</strong><select id="dept" name="dept">
-                <option value="" selected>请选择</option>
+            <option value="" selected>请选择</option>
+            <%
+                if(!"".equals(bankReturn)){
+                    String[] depts = bankAndDepts.get(bankReturn);
+                    for(int i = 0; i < depts.length; ++i){
+                        String selected = "";
+                        if(depts[i].equals(deptReturn))
+                            selected = "selected";
+            %>
+                    <option value="<%=depts[i]%>" <%=selected%>><%=depts[i]%></option>
+            <%
+                    }
+                }
+            %>
                 </select>  &nbsp;&nbsp;
         <strong>使用情况：</strong><select id="state" name="state">
             <option value="" selected="">请选择</option>
@@ -397,20 +431,20 @@
 
         <br>
         <div>&nbsp;
-        <a href = "abcbank/ipsegment.jsp?curPage=1" >首页</a>
+        <a href = "abcbank/ipsegment.jsp?curPage=1&bank=<%=bankReturn%>&dept=<%=deptReturn%>&state=<%=stateReturn%>" >首页</a>
         <%
             if(curPage - 1 > 0)
-                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage - 1) + "' >上一页</a>");
+                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage - 1) + "&bank=" + bankReturn + "&dept=" + deptReturn + "&state=" + stateReturn + "' >上一页</a>");
             else
                 out.print("上一页");
         %>
         <%
             if(curPage + 1 <= pageCount)
-                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage + 1) + "' >下一页</a>");
+                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage + 1) + "&bank=" + bankReturn + "&dept=" + deptReturn + "&state=" + stateReturn + "' >下一页</a>");
             else
                 out.print("下一页");
         %>
-        <a href = "abcbank/ipsegment.jsp?curPage=<%=pageCount%>" >尾页</a>
+        <a href = "abcbank/ipsegment.jsp?curPage=<%=pageCount%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>&state=<%=stateReturn%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
         </div>
     </div>

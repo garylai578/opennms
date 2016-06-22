@@ -44,7 +44,7 @@ public class StartIPSegmentServlet extends HttpServlet {
         String curPage = request.getParameter("curPage");
         if(curPage == null)
             curPage = "1";
-        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipsegment.jsp&curPage=" + curPage + "');</script>");
+        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipsegment.jsp?curPage=" + curPage + "');</script>");
         pw.close();
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
 //            dispatcher.forward(request, response);

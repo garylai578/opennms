@@ -47,7 +47,8 @@ public class SearchIPSegmentServlet extends HttpServlet {
                 request.setAttribute("state", request.getParameter("state"));
                 request.getRequestDispatcher("ipsegment.jsp").forward(request, response);
             } else {
-                pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipsegment.jsp');</script>");
+                pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage="
+                        + request.getParameter("curPage") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
                 pw.close();
             }
         } catch (SQLException e) {

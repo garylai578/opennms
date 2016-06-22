@@ -46,7 +46,8 @@ public class StartIPAddressServlet extends HttpServlet {
         String curPage = request.getParameter("curPage");
         if(curPage == null)
             curPage = "1";
-        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp&curPage=" + curPage + "');</script>");
+        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage="
+                + curPage + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
         pw.close();
     }
 
