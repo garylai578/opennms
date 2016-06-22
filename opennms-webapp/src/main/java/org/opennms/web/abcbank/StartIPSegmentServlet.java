@@ -40,7 +40,7 @@ public class StartIPSegmentServlet extends HttpServlet {
 
         request.setAttribute("update", "true");
         BankLogWriter.getSingle().writeLog("用户[" + userId + "]启用IP段[" + ipSegs + "]");
-        response.setContentType("text/html;charset=gb2312");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter pw = response.getWriter();
         String curPage = request.getParameter("curPage");
         if(curPage == null)

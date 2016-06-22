@@ -42,7 +42,7 @@ public class StopIPSegmentServlet extends HttpServlet {
         }
 
         BankLogWriter.getSingle().writeLog("用户[" + userId + "]停用IP段[" + ipSegs + "]");
-        response.setContentType("text/html;charset=gb2312");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter pw = response.getWriter();
         String curPage = request.getParameter("curPage");
         request.setAttribute("update", "true");
