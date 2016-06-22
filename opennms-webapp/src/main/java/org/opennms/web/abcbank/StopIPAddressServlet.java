@@ -38,12 +38,14 @@ public class StopIPAddressServlet extends HttpServlet {
             }
         }
         BankLogWriter.getSingle().writeLog("用户[" + userId + "]停用IP[" + request.getParameter("ipAddr") + "]");
-        response.setContentType("text/html;charset=gb2312");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter pw = response.getWriter();
+        request.setAttribute("update", "true");
         String curPage = request.getParameter("curPage");
         if(curPage == null)
             curPage = "1";
-        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp&curPage=" + curPage + "');</script>");
+        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage=" + curPage
+                + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
         pw.close();
     }
 

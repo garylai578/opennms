@@ -50,9 +50,11 @@ public class UpdateIPAddressServlet extends HttpServlet {
             BankLogWriter.getSingle().writeLog("用户[" + userId + "]更新IP[" + ip  + "]，网络类型更新为：" + network_type + ", 设备使用人更新为：" + users + "，所属支行（分行）更新为："
                     + bank + "，所属网点（部门）更新为：" + dept + ", 设备类型更新为：" + model + ", 设备品牌更新为：" + equip_brand + "，设备型号更新为：" + equip_type
                     + "，用途更新为：" + application + "，备注更新为：" + comment);
-            response.setContentType("text/html;charset=gb2312");
+            response.setContentType("text/html;charset=UTF-8");
+            request.setAttribute("update", "true");
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('修改成功' );window.location=('/opennms/abcbank/ipaddress.jsp');</script>");
+            pw.print("<script language='javascript'>alert('修改成功' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage=" + request.getParameter("curPage")
+                    + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
             pw.close();
 
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");

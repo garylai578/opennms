@@ -24,6 +24,7 @@
 <%!
     int pageCount;
     int curPage = 1;
+    IPSegment[] ips;
 %>
 
 <%
@@ -54,9 +55,11 @@
             stateReturn = "";
     }
 
-    update = (String)request.getAttribute("update");
+    if(request.getAttribute("update") != null)
+        update = (String)request.getAttribute("update");
+    else
+        update = request.getParameter("update");
 
-    IPSegment[] ips = null;
     if(request.getAttribute("ipSeg") != null)
         ips = (IPSegment[])request.getAttribute("ipSeg");
     if(ips == null || (update != null && update.equals("true")))
