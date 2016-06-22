@@ -34,7 +34,11 @@ public class DeleteWebLineServlet extends HttpServlet {
         BankLogWriter.getSingle().writeLog("用户[" + userId + "]删除专线id[" + request.getParameter("webLineID") + "]");
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw = response.getWriter();
-        pw.print("<script language='javascript'>alert('成功删除！' );window.location=('/opennms/abcbank/webline.jsp');</script>");
+
+        String curPage = request.getParameter("curPage");
+        if(curPage == null)
+            curPage = "1";
+        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/webline.jsp&curPage=" + curPage + "');</script>");
         pw.close();
     }
 
