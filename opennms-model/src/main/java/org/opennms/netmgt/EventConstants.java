@@ -1125,7 +1125,7 @@ public class EventConstants {
             }
             final DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.FULL, timeFormat);
             formatter.setLenient(true);
-            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+//            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
             return formatter;
         }
     };
@@ -1134,7 +1134,7 @@ public class EventConstants {
         protected synchronized DateFormat initialValue() {
             final DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.LONG);
             formatter.setLenient(true);
-            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
+//            formatter.setTimeZone(TimeZone.getTimeZone("GMT"));
             return formatter;
         }
     };

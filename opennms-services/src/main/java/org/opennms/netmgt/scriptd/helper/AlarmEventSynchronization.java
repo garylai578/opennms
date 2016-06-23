@@ -28,28 +28,22 @@
 
 package org.opennms.netmgt.scriptd.helper;
 
+import org.opennms.core.utils.BeanUtils;
+import org.opennms.netmgt.dao.AlarmDao;
+import org.opennms.netmgt.model.OnmsAlarm;
+import org.opennms.netmgt.xml.event.AlarmData;
+import org.opennms.netmgt.xml.event.Event;
+import org.opennms.netmgt.xml.event.Logmsg;
+import org.springframework.beans.factory.access.BeanFactoryReference;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
+
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TimeZone;
-
-
-import org.opennms.core.utils.BeanUtils;
-
-import org.opennms.netmgt.dao.AlarmDao;
-
-import org.opennms.netmgt.model.OnmsAlarm;
-
-import org.opennms.netmgt.xml.event.AlarmData;
-import org.opennms.netmgt.xml.event.Event;
-import org.opennms.netmgt.xml.event.Logmsg;
-
-import org.springframework.beans.factory.access.BeanFactoryReference;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
-import org.springframework.transaction.support.TransactionTemplate;
 
 public class AlarmEventSynchronization implements EventSynchronization {
 
@@ -100,14 +94,14 @@ public class AlarmEventSynchronization implements EventSynchronization {
         // alarm creation time
         if (alarm.getFirstEventTime() != null) {
             DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);
-            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+//            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         	event.setCreationTime(dateFormat.format(alarm.getFirstEventTime()));
         }
 
         // last event timestamp
         if (alarm.getLastEventTime() != null) {
             DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);
-            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+//            dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
             event.setTime(dateFormat.format(alarm.getLastEventTime()));
         }
         
