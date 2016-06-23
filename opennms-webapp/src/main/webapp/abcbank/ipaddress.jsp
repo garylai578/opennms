@@ -101,7 +101,22 @@
             ipsList.add(ip);
     }
     ips = ipsList.toArray(new BankIPAddress[ipsList.size()]);
-    int nums = ips.length;
+    int nums=0;
+
+	int size = ips.length;
+	pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
+	String tmp = request.getParameter("curPage");
+	if(tmp==null){
+		tmp="1";
+	}
+	curPage = Integer.parseInt(tmp);
+	if(curPage >= pageCount){
+		curPage = pageCount;
+		nums = size%PAGESIZE;
+	}else{
+		nums = PAGESIZE;
+	}
+	
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -289,15 +304,6 @@
             <td><b>备注</b></td>
         </tr>
         <%
-            int size = ips.length;
-            pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
-            String tmp = request.getParameter("curPage");
-            if(tmp==null){
-                tmp="1";
-            }
-            curPage = Integer.parseInt(tmp);
-            if(curPage >= pageCount)
-                curPage = pageCount;
             int ipAtArray = (curPage - 1) * PAGESIZE;
             int row = 0;
             for(int j = ipAtArray; j < ipAtArray + PAGESIZE && j < ips.length; j++){

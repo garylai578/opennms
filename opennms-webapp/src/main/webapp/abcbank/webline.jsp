@@ -83,7 +83,20 @@
     }
 
     int row = 0;
-    int nums = lines.length;
+    int nums = 0;
+	int size = lines.length;
+	pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
+	String tmp = request.getParameter("curPage");
+	if(tmp==null){
+		tmp="1";
+	}
+	curPage = Integer.parseInt(tmp);
+	if(curPage >= pageCount){
+		curPage = pageCount;
+		nums = size%PAGESIZE;
+	}else{
+		nums = PAGESIZE;
+	}
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -232,15 +245,6 @@
             <td width="10%"><b>备注</b></td>
         </tr>
         <%
-            int size = lines.length;
-            pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
-            String tmp = request.getParameter("curPage");
-            if(tmp==null){
-                tmp="1";
-            }
-            curPage = Integer.parseInt(tmp);
-            if(curPage >= pageCount)
-                curPage = pageCount;
             int lineAtArray = (curPage - 1) * PAGESIZE;
 
             for(int j = lineAtArray; j < lineAtArray + PAGESIZE && j < lines.length; ++j){

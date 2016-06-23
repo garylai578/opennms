@@ -64,7 +64,6 @@
         ips = (IPSegment[])request.getAttribute("ipSeg");
     if(ips == null || (update != null && update.equals("true")))
         ips = op.selectAll("");
-    int nums = ips.length;
     List<IPSegment> ipSegmentList = new LinkedList<IPSegment>();
     for(IPSegment ip : ips) {
         //如果停用的时间超过7天，则不显示
@@ -87,6 +86,28 @@
         }else
             ipSegmentList.add(ip);
     }
+	
+	int nums=0;
+	int size = ipSegmentList.size();
+	pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
+	String tmp = request.getParameter("curPage");
+	if(tmp==null){
+		tmp="1";
+	}
+	curPage = Integer.parseInt(tmp);
+	if(curPage >= pageCount){
+		curPage = pageCount;
+		nums = size%PAGESIZE;
+	}else{
+		nums = PAGESIZE;
+	}	if(curPage >= pageCount){
+		curPage = pageCount;
+		nums = size%PAGESIZE;
+	}else{
+		nums = PAGESIZE;
+	}
+	
+	int ipAtList = (curPage - 1) * PAGESIZE;
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -263,17 +284,6 @@
             <td><b>备注</b></td>
         </tr>
         <%
-            int size = ipSegmentList.size();
-            pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
-            String tmp = request.getParameter("curPage");
-            if(tmp==null){
-                tmp="1";
-            }
-            curPage = Integer.parseInt(tmp);
-            if(curPage >= pageCount)
-                curPage = pageCount;
-            int ipAtList = (curPage - 1) * PAGESIZE;
-
             int row = 0;
             for(int j = ipAtList; j < ipAtList + PAGESIZE && j < ipSegmentList.size(); j++){
                 IPSegment ip  =  ipSegmentList.get(j);
@@ -402,6 +412,7 @@
                 <div id="createdate-<%=row%>">
                     <%= ((time == null || time.equals("")) ? "&nbsp;" : time) %>
                     <input type="hidden" name="createdate-<%=row%>" value="<%= ((time == null || time.equals("")) ? "&nbsp;" : time) %>"/>
+					<input type="hidden" name="stopTime-<%=row%>" value="<%= ((stopTime == null || stopTime.equals("")) ? "&nbsp;" : stopTime) %>"/>
                 </div>
             </td>
 
