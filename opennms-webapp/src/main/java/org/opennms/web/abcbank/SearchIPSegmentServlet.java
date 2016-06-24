@@ -41,7 +41,7 @@ public class SearchIPSegmentServlet extends HttpServlet {
         try {
             IPSegment[] rs = op.andSelect(colAndValue);
             if(rs != null && rs.length > 0){
-                request.setAttribute("ipSeg", rs);
+                request.getSession().setAttribute("ipSeg", rs);
                 request.setAttribute("bank", request.getParameter("bank"));
                 request.setAttribute("dept", request.getParameter("dept"));
                 request.setAttribute("state", request.getParameter("state"));

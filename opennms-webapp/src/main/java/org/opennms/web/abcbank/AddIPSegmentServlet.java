@@ -127,7 +127,7 @@ public class AddIPSegmentServlet extends HttpServlet {
             }
 
             BankLogWriter.getSingle().writeLog("用户[" + userId +"]新增IP段[" + startIP + "-" + endIP + "]：" + backMsg);
-            pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipsegment.jsp?curPage="
+            pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipsegment.jsp?update=true&curPage="
                     + request.getParameter("curPage") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
             pw.close();
 

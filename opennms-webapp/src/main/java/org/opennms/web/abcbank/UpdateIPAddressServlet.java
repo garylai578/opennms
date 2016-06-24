@@ -53,7 +53,7 @@ public class UpdateIPAddressServlet extends HttpServlet {
             response.setContentType("text/html;charset=UTF-8");
             request.setAttribute("update", "true");
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('修改成功' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage=" + request.getParameter("curPage")
+            pw.print("<script language='javascript'>alert('修改成功' );window.location=('/opennms/abcbank/ipaddress.jsp?update=true&curPage=" + request.getParameter("curPage")
                     + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
             pw.close();
 

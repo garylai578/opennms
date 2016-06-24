@@ -24,7 +24,6 @@
 <%!
     int pageCount;
     int curPage = 1;
-    BankIPAddress[] ips;
 %>
 
 <%
@@ -67,17 +66,28 @@
     else
         update = request.getParameter("update");
 
+    Map<String, String> colAndValue = new HashMap<String, String>();
+    if(bankReturn != null && !"".equals(bankReturn) && !"null".equals(bankReturn))
+        colAndValue.put("bank", bankReturn);
+    if(deptReturn != null && !"".equals(deptReturn) && !"null".equals(deptReturn))
+        colAndValue.put("dept", deptReturn);
+    if(typeReturn != null && !"".equals(typeReturn) && !"null".equals(typeReturn))
+        colAndValue.put("network_type", typeReturn);
+    if(usersReturn != null && !"".equals(usersReturn) && !"null".equals(usersReturn))
+        colAndValue.put("users", usersReturn);
+
     BankIPAddressOp op = new BankIPAddressOp();
-    BankIPAddress[] ipsReturn = (BankIPAddress[])request.getAttribute("ip_addresses");
-    if(ipsReturn != null)
-        ips = ipsReturn;
+    BankIPAddress[] ips = (BankIPAddress[])session.getAttribute("ip_addresses");
     List<BankIPAddress> ipsList = new LinkedList<BankIPAddress>();
     if(ips == null || (update != null && update.equals("true"))){
         if(request.isUserInRole(Authentication.ROLE_ADMIN))
-            ips = op.selectAll("");
-        else
-            ips = op.selectAll(group);
+            ips = op.unionSearch(colAndValue);
+        else {
+            colAndValue.put("bank", group);
+            ips = op.unionSearch(colAndValue);
+        }
     }
+    session.setAttribute("ip_addresses", ips);
 
     for(BankIPAddress ip : ips) {
         //如果停用的时间超过7天，则不显示
@@ -106,9 +116,9 @@
 	int size = ips.length;
 	pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
 	String tmp = request.getParameter("curPage");
-	if(tmp==null){
-		tmp="1";
-	}
+    if(tmp==null || "".equals(tmp) || "null".equals(tmp)){
+        tmp="1";
+    }
 	curPage = Integer.parseInt(tmp);
 	if(curPage >= pageCount){
 		curPage = pageCount;

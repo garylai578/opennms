@@ -46,7 +46,7 @@ public class SearchSwitcherServlet extends HttpServlet {
         try {
             Switcher[] rs = op.andSelect(colAndValue);
             if(rs != null && rs.length > 0){
-                request.setAttribute("switchers", rs);
+                request.getSession().setAttribute("switchers", rs);
                 request.setAttribute("name", request.getParameter("name"));
                 request.setAttribute("group", request.getParameter("group"));
                 request.setAttribute("brand", request.getParameter("brand"));
@@ -54,7 +54,9 @@ public class SearchSwitcherServlet extends HttpServlet {
                 request.setAttribute("comment", request.getParameter("comment"));
                 request.getRequestDispatcher("switcher.jsp").forward(request, response);
             } else {
-                pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
+                pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/switcher.jsp?curPage=" + request.getParameter("curPage")
+                        + "&group=" + request.getParameter("group") + "&name=" + request.getParameter("name") + "&brand=" + request.getParameter("brand") +
+                        "&ip=" + request.getParameter("ip") + "&comment=" + request.getParameter("comment") + "');</script>");
                 pw.close();
             }
         } catch (SQLException e) {

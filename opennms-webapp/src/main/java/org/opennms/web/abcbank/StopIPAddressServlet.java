@@ -44,7 +44,7 @@ public class StopIPAddressServlet extends HttpServlet {
         String curPage = request.getParameter("curPage");
         if(curPage == null)
             curPage = "1";
-        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage=" + curPage
+        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipaddress.jsp?update=true&curPage=" + curPage
                 + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
         pw.close();
     }

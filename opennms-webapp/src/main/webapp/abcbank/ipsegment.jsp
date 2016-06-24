@@ -24,7 +24,6 @@
 <%!
     int pageCount;
     int curPage = 1;
-    IPSegment[] ips;
 %>
 
 <%
@@ -60,10 +59,19 @@
     else
         update = request.getParameter("update");
 
-    if(request.getAttribute("ipSeg") != null)
-        ips = (IPSegment[])request.getAttribute("ipSeg");
+    Map<String, String> colAndValue = new HashMap<String, String>();
+    if(bankReturn != null && !"".equals(bankReturn) && !"null".equals(bankReturn)) {
+        if(deptReturn != null && !"".equals(deptReturn) && !"null".equals(deptReturn))
+            bankReturn = bankReturn + "/" + deptReturn;
+        colAndValue.put("name", bankReturn);
+    }
+    if(stateReturn != null && !"".equals(stateReturn) && !"null".equals(stateReturn))
+        colAndValue.put("state", stateReturn);
+
+    IPSegment[] ips = (IPSegment[])session.getAttribute("ipSeg");
     if(ips == null || (update != null && update.equals("true")))
-        ips = op.selectAll("");
+        ips = op.andSelect(colAndValue);
+    session.setAttribute("ipSeg", ips);
     List<IPSegment> ipSegmentList = new LinkedList<IPSegment>();
     for(IPSegment ip : ips) {
         //如果停用的时间超过7天，则不显示
@@ -91,16 +99,11 @@
 	int size = ipSegmentList.size();
 	pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
 	String tmp = request.getParameter("curPage");
-	if(tmp==null){
+	if(tmp==null || "".equals(tmp) || "null".equals(tmp)){
 		tmp="1";
 	}
 	curPage = Integer.parseInt(tmp);
 	if(curPage >= pageCount){
-		curPage = pageCount;
-		nums = size%PAGESIZE;
-	}else{
-		nums = PAGESIZE;
-	}	if(curPage >= pageCount){
 		curPage = pageCount;
 		nums = size%PAGESIZE;
 	}else{

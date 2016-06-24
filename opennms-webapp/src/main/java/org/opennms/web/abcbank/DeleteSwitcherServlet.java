@@ -28,7 +28,9 @@ public class DeleteSwitcherServlet extends HttpServlet {
             BankLogWriter.getSingle().writeLog("用户[" + userId + "]删除交换机[" + host + "]");
             response.setContentType("text/html;charset=gb2312");
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('成功删除！' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
+            pw.print("<script language='javascript'>alert('成功删除！' );window.location=('/opennms/abcbank/switcher.jsp?curPage=" + request.getParameter("curPage")
+                    + "&group=" + request.getParameter("group") + "&name=" + request.getParameter("name") + "&brand=" + request.getParameter("brand") +
+                    "&ip=" + request.getParameter("ip") + "&comment=" + request.getParameter("comment") + "');</script>");
             pw.close();
         } catch (SQLException e) {
             e.printStackTrace();

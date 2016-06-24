@@ -20,7 +20,6 @@
 <%!
     int pageCount;
     int curPage = 1;
-    WebLine[] lines;
 %>
 
 <%
@@ -71,23 +70,36 @@
     else
         update = request.getParameter("update");
 
+    Map<String, String> colAndValue = new HashMap<String, String>();
+    if(bankReturn != null && !"".equals(bankReturn) && !"null".equals(bankReturn))
+        colAndValue.put("bank", bankReturn);
+    if(deptReturn != null && !"".equals(deptReturn) && !"null".equals(deptReturn))
+        colAndValue.put("dept", deptReturn);
+    if(typeReturn != null && !"".equals(typeReturn) && !"null".equals(typeReturn))
+        colAndValue.put("type", typeReturn);
+    if(applicantReturn != null && !"".equals(applicantReturn) && !"null".equals(applicantReturn))
+        colAndValue.put("applicant", applicantReturn);
+    if(approverReturn != null && !"".equals(approverReturn) && !"null".equals(approverReturn))
+        colAndValue.put("approver", approverReturn);
+
     WebLineOperator op = new WebLineOperator();
-    WebLine[] linesReturn = (WebLine[])request.getAttribute("webLines");
-    if(linesReturn != null)
-        lines = linesReturn;
+    WebLine[] lines = (WebLine[])session.getAttribute("webLines");
     if(lines == null || (update != null && update.equals("true"))){
         if(request.isUserInRole(Authentication.ROLE_ADMIN))
-            lines = op.selectAll("");
-        else
-            lines = op.selectAll(group);
+            lines = op.andSearch(colAndValue);
+        else {
+            colAndValue.put("grp", group);
+            lines = op.andSearch(colAndValue);
+        }
     }
+    session.setAttribute("webLines", lines);
 
     int row = 0;
     int nums = 0;
 	int size = lines.length;
 	pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
 	String tmp = request.getParameter("curPage");
-	if(tmp==null){
+    if(tmp==null || "".equals(tmp) || "null".equals(tmp)){
 		tmp="1";
 	}
 	curPage = Integer.parseInt(tmp);

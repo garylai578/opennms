@@ -44,7 +44,7 @@ public class SearchIPAddressServlet extends HttpServlet {
         try {
             BankIPAddress[] rs = op.unionSearch(colAndValue);
             if(rs != null && rs.length > 0){
-                request.setAttribute("ip_addresses", rs);
+                request.getSession().setAttribute("ip_addresses", rs);
                 request.setAttribute("network_type", request.getParameter("network_type"));
                 request.setAttribute("users", request.getParameter("users"));
                 request.setAttribute("dept", request.getParameter("dept"));

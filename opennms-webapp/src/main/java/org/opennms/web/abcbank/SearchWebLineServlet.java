@@ -47,7 +47,7 @@ public class SearchWebLineServlet extends HttpServlet {
             WebLine[] rs = op.andSearch(colAndValue);
 
             if(rs != null && rs.length > 0){
-                request.setAttribute("webLines", rs);
+                request.getSession().setAttribute("webLines", rs);
                 request.setAttribute("type", request.getParameter("type"));
                 request.setAttribute("applicant", request.getParameter("applicant"));
                 request.setAttribute("approver", request.getParameter("approver"));

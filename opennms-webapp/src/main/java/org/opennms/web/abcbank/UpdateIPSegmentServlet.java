@@ -41,7 +41,7 @@ public class UpdateIPSegmentServlet extends HttpServlet {
             request.setAttribute("update", "true");
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter pw=response.getWriter();
-            pw.print("<script language='javascript'>alert('修改成功！');window.location=('/opennms/abcbank/ipsegment.jsp?curPage="
+            pw.print("<script language='javascript'>alert('修改成功！');window.location=('/opennms/abcbank/ipsegment.jsp?update=true&curPage="
                     + request.getParameter("curPage") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
             pw.close();
 

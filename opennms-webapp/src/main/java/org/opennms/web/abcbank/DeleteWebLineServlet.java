@@ -35,7 +35,7 @@ public class DeleteWebLineServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setAttribute("update", "true");
         PrintWriter pw = response.getWriter();
-        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/webline.jsp?curPage=" + request.getParameter("curPage")
+        pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/webline.jsp?update=true&curPage=" + request.getParameter("curPage")
                 + "&type=" + request.getParameter("type") + "&applicant=" + request.getParameter("applicant") + "&approver=" + request.getParameter("approver")
                 + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "');</script>");
         pw.close();

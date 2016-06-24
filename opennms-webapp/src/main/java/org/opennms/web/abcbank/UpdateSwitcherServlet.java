@@ -79,7 +79,7 @@ public class UpdateSwitcherServlet extends HttpServlet {
         BankLogWriter.getSingle().writeLog("用户[" + userId + "]修改交换机配置[" + host + "]");
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
-        pw.print("<script language='javascript'>alert('成功修改！' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
+        pw.print("<script language='javascript'>alert('成功修改！' );window.location=('/opennms/abcbank/switcher.jsp?update=true');</script>");
         pw.close();
     }
 

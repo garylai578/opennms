@@ -78,7 +78,7 @@ public class AddSwitcherServlet extends HttpServlet {
         BankLogWriter.getSingle().writeLog("用户[" + userId + "]新增交换机[" + host + "]");
         response.setContentType("text/html;charset=gb2312");
         PrintWriter pw=response.getWriter();
-        pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/opennms/abcbank/switcher.jsp');</script>");
+        pw.print("<script language='javascript'>alert('成功添加！' );window.location=('/opennms/abcbank/switcher.jsp?update=true&curPage=" + request.getParameter("curPage") + "');</script>");
         pw.close();
     }
 

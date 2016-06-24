@@ -37,12 +37,9 @@
 <%!
     int pageCount;
     int curPage = 1;
-    Switcher[] ss;
 %>
 
 <%
-    SwitcherOperator op = new SwitcherOperator();
-
     final DBUtils d = new DBUtils(getClass());
     List<Integer> nodeIds = new ArrayList<Integer>();
     Map<String, Integer> ipNodeidMap = new HashMap<String, Integer>();
@@ -67,12 +64,80 @@
     }
 
     String swip = request.getParameter("switcherIP");
+    String groupReturn, nameReturn, brandReturn, ipReturn, commentReturn, update;
+    if(request.getAttribute("group") != null )
+        groupReturn = (String)request.getAttribute("group");
+    else {
+        groupReturn = request.getParameter("group");
+        if(groupReturn == null)
+            groupReturn = "";
+    }
 
-    Switcher[] ssReturn = (Switcher[])request.getAttribute("switchers");
-    if(ssReturn != null)
-        ss = ssReturn;
-    if(ss == null)
-        ss = op.selectAll();
+    if(request.getAttribute("name") != null)
+        nameReturn = (String)request.getAttribute("name");
+    else {
+        nameReturn = request.getParameter("name");
+        if(nameReturn == null)
+            nameReturn = "";
+    }
+
+    if(request.getAttribute("brand") != null)
+        brandReturn = (String)request.getAttribute("brand");
+    else {
+        brandReturn = request.getParameter("brand");
+        if(brandReturn == null)
+            brandReturn = "";
+    }
+
+    if(request.getAttribute("ip") != null)
+        ipReturn = (String)request.getAttribute("ip");
+    else {
+        ipReturn = request.getParameter("ip");
+        if(ipReturn == null)
+            ipReturn = "";
+    }
+
+    if(request.getAttribute("comment") != null)
+        commentReturn = (String)request.getAttribute("comment");
+    else {
+        commentReturn = request.getParameter("comment");
+        if(commentReturn == null)
+            commentReturn = "";
+    }
+
+    if(request.getAttribute("update") != null)
+        update = (String)request.getAttribute("update");
+    else
+        update = request.getParameter("update");
+
+    Map<String, String> colAndValue = new HashMap<String, String>();
+    if(groupReturn != null && !"".equals(groupReturn) && !"null".equals(groupReturn))
+        colAndValue.put("groups", groupReturn);
+    if(nameReturn != null && !"".equals(nameReturn) && !"null".equals(nameReturn))
+        colAndValue.put("name", nameReturn);
+    if(brandReturn != null && !"".equals(brandReturn) && !"null".equals(brandReturn))
+        colAndValue.put("brand", brandReturn);
+    if(ipReturn != null && !"".equals(ipReturn) && !"null".equals(ipReturn))
+        colAndValue.put("host", ipReturn);
+    if(commentReturn != null && !"".equals(commentReturn) && !"null".equals(commentReturn))
+        colAndValue.put("comment", commentReturn);
+
+    SwitcherOperator op = new SwitcherOperator();
+    Switcher[] ss = (Switcher[])session.getAttribute("switchers");
+    if(ss == null || (update != null && update.equals("true")))
+        ss = op.andSelect(colAndValue);
+    session.setAttribute("switchers", ss);
+
+    int size = ss.length;
+    pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
+    String tmp = request.getParameter("curPage");
+    if(tmp==null || "".equals(tmp) || "null".equals(tmp)){
+        tmp="1";
+    }
+    curPage = Integer.parseInt(tmp);
+    if(curPage >= pageCount)
+        curPage = pageCount;
+    int swAtArray = (curPage - 1) * PAGESIZE;
 %>
 
 <script type="text/javascript" >
@@ -238,13 +303,13 @@
         </td>
 
         <td align="left">&nbsp;&nbsp;
-            <strong>名称:</strong><input id="name" name="name" size="12" value="">&nbsp;&nbsp;
+            <strong>名称:</strong><input id="name" name="name" size="12" value="<%=(nameReturn == null ? "" : nameReturn)%>">&nbsp;&nbsp;
             <strong>分组：</strong><select id="group" name="grpup">
                 <option value="" selected="">请选择</option>
                 <%
                     for(int i = 0; i < switcherGroups.length; ++i){
                 %>
-                <option value="<%=switcherGroups[i]%>"><%=switcherGroups[i]%></option>
+                <option value="<%=switcherGroups[i]%>" <%=((groupReturn!=null && groupReturn.equals(switcherGroups[i])) ? "selected" : "")%>><%=switcherGroups[i]%></option>
                 <%
                     }
                 %>
@@ -254,13 +319,13 @@
                 <%
                     for(int i = 0; i < switcherBrands.length; ++i){
                 %>
-                <option value="<%=switcherBrands[i]%>"><%=switcherBrands[i]%></option>
+                <option value="<%=switcherBrands[i]%>" <%=((brandReturn!=null && brandReturn.equals(switcherBrands[i])) ? "selected" : "")%>><%=switcherBrands[i]%></option>
                 <%
                     }
                 %>
             </select>&nbsp;&nbsp;
-            <strong>IP:</strong><input id="ip" name="ip" size="12" value="">&nbsp;&nbsp;
-            <strong>备注:</strong><input id="comment" name="comment" size="12" value="">&nbsp;&nbsp;
+            <strong>IP:</strong><input id="ip" name="ip" size="12" value="<%=(ipReturn == null) ? "" : ipReturn%>">&nbsp;&nbsp;
+            <strong>备注:</strong><input id="comment" name="comment" size="12" value="<%=(commentReturn == null) ? "" : commentReturn%>">&nbsp;&nbsp;
             <a id="doSearch" href="javascript:searchSwitcher()"><img src="images/search.png" alt="搜索" border="0"></a>
             <a id="search" href="javascript:searchSwitcher()">搜索</a>
         </td>
@@ -295,17 +360,6 @@
             <td class="iptd"><b>备注</b></td>
         </tr>
         <%
-            int size = ss.length;
-            pageCount = (size%PAGESIZE==0)?(size/PAGESIZE):(size/PAGESIZE+1);
-            String tmp = request.getParameter("curPage");
-            if(tmp==null){
-                tmp="1";
-            }
-            curPage = Integer.parseInt(tmp);
-            if(curPage >= pageCount)
-                curPage = pageCount;
-            int swAtArray = (curPage - 1) * PAGESIZE;
-
             int row = 0;
             for(int j = swAtArray; j < ss.length && j < swAtArray + PAGESIZE; ++j){
                 Switcher sw = ss[j];
@@ -505,20 +559,22 @@
         %>
     </table>
     </div>
-    <a href = "abcbank/switcher.jsp?curPage=1" >首页</a>
+    <a href = "abcbank/switcher.jsp?curPage=1&group=<%=groupReturn%>&name=<%=nameReturn%>&brand=<%=brandReturn%>&ip=<%=ipReturn%>&comment=<%=commentReturn%>" >首页</a>
     <%
         if(curPage - 1 > 0)
-            out.print("<a href = 'abcbank/switcher.jsp?curPage=" + (curPage - 1) + "' >上一页</a>");
+            out.print("<a href = 'abcbank/switcher.jsp?curPage=" + (curPage - 1) + "&group=" + groupReturn + "&name=" + nameReturn + "&brand=" + brandReturn +
+                    "&ip=" + ipReturn + "&comment=" + commentReturn + "' >上一页</a>");
         else
             out.print("上一页");
     %>
     <%
         if(curPage + 1 <= pageCount)
-            out.print("<a href = 'abcbank/switcher.jsp?curPage=" + (curPage + 1) + "' >下一页</a>");
+            out.print("<a href = 'abcbank/switcher.jsp?curPage=" + (curPage + 1)  + "&group=" + groupReturn + "&name=" + nameReturn + "&brand=" + brandReturn +
+                    "&ip=" + ipReturn + "&comment=" + commentReturn + "' >下一页</a>");
         else
             out.print("下一页");
     %>
-    <a href = "abcbank/switcher.jsp?curPage=<%=pageCount%>" >尾页</a>
+    <a href = "abcbank/switcher.jsp?curPage=<%=pageCount%>&group=<%=groupReturn%>&name=<%=nameReturn%>&brand=<%=brandReturn%>&ip=<%=ipReturn%>&comment=<%=commentReturn%>" >尾页</a>
     第<%=curPage%>页/共<%=pageCount%>页
 
     <br>
