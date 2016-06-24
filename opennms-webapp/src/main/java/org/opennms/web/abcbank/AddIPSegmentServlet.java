@@ -47,7 +47,7 @@ public class AddIPSegmentServlet extends HttpServlet {
             String name = request.getParameter("bankName");
             String type = request.getParameter("bankType");
             String comment = request.getParameter("comments");
-            String dept = request.getParameter("dept");
+            String dept = request.getParameter("deptName");
             name = name + "/" + dept;
 
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -127,7 +127,7 @@ public class AddIPSegmentServlet extends HttpServlet {
             }
 
             BankLogWriter.getSingle().writeLog("用户[" + userId +"]新增IP段[" + startIP + "-" + endIP + "]：" + backMsg);
-            pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage="
+            pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipsegment.jsp?curPage="
                     + request.getParameter("curPage") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
             pw.close();
 

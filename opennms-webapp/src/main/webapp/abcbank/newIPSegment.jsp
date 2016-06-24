@@ -160,7 +160,7 @@
         <tr>
             <td>所属网点（部门）：</td>
             <td>
-                <select id="dept" name="dept">
+                <select id="dept" name="deptName">
                     <option value="" selected>请选择</option>
                 </select>
             </td>
