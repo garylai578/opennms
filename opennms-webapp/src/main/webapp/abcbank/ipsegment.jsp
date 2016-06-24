@@ -62,8 +62,9 @@
     Map<String, String> colAndValue = new HashMap<String, String>();
     if(bankReturn != null && !"".equals(bankReturn) && !"null".equals(bankReturn)) {
         if(deptReturn != null && !"".equals(deptReturn) && !"null".equals(deptReturn))
-            bankReturn = bankReturn + "/" + deptReturn;
-        colAndValue.put("name", bankReturn);
+            colAndValue.put("name", bankReturn + "/" + deptReturn);
+        else
+            colAndValue.put("name", bankReturn);
     }
     if(stateReturn != null && !"".equals(stateReturn) && !"null".equals(stateReturn))
         colAndValue.put("state", stateReturn);
