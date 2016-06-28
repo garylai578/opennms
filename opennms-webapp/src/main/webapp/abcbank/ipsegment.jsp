@@ -468,20 +468,20 @@
 
         <br>
         <div>&nbsp;
-        <a href = "abcbank/ipsegment.jsp?curPage=1&bank=<%=bankReturn%>&dept=<%=deptReturn%>&state=<%=stateReturn%>" >首页</a>
+        <a href = "abcbank/ipsegment.jsp?curPage=1&searchIpSeg=<%=ipSegReturn%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>&state=<%=stateReturn%>" >首页</a>
         <%
             if(curPage - 1 > 0)
-                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage - 1) + "&bank=" + bankReturn + "&dept=" + deptReturn + "&state=" + stateReturn + "' >上一页</a>");
+                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage - 1) + "&searchIpSeg=" + ipSegReturn + "&bank=" + bankReturn + "&dept=" + deptReturn + "&state=" + stateReturn + "' >上一页</a>");
             else
                 out.print("上一页");
         %>
         <%
             if(curPage + 1 <= pageCount)
-                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage + 1) + "&bank=" + bankReturn + "&dept=" + deptReturn + "&state=" + stateReturn + "' >下一页</a>");
+                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage + 1) + "&searchIpSeg=" + ipSegReturn + "&bank=" + bankReturn + "&dept=" + deptReturn + "&state=" + stateReturn + "' >下一页</a>");
             else
                 out.print("下一页");
         %>
-        <a href = "abcbank/ipsegment.jsp?curPage=<%=pageCount%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>&state=<%=stateReturn%>" >尾页</a>
+        <a href = "abcbank/ipsegment.jsp?curPage=<%=pageCount%>&searchIpSeg=<%=ipSegReturn%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>&state=<%=stateReturn%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
         </div>
     </div>
