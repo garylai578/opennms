@@ -89,7 +89,6 @@
         }else{
             document.newIPs.action = "abcbank/newIPSegment";
             document.newIPs.submit();
-            return true;
         }
     }
 
@@ -103,7 +102,7 @@
 
 <h3>请填写以下资料</h3>
 
-<form id="newIPs" method="post" name="newIPs" onsubmit="return validateFormInput();">
+<form id="newIPs" method="post" name="newIPs">
     <input name="ipSeg" type="hidden"/>
     <table>
         <tr>
@@ -190,7 +189,7 @@
         </tr>
 
         <tr>
-            <td><input id="doOK" type="submit" value="确认"  href="javascript:validateFormInput()"/></td>
+            <td><input id="doOK" type="button" value="确认"  onclick="javascript:validateFormInput()"/></td>
             <td><input id="doCancel" type="button" value="取消" onclick="cancel()"/></td>
         </tr>
     </table>
