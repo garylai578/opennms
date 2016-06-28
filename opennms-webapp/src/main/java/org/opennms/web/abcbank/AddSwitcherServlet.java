@@ -11,6 +11,7 @@ import org.opennms.netmgt.config.discovery.DiscoveryConfiguration;
 import org.opennms.netmgt.config.discovery.Specific;
 import org.opennms.netmgt.model.events.EventBuilder;
 import org.opennms.netmgt.model.events.EventProxy;
+import org.opennms.web.admin.discovery.AddSpecIP;
 import org.opennms.web.admin.discovery.GeneralSettingsLoader;
 import org.opennms.web.admin.discovery.ModifyDiscoveryConfigurationServlet;
 import org.opennms.web.api.Util;
@@ -82,7 +83,8 @@ public class AddSwitcherServlet extends HttpServlet {
             SwitcherOperator op = new SwitcherOperator();
             op.insert(switcher);
 
-            addSpecificIP(request, host);
+            AddSpecIP add = new AddSpecIP();
+            add.addIP(request, host);
         }catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -122,6 +124,7 @@ public class AddSwitcherServlet extends HttpServlet {
             DiscoveryConfigFactory.init();
             dcf = DiscoveryConfigFactory.getInstance();
             dcf.saveConfiguration(config);
+            BankLogWriter.getSingle().writeLog("");
         }catch(Throwable ex){
             log.error("Error while saving configuration. "+ex);
             throw new ServletException(ex);
