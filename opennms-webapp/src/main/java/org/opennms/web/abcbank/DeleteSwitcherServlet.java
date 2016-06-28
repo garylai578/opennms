@@ -30,7 +30,7 @@ public class DeleteSwitcherServlet extends HttpServlet {
             PrintWriter pw=response.getWriter();
             pw.print("<script language='javascript'>alert('成功删除！' );window.location=('/opennms/abcbank/switcher.jsp?curPage=" + request.getParameter("curPage")
                     + "&group=" + request.getParameter("group") + "&name=" + request.getParameter("name") + "&brand=" + request.getParameter("brand") +
-                    "&ip=" + request.getParameter("ip") + "&comment=" + request.getParameter("comment") + "');</script>");
+                    "&ip=" + request.getParameter("ip") + "&comment=" + request.getParameter("comment") + "&update=true');</script>");
             pw.close();
         } catch (SQLException e) {
             e.printStackTrace();
