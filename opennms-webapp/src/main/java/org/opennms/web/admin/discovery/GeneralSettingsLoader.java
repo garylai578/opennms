@@ -28,15 +28,15 @@
 
 package org.opennms.web.admin.discovery;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.opennms.core.utils.ThreadCategory;
 import org.opennms.core.utils.WebSecurityUtils;
 import org.opennms.netmgt.config.discovery.DiscoveryConfiguration;
 
+import javax.servlet.http.HttpServletRequest;
 
 
-class GeneralSettingsLoader {
+
+public class GeneralSettingsLoader {
 	/** Constant <code>log</code> */
 	protected static ThreadCategory log = ThreadCategory.getInstance("WEB");
 	
