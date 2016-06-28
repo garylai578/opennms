@@ -120,6 +120,11 @@
 <h3>请填写以下资料</h3>
 
 <form id="newSwitcher" method="post" name="newSwitcher" onsubmit="return validateFormInput();">
+    <input name="timeout" type="hidden" value="2000"/>
+    <input name="retries" type="hidden" value="2"/>
+    <input name="initialsleeptime" type="hidden" value="30000"/>
+    <input name="restartsleeptime" type="hidden" value="86400000"/>
+    <input name="threads" type="hidden" value="1"/>
     <table>
         <tr>
             <td>*交换机名称：</td>

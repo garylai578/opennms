@@ -104,8 +104,7 @@
 
 <form id="newIPs" method="post" name="newIPs">
     <input name="ipSeg" type="hidden"/>
-    <input name="timeout" type="hidden" value="2000"/>
-    <input name="retries" type="hidden" value="2"/>
+
     <table>
         <tr>
             <td>*所属IP段：</td>
