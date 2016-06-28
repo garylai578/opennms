@@ -5,16 +5,7 @@ import org.opennms.core.bank.DesUtil;
 import org.opennms.core.bank.Switcher;
 import org.opennms.core.bank.SwitcherOperator;
 import org.opennms.core.utils.ThreadCategory;
-import org.opennms.netmgt.EventConstants;
-import org.opennms.netmgt.config.DiscoveryConfigFactory;
-import org.opennms.netmgt.config.discovery.DiscoveryConfiguration;
-import org.opennms.netmgt.config.discovery.Specific;
-import org.opennms.netmgt.model.events.EventBuilder;
-import org.opennms.netmgt.model.events.EventProxy;
 import org.opennms.web.admin.discovery.AddSpecIP;
-import org.opennms.web.admin.discovery.GeneralSettingsLoader;
-import org.opennms.web.admin.discovery.ModifyDiscoveryConfigurationServlet;
-import org.opennms.web.api.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.sql.SQLException;
 
 /**
@@ -100,52 +90,5 @@ public class AddSwitcherServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    }
-
-    // 将ip添加到节点中
-    private void addSpecificIP(HttpServletRequest request, String ip) throws ServletException {
-        Specific newSpecific = new Specific();
-        newSpecific.setContent(ip);
-        newSpecific.setTimeout(2000);
-        newSpecific.setRetries(2);
-
-        DiscoveryConfiguration config = ModifyDiscoveryConfigurationServlet.getDiscoveryConfig();
-        //load current general settings
-        config = GeneralSettingsLoader.load(request,config);
-        config.addSpecific(newSpecific);
-
-        DiscoveryConfigFactory dcf=null;
-        try{
-            if (log.isDebugEnabled()) {
-                StringWriter configString = new StringWriter();
-                config.marshal(configString);
-                log.debug(configString.toString().trim());
-            }
-            DiscoveryConfigFactory.init();
-            dcf = DiscoveryConfigFactory.getInstance();
-            dcf.saveConfiguration(config);
-            BankLogWriter.getSingle().writeLog("");
-        }catch(Throwable ex){
-            log.error("Error while saving configuration. "+ex);
-            throw new ServletException(ex);
-        }
-
-        EventProxy proxy = null;
-        try {
-            proxy = Util.createEventProxy();
-        } catch (Throwable me) {
-            log.error(me.getMessage());
-        }
-
-        EventBuilder bldr = new EventBuilder(EventConstants.DISCOVERYCONFIG_CHANGED_EVENT_UEI, "ActionDiscoveryServlet");
-        bldr.setHost("host");
-
-        try {
-            proxy.send(bldr.getEvent());
-        } catch (Throwable me) {
-            log.error(me.getMessage());
-        }
-
-        log.info("Restart Discovery requested!");
     }
 }

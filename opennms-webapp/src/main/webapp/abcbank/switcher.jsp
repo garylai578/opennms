@@ -135,7 +135,7 @@
         tmp="1";
     }
     curPage = Integer.parseInt(tmp);
-    if(curPage >= pageCount)
+    if(pageCount > 0 && curPage >= pageCount)
         curPage = pageCount;
     int swAtArray = (curPage - 1) * PAGESIZE;
 %>

@@ -120,7 +120,7 @@
         tmp="1";
     }
 	curPage = Integer.parseInt(tmp);
-	if(curPage >= pageCount){
+	if(pageCount > 0 && curPage >= pageCount){
 		curPage = pageCount;
 		nums = size%PAGESIZE;
 	}else{
