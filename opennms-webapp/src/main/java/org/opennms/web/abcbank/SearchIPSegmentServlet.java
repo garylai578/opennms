@@ -24,6 +24,7 @@ public class SearchIPSegmentServlet extends HttpServlet {
         String bank = request.getParameter("bank");
         String dept = request.getParameter("dept");
         String state = request.getParameter("state");
+        String ipSeg = request.getParameter("searchIpSeg");
 
         IPSegmentOperater op = new IPSegmentOperater();
         response.setContentType("text/html;charset=gb2312");
@@ -37,6 +38,8 @@ public class SearchIPSegmentServlet extends HttpServlet {
         }
         if(state != null && !"".equals(state))
             colAndValue.put("state", state);
+        if(ipSeg != null && !"".equals(ipSeg))
+            colAndValue.put("segment", ipSeg);
 
         try {
             IPSegment[] rs = op.andSelect(colAndValue);
@@ -45,6 +48,7 @@ public class SearchIPSegmentServlet extends HttpServlet {
                 request.setAttribute("bank", request.getParameter("bank"));
                 request.setAttribute("dept", request.getParameter("dept"));
                 request.setAttribute("state", request.getParameter("state"));
+                request.setAttribute("searchIpSeg", request.getParameter("searchIpSeg"));
                 request.getRequestDispatcher("ipsegment.jsp").forward(request, response);
             } else {
                 pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage="

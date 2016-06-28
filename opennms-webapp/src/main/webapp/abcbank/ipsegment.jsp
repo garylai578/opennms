@@ -28,7 +28,7 @@
 
 <%
     IPSegmentOperater op = new IPSegmentOperater();
-    String bankReturn,deptReturn, stateReturn, update;
+    String bankReturn,deptReturn, stateReturn, ipSegReturn, update;
 
     if(request.getAttribute("bank") != null )
         bankReturn = (String)request.getAttribute("bank");
@@ -52,6 +52,14 @@
         stateReturn = request.getParameter("state");
         if(stateReturn == null)
             stateReturn = "";
+    }
+
+    if(request.getAttribute("searchIpSeg") != null)
+        ipSegReturn = (String)request.getAttribute("searchIpSeg");
+    else {
+        ipSegReturn = request.getParameter("searchIpSeg");
+        if(ipSegReturn == null)
+            ipSegReturn = "";
     }
 
     if(request.getAttribute("update") != null)
@@ -112,6 +120,8 @@
 	}
 	
 	int ipAtList = (curPage - 1) * PAGESIZE;
+
+    String[] ipsegs = op.getIPSegments();
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -228,6 +238,16 @@
     </td>
 
     <td align="left">&nbsp;&nbsp;
+        <strong>所属IP段：</strong><select id="searchIpSeg" name="searchIpSeg">
+            <option value="">请选择</option>
+            <%
+                for(String seg : ipsegs){
+            %>
+            <option value="<%=seg%>" <%=(ipSegReturn != null && ipSegReturn.equals(seg)) ? "selected" : ""%>><%=seg%></option>
+            <%
+                }
+            %>
+        </select>&nbsp;&nbsp;
         <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
             <option value="" selected="">请选择</option>
             <%
