@@ -23,28 +23,13 @@ public class ExportIPSegmentServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getRemoteUser();
-		String tmp = request.getParameter("rows");
-        int rows = Integer.parseInt(tmp);
-		List<IPSegment> ipSegmentList = new ArrayList<IPSegment>();
-		
-		for(int i = 0; i < rows; ++i){
-            IPSegment ips = new IPSegment();
-            ips.setId(request.getParameter("id-"+i));
-            ips.setSegment(request.getParameter("ipSeg-"+i));
-            ips.setGateway(request.getParameter("gateway-"+i));
-            ips.setMask(request.getParameter("mask-"+i));
-            ips.setStartIP(request.getParameter("startIP-"+i));
-            ips.setEndIP(request.getParameter("endIP-"+i));
-            ips.setBankname(request.getParameter("bankname-"+i) + "/" + request.getParameter("dept-"+i));
-            ips.setBanktype(request.getParameter("banktype-"+i));
-            ips.setCreateTime(request.getParameter("createdate-"+i));
-            ips.setState(request.getParameter("state-"+i));
-            ips.setStopTime(request.getParameter("stopTime-"+i));
-            ips.setComment(request.getParameter("comment-"+i));
-            ipSegmentList.add(ips);
-        }
 
         try {
+            IPSegmentOperater op = new IPSegmentOperater();
+            IPSegment[] ips = op.selectAll("");
+            List<IPSegment> ipSegmentList = new ArrayList<IPSegment>();
+            for(IPSegment ip : ips)
+                ipSegmentList.add(ip);
             Collections.sort(ipSegmentList, IPSegment.IPComparator);
 
             List<IPSegment> dataset = new ArrayList<IPSegment>();
@@ -76,7 +61,9 @@ public class ExportIPSegmentServlet extends HttpServlet {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        } 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         BankLogWriter.getSingle().writeLog("用户[" + userId +"]导出IP地址段分配报表");
     }
