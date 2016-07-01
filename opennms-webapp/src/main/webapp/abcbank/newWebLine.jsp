@@ -17,6 +17,7 @@
     <jsp:param name="breadcrumb" value="新增专线" />
 </jsp:include>
 
+<script type='text/javascript' src='js/ipv6/ipv6.js'></script>
 
 <%@include file="/abcbank/getVars.jsp"%>
 
@@ -27,6 +28,7 @@
         if(isCommitted == true)
             return false;
         isCommitted = true;
+        var ip = new String(document.newWebLine.ip.value);
         var type = new String(document.newWebLine.type.value);
         var applicant = new String(document.newWebLine.applicant.value);
         var contact = new String(document.newWebLine.contact.value);
@@ -34,7 +36,11 @@
         var address = new String(document.newWebLine.address.value);
         var approver = new String(document.newWebLine.approver.value);
 
-        if(type== 0 || type=="") {
+        if(ip != null  && ip != "" && !isValidIPAddress(ip)){
+            alert("IP地址无效：" + ip);
+            isCommitted = false;
+            return false;
+        }else if(type== 0 || type=="") {
             alert("请选择专线类型！");
             isCommitted = false;
             return false;
@@ -99,7 +105,15 @@
     <input type="hidden" name="bankType"/>
     <input type="hidden" name="comments"/>
     <input type="hidden" name="group" value="<%=group%>"/>
+    <input type="hidden" name="state" value="待审批"/>
     <table>
+        <tr>
+            <td>专线IP：</td>
+            <td>
+                <input id="ip" name="ip" type="text" size="100"/>
+            </td>
+        </tr>
+
         <tr>
             <td>*专线类型：</td>
             <td>

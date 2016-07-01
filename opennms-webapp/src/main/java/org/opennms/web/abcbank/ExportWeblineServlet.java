@@ -28,6 +28,8 @@ public class ExportWeblineServlet extends HttpServlet {
         for(int i = 0; i < rows; ++i){
             WebLine line = new WebLine();
             line.setId(request.getParameter("id-"+i));
+            line.setIp(request.getParameter("ip-"+i));
+            line.setState(request.getParameter("state-"+i));
             line.setType(request.getParameter("type-"+i));
             line.setApplicant(request.getParameter("applicant-"+i));
             line.setContact(request.getParameter("contact-"+i));
@@ -40,6 +42,7 @@ public class ExportWeblineServlet extends HttpServlet {
             line.setVlan_num(request.getParameter("vlan_num-"+i));
             line.setPort(request.getParameter("port-"+i));
             line.setInter(request.getParameter("inter-"+i));
+            line.setAttach(request.getParameter("attach="+i));
             line.setComment(request.getParameter("comment-"+i));
             dataset.add(line);
         }
@@ -47,7 +50,7 @@ public class ExportWeblineServlet extends HttpServlet {
         response.setContentType("octets/stream");
         response.addHeader("Content-Disposition", "attachment;filename=result.xls");
         ExportExcel<WebLine> ex = new ExportExcel<WebLine>();
-        String[] headers = { "id", "专线类型", "申请人", "联系方式", "审批人", "所属分行（支行）", "所属网点（部门）", "地址","开通日期", "月租", "VLAN编号", "物理端口号", " 运营商接口号", "备注"};
+        String[] headers = { "id", "ip", "状态", "专线类型", "申请人", "联系方式", "审批人", "所属分行（支行）", "所属网点（部门）", "地址","开通日期", "月租", "VLAN编号", "物理端口号", " 运营商接口号", "附件", "备注"};
         try {
             OutputStream out = response.getOutputStream();
             ex.exportExcel("result", headers, dataset, out);

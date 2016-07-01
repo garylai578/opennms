@@ -170,6 +170,14 @@
             choose.checked = false;
         }
     }
+
+    function modifyWebline(id, row)
+    {
+        document.getElementById("state-"+row).removeAttribute("disabled");
+        document.allWebLines.action="abcbank/updateWebLine";
+        document.allWebLines.webLineID.value=id;
+        document.allWebLines.submit();
+    }
 </script>
 
 <form method="post" name="allWebLines">
@@ -244,6 +252,8 @@
         <tr class="header1">
             <td style="width: 30px"><b>选择</b></td>
             <td width="5%"><b>操作</b></td>
+            <td width="5%"><b>专线IP</b></td>
+            <td width="5%"><b>专线状态</b></td>
             <td width="5%"><b>专线类型</b></td>
             <td width="5%"><b>申请人</b></td>
             <td width="10%"><b>联系方式</b></td>
@@ -256,6 +266,7 @@
             <td width="5%"><b>VLAN编号</b></td>
             <td width="5%"><b>物理端口号</b></td>
             <td width="5%"><b>运营商接口号</b></td>
+            <td width="5%"><b>附件</b></td>
             <td width="10%"><b>备注</b></td>
         </tr>
         <%
@@ -264,6 +275,8 @@
             for(int j = lineAtArray; j < lineAtArray + PAGESIZE && j < lines.length; ++j){
                 WebLine line = lines[j];
                 String lineId = line.getId();
+                String ip = line.getIp();
+                String state = line.getState();
                 String type = line.getType();
                 String applicant = line.getApplicant();
                 String approver = line.getApprover();
@@ -276,6 +289,7 @@
                 String vlan_num = line.getVlan_num();
                 String port = line.getPort();
                 String inter = line.getInter();
+                String attach = line.getAttatch();
                 String comment = line.getComment();
         %>
         <tr>
@@ -287,9 +301,36 @@
 
             <td align="center" style="vertical-align:middle;">
                 <a id="<%= "ips("+lineId+").doStop" %>" href="javascript:deleteWebLine('<%=lineId%>')" onclick="return confirm('确定要删除该专线？')">删除</a>
+                <%//只有管理员或者待审批的才能够修改
+                    if((group != null && !"".equals(group) && state.equals(weblineStates[0])) || group.equals("")){
+                %>
+                        <a id="<%= "ips("+lineId+").doUpdate" %>" href="javascript:modifyWebline('<%=lineId%>', '<%=row%>')">修改</a>
+                <%
+                    }
+                %>
             </td>
 
             <input type="hidden" id="id-<%=row%>" name="id-<%=row%>" value="<%=lineId %>"/>
+
+            <td>
+                <div id="ip-<%=row%>" >
+                    <%= ((ip == null || ip.equals("")) ? "&nbsp;" : ip) %>
+                    <input type="hidden" id="ip-<%=row%>" name="ip-<%=row%>" value="<%= ((ip == null || ip.equals("")) ? "&nbsp;" : ip) %>"/>
+                </div>
+            </td>
+
+            <td>
+                <select id="state-<%=row%>" name="state-<%=row%>" <%=(group == null || "".equals(group)) ? "" : "disabled"%>>
+                    <option value="" selected="">请选择</option>
+                    <%
+                        for(int i = 0; i < weblineStates.length; ++i){
+                    %>
+                    <option value="<%=weblineStates[i]%>" <%=((state != null && weblineStates[i].equals(state)) ? "selected" : "")%>><%=weblineStates[i]%></option>
+                    <%
+                        }
+                    %>
+                </select>
+            </td>
 
             <td>
                 <div id="type-<%=row%>" >
@@ -372,6 +413,13 @@
                 <div id="inter-<%=row%>">
                     <%= ((inter == null || inter.equals("")) ? "&nbsp;" : inter) %>
                     <input type="hidden"  name="inter-<%=row%>" value="<%= ((inter == null || inter.equals("")) ? "&nbsp;" : inter) %>"/>
+                </div>
+            </td>
+
+            <td>
+                <div>
+                    <a id=""attach-<%=row%> name="attach-<%=row%>" href="<%= ((attach == null || attach.equals("")) ? "&nbsp;" : attach) %>">点击下载</a>
+                    <%--<input id="attach-<%=row%>" name="attach-<%=row%>" type="text" size="8" value="<%= ((attach == null || attach.equals("")) ? "&nbsp;" : attach) %>"/>--%>
                 </div>
             </td>
 

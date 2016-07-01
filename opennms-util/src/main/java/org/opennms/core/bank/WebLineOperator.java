@@ -32,7 +32,7 @@ public class WebLineOperator {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String insert = "insert into webline(type, applicant, approver, contact, bank, dept, address, rent, vlan_num, port, interface, comment, grp, start_date" +
+            String insert = "insert into webline(ip, state, type, applicant, approver, contact, bank, dept, address, rent, vlan_num, port, interface, attach, comment, grp, start_date" +
                     ") values (" + value.toInsertValue() + ")";
             log.debug("insert sql = " + insert);
             int rc = stmt.executeUpdate(insert);
@@ -189,6 +189,8 @@ public class WebLineOperator {
         while(rs.next()){
             WebLine webLine = new WebLine();
             webLine.setId(String.valueOf(rs.getInt("id")));
+            webLine.setIp(rs.getString("ip"));
+            webLine.setState(rs.getString("state"));
             webLine.setType(rs.getString("type"));
             webLine.setApplicant(rs.getString("applicant"));
             webLine.setApprover(rs.getString("approver"));
@@ -201,6 +203,7 @@ public class WebLineOperator {
             webLine.setVlan_num(rs.getString("vlan_num"));
             webLine.setPort(rs.getString("port"));
             webLine.setInter(rs.getString("interface"));
+            webLine.setAttach(rs.getString("attach"));
             webLine.setComment(rs.getString("comment"));
             webLine.setGroup(rs.getString("grp"));
             list.add(webLine);

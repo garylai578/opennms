@@ -306,11 +306,15 @@ create table ipaddress (
 --#  vlan_num    : the vlan number of this web line
 --#  port        : the physical port of this web line
 --#  grp         : the group of this web line
---#  interface   : the interface between the operator
+--#  state       : the state of this web line
+--#  attatchment : the attatchment of this web line
+--#  comment     : the comnnet
 --#
 --########################################################################
 create table webline (
     id serial,
+    ip text,
+    state text not null,
     type text not null,
     applicant text not null,
     approver text,
@@ -324,6 +328,7 @@ create table webline (
     port text,
     interface text,
     grp text not null,
+    attach text,
     comment text
 );
 

@@ -5,7 +5,24 @@ package org.opennms.core.bank;
  */
 public class WebLine {
 
-    private String id, type, applicant, contact, approver, bank, dept, address, start_date, rent, vlan_num, port, inter, comment, group;
+    private String id;
+    private String ip;
+    private String state;
+    private String type;
+    private String applicant;
+    private String contact;
+    private String approver;
+    private String bank;
+    private String dept;
+    private String address;
+    private String start_date;
+    private String rent;
+    private String vlan_num;
+    private String port;
+    private String inter;
+    private String comment;
+    private String group;
+    private String attach;
 
     public String getId() {
         return id;
@@ -13,6 +30,22 @@ public class WebLine {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getType() {
@@ -111,6 +144,14 @@ public class WebLine {
         this.inter = inter;
     }
 
+    public String getAttatch() {
+        return attach;
+    }
+
+    public void setAttach(String attach) {
+        this.attach = attach;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -125,7 +166,7 @@ public class WebLine {
 
     public String toInsertValue() {
         String value = "";
-        String[] colsString = {type, applicant, approver, contact, bank, dept, address, rent, vlan_num, port, inter, comment, group};
+        String[] colsString = {ip, state, type, applicant, approver, contact, bank, dept, address, rent, vlan_num, port, inter, attach, comment, group};
 
         for (String col: colsString) {
             if(col == null)

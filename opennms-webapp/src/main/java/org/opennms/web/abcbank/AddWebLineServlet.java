@@ -20,6 +20,8 @@ public class AddWebLineServlet extends HttpServlet {
     private static final long serialVersionUID = 5322209775976767374L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String ip = request.getParameter("ip");
+        String state = request.getParameter("state");
         String type = request.getParameter("type");
         String group = request.getParameter("group");
         String applicant = request.getParameter("applicant");
@@ -33,11 +35,14 @@ public class AddWebLineServlet extends HttpServlet {
         String vlan_num = request.getParameter("vlan_num");
         String port = request.getParameter("port");
         String inter = request.getParameter("inter");
+        String attach = request.getParameter("attach");
         String comment = request.getParameter("comment");
         String userId = request.getRemoteUser();
 
         try{
             WebLine line = new WebLine();
+            line.setIp(ip);
+            line.setState(state);
             line.setType(type);
             line.setApplicant(applicant);
             line.setApprover(approver);
@@ -50,6 +55,7 @@ public class AddWebLineServlet extends HttpServlet {
             line.setVlan_num(vlan_num);
             line.setPort(port);
             line.setInter(inter);
+            line.setAttach(attach);
             line.setComment(comment);
             line.setGroup(group);
             WebLineOperator op = new WebLineOperator();
