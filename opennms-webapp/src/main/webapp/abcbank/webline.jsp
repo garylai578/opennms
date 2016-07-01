@@ -88,7 +88,7 @@
         if(request.isUserInRole(Authentication.ROLE_ADMIN))
             lines = op.andSearch(colAndValue);
         else {
-            colAndValue.put("grp", group);
+            colAndValue.put("bank", group);
             lines = op.andSearch(colAndValue);
         }
     }
@@ -146,7 +146,7 @@
 
     function searchWebLine()
     {
-
+        document.getElementById("bank").removeAttribute("disabled");
         document.allWebLines.action="abcbank/searchWebLine";
         document.allWebLines.submit();
     }
@@ -199,9 +199,11 @@
             </select>&nbsp;&nbsp;
             <strong>申请人:</strong><input id="applicant" name="applicant" size="8" value="<%=(applicantReturn==null) ? "" : applicantReturn%>">&nbsp;&nbsp;
             <strong>审批人:</strong><input id="approver" name="approver" size="8" value="<%=(approverReturn==null) ? "" : approverReturn%>">&nbsp;&nbsp;
-            <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
+            <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')" <%=(group == null || "".equals(group)) ? "" : "disabled"%>>
                 <option value="" selected="">请选择</option>
                 <%
+                    if(group != null && !"".equals(group))
+                        bankReturn = group;
                     for(int i = 0; i < bankNames.length; ++i){
                 %>
                 <option value="<%=bankNames[i]%>" <%=((bankReturn != null && bankNames[i].equals(bankReturn)) ? "selected" : "")%>><%=bankNames[i]%></option>

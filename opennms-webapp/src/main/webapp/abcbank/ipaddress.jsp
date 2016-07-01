@@ -196,6 +196,7 @@
 
     function searchIPAddress()
     {
+        document.getElementById("bank").removeAttribute("disabled");
         document.allIPSegments.action="abcbank/searchIPAddress";
         document.allIPSegments.submit();
     }
@@ -249,9 +250,11 @@
                     %>
                  </select>&nbsp;&nbsp;
         <strong>设备使用人:</strong><input id="users" name="users" size="12" value="<%=(usersReturn==null?"":usersReturn)%>">&nbsp;&nbsp;
-        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
+        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')" <%=(group == null || "".equals(group)) ? "" : "disabled"%>>
                             <option value="" selected="">请选择</option>
                             <%
+                                if(group != null && !"".equals(group))
+                                    bankReturn = group;
                                 for(int i = 0; i < bankNames.length; ++i){
                             %>
                             <option value="<%=bankNames[i]%>" <%=((bankReturn != null && bankNames[i].equals(bankReturn)) ? "selected" : "")%>><%=bankNames[i]%></option>

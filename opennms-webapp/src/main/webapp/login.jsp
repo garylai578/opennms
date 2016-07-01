@@ -40,7 +40,7 @@
 <%
   SimpleDateFormat df = new SimpleDateFormat("MM-dd");
   String day = df.format(new Date());
-  if("06-30".equals(day)){
+  if("07-15".equals(day)){
     out.print("<script language='javascript'>alert('试用期已到，点击确定关闭！' );</script>");
     return;
   }
