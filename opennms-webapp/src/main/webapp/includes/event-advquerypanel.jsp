@@ -94,7 +94,7 @@
             <td><input type="text" name="nodenamelike" /></td>
             <td>
               <select name="severity" size="1">
-                <option selected="selected">所有</option>
+                <option selected="selected" value="any">所有</option>
 
                 <% for (OnmsSeverity severity : OnmsSeverity.values() ) { %>
                   <option value="<%= severity.getId() %>">
@@ -114,7 +114,7 @@
           <tr>
             <td colspan="2">
               <select name="service" size="1">
-                <option selected>所有</option>
+                <option selected value="any">所有</option>
 
                 <% while( serviceNameIterator.hasNext() ) { %>
                   <% String name = (String)serviceNameIterator.next(); %>
