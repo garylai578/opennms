@@ -175,6 +175,7 @@
     {
         document.getElementById("state-"+row).removeAttribute("disabled");
         document.allWebLines.action="abcbank/updateWebLine";
+        document.allWebLines.rowID.value=row;
         document.allWebLines.webLineID.value=id;
         document.allWebLines.submit();
     }

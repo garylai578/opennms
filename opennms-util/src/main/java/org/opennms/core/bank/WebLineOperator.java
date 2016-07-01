@@ -182,6 +182,29 @@ public class WebLineOperator {
         return result;
     }
 
+    /**
+     * update the col value with newValue.
+     * @param id
+     * @param colName
+     * @param newValue
+     * @throws SQLException
+     */
+    public void updateByID(int id, String colName, String newValue) throws SQLException {
+        try {
+            Connection conn = Vault.getDbConnection();
+            d.watch(conn);
+            Statement stmt = conn.createStatement();
+            d.watch(stmt);
+            String sql;
+            sql = "update webline set " + colName + " = " + newValue + " where id =" + id;
+            log.debug("update by id, SQL = " + sql);
+            int rc = stmt.executeUpdate(sql);
+            log.debug(", and the rc= " + rc);
+        } finally {
+            d.cleanUp();
+        }
+    }
+
     private WebLine[] rs2WebLines(ResultSet rs)  throws SQLException{
         WebLine[] result = null;
         List<WebLine> list = new ArrayList<WebLine>();

@@ -932,6 +932,10 @@
     <servlet-name>UpdateSwitcherServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.UpdateSwitcherServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>UpdateWeblineServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.UpdateWeblineServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1314,7 +1318,10 @@
     <servlet-name>SearchWebLineServlet</servlet-name>
     <url-pattern>/abcbank/searchWebLine</url-pattern>
   </servlet-mapping>
-
+  <servlet-mapping>
+    <servlet-name>UpdateWeblineServlet</servlet-name>
+    <url-pattern>/abcbank/updateWebLine</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>ExportWebLineServlet</servlet-name>
     <url-pattern>/abcbank/exportWeblineExcel</url-pattern>
