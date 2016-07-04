@@ -1,5 +1,7 @@
 package org.opennms.web.abcbank;
 
+import org.opennms.core.bank.BankLogWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -43,12 +45,14 @@ public class DownLoadServlet extends HttpServlet {
             while ((len = in.read(buffer)) > 0) {
                 //输出缓冲区的内容到浏览器，实现文件下载
                 out.write(buffer, 0, len);
+                BankLogWriter.getSingle().writeLog("buf:" + buffer);
             }
             //关闭文件输入流
             in.close();
             //关闭输出流
             out.close();
         }
+        BankLogWriter.getSingle().writeLog("msg:" + message);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
