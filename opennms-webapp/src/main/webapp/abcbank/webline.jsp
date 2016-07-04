@@ -458,7 +458,7 @@
 
             <td>
                 <div>
-                    <a id=""attach-<%=row%> name="attach-<%=row%>" href="<%= ((attach == null || attach.equals("")) ? "&nbsp;" : attach) %>">点击下载</a>
+                    <a id="attach-<%=row%>" name="attach-<%=row%>" href="<%= ((attach == null || attach.equals("")) ? "javascript:void(0)" : attach) %>">点击下载</a>
                     <%--<input id="attach-<%=row%>" name="attach-<%=row%>" type="text" size="8" value="<%= ((attach == null || attach.equals("")) ? "&nbsp;" : attach) %>"/>--%>
                 </div>
             </td>

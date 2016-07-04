@@ -66,6 +66,7 @@
             return false;
         }else{
             document.newWebLine.action = "abcbank/newWebLine";
+            document.newWebLine.submit();
             return true;
         }
     }
@@ -99,7 +100,7 @@
 
 <h3>请填写以下资料</h3>
 
-<form id="newIPs" method="post" name="newWebLine" onsubmit="return validateFormInput();">
+<form id="newIPs" method="post" name="newWebLine" enctype="multipart/form-data">
     <input type="hidden" name="ipNum"/>
     <input type="hidden" name="bankName"/>
     <input type="hidden" name="bankType"/>
@@ -219,6 +220,13 @@
         </tr>
 
         <tr>
+            <td>上传附件：</td>
+            <td>
+                <input type="file" name="file"/>
+            </td>
+        </tr>
+
+        <tr>
             <td>备注：</td>
             <td>
                 <input id="comment" name="comment" type="text" size="100"/>
@@ -226,7 +234,7 @@
         </tr>
 
         <tr>
-            <td><input id="doOK" type="submit" value="确认"  href="javascript:validateFormInput()"/></td>
+            <td><input id="doOK" type="button" value="确认"  onclick="javascript:validateFormInput()"/></td>
             <td><input id="doCancel" type="button" value="取消" onclick="cancel()"/></td>
         </tr>
     </table>

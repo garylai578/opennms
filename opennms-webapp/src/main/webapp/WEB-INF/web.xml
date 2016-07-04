@@ -936,6 +936,10 @@
     <servlet-name>UpdateWeblineServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.UpdateWeblineServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>UploadHandleServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.UploadHandleServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1394,6 +1398,10 @@
   <servlet-mapping>
     <servlet-name>StartSwitcherMonitorServlet</servlet-name>
     <url-pattern>/abcbank/startSwitcherMonitor</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UploadHandleServlet</servlet-name>
+    <url-pattern>/abcbank/uploadHandle</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
