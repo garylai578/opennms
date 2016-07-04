@@ -13,7 +13,16 @@
 
 <%@ page import="org.opennms.core.bank.WebLine" %>
 <%@ page import="org.opennms.core.bank.WebLineOperator" %>
+<%@ page import="org.opennms.core.resource.Vault" %>
+<%@ page import="org.opennms.core.utils.DBUtils" %>
+<%@ page import="org.opennms.web.element.Interface" %>
+<%@ page import="org.opennms.web.element.NetworkElementFactory" %>
 <%@ page import="org.opennms.web.springframework.security.Authentication" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 
 <%@include file="/abcbank/getVars.jsp"%>
 
@@ -109,6 +118,29 @@
 	}else{
 		nums = PAGESIZE;
 	}
+
+    final DBUtils d = new DBUtils(getClass());
+    List<Integer> nodeIds = new ArrayList<Integer>();
+    Map<String, Integer> ipNodeidMap = new HashMap<String, Integer>();
+    try {
+        Connection conn = Vault.getDbConnection();
+        d.watch(conn);
+        Statement stmt = conn.createStatement();
+        d.watch(stmt);
+        ResultSet rs = stmt.executeQuery("SELECT nodeid FROM assets");
+        d.watch(rs);
+        while(rs.next())
+            nodeIds.add(rs.getInt("nodeid"));
+    } finally {
+        d.cleanUp();
+    }
+    for(Integer id : nodeIds) {
+        Interface[] allInterfaces= NetworkElementFactory.getInstance(this.getServletConfig().getServletContext()).getActiveInterfacesOnNode(id);
+        for (int i = 0; i < allInterfaces.length; i++) {
+            Interface intf = allInterfaces[i];
+            ipNodeidMap.put(intf.getIpAddress(), id);
+        }
+    }
 %>
 
 <jsp:include page="/includes/header.jsp" flush="false" >
@@ -248,12 +280,12 @@
     </table>
 
     <div style="overflow: auto; width: 100%;">
-    <table border="1" cellspacing="0" cellpadding="2" bordercolor="black" class="tab_css_2">
+    <table border="1" cellspacing="0" cellpadding="2" bordercolor="black" class="tab_css_1">
 
         <tr class="header1">
             <td style="width: 30px"><b>选择</b></td>
             <td width="5%"><b>操作</b></td>
-            <td width="5%"><b>专线IP</b></td>
+            <td style="width: 100px"><b>专线IP</b></td>
             <td width="5%"><b>专线状态</b></td>
             <td width="5%"><b>专线类型</b></td>
             <td width="5%"><b>申请人</b></td>
@@ -315,7 +347,14 @@
 
             <td>
                 <div id="ip-<%=row%>" >
-                    <%= ((ip == null || ip.equals("")) ? "&nbsp;" : ip) %>
+                    <%
+                        if(ipNodeidMap.containsKey(ip)){
+                            out.print("<a href=\"/opennms/element/node.jsp?node="+ ipNodeidMap.get(ip) +"\">" + ip + "</a>");
+                        }
+                        else {
+                            out.print((ip == null || ip.equals("")) ? "&nbsp;" : ip);
+                        }
+                    %>
                     <input type="hidden" id="ip-<%=row%>" name="ip-<%=row%>" value="<%= ((ip == null || ip.equals("")) ? "&nbsp;" : ip) %>"/>
                 </div>
             </td>
