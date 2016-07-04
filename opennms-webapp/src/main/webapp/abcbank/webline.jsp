@@ -211,6 +211,12 @@
         document.allWebLines.webLineID.value=id;
         document.allWebLines.submit();
     }
+
+    function downLoad(row){
+        document.allWebLines.rowID.value=row;
+        document.allWebLines.action="abcbank/downLoad";
+        document.allWebLines.submit();
+    }
 </script>
 
 <form method="post" name="allWebLines">
@@ -458,7 +464,8 @@
 
             <td>
                 <div>
-                    <a id="attach-<%=row%>" name="attach-<%=row%>" href="<%= ((attach == null || attach.equals("")) ? "javascript:void(0)" : attach) %>">点击下载</a>
+                    <a id="attach-<%=row%>" name="attach-<%=row%>" href="<%= ((attach == null || attach.equals("")) ? "javascript:void(0)" : "javascript:downLoad('" + row +  "')") %>">点击下载</a>
+                    <input id="" name="" hidden value="<%=attach%>" />
                     <%--<input id="attach-<%=row%>" name="attach-<%=row%>" type="text" size="8" value="<%= ((attach == null || attach.equals("")) ? "&nbsp;" : attach) %>"/>--%>
                 </div>
             </td>

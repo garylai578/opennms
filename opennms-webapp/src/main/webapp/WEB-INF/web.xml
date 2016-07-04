@@ -940,6 +940,10 @@
     <servlet-name>UploadHandleServlet</servlet-name>
     <servlet-class>org.opennms.web.abcbank.UploadHandleServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>DownLoadServlet</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.DownLoadServlet</servlet-class>
+  </servlet>
 
   <!-- desktop graph servlet mapping -->
   <!-- desktop survey report servlet mapping -->  
@@ -1402,6 +1406,10 @@
   <servlet-mapping>
     <servlet-name>UploadHandleServlet</servlet-name>
     <url-pattern>/abcbank/uploadHandle</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DownLoadServlet</servlet-name>
+    <url-pattern>/abcbank/downLoad</url-pattern>
   </servlet-mapping>
   
   <servlet-mapping>
