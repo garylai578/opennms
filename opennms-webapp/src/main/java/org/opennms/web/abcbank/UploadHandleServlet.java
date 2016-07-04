@@ -184,7 +184,7 @@ public class UploadHandleServlet extends HttpServlet {
         int dir1 = hashcode&0xf;  //0--15
         int dir2 = (hashcode&0xf0)>>4;  //0-15
         //构造新的保存目录
-        String dir = savePath + "\\" + dir1 + "\\" + dir2;  //upload\2\3  upload\3\5
+        String dir = savePath + System.getProperty("file.separator") + dir1 + System.getProperty("file.separator") + dir2;  //upload\2\3  upload\3\5
         //File既可以代表文件也可以代表目录
         File file = new File(dir);
         //如果目录不存在
