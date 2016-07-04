@@ -45,7 +45,7 @@ public class UpdateWeblineServlet extends HttpServlet {
             op.updateByID(id, "rent", "'" + rent + "'");
             op.updateByID(id, "vlan_num", "'" + vlan_num + "'");
             op.updateByID(id, "port", "'" + port + "'");
-            op.updateByID(id, "inter", "'" + inter + "'");
+            op.updateByID(id, "interface", "'" + inter + "'");
             op.updateByID(id, "comment", "'" + comment + "'");
             if(start_date != null && !start_date.equals(""))
                 op.updateByID(id, "start_date", "'" + start_date + "'");

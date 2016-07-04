@@ -221,7 +221,7 @@
         <tr>
             <td>备注：</td>
             <td>
-                <input id="comment" type="text" size="100"/>
+                <input id="comment" name="comment" type="text" size="100"/>
             </td>
         </tr>
 
