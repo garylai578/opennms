@@ -937,8 +937,8 @@
     <servlet-class>org.opennms.web.abcbank.UpdateWeblineServlet</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>UploadHandleServlet</servlet-name>
-    <servlet-class>org.opennms.web.abcbank.UploadHandleServlet</servlet-class>
+    <servlet-name>AddWebLineServlet2</servlet-name>
+    <servlet-class>org.opennms.web.abcbank.AddWebLineServlet2</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>DownLoadServlet</servlet-name>
@@ -1404,8 +1404,8 @@
     <url-pattern>/abcbank/startSwitcherMonitor</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>UploadHandleServlet</servlet-name>
-    <url-pattern>/abcbank/uploadHandle</url-pattern>
+    <servlet-name>AddWebLineServlet2</servlet-name>
+    <url-pattern>/abcbank/addWebLine2</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>DownLoadServlet</servlet-name>

@@ -20,7 +20,7 @@ import java.util.UUID;
  * Created by laiguanhui on 2016/7/4.
  */
 
-public class UploadHandleServlet extends HttpServlet {
+public class AddWebLineServlet2 extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -118,7 +118,7 @@ public class UploadHandleServlet extends HttpServlet {
                     //创建一个缓冲区
                     byte buffer[] = new byte[1024];
                     //判断输入流中的数据是否已经读完的标识
-                    int len = 0;
+                    int len;
                     //循环将输入流读入到缓冲区当中，(len=in.read(buffer))>0就表示in里面还有数据
                     while((len=in.read(buffer))>0){
                         //使用FileOutputStream输出流将缓冲区的数据写入到指定的目录(savePath + "\\" + filename)当中
@@ -157,9 +157,6 @@ public class UploadHandleServlet extends HttpServlet {
     }
 
     /**
-     * @Method: makeFileName
-     * @Description: 生成上传文件的文件名，文件名以：uuid+"_"+文件的原始名称
-     * @Anthor:孤傲苍狼
      * @param filename 文件的原始名称
      * @return uuid+"_"+文件的原始名称
      */
@@ -170,10 +167,6 @@ public class UploadHandleServlet extends HttpServlet {
 
     /**
      * 为防止一个目录下面出现太多文件，要使用hash算法打散存储
-     * @Method: makePath
-     * @Description:
-     * @Anthor:孤傲苍狼
-     *
      * @param filename 文件名，要根据文件名生成存储目录
      * @param savePath 文件存储路径
      * @return 新的存储目录

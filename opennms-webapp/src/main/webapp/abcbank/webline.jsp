@@ -464,7 +464,17 @@
 
             <td>
                 <div>
-                    <a href="<%= ((attach == null || attach.equals("")) ? "javascript:void(0)" : "javascript:downLoad('" + row +  "')") %>">点击下载</a>
+                    <%
+                        if(attach == null || attach.equals("")){
+                    %>
+                    点击下载
+                    <%
+                        }else{
+                    %>
+                    <a href="javascript:downLoad('<%=row%>')">点击下载</a>
+                    <%
+                        }
+                    %>
                     <input id="attach-<%=row%>" name="attach-<%=row%>" hidden value="<%=attach%>" />
                     <%--<input id="attach-<%=row%>" name="attach-<%=row%>" type="text" size="8" value="<%= ((attach == null || attach.equals("")) ? "&nbsp;" : attach) %>"/>--%>
                 </div>

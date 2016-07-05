@@ -65,7 +65,7 @@
             isCommitted = false;
             return false;
         }else{
-            document.newWebLine.action = "abcbank/uploadHandle";
+            document.newWebLine.action = "abcbank/addWebLine2";
             document.newWebLine.submit();
             return true;
         }
