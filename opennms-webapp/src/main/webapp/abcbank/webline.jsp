@@ -331,7 +331,7 @@
                 String attach = line.getAttatch();
                 String comment = line.getComment();
         %>
-        <tr>
+        <tr <%if (state.equals("待审批")) out.print("class=\"lineUnused\"");%>>
             <td>
                 <div>
                     <input id="choose-<%=row%>" type="checkbox" value="" />
