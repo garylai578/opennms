@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.URLEncoder;
 
 /**
  * Created by laiguanhui on 2016/7/4.
@@ -33,7 +32,7 @@ public class DownLoadServlet extends HttpServlet {
             String realname = new String(fileName.substring(fileName.indexOf("_")+1).getBytes("GB2312"),"ISO-8859-1"); // 文件路径中不能有_否则获取文件名会失败
             //设置响应头，控制浏览器下载该文件
             response.setContentType("charset=GBK");
-            response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(realname, "UTF-8"));
+            response.setHeader("content-disposition", "attachment;filename=" + realname);
             //读取要下载的文件，保存到文件输入流
             FileInputStream in = new FileInputStream(fileName);
             //创建输出流
