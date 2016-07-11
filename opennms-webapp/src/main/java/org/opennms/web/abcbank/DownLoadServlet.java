@@ -17,7 +17,7 @@ public class DownLoadServlet extends HttpServlet {
         String row = request.getParameter("rowID");
         //得到要下载的文件名
         String fileName = request.getParameter("attach-" + row);
-        fileName = new String(fileName.getBytes("iso8859-1"), "UTF-8");
+//        fileName = new String(fileName.getBytes("iso-8859-1"), "UTF-8");
         //得到要下载的文件
         File file = new File(fileName);
         //如果文件不存在
@@ -30,8 +30,9 @@ public class DownLoadServlet extends HttpServlet {
             pw.close();
         }else {
             //处理文件名
-            String realname = fileName.substring(fileName.indexOf("_") + 1); // 文件路径中不能有_否则获取文件名会失败
+            String realname = new String(fileName.substring(fileName.indexOf("_")+1).getBytes("GB2312"),"ISO-8859-1"); // 文件路径中不能有_否则获取文件名会失败
             //设置响应头，控制浏览器下载该文件
+            response.setContentType("charset=GBK");
             response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(realname, "UTF-8"));
             //读取要下载的文件，保存到文件输入流
             FileInputStream in = new FileInputStream(fileName);
