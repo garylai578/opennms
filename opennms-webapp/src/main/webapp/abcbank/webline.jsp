@@ -10,6 +10,7 @@
         contentType="text/html"
         session="true"
 %>
+<script language="javascript" type="text/javascript" src="/opennms/js/My97DatePicker/WdatePicker.js"></script>
 
 <%@ page import="org.opennms.core.bank.WebLine" %>
 <%@ page import="org.opennms.core.bank.WebLineOperator" %>
@@ -380,33 +381,79 @@
 
             <td>
                 <div id="type-<%=row%>" >
-                    <%= ((type == null || type.equals("")) ? "&nbsp;" : type) %>
-                    <input type="hidden" name="type-<%=row%>" value="<%= ((type == null || type.equals("")) ? "&nbsp;" : type) %>"/>
+<%--                    <%= ((type == null || type.equals("")) ? "&nbsp;" : type) %>--%>
+    <%--<input type="hidden" name="type-<%=row%>" value="<%= ((type == null || type.equals("")) ? "&nbsp;" : type) %>"/>--%>
+                    <select name="type-<%=row%>">
+                        <%
+                            for(int i = 0; i < weblineStates.length; ++i){
+                        %>
+                        <option value="<%=weblineTypes[i]%>" <%=((type != null && type.equals(weblineTypes[i])) ? "selected" : "")%>><%=weblineTypes[i]%></option>
+                        <%
+                            }
+                        %>
+                    </select>
+
                 </div>
             </td>
 
             <td>
                 <div id="applicant-<%=row%>">
-                    <%= ((applicant == null || applicant.equals("")) ? "&nbsp;" : applicant) %>
-                    <input type="hidden"  name="applicant-<%=row%>" value="<%= ((applicant == null || applicant.equals("")) ? "&nbsp;" : applicant) %>"/>
+                    <%--<%= ((applicant == null || applicant.equals("")) ? "&nbsp;" : applicant) %>--%>
+                    <input size="9"  name="applicant-<%=row%>" value="<%= ((applicant == null || applicant.equals("")) ? "&nbsp;" : applicant) %>"/>
                 </div>
             </td>
 
             <td>
                 <div id="contact-<%=row%>">
-                    <%= ((contact == null || contact.equals("")) ? "&nbsp;" : contact) %>
-                    <input type="hidden"  name="contact-<%=row%>" value="<%= ((contact == null || contact.equals("")) ? "&nbsp;" : contact) %>"/>
+<%--                    <%= ((contact == null || contact.equals("")) ? "&nbsp;" : contact) %>--%>
+                    <input name="contact-<%=row%>" value="<%= ((contact == null || contact.equals("")) ? "&nbsp;" : contact) %>" size="9"/>
                 </div>
             </td>
 
             <td>
                 <div id="approver-<%=row%>" >
-                    <%= ((approver == null || approver.equals("")) ? "&nbsp;" : approver) %>
-                    <input type="hidden"  name="approver-<%=row%>" value="<%= ((approver == null || approver.equals("")) ? "&nbsp;" : approver) %>"/>
+                    <%--<%= ((approver == null || approver.equals("")) ? "&nbsp;" : approver) %>--%>
+                    <input size="9"  name="approver-<%=row%>" value="<%= ((approver == null || approver.equals("")) ? "&nbsp;" : approver) %>"/>
                 </div>
             </td>
 
             <td>
+                <div>
+                    <select id="bank-<%=row%>" name="bank-<%=row%>" onChange="selectDepts(this.value, 'dept-<%=row%>')">
+                        <%
+                            if(bank == null || bank.equals(""))
+                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                        %>
+                        <%
+                            for(int i = 0; i < bankNames.length; ++i){
+                        %>
+                        <option value="<%=bankNames[i]%>"  <%if(bank.equals(bankNames[i])) out.print("selected=\"\"");%>><%=bankNames[i]%></option>
+                        <%
+                            }
+                        %>
+                    </select>
+                </div>
+            </td>
+
+            <td>
+                <div style="float:left">
+                    <select id="dept-<%=row%>" name="dept-<%=row%>">
+                        <%
+                            if(dept == null || dept.equals(""))
+                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
+                        %>
+                        <%
+                            String[] depts = bankAndDepts.get(bank);
+                            for(int i = 0; i < depts.length; ++i){
+                        %>
+                        <option value="<%=depts[i]%>"<%if(dept.equals(depts[i])) out.print("selected=\"\"");%>><%=depts[i]%></option>
+                        <%
+                            }
+                        %>
+                    </select>
+                </div>
+            </td>
+<%--            <td>
                 <div id="bank-<%=row%>">
                     <%= ((bank == null || bank.equals("")) ? "&nbsp;" : bank) %>
                     <input type="hidden"  name="bank-<%=row%>" value="<%= ((bank == null || bank.equals("")) ? "&nbsp;" : bank) %>"/>
@@ -418,47 +465,47 @@
                     <%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>
                     <input type="hidden"  name="dept-<%=row%>" value="<%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>"/>
                 </div>
-            </td>
+            </td>--%>
 
             <td>
                 <div id="address-<%=row%>">
-                    <%= ((address == null || address.equals("")) ? "&nbsp;" : address) %>
-                    <input type="hidden"  name="address-<%=row%>" value="<%= ((address == null || address.equals("")) ? "&nbsp;" : address) %>"/>
+                   <%-- <%= ((address == null || address.equals("")) ? "&nbsp;" : address) %>--%>
+                    <input size="9" name="address-<%=row%>" value="<%= ((address == null || address.equals("")) ? "&nbsp;" : address) %>"/>
                 </div>
             </td>
 
             <td>
                 <div id="start_date-<%=row%>">
-                    <%= ((start_date == null || start_date.equals("")) ? "&nbsp;" : start_date) %>
-                    <input type="hidden"  name="start_date-<%=row%>" value="<%= ((start_date == null || start_date.equals("")) ? "&nbsp;" : start_date) %>"/>
+<%--                    <%= ((start_date == null || start_date.equals("")) ? "" : start_date) %>--%>
+                    <input type="text" size="9"  name="start_date-<%=row%>" class="Wdate" onClick="WdatePicker()" value="<%= ((start_date == null || start_date.equals("")) ? "" : start_date) %>"/>
                 </div>
             </td>
 
             <td>
                 <div id="rent-<%=row%>">
-                    <%= ((rent == null || rent.equals("")) ? "&nbsp;" : rent) %>
-                    <input type="hidden"  name="rent-<%=row%>" value="<%= ((rent == null || rent.equals("")) ? "&nbsp;" : rent) %>"/>
+                   <%-- <%= ((rent == null || rent.equals("")) ? "&nbsp;" : rent) %>--%>
+                    <input size="9" name="rent-<%=row%>" value="<%= ((rent == null || rent.equals("")) ? "&nbsp;" : rent) %>"/>
                 </div>
             </td>
 
             <td>
                 <div id="vlan_num-<%=row%>">
-                    <%= ((vlan_num == null || vlan_num.equals("")) ? "&nbsp;" : vlan_num) %>
-                    <input type="hidden"  name="vlan_num-<%=row%>" value="<%= ((vlan_num == null || vlan_num.equals("")) ? "&nbsp;" : vlan_num) %>"/>
+                    <%--<%= ((vlan_num == null || vlan_num.equals("")) ? "&nbsp;" : vlan_num) %>--%>
+                    <input size="9" name="vlan_num-<%=row%>" value="<%= ((vlan_num == null || vlan_num.equals("")) ? "&nbsp;" : vlan_num) %>"/>
                 </div>
             </td>
 
             <td>
                 <div id="port-<%=row%>">
-                    <%= ((port == null || port.equals("")) ? "&nbsp;" : port) %>
-                    <input type="hidden"  name="port-<%=row%>" value="<%= ((port == null || port.equals("")) ? "&nbsp;" : port) %>"/>
+                    <%--<%= ((port == null || port.equals("")) ? "&nbsp;" : port) %>--%>
+                    <input size="9" name="port-<%=row%>" value="<%= ((port == null || port.equals("")) ? "&nbsp;" : port) %>"/>
                 </div>
             </td>
 
             <td>
                 <div id="inter-<%=row%>">
-                    <%= ((inter == null || inter.equals("")) ? "&nbsp;" : inter) %>
-                    <input type="hidden"  name="inter-<%=row%>" value="<%= ((inter == null || inter.equals("")) ? "&nbsp;" : inter) %>"/>
+                   <%-- <%= ((inter == null || inter.equals("")) ? "&nbsp;" : inter) %>--%>
+                    <input size="9" name="inter-<%=row%>" value="<%= ((inter == null || inter.equals("")) ? "&nbsp;" : inter) %>"/>
                 </div>
             </td>
 
@@ -475,7 +522,7 @@
                     <%
                         }
                     %>
-                    <input id="attach-<%=row%>" name="attach-<%=row%>" hidden value="<%=attach%>" />
+                    <input id="attach-<%=row%>" name="attach-<%=row%>"  type="hidden" value="<%=attach%>" />
                     <%--<input id="attach-<%=row%>" name="attach-<%=row%>" type="text" size="8" value="<%= ((attach == null || attach.equals("")) ? "&nbsp;" : attach) %>"/>--%>
                 </div>
             </td>

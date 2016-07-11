@@ -441,7 +441,7 @@
             </td>
 
             <td>
-                <div>
+                <div style="float:left">
                     <select id="dept-<%=row%>" name="dept-<%=row%>">
                         <%
                             if(dept == null || dept.equals(""))

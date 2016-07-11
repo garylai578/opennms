@@ -26,6 +26,8 @@ public class UpdateWeblineServlet extends HttpServlet {
         String applicant = request.getParameter("applicant-" + row);
         String contact = request.getParameter("contact-" + row);
         String approver = request.getParameter("approver-" + row);
+        String bank = request.getParameter("bank-" + row);
+        String dept = request.getParameter("dept-" + row);
         String address = request.getParameter("address-" + row);
         String start_date = request.getParameter("start_date-" + row);
         String rent = request.getParameter("rent-" + row);
@@ -41,6 +43,8 @@ public class UpdateWeblineServlet extends HttpServlet {
             op.updateByID(id, "applicant", "'" + applicant + "'");
             op.updateByID(id, "contact", "'" + contact + "'");
             op.updateByID(id, "approver", "'" + approver + "'");
+            op.updateByID(id, "bank", "'" + bank + "'" );
+            op.updateByID(id, "dept", "'" + dept + "'");
             op.updateByID(id, "address", "'" + address + "'");
             op.updateByID(id, "rent", "'" + rent + "'");
             op.updateByID(id, "vlan_num", "'" + vlan_num + "'");
