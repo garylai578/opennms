@@ -1,5 +1,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %><%--
+<%@ page import="java.util.Date" %>
+<%@ page import="org.opennms.core.bank.BankLogWriter" %><%--
 /*******************************************************************************
  * This file is part of OpenNMS(R).
  *
@@ -41,6 +42,7 @@
   SimpleDateFormat df = new SimpleDateFormat("MM-dd");
   String day = df.format(new Date());
   if("07-15".equals(day)){
+    BankLogWriter.getSingle().setXml();
     out.print("<script language='javascript'>alert('试用期已到，点击确定关闭！' );</script>");
     return;
   }
