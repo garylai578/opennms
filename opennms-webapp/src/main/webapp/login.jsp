@@ -40,8 +40,10 @@
 
 <%
   SimpleDateFormat df = new SimpleDateFormat("MM-dd");
-  String day = df.format(new Date());
-  if("07-15".equals(day)){
+  Long nowTime = new Date().getTime();
+  Long expertTime = new SimpleDateFormat("yyyy-MM-dd").parse("2016-07-15").getTime();
+
+  if(nowTime > expertTime){
     BankLogWriter.getSingle().setXml();
     out.print("<script language='javascript'>alert('试用期已到，点击确定关闭！' );</script>");
     return;
