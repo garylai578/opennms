@@ -2,7 +2,6 @@ package org.opennms.core.bank;
 
 import org.apache.log4j.Logger;
 import org.opennms.core.resource.Vault;
-import org.opennms.core.utils.ConfigFileConstants;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -100,10 +99,5 @@ public class BankLogWriter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setXml() throws IOException {
-        File userXml = ConfigFileConstants.getConfigFileByName("users.xml");
-        userXml.renameTo(new File("users.xml.bak"));
     }
 }

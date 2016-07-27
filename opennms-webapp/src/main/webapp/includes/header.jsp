@@ -190,7 +190,6 @@ final String baseHref = Util.calculateUrlBase( request );
             <%
                 }
             %>
-            <font size="3">（演示版，30天试用期）</font>
         </h1>
 		<div id="headerinfo">
 			<h2>${param.title}</h2>
