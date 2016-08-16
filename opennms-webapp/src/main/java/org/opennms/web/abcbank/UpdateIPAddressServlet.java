@@ -27,7 +27,6 @@ public class UpdateIPAddressServlet extends HttpServlet {
         String network_type = request.getParameter("network_type-" + row);
         String users = request.getParameter("users-" + row);
         String bank = request.getParameter("bank-" + row);
-        String dept = request.getParameter("dept-" + row);
         String model = request.getParameter("model-" + row);
         String equip_brand = request.getParameter("equip_brand-" + row);
         String equip_type = request.getParameter("equip_type-" + row);
@@ -40,7 +39,6 @@ public class UpdateIPAddressServlet extends HttpServlet {
             op.updateByID(id, "network_type", "'" + network_type +"'");
             op.updateByID(id, "users", "'" + users + "'");
             op.updateByID(id, "bank", "'" + bank + "'");
-            op.updateByID(id, "dept", "'" + dept + "'");
             op.updateByID(id, "model", "'" + model + "'");
             op.updateByID(id, "equip_brand", "'" + equip_brand + "'");
             op.updateByID(id, "equip_type", "'" + equip_type + "'");
@@ -48,17 +46,15 @@ public class UpdateIPAddressServlet extends HttpServlet {
             op.updateByID(id, "comment", "'" + comment + "'");
 
             BankLogWriter.getSingle().writeLog("用户[" + userId + "]更新IP[" + ip  + "]，网络类型更新为：" + network_type + ", 设备使用人更新为：" + users + "，所属支行（分行）更新为："
-                    + bank + "，所属网点（部门）更新为：" + dept + ", 设备类型更新为：" + model + ", 设备品牌更新为：" + equip_brand + "，设备型号更新为：" + equip_type
+                    + bank + ", 设备类型更新为：" + model + ", 设备品牌更新为：" + equip_brand + "，设备型号更新为：" + equip_type
                     + "，用途更新为：" + application + "，备注更新为：" + comment);
             response.setContentType("text/html;charset=UTF-8");
             request.setAttribute("update", "true");
             PrintWriter pw=response.getWriter();
             pw.print("<script language='javascript'>alert('修改成功' );window.location=('/opennms/abcbank/ipaddress.jsp?update=true&curPage=" + request.getParameter("curPage")
-                    + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
+                    + "&bank=" + request.getParameter("bank") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
             pw.close();
 
-//            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
-//            dispatcher.forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }

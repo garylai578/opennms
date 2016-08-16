@@ -27,7 +27,7 @@
 %>
 
 <%
-    String bankReturn, deptReturn, typeReturn, usersReturn, update;
+    String bankReturn, typeReturn, usersReturn, update;
 
     if(request.getAttribute("bank") != null )
         bankReturn = (String)request.getAttribute("bank");
@@ -35,14 +35,6 @@
         bankReturn = request.getParameter("bank");
         if(bankReturn == null)
             bankReturn = "";
-    }
-
-    if(request.getAttribute("dept") != null)
-        deptReturn = (String)request.getAttribute("dept");
-    else {
-        deptReturn = request.getParameter("dept");
-        if(deptReturn == null)
-            deptReturn = "";
     }
 
     if(request.getAttribute("network_type") != null)
@@ -69,8 +61,6 @@
     Map<String, String> colAndValue = new HashMap<String, String>();
     if(bankReturn != null && !"".equals(bankReturn) && !"null".equals(bankReturn))
         colAndValue.put("bank", bankReturn);
-    if(deptReturn != null && !"".equals(deptReturn) && !"null".equals(deptReturn))
-        colAndValue.put("dept", deptReturn);
     if(typeReturn != null && !"".equals(typeReturn) && !"null".equals(typeReturn))
         colAndValue.put("network_type", typeReturn);
     if(usersReturn != null && !"".equals(usersReturn) && !"null".equals(usersReturn))
@@ -250,7 +240,7 @@
                     %>
                  </select>&nbsp;&nbsp;
         <strong>设备使用人:</strong><input id="users" name="users" size="12" value="<%=(usersReturn==null?"":usersReturn)%>">&nbsp;&nbsp;
-        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')" <%=(group == null || "".equals(group)) ? "" : "disabled"%>>
+        <strong>所属部门：</strong><select id="bank" name="bank" <%=(group == null || "".equals(group)) ? "" : "disabled"%>>
                             <option value="" selected="">请选择</option>
                             <%
                                 if(group != null && !"".equals(group))
@@ -262,27 +252,6 @@
                                 }
                             %>
                         </select>&nbsp;&nbsp;
-        <strong>所属网点（部门）：</strong><select id="dept" name="dept">
-            <option value="" selected>请选择</option>
-            <%
-                if(!"".equals(bankReturn)){
-                    String[] depts = bankAndDepts.get(bankReturn);
-                    if(depts != null)
-                        for(String dep : depts){
-                            String selected = "";
-                            if(dep.equals(deptReturn))
-                                selected = "selected";
-            %>
-            <option value="<%=dep%>" <%=selected%>><%=dep%></option>
-            <%
-                        }
-                }
-            %>
-        </select>  &nbsp;&nbsp;
-<%--        <input id="searchArea-0" type="checkbox" value="network_type" checked>网络类型
-        <input id="searchArea-1" type="checkbox" value="users" checked>设备使用人
-        <input id="searchArea-2" type="checkbox" value="bank" checked>所属支行（分行）
-        <input id="searchArea-3" type="checkbox" value="dept" checked>所属网点（部门）&nbsp;--%>
         <a id="doSearch" href="javascript:searchIPAddress()"><img src="images/search.png" alt="搜索" border="0"></a>
         <a id="search" href="javascript:searchIPAddress()">搜索</a>
     </td>
@@ -307,8 +276,7 @@
             <td><b>申请时间</b></td>
             <td><b>启用日期</b></td>
             <td><b>设备使用人</b></td>
-            <td><b>所属支行（分行）</b></td>
-            <td><b>所属网点（部门）</b></td>
+            <td><b>所属部门</b></td>
             <td><b>设备类型</b></td>
             <td><b>设备品牌</b></td>
             <td><b>设备型号</b></td>
@@ -332,7 +300,6 @@
                 String apply_date = ip.getApply_date();
                 String usres = ip.getUsers();
                 String bank = ip.getBank();
-                String dept = ip.getDept();
                 String model = ip.getModel();
                 String equip_type = ip.getEquip_type();
                 String equip_brand = ip.getEquip_brand();
@@ -424,7 +391,7 @@
 
             <td>
                 <div>
-                    <select id="bank-<%=row%>" name="bank-<%=row%>" onChange="selectDepts(this.value, 'dept-<%=row%>')">
+                    <select id="bank-<%=row%>" name="bank-<%=row%>">
                         <%
                             if(bank == null || bank.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
@@ -433,25 +400,6 @@
                             for(int i = 0; i < bankNames.length; ++i){
                         %>
                         <option value="<%=bankNames[i]%>"  <%if(bank.equals(bankNames[i])) out.print("selected=\"\"");%>><%=bankNames[i]%></option>
-                        <%
-                            }
-                        %>
-                    </select>
-                </div>
-            </td>
-
-            <td>
-                <div style="float:left">
-                    <select id="dept-<%=row%>" name="dept-<%=row%>">
-                        <%
-                            if(dept == null || dept.equals(""))
-                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
-                        %>
-                        <%
-                            String[] depts = bankAndDepts.get(bank);
-                            for(int i = 0; i < depts.length; ++i){
-                        %>
-                        <option value="<%=depts[i]%>"<%if(dept.equals(depts[i])) out.print("selected=\"\"");%>><%=depts[i]%></option>
                         <%
                             }
                         %>
@@ -509,20 +457,20 @@
         </div>
     </div>
     <div>&nbsp;
-        <a href = "abcbank/ipaddress.jsp?curPage=1&bank=<%=bankReturn%>&dept=<%=deptReturn%>&network_type=<%=typeReturn%>&users=<%=usersReturn%>" >首页</a>
+        <a href = "abcbank/ipaddress.jsp?curPage=1&bank=<%=bankReturn%>&network_type=<%=typeReturn%>&users=<%=usersReturn%>" >首页</a>
         <%
             if(curPage - 1 > 0)
-                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage - 1) + "&bank=" + bankReturn + "&dept=" + deptReturn + "&network_type=" + typeReturn + "&users=" + usersReturn + "' >上一页</a>");
+                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage - 1) + "&bank=" + bankReturn +  "&network_type=" + typeReturn + "&users=" + usersReturn + "' >上一页</a>");
             else
                 out.print("上一页");
         %>
         <%
             if(curPage + 1 <= pageCount)
-                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage + 1) + "&bank=" + bankReturn + "&dept=" + deptReturn + "&network_type=" + typeReturn + "&users=" + usersReturn + "' >下一页</a>");
+                out.print("<a href = 'abcbank/ipaddress.jsp?curPage=" + (curPage + 1) + "&bank=" + bankReturn +"&network_type=" + typeReturn + "&users=" + usersReturn + "' >下一页</a>");
             else
                 out.print("下一页");
         %>
-        <a href = "abcbank/ipaddress.jsp?curPage=<%=pageCount%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>&network_type=<%=typeReturn%>&users=<%=usersReturn%>" >尾页</a>
+        <a href = "abcbank/ipaddress.jsp?curPage=<%=pageCount%>&bank=<%=bankReturn%>&network_type=<%=typeReturn%>&users=<%=usersReturn%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
     </div>
     <input type="hidden" name="curPage" value="<%=curPage%>"/>

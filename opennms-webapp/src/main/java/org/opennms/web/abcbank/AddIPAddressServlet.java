@@ -34,7 +34,6 @@ public class AddIPAddressServlet extends HttpServlet  {
         String start_date = request.getParameter("start_date");
         String users = request.getParameter("users");
         String bank = request.getParameter("bank");
-        String dept = request.getParameter("dept");
         String equip_type = request.getParameter("equip_type");
         String equip_brand = request.getParameter("equip_brand");
         String model = request.getParameter("model");
@@ -100,7 +99,6 @@ public class AddIPAddressServlet extends HttpServlet  {
                     ip.setStart_date(start_date);
                     ip.setUsers(users);
                     ip.setBank(bank);
-                    ip.setDept(dept);
                     ip.setEquip_type(equip_type);
                     ip.setEquip_brand(equip_brand);
                     ip.setModel(model);

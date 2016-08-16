@@ -32,9 +32,6 @@ public class StartIPAddressServlet extends HttpServlet {
                 Date date = new Date();
                 op.updateByID(id, "start_date", "'" + sf.format(date) + "'");
                 op.updateByID(id, "stop_date", "null");
-
-//            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");
-//            dispatcher.forward(request, response);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -48,7 +45,7 @@ public class StartIPAddressServlet extends HttpServlet {
         if(curPage == null)
             curPage = "1";
         pw.print("<script language='javascript'>alert('成功启用' );window.location=('/opennms/abcbank/ipaddress.jsp?update=true&curPage=" + curPage
-                + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
+                + "&bank=" + request.getParameter("bank") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
         pw.close();
     }
 

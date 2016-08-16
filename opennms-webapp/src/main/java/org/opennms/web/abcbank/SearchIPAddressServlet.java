@@ -24,7 +24,6 @@ public class SearchIPAddressServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String networkType = request.getParameter("network_type");
         String users = request.getParameter("users");
-        String dept = request.getParameter("dept");
         String bank = request.getParameter("bank");
         Map<String, String> colAndValue = new HashMap<String, String>();
 
@@ -32,8 +31,6 @@ public class SearchIPAddressServlet extends HttpServlet {
             colAndValue.put("network_type", networkType);
         if(users != null && !"".equals(users))
             colAndValue.put("users", users);
-        if(dept != null && !"".equals(dept))
-            colAndValue.put("dept", dept);
         if(bank != null && !"".equals(bank))
             colAndValue.put("bank", bank);
 
@@ -55,7 +52,7 @@ public class SearchIPAddressServlet extends HttpServlet {
                 if(curPage == null)
                     curPage = "1";
                 pw.print("<script language='javascript'>alert('查询无结果！' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage=" + curPage
-                        + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
+                        + "&bank=" + request.getParameter("bank") + "&network_type=" + request.getParameter("network_type") + "&users=" + request.getParameter("users") + "');</script>");
                 pw.close();
             }
         } catch (SQLException e) {

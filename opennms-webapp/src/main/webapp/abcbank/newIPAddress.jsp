@@ -30,7 +30,6 @@
         var ip = trimStr(new String(document.newIPs.ipAddr.value));
         var mask = trimStr(new String(document.newIPs.mask.value));
         var gateway = trimStr(new String(document.newIPs.gateway.value));
-        var bank = trimStr(new String(document.newIPs.bank.value));
         if(ip==null || ip==0) {
             alert("请输入IP地址！");
             isCommitted = false;
@@ -53,10 +52,6 @@
             return false;
         }else if(!judgeIP(gateway)){
             alert("网关地址格式不正确！");
-            isCommitted = false;
-            return false;
-        }else if(bank == 0){
-            alert("请选择所属支行（分行）！");
             isCommitted = false;
             return false;
         }else{
@@ -144,9 +139,9 @@
         </tr>
 
         <tr>
-            <td>*所属支行（分行）：</td>
+            <td>所属部门：</td>
             <td>
-                <select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
+                <select id="bank" name="bank">
                     <option value="0" selected="">请选择</option>
                     <%
                         for(int i = 0; i < bankNames.length; ++i){
@@ -155,15 +150,6 @@
                     <%
                         }
                     %>
-                </select>
-            </td>
-        </tr>
-
-        <tr>
-            <td>所属网点（部门）：</td>
-            <td>
-                <select id="dept" name="dept">
-                    <option value="" selected>请选择</option>
                 </select>
             </td>
         </tr>
