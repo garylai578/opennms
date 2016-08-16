@@ -48,7 +48,7 @@ public class SearchIPSegmentServlet extends HttpServlet {
                 request.setAttribute("searchIpSeg", request.getParameter("searchIpSeg"));
                 request.getRequestDispatcher("ipsegment.jsp").forward(request, response);
             } else {
-                pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage="
+                pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipsegment.jsp?curPage="
                         + request.getParameter("curPage") + "&searchIpSeg=" + request.getParameter("searchIpSeg") + "&bank=" + request.getParameter("bank")
                         + "&state=" + request.getParameter("state") + "');</script>");
                 pw.close();

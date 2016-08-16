@@ -175,7 +175,6 @@
         document.allIPSegments.ipSegID.value=id;
         document.allIPSegments.rowID.value=row;
         document.allIPSegments.bankName.value=document.getElementById("bankname-"+row).value;
-        document.allIPSegments.bankType.value=document.getElementById("banktype-"+row).value;
         document.allIPSegments.comments.value=document.getElementById("comment-"+row).value;
         document.allIPSegments.submit();
     }
@@ -212,7 +211,6 @@
     <input type="hidden" name="ipSegID"/>
     <input type="hidden" name="rowID"/>
     <input type="hidden" name="bankName"/>
-    <input type="hidden" name="bankType"/>
     <input type="hidden" name="comments"/>
     <input type="hidden" name="rows"/>
     <input type="hidden" name="ipSegs"/>
@@ -236,7 +234,7 @@
                 }
             %>
         </select>&nbsp;&nbsp;
-        <strong>所属部门：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
+        <strong>所属部门：</strong><select id="bank" name="bank">
             <option value="" selected="">请选择</option>
             <%
                 for(int i = 0; i < bankNames.length; ++i){
@@ -366,7 +364,7 @@
 
             <td>
                 <div>
-                    <select id="bankname-<%=row%>" name="bankname-<%=row%>" onChange="selectDepts(this.value, 'dept-<%=row%>')">
+                    <select id="bankname-<%=row%>" name="bankname-<%=row%>">
                         <%
                             if(name == null || name.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
