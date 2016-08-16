@@ -45,10 +45,7 @@ public class AddIPSegmentServlet extends HttpServlet {
             String numString = request.getParameter("ipNum");
             int num = Integer.parseInt(numString);
             String name = request.getParameter("bankName");
-            String type = request.getParameter("bankType");
             String comment = request.getParameter("comments");
-            String dept = request.getParameter("deptName");
-            name = name + "/" + dept;
 
             SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date date = new Date();
@@ -77,7 +74,6 @@ public class AddIPSegmentServlet extends HttpServlet {
                                 op.updateByID(id, "createtime", sf.format(date));
                                 op.updateByID(id, "stoptime", "null");
                                 op.updateByID(id, "name", name);
-                                op.updateByID(id, "type", type);
                                 op.updateByID(id, "comment", comment);
                                 flag = 1;
                                 log.debug("update ipsegment where id =" + id);
@@ -113,7 +109,6 @@ public class AddIPSegmentServlet extends HttpServlet {
                     seg.setIpPool(cal.getIPPool());
                     seg.setState("在用");
                     seg.setBankname(name);
-                    seg.setBanktype(type);
                     seg.setComment(comment);
                     seg.setCreateTime(sf.format(date));
                     op.insert(seg);
@@ -127,7 +122,7 @@ public class AddIPSegmentServlet extends HttpServlet {
 
             BankLogWriter.getSingle().writeLog("用户[" + userId +"]新增IP段[" + startIP + "-" + endIP + "]：" + backMsg);
             pw.print("<script language='javascript'>alert('"+ backMsg + "' );window.location=('/opennms/abcbank/ipsegment.jsp?update=true&curPage="
-                    + request.getParameter("curPage") + "&searchIpSeg=" + request.getParameter("searchIpSeg") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
+                    + request.getParameter("curPage") + "&searchIpSeg=" + request.getParameter("searchIpSeg") + "&bank=" + request.getParameter("bank") + "&state=" + request.getParameter("state") + "');</script>");
             pw.close();
 
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");

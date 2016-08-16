@@ -312,7 +312,7 @@
             </tr>
         <tr >
             <td valign="top">
-                <label id="textServiceLabel" for="textService">*所属支行:</label>
+                <label id="textServiceLabel" for="textService">*所属部门:</label>
             </td>
             <td valign="top">
                 <select id="textService" name="textService">

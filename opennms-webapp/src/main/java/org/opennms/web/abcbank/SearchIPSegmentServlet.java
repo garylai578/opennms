@@ -22,7 +22,6 @@ public class SearchIPSegmentServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String bank = request.getParameter("bank");
-        String dept = request.getParameter("dept");
         String state = request.getParameter("state");
         String ipSeg = request.getParameter("searchIpSeg");
 
@@ -33,7 +32,6 @@ public class SearchIPSegmentServlet extends HttpServlet {
         Map<String, String> colAndValue = new HashMap<String, String>();
 
         if(bank != null && !"".equals(bank)) {
-            bank = bank + "/" + dept;
             colAndValue.put("name", bank);
         }
         if(state != null && !"".equals(state))
@@ -46,14 +44,13 @@ public class SearchIPSegmentServlet extends HttpServlet {
             if(rs != null && rs.length > 0){
                 request.getSession().setAttribute("ipSeg", rs);
                 request.setAttribute("bank", request.getParameter("bank"));
-                request.setAttribute("dept", request.getParameter("dept"));
                 request.setAttribute("state", request.getParameter("state"));
                 request.setAttribute("searchIpSeg", request.getParameter("searchIpSeg"));
                 request.getRequestDispatcher("ipsegment.jsp").forward(request, response);
             } else {
                 pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/ipaddress.jsp?curPage="
                         + request.getParameter("curPage") + "&searchIpSeg=" + request.getParameter("searchIpSeg") + "&bank=" + request.getParameter("bank")
-                        + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
+                        + "&state=" + request.getParameter("state") + "');</script>");
                 pw.close();
             }
         } catch (SQLException e) {

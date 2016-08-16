@@ -28,7 +28,7 @@
 
 <%
     IPSegmentOperater op = new IPSegmentOperater();
-    String bankReturn,deptReturn, stateReturn, ipSegReturn, update;
+    String bankReturn, stateReturn, ipSegReturn, update;
 
     if(request.getAttribute("bank") != null )
         bankReturn = (String)request.getAttribute("bank");
@@ -36,14 +36,6 @@
         bankReturn = request.getParameter("bank");
         if(bankReturn == null)
             bankReturn = "";
-    }
-
-    if(request.getAttribute("dept") != null)
-        deptReturn = (String)request.getAttribute("dept");
-    else {
-        deptReturn = request.getParameter("dept");
-        if(deptReturn == null)
-            deptReturn = "";
     }
 
     if(request.getAttribute("state") != null)
@@ -68,12 +60,8 @@
         update = request.getParameter("update");
 
     Map<String, String> colAndValue = new HashMap<String, String>();
-    if(bankReturn != null && !"".equals(bankReturn) && !"null".equals(bankReturn)) {
-        if(deptReturn != null && !"".equals(deptReturn) && !"null".equals(deptReturn))
-            colAndValue.put("name", bankReturn + "/" + deptReturn);
-        else
-            colAndValue.put("name", bankReturn);
-    }
+    if(bankReturn != null && !"".equals(bankReturn) && !"null".equals(bankReturn))
+        colAndValue.put("name", bankReturn);
     if(stateReturn != null && !"".equals(stateReturn) && !"null".equals(stateReturn))
         colAndValue.put("state", stateReturn);
 
@@ -248,7 +236,7 @@
                 }
             %>
         </select>&nbsp;&nbsp;
-        <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
+        <strong>所属部门：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
             <option value="" selected="">请选择</option>
             <%
                 for(int i = 0; i < bankNames.length; ++i){
@@ -258,7 +246,7 @@
                 }
             %>
         </select>&nbsp;&nbsp;
-        <strong>所属网点（部门）：</strong><select id="dept" name="dept">
+        <%--<strong>所属网点（部门）：</strong><select id="dept" name="dept">
             <option value="" selected>请选择</option>
             <%
                 if(!"".equals(bankReturn)){
@@ -274,7 +262,7 @@
                         }
                     }
             %>
-                </select>  &nbsp;&nbsp;
+                </select>  &nbsp;&nbsp;--%>
         <strong>使用情况：</strong><select id="state" name="state">
             <option value="" selected="">请选择</option>
             <option value="在用" <%=((stateReturn != null && stateReturn.equals("在用")) ? "selected" : "")%>>在用</option>
@@ -300,9 +288,9 @@
             <td><b>网关</b></td>
             <td><b>掩码</b></td>
             <td><b>开始IP-结束IP</b></td>
-            <td><b>所属分行（支行）</b></td>
-            <td><b>所属网点（部门）</b></td>
-            <td><b>网点类型</b></td>
+            <td><b>所属部门</b></td>
+            <%--<td><b>所属网点（部门）</b></td>--%>
+            <%--<td><b>网点类型</b></td>--%>
             <td><b>启用日期</b></td>
             <td><b>使用情况</b></td>
             <td><b>备注</b></td>
@@ -318,17 +306,17 @@
                 String startIP = ip.getStartIP();
                 String endIP = ip.getEndIP();
                 String name = ip.getBankname();
-                String type = ip.getBanktype();
+//                String type = ip.getBanktype();
                 String time = ip.getCreateTime();
                 String stopTime = ip.getStopTime();
                 String state = ip.getState();
                 String comment = ip.getComment();
 
-                String[] bankAndDept = name.split("/");
+/*                String[] bankAndDept = name.split("/");
                 name = bankAndDept[0];
                 String dept = "";
                 if(bankAndDept.length == 2)
-                    dept = bankAndDept[1];
+                    dept = bankAndDept[1];*/
         %>
         <tr  <%if (state.equals("停用")) out.print("class=\"lineUnused\"");%>>
             <td>
@@ -394,7 +382,7 @@
                 </div>
             </td>
 
-            <td>
+<%--            <td>
                 <div>
                     <select id="dept-<%=row%>" name="dept-<%=row%>">
                         <%
@@ -411,9 +399,9 @@
                         %>
                     </select>
                 </div>
-            </td>
+            </td>--%>
 
-            <td>
+<%--            <td>
                 <div>
                     <select id="banktype-<%=row%>" name="banktype-<%=row%>">
                         <%
@@ -430,7 +418,7 @@
                     </select>
 
                 </div>
-            </td>
+            </td>--%>
 
             <td>
                 <div id="createdate-<%=row%>">
@@ -468,20 +456,20 @@
 
         <br>
         <div>&nbsp;
-        <a href = "abcbank/ipsegment.jsp?curPage=1&searchIpSeg=<%=ipSegReturn%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>&state=<%=stateReturn%>" >首页</a>
+        <a href = "abcbank/ipsegment.jsp?curPage=1&searchIpSeg=<%=ipSegReturn%>&bank=<%=bankReturn%>&state=<%=stateReturn%>" >首页</a>
         <%
             if(curPage - 1 > 0)
-                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage - 1) + "&searchIpSeg=" + ipSegReturn + "&bank=" + bankReturn + "&dept=" + deptReturn + "&state=" + stateReturn + "' >上一页</a>");
+                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage - 1) + "&searchIpSeg=" + ipSegReturn + "&bank=" + bankReturn + "&state=" + stateReturn + "' >上一页</a>");
             else
                 out.print("上一页");
         %>
         <%
             if(curPage + 1 <= pageCount)
-                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage + 1) + "&searchIpSeg=" + ipSegReturn + "&bank=" + bankReturn + "&dept=" + deptReturn + "&state=" + stateReturn + "' >下一页</a>");
+                out.print("<a href = 'abcbank/ipsegment.jsp?curPage=" + (curPage + 1) + "&searchIpSeg=" + ipSegReturn + "&bank=" + bankReturn + "&state=" + stateReturn + "' >下一页</a>");
             else
                 out.print("下一页");
         %>
-        <a href = "abcbank/ipsegment.jsp?curPage=<%=pageCount%>&searchIpSeg=<%=ipSegReturn%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>&state=<%=stateReturn%>" >尾页</a>
+        <a href = "abcbank/ipsegment.jsp?curPage=<%=pageCount%>&searchIpSeg=<%=ipSegReturn%>&bank=<%=bankReturn%>&state=<%=stateReturn%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
         </div>
     </div>

@@ -54,8 +54,6 @@
         var startIP = new String(document.newIPs.startIP.value);
         var endIP = new String(document.newIPs.endIP.value);
         var num = new String(document.newIPs.ipNum.value);
-        var name = new String(document.newIPs.bankName.value);
-        var type = new String(document.newIPs.bankType.value);
         if(seg==null || seg==0){
             if(startIP == null || startIP == 0 || endIP == null || endIP == 0) {
                 alert("请选择或输入所属的IP段");
@@ -76,14 +74,6 @@
 
         if(num==0) {
             alert("请选择所需的IP数量！");
-            isCommitted = false;
-            return false;
-        }else if(name == 0){
-            alert("请选择所属网点！");
-            isCommitted = false;
-            return false;
-        }else if(type == 0){
-            alert("请选择网点所属类型！");
             isCommitted = false;
             return false;
         }else{
@@ -142,7 +132,7 @@
         </tr>
 
         <tr>
-            <td>*所属支行（分行）：</td>
+            <td>所属部门：</td>
             <td>
                 <select id="bank" name="bankName" onChange="selectDepts(this.value, 'dept')">
                     <option value="0" selected="">请选择</option>
@@ -150,31 +140,6 @@
                         for(int i = 0; i < bankNames.length; ++i){
                     %>
                     <option value="<%=bankNames[i]%>"><%=bankNames[i]%></option>
-                    <%
-                        }
-                    %>
-                </select>
-            </td>
-        </tr>
-
-        <tr>
-            <td>所属网点（部门）：</td>
-            <td>
-                <select id="dept" name="deptName">
-                    <option value="" selected>请选择</option>
-                </select>
-            </td>
-        </tr>
-
-        <tr>
-            <td>*网点类型：</td>
-            <td>
-                <select id="bankType" name="bankType">
-                    <option value="0" selected="">请选择</option>
-                    <%
-                        for(int i = 0; i < bankTypes.length; ++i){
-                    %>
-                    <option value="<%=bankTypes[i]%>"><%=bankTypes[i]%></option>
                     <%
                         }
                     %>

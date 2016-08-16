@@ -49,7 +49,7 @@ public class StopIPSegmentServlet extends HttpServlet {
         if(curPage == null)
             curPage = "1";
         pw.print("<script language='javascript'>alert('成功停用' );window.location=('/opennms/abcbank/ipsegment.jsp?update=true&curPage="
-                + curPage + "&searchIpSeg=" + request.getParameter("searchIpSeg") + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "&state=" + request.getParameter("state") + "');</script>");
+                + curPage + "&searchIpSeg=" + request.getParameter("searchIpSeg") + "&bank=" + request.getParameter("bank") + "&state=" + request.getParameter("state") + "');</script>");
         pw.close();
     }
 }
