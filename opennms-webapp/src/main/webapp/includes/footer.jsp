@@ -80,7 +80,6 @@
     <div id="footer">
       <p>
          Copyright &copy; 2016
-	    <a href="http://www.abchina.com/cn/">中国农业银行股份有限公司</a>东莞分行
 	  </p>
     </div>
   </c:otherwise>
