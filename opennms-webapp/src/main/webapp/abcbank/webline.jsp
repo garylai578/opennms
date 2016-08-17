@@ -271,8 +271,7 @@
             <td width="5%"><b>申请人</b></td>
             <td width="10%"><b>联系方式</b></td>
             <td width="5%"><b>审批人</b></td>
-            <td width="8%"><b>所属分行（支行）</b></td>
-            <td width="8%"><b>所属网点（部门）</b></td>
+            <td width="8%"><b>所属部门</b></td>
             <td width="15%"><b>地址</b></td>
             <td width="5%"><b>开通日期</b></td>
             <td width="5%"><b>月租</b></td>
