@@ -29,19 +29,13 @@
             return false;
         isCommitted = true;
         var ip = new String(document.newWebLine.ip.value);
-        var type = new String(document.newWebLine.type.value);
         var applicant = new String(document.newWebLine.applicant.value);
         var contact = new String(document.newWebLine.contact.value);
-        var bank = new String(document.newWebLine.bank.value);
         var address = new String(document.newWebLine.address.value);
         var approver = new String(document.newWebLine.approver.value);
 
         if(ip != null  && ip != "" && !isValidIPAddress(ip)){
             alert("IP地址无效：" + ip);
-            isCommitted = false;
-            return false;
-        }else if(type== 0 || type=="") {
-            alert("请选择专线类型！");
             isCommitted = false;
             return false;
         }else if(applicant == 0 || applicant==""){
@@ -54,10 +48,6 @@
             return false;
         }else if(approver == 0 || approver ==""){
             alert("请填写审批人！");
-            isCommitted = false;
-            return false;
-        }else if(bank == 0 || bank ==""){
-            alert("请选择所属分行（支行）！");
             isCommitted = false;
             return false;
         }else if(address == 0 || address ==""){
@@ -116,7 +106,7 @@
         </tr>
 
         <tr>
-            <td>*专线类型：</td>
+            <td>专线类型：</td>
             <td>
                 <select id="type" name="type">
                     <option value="0" selected="">请选择</option>
@@ -153,9 +143,9 @@
         </tr>
 
         <tr>
-            <td>*所属支行（分行）：</td>
+            <td>所属部门：</td>
             <td>
-                <select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')">
+                <select id="bank" name="bank">
                     <option value="0" selected="">请选择</option>
                     <%
                         for(int i = 0; i < bankNames.length; ++i){
@@ -164,15 +154,6 @@
                     <%
                         }
                     %>
-                </select>
-            </td>
-        </tr>
-
-        <tr>
-            <td>所属网点（部门）：</td>
-            <td>
-                <select id="dept" name="dept">
-                    <option value="" selected>请选择</option>
                 </select>
             </td>
         </tr>

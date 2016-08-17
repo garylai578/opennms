@@ -33,7 +33,7 @@
 %>
 
 <%
-    String bankReturn, deptReturn, typeReturn, applicantReturn, approverReturn, update;
+    String bankReturn, typeReturn, applicantReturn, approverReturn, update;
 
     if(request.getAttribute("bank") != null )
         bankReturn = (String)request.getAttribute("bank");
@@ -41,14 +41,6 @@
         bankReturn = request.getParameter("bank");
         if(bankReturn == null)
             bankReturn = "";
-    }
-
-    if(request.getAttribute("dept") != null)
-        deptReturn = (String)request.getAttribute("dept");
-    else {
-        deptReturn = request.getParameter("dept");
-        if(deptReturn == null)
-            deptReturn = "";
     }
 
     if(request.getAttribute("type") != null)
@@ -83,8 +75,6 @@
     Map<String, String> colAndValue = new HashMap<String, String>();
     if(bankReturn != null && !"".equals(bankReturn) && !"null".equals(bankReturn))
         colAndValue.put("bank", bankReturn);
-    if(deptReturn != null && !"".equals(deptReturn) && !"null".equals(deptReturn))
-        colAndValue.put("dept", deptReturn);
     if(typeReturn != null && !"".equals(typeReturn) && !"null".equals(typeReturn))
         colAndValue.put("type", typeReturn);
     if(applicantReturn != null && !"".equals(applicantReturn) && !"null".equals(applicantReturn))
@@ -247,7 +237,7 @@
             </select>&nbsp;&nbsp;
             <strong>申请人:</strong><input id="applicant" name="applicant" size="8" value="<%=(applicantReturn==null) ? "" : applicantReturn%>">&nbsp;&nbsp;
             <strong>审批人:</strong><input id="approver" name="approver" size="8" value="<%=(approverReturn==null) ? "" : approverReturn%>">&nbsp;&nbsp;
-            <strong>所属支行（分行）：</strong><select id="bank" name="bank" onChange="selectDepts(this.value, 'dept')" <%=(group == null || "".equals(group)) ? "" : "disabled"%>>
+            <strong>所属部门：</strong><select id="bank" name="bank" <%=(group == null || "".equals(group)) ? "" : "disabled"%>>
                 <option value="" selected="">请选择</option>
                 <%
                     if(group != null && !"".equals(group))
@@ -259,23 +249,6 @@
                     }
                 %>
             </select>&nbsp;&nbsp;
-            <strong>所属网点（部门）：</strong><select id="dept" name="dept">
-                <option value="" selected>请选择</option>
-                <%
-                    if(!"".equals(bankReturn)){
-                        String[] depts = bankAndDepts.get(bankReturn);
-                        if(depts != null)
-                            for(String dep : depts){
-                                String selected = "";
-                                if(dep.equals(deptReturn))
-                                    selected = "selected";
-                %>
-                <option value="<%=dep%>" <%=selected%>><%=dep%></option>
-                <%
-                            }
-                    }
-                %>
-            </select>  &nbsp;&nbsp;
             <a id="doSearch" href="javascript:searchWebLine()"><img src="images/search.png" alt="搜索" border="0"></a>
             <a id="search" href="javascript:searchWebLine()">搜索</a>
         </td>
@@ -322,7 +295,6 @@
                 String approver = line.getApprover();
                 String contact = line.getContact();
                 String bank = line.getBank();
-                String dept = line.getDept();
                 String address = line.getAddress();
                 String start_date = line.getStart_date();
                 String rent = line.getRent();
@@ -419,7 +391,7 @@
 
             <td>
                 <div>
-                    <select id="bank-<%=row%>" name="bank-<%=row%>" onChange="selectDepts(this.value, 'dept-<%=row%>')">
+                    <select id="bank-<%=row%>" name="bank-<%=row%>">
                         <%
                             if(bank == null || bank.equals(""))
                                 out.print("<option value=\"0\" selected=\"\">请选择</option>");
@@ -434,38 +406,6 @@
                     </select>
                 </div>
             </td>
-
-            <td>
-                <div style="float:left">
-                    <select id="dept-<%=row%>" name="dept-<%=row%>">
-                        <%
-                            if(dept == null || dept.equals(""))
-                                out.print("<option value=\"0\" selected=\"\">请选择</option>");
-                        %>
-                        <%
-                            String[] depts = bankAndDepts.get(bank);
-                            for(int i = 0; i < depts.length; ++i){
-                        %>
-                        <option value="<%=depts[i]%>"<%if(dept.equals(depts[i])) out.print("selected=\"\"");%>><%=depts[i]%></option>
-                        <%
-                            }
-                        %>
-                    </select>
-                </div>
-            </td>
-<%--            <td>
-                <div id="bank-<%=row%>">
-                    <%= ((bank == null || bank.equals("")) ? "&nbsp;" : bank) %>
-                    <input type="hidden"  name="bank-<%=row%>" value="<%= ((bank == null || bank.equals("")) ? "&nbsp;" : bank) %>"/>
-                </div>
-            </td>
-
-            <td>
-                <div id="dept-<%=row%>">
-                    <%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>
-                    <input type="hidden"  name="dept-<%=row%>" value="<%= ((dept == null || dept.equals("")) ? "&nbsp;" : dept) %>"/>
-                </div>
-            </td>--%>
 
             <td>
                 <div id="address-<%=row%>">
@@ -547,22 +487,22 @@
 
         <br>
         <div>&nbsp;
-        <a href = "abcbank/webline.jsp?curPage=1&type=<%=typeReturn%>&applicant=<%=applicantReturn%>&approver=<%=approverReturn%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>" >首页</a>
+        <a href = "abcbank/webline.jsp?curPage=1&type=<%=typeReturn%>&applicant=<%=applicantReturn%>&approver=<%=approverReturn%>&bank=<%=bankReturn%>" >首页</a>
         <%
             if(curPage - 1 > 0)
                 out.print("<a href = 'abcbank/webline.jsp?curPage=" + (curPage - 1) + "&type=" + typeReturn + "&applicant=" + applicantReturn
-                        + "&approver=" + approverReturn + "&bank=" + bankReturn + "&dept=" + deptReturn + "' >上一页</a>");
+                        + "&approver=" + approverReturn + "&bank=" + bankReturn + "' >上一页</a>");
             else
                 out.print("上一页");
         %>
         <%
             if(curPage + 1 <= pageCount)
                 out.print("<a href = 'abcbank/webline.jsp?curPage=" + (curPage + 1) + "&type=" + typeReturn + "&applicant=" + applicantReturn
-                        + "&approver=" + approverReturn + "&bank=" + bankReturn + "&dept=" + deptReturn + "' >下一页</a>");
+                        + "&approver=" + approverReturn + "&bank=" + bankReturn + "' >下一页</a>");
             else
                 out.print("下一页");
         %>
-        <a href = "abcbank/webline.jsp?curPage=<%=pageCount%>&type=<%=typeReturn%>&applicant=<%=applicantReturn%>&approver=<%=approverReturn%>&bank=<%=bankReturn%>&dept=<%=deptReturn%>" >尾页</a>
+        <a href = "abcbank/webline.jsp?curPage=<%=pageCount%>&type=<%=typeReturn%>&applicant=<%=applicantReturn%>&approver=<%=approverReturn%>&bank=<%=bankReturn%>" >尾页</a>
         第<%=curPage%>页/共<%=pageCount%>页
         </div>
         </div>

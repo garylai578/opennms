@@ -28,7 +28,6 @@ public class AddWebLineServlet extends HttpServlet {
         String approver = request.getParameter("approver");
         String contact = request.getParameter("contact");
         String bank = request.getParameter("bank");
-        String dept = request.getParameter("dept");
         String address = request.getParameter("address");
         String start_date = request.getParameter("start_date");
         String rent = request.getParameter("rent");
@@ -48,7 +47,6 @@ public class AddWebLineServlet extends HttpServlet {
             line.setApprover(approver);
             line.setContact(contact);
             line.setBank(bank);
-            line.setDept(dept);
             line.setAddress(address);
             line.setStart_date(start_date);
             line.setRent(rent);

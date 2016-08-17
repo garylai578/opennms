@@ -27,7 +27,6 @@ public class UpdateWeblineServlet extends HttpServlet {
         String contact = request.getParameter("contact-" + row);
         String approver = request.getParameter("approver-" + row);
         String bank = request.getParameter("bank-" + row);
-        String dept = request.getParameter("dept-" + row);
         String address = request.getParameter("address-" + row);
         String start_date = request.getParameter("start_date-" + row);
         String rent = request.getParameter("rent-" + row);
@@ -44,7 +43,6 @@ public class UpdateWeblineServlet extends HttpServlet {
             op.updateByID(id, "contact", "'" + contact + "'");
             op.updateByID(id, "approver", "'" + approver + "'");
             op.updateByID(id, "bank", "'" + bank + "'" );
-            op.updateByID(id, "dept", "'" + dept + "'");
             op.updateByID(id, "address", "'" + address + "'");
             op.updateByID(id, "rent", "'" + rent + "'");
             op.updateByID(id, "vlan_num", "'" + vlan_num + "'");
@@ -62,7 +60,7 @@ public class UpdateWeblineServlet extends HttpServlet {
             PrintWriter pw=response.getWriter();
             pw.print("<script language='javascript'>alert('修改成功' );window.location=('/opennms/abcbank/webline.jsp?update=true&curPage=" + request.getParameter("curPage")
                     + "&type=" + request.getParameter("type") + "&applicant=" + request.getParameter("applicant") + "&approver=" + request.getParameter("approver")
-                    + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "');</script>");
+                    + "&bank=" + request.getParameter("bank") + "');</script>");
             pw.close();
 
 //            RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/abcbank/ipsegment.jsp");

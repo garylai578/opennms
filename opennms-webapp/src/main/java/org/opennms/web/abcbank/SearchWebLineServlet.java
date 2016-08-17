@@ -24,7 +24,6 @@ public class SearchWebLineServlet extends HttpServlet {
         String applicant = request.getParameter("applicant");
         String approver = request.getParameter("approver");
         String bank = request.getParameter("bank");
-        String dept = request.getParameter("dept");
 
         Map<String, String> colAndValue = new HashMap<String, String>();
 
@@ -34,8 +33,6 @@ public class SearchWebLineServlet extends HttpServlet {
             colAndValue.put("applicant", applicant);
         if(approver != null && !"".equals(approver))
             colAndValue.put("approver", approver);
-        if(dept != null && !"".equals(dept))
-            colAndValue.put("dept", dept);
         if(bank != null && !"".equals(bank))
             colAndValue.put("bank", bank);
 
@@ -57,7 +54,7 @@ public class SearchWebLineServlet extends HttpServlet {
             } else {
                 pw.print("<script language='javascript'>alert('查询无结果，请更换查询内容！' );window.location=('/opennms/abcbank/webline.jsp?curPage=" + request.getParameter("curPage")
                         + "&type=" + request.getParameter("type") + "&applicant=" + request.getParameter("applicant") + "&approver=" + request.getParameter("approver")
-                        + "&bank=" + request.getParameter("bank") + "&dept=" + request.getParameter("dept") + "');</script>");
+                        + "&bank=" + request.getParameter("bank") + "');</script>");
                 pw.close();
             }
         } catch (SQLException e) {
