@@ -133,7 +133,7 @@
     <div class="boxWrapper">
       <ul class="plain">  
         <li><a href="admin/discovery/modifyDiscoveryConfig">配置自动发现</a></li>
-        <li><a href="abcbank/switcher.jsp?update=true">交换机配置管理</a></li>
+        <%--<li><a href="abcbank/switcher.jsp?update=true">交换机配置管理</a></li>--%>
         <li><a href="javascript:snmpConfigPost()">通过IP配置SNMP团体名</a></li>
         <li><a href="javascript:snmpManagePost()">配置每个接口SNMP数据采集</a></li>
 		<!-- Removed this - see bug 586
