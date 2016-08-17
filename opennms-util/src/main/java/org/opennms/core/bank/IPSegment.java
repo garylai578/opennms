@@ -130,7 +130,7 @@ public class IPSegment {
         String value = "";
         for (String col: colsString) {
             if(col == null)
-                value += "''， ";
+                value += "'', ";
             else
                 value += "'" + col + "', ";
         }
