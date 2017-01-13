@@ -126,8 +126,15 @@ public class IPSegment {
     }
 
     public String toInsertValues() {
-        return  "'" + segment + "', '" + gateway + "', '" + mask + "', '" + startIP + "', '" + endIP + "', '"  + bankname + "', '"  + createTime + "', '"   + banktype + "', '"  + state + "', '"  + comment +"'";
-
+        String[] colsString = {segment, gateway, mask, startIP, endIP, bankname, createTime, banktype, state, comment};
+        String value = "";
+        for (String col: colsString) {
+            if(col == null)
+                value += "''， ";
+            else
+                value += "'" + col + "', ";
+        }
+        return  value.substring(0, value.length()-2);
     }
 
     public static Comparator IPComparator=new Comparator(){

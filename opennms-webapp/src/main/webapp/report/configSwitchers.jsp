@@ -65,6 +65,8 @@
     }
     Collections.sort(ips, SwitcherStats.IPComparator);
     int len1 = ips.size() / 2 + 1;
+	if(ips.size() == 0)
+        len1 = 0;
 %>
 
 <script type="text/javascript">

@@ -27,7 +27,9 @@ public class IPSegmentOperater {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            int rc = stmt.executeUpdate(("insert into ipSegment(segment, gateway, mask, startIP, endIP, name, createTime, type, state, comment) values (" + ipSegment.toInsertValues() + ")"));
+            String sql = "insert into ipSegment(segment, gateway, mask, startIP, endIP, name, createTime, type, state, comment) values (" + ipSegment.toInsertValues() + ")";
+            log.debug("IPSegmentOperater.insert:" + sql);
+            int rc = stmt.executeUpdate(sql);
             log.debug("IPSegmentOperater.insert: SQL update result = " + rc);
         } finally {
             d.cleanUp();

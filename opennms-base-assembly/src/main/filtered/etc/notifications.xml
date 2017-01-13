@@ -6,22 +6,22 @@
         <mstation>localhost</mstation>
     </header>
     <notification name="interfaceDown" status="on">
-        <uei>uei.opennms.org/nodes/interfaceDown</uei>
-        <rule>IPADDR != '0.0.0.0'</rule>
-        <destinationPath>Email-Admin</destinationPath>
-        <text-message>在节点%nodelabel%上的接口%interfaceresolve% (%interface%)的所有服务都不可用。新的故障报告已经形成，而且直到这个故障被解决为止，
-            服务水平的可用性计算将受到影响。
-	</text-message>
-        <subject>Notice #%noticeid%: %interfaceresolve% (%interface%) on node %nodelabel% down.</subject>
-        <numeric-message>111-%noticeid%</numeric-message>
-    </notification>
+    <uei>uei.opennms.org/nodes/interfaceDown</uei>
+    <rule>IPADDR != '0.0.0.0'</rule>
+    <destinationPath>Email-Admin</destinationPath>
+    <text-message>在节点%nodelabel%上的接口%interfaceresolve% (%interface%)的所有服务都不可用。新的故障报告已经形成，而且直到这个故障被解决为止，
+        服务水平的可用性计算将受到影响。
+    </text-message>
+    <subject>Notice #%noticeid%: %interfaceresolve% (%interface%) on node %nodelabel% down.</subject>
+    <numeric-message>111-%noticeid%</numeric-message>
+</notification>
     <notification name="nodeDown" status="on">
         <uei>uei.opennms.org/nodes/nodeDown</uei>
         <rule>IPADDR != '0.0.0.0'</rule>
         <destinationPath>Email-Admin</destinationPath>
         <text-message>在节点%nodelabel%上的所有服务都不可用.  新的故障报告已经形成，而且直到这个故障被解决为止，
             服务水平的可用性计算将受到影响。
-	</text-message>
+        </text-message>
         <subject>Notice #%noticeid%: node %nodelabel% down.</subject>
         <numeric-message>111-%noticeid%</numeric-message>
     </notification>
@@ -30,7 +30,7 @@
         <rule>IPADDR != '0.0.0.0'</rule>
         <destinationPath>Email-Admin</destinationPath>
         <text-message>在节点%nodelabel%上的接口%interfaceresolve% (%interface%)的服务 %service% 在 %time% 终止.
-	</text-message>
+        </text-message>
         <subject>Notice #%noticeid%: %service% down on %interfaceresolve% (%interface%) on node %nodelabel%.</subject>
         <numeric-message>111-%noticeid%</numeric-message>
     </notification>
@@ -47,7 +47,7 @@
         <rule>IPADDR != '0.0.0.0'</rule>
         <destinationPath>Email-Admin</destinationPath>
         <text-message>由于停机时间过长或者操作原因，在节点  %nodelabel% 上的接口 %interfaceresolve% (%interface%)
-已经被系统的轮询数据库删除.</text-message>
+            已经被系统的轮询数据库删除.</text-message>
         <subject>Notice #%noticeid%: [OpenNMS] %interfaceresolve% (%interface%) on node %nodelabel% deleted.</subject>
         <numeric-message>111-%noticeid%</numeric-message>
     </notification>
