@@ -11,4 +11,10 @@
                 <command>javaEmail</command>
         </target>
     </path>
+    <path name="SMS-Admin">
+        <target>
+            <name>Admin</name>
+            <command>sendSms</command>
+        </target>
+    </path>
 </destinationPaths>
