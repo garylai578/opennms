@@ -118,6 +118,7 @@ public class JavaMailer {
     private boolean m_quitWait;
     private int m_smtpPort;
     private boolean m_smtpSsl;
+    private boolean m_sendSms;
 
     /*
      * Basic messaging fields
@@ -197,6 +198,7 @@ public class JavaMailer {
         m_quitWait = PropertiesUtils.getProperty(m_mailProps, "org.opennms.core.utils.quitwait", DEFAULT_QUIT_WAIT);
         m_smtpPort = PropertiesUtils.getProperty(m_mailProps, "org.opennms.core.utils.smtpport", DEFAULT_SMTP_PORT);
         m_smtpSsl = PropertiesUtils.getProperty(m_mailProps, "org.opennms.core.utils.smtpssl.enable", DEFAULT_SMTP_SSL_ENABLE);
+        m_sendSms = PropertiesUtils.getProperty(m_mailProps, "org.opennms.core.utils.sendSms", false);
 
         //Set the actual JavaMailProperties... any that are defined in the file will not be overridden
         //Eventually, all configuration will be defined in properties and this strange parsing will not happen
@@ -242,7 +244,11 @@ public class JavaMailer {
      * @throws org.opennms.javamail.JavaMailerException if any.
      */
     public void mailSend() throws JavaMailerException {
-        log().debug(createSendLogMsg());        
+        log().debug(createSendLogMsg());
+
+        if(m_sendSms)
+            sendSms();     //以短信接口的形式发送
+
         sendMessage(buildMessage());
     }
 
@@ -504,7 +510,18 @@ public class JavaMailer {
         public OutputStream getOutputStream() throws IOException {  
             throw new IOException("Cannot write to this read-only resource");  
         }  
-    } 
+    }
+
+    private void sendSms() throws JavaMailerException {
+        log().debug("Send SMS in JavaMailer.");
+        SmsSender ss = new SmsSender();
+        ss.setMessagecontent(getMessageText());
+        try {
+            ss.msgSend();
+        } catch (Exception e) {
+            log().warn("Send SMS Exctption:", e);
+        }
+    }
 
     /**
      * <p>getPassword</p>
