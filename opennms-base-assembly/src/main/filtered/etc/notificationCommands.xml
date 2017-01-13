@@ -33,14 +33,6 @@
             <switch>-tm</switch>
         </argument>
     </command>
-    <command binary="false">
-        <name>sendSms</name>
-        <execute>org.opennms.netmgt.notifd.SmsNotificationStrategy</execute>
-        <comment>class for sending SMS notifications</comment>
-        <argument streamed="false">
-            <switch>-tm</switch>
-        </argument>
-    </command>
     <command binary="true">
         <name>textPage</name>
         <execute>/usr/bin/qpage</execute>
