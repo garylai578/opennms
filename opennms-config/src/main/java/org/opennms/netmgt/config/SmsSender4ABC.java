@@ -113,7 +113,7 @@ public class SmsSender4ABC {
             d.watch(conn);
             Statement stmt = conn.createStatement();
             d.watch(stmt);
-            String sql = "select supportphone FROM assets where nodeid" + nodeid;
+            String sql = "select supportphone FROM assets where nodeid=" + nodeid;
             ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
             result = rs.getString("supportphone");
