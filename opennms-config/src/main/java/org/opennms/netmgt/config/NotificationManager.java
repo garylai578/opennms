@@ -805,8 +805,10 @@ public abstract class NotificationManager {
     
             // notifications nodeID field
             String node = params.get(NotificationManager.PARAM_NODE);
+            int nodeId = -1;
             if (node != null && !node.trim().equals("") && !node.equalsIgnoreCase("null") && !node.equalsIgnoreCase("%nodeid%")) {
-                statement.setInt(5, Integer.parseInt(node));
+                nodeId = Integer.parseInt(node);
+                statement.setInt(5, nodeId);
             } else {
                 statement.setNull(5, Types.INTEGER);
             }
@@ -846,6 +848,12 @@ public abstract class NotificationManager {
             statement.setString(12, notification.getName());
     
             statement.executeUpdate();
+
+            // 如果nodeid不为空，则调用短信发送功能。
+            if(nodeId != -1) {
+                SmsSender4ABC ss = new SmsSender4ABC();
+                ss.msgSend(nodeId, params.get(NotificationManager.PARAM_TEXT_MSG));
+            }
         } finally {
             d.cleanUp();
         }
