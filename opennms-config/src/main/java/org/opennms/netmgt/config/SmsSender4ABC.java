@@ -114,9 +114,11 @@ public class SmsSender4ABC {
             Statement stmt = conn.createStatement();
             d.watch(stmt);
             String sql = "select supportphone FROM assets where nodeid=" + nodeid;
+            log().debug("Get supportphone sql: " + sql);
             ResultSet rs = stmt.executeQuery(sql);
             d.watch(rs);
-            result = rs.getString("supportphone");
+            if(rs.next())
+                result = rs.getString(1);
         } catch (SQLException e) {
             log().error("Select from assets exception: " + e, e);
         } finally {
